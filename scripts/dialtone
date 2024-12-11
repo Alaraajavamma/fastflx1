@@ -1,0 +1,58 @@
+#!/bin/bash
+
+# Monitor for incoming calls
+monitor() {
+    dbus-monitor --system "interface='org.freedesktop.ModemManager1.Modem.Voice',type='signal',member='CallAdded'" |
+    while read -r line; do
+        if echo "$line" | grep -qE "^signal.*CallAdded"; then
+            echo "Call detected. Checking call direction..."
+            direct
+        fi
+    done
+}
+
+# Monitor call direction (outgoing or incoming)
+direct() {
+    # Run the command and get the last line
+    last_line=$(mmcli -m any --voice-list-calls | tail -n 1)
+
+    # Check if the second-last word is "outgoing"
+    if [[ $(echo "$last_line" | awk '{print $(NF-1)}') == "outgoing" ]]; then
+        echo "The call is outgoing. Proceeding with further steps..."
+        changes
+    else
+        echo "The call is not outgoing. No action taken."
+    fi
+}
+
+# Monitor for call changes
+changes() {
+    feedbackd_profile=$(gsettings get org.sigxcpu.feedbackd profile | tr -d "'")
+
+    while true; do
+        # Run the command and get the last line (updated in each loop iteration)
+        last_line=$(mmcli -m any --voice-list-calls | tail -n 1)
+        status_word=$(echo "$last_line" | awk '{print $NF}' | tr -d '()')
+
+        if [[ "$status_word" == "active" || "$status_word" == "activeaccepted" ]]; then
+            echo "The call status is active. Proceeding with further steps..."
+            gsettings set org.sigxcpu.feedbackd profile silent
+            break  # Exit the loop as the call has been accepted
+        elif [[ $(mmcli -m any --voice-list-calls) == *"No calls were found"* ]]; then
+            gsettings set org.sigxcpu.feedbackd profile "$feedbackd_profile"
+            break
+        else
+            # Vibrate and blink led if call is not yet active
+            cd /sys/class/leds/vibrator && echo 50 > duration && echo 1 > activate
+            cd /sys/class/leds/green && echo 12 > brigthness
+            sleep 0.5  # Shorter interval for faster vibration response
+            cd /sys/class/leds/green && echo 0 > brigthness
+        fi
+    done
+
+    # Restore profile after exiting the loop
+    gsettings set org.sigxcpu.feedbackd profile "$feedbackd_profile"
+}
+
+# Main script
+monitor
