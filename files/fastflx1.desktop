@@ -1,0 +1,22 @@
+[Desktop Entry]
+Name=Update-FastFLX1
+Exec=bash -c 'cd ~ && cd .git && cd fastcalls && ./update.sh'
+Terminal=true
+Icon=/opt/fastflx1/files/tux.svg
+Actions=staging;backtoprod;upgrade;
+Type=Application
+
+[Desktop Action staging]
+Name=Go to staging repo
+Exec=bash -c 'sudo apt install furios-apt-config-staging furios-apt-config-debian-staging -y && sudo apt update && sudo apt install furios-apt-krypton-staging -y && sudo apt update && sudo apt upgrade -y --allow-downgrades && sudo apt update && sudo apt upgrade -y --allow-downgrades'
+Terminal=true
+
+[Desktop Action backtoprod]
+Name=Go to prod repo
+Exec=bash -c 'sudo apt remove furios-apt-config-staging furios-apt-config-debian-staging furios-apt-config-krypton-staging -y && sudo apt update && sudo apt upgrade -y --allow-downgrades && sudo apt update && sudo apt upgrade -y --allow-downgrades'
+Terminal=true
+
+[Desktop Action upgrade]
+Name=Upgrade FLX1
+Exec=bash -c 'sudo apt update && sudo apt upgrade -y --allow-downgrades && sudo apt update && sudo apt upgrade -y --allow-downgrades'
+Terminal=true
