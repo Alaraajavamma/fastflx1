@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# Action to perform when the event is detected
+
+perform_action() {
+echo "Alarm clock event detected!"
+amixer set Master 100% unmute
+}
+
+# Monitor DBus for the specific event and trigger the action
+
+dbus-monitor "type='method_call',interface='org.sigxcpu.Feedback',member='TriggerFeedback'" | \
+while read -r line; do
+if echo "$line" | grep -q '"org.gnome.clocks"'; then
+read -r next_line
+if echo "$next_line" | grep -q '"alarm-clock-elapsed"'; then
+perform_action
+fi
+fi
+done
