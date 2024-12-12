@@ -10,6 +10,9 @@ echo "FastFLX1 is easy to way to add some cool workarounds and features to your 
 
 sudo apt update
 sudo apt upgrade --allow-downgrades
+sudo apt update
+sudo apt upgrade --allow-downgrades
+sudo apt install wtype
 
 mkdir -p "${HOME}/.config/autostart/"
 mkdir -p "${HOME}/.local/share/applications/"
