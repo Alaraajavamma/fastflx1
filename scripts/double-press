@@ -1,7 +1,35 @@
 #!/bin/bash
 
 unlocked() {
-    double-press-predefined
+
+# Define directories and file naming
+HOME_DIR="$HOME"
+PICTURES_DIR="$HOME_DIR/Pictures"
+SCREENSHOTS_DIR="$PICTURES_DIR/Screenshots"
+
+# Ensure directories exist
+mkdir -p "$SCREENSHOTS_DIR"
+
+# Generate a timestamped file name
+DATETIME=$(date +"Screenshot from %Y-%m-%d %H-%M-%S.png")
+SCREENSHOT_PATH="$SCREENSHOTS_DIR/$DATETIME"
+
+# Call D-Bus to take the screenshot
+RESULT=$(gdbus call \
+    --session \
+    --dest org.gnome.Shell.Screenshot \
+    --object-path /org/gnome/Shell/Screenshot \
+    --method org.gnome.Shell.Screenshot.Screenshot true false "$SCREENSHOT_PATH")
+
+# Check for success and notify the user
+if echo "$RESULT" | grep -q "(true,"; then
+    echo "Screenshot saved to: $SCREENSHOT_PATH"
+    notify-send "Screenshot saved" "$SCREENSHOT_PATH"
+else
+    echo "Failed to take screenshot."
+    notify-send "Screenshot failed" "Unable to save the screenshot."
+fi
+
 }
 
 # Function to toggle the flashlight
