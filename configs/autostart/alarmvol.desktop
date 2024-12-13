@@ -1,0 +1,8 @@
+[Desktop Entry]
+Version=0.1
+Name=AlarmVol
+Comment=Put the volume to 100% when alarm starts
+Exec=bash -c 'alarmvol.sh'
+Icon=org.gnome.Terminal
+Terminal=false
+Type=Application
