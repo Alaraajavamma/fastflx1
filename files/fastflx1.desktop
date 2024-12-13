@@ -2,7 +2,7 @@
 Name=Update-FastFLX1
 Exec=bash -c 'cd ~ && cd .git && cd fastcalls && ./update.sh'
 Terminal=true
-Icon=/opt/fastflx1/files/tux.svg
+Icon=/opt/fastflx1/files/fastflx1.svg
 Actions=staging;backtoprod;upgrade;
 Type=Application
 
