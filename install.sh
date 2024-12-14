@@ -101,4 +101,6 @@ echo 'export PATH=$PATH:/opt/fastflx1/scripts' >> ~/.bashrc
 # Reload bashrc to apply changes
 source ~/.bashrc
 
+gsettings set org.gnome.desktop.sound theme-name __custom
+
 echo "FastFLX1 setup complete"
