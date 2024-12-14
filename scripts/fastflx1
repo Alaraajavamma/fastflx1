@@ -4,11 +4,10 @@ yad --title="FastFLX1" \
     --image=/opt/fastflx1/fastxl1.svg \
     --text="Fast tweaks for FLX1" \
     --form \
-    --field="Record rear":fbtn "bash -c '/opt/fastvideo/record.sh rear'" \
-    --field="Record front":fbtn "bash -c '/opt/fastvideo/record.sh front'" \
-    --field="Open Videos folder":fbtn "bash -c 'xdg-open ${HOME}/Videos/'" \
-    --field="Open latest video file":fbtn "bash -c 'cd /opt/fastvideo/ && ./latest.sh'" \
-    --field="Delete latest video file":fbtn "bash -c 'cd /opt/fastvideo/ && ./deletelatest.sh'" \
-    --field="Rename latest video file":fbtn "bash -c 'cd /opt/fastvideo/ && ./renamelatest.sh'" \
+    --field="Update FastFLX1 tweaks":fbtn "bash -c '/opt/fastflx1/update.sh'" \
+    --field="Go to staging":fbtn "bash -c 'sudo apt install furios-apt-config-staging furios-apt-config-debian-staging -y && sudo apt update && sudo apt install furios-apt-krypton-staging -y && sudo apt update && sudo apt upgrade -y --allow-downgrades && sudo apt update && sudo apt upgrade -y --allow-downgrades'" \
+    --field="Go to prod folder":fbtn "bash -c 'sudo apt remove furios-apt-config-staging furios-apt-config-debian-staging furios-apt-config-krypton-staging -y && sudo apt update && sudo apt upgrade -y --allow-downgrades && sudo apt update && sudo apt upgrade -y --allow-downgrades'" \
+    --field="Upgrade FuriOS":fbtn "bash -c 'sudo apt update && sudo apt upgrade -y --allow-downgrades && sudo apt update && sudo apt upgrade -y --allow-downgrades'" \
+    --field="Set city to Weather":fbtn "bash -c '/opt/fastflx1/scripts/gnome-weather-location'" \
     --buttons-layout=center \
     --button="Quit"\
