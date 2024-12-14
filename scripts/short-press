@@ -1,7 +1,7 @@
 #!/bin/bash
 
 unlocked() {
-    wtype -k Super_L
+    wtype -k XF86Back
 }
 
 # Function to toggle the flashlight
