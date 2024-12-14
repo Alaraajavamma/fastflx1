@@ -1,8 +1,8 @@
 #!/bin/bash
 
 yad --title="FastFLX1" \
-    --image=/opt/fastflx1/fastxl1.svg \
     --text="Fast tweaks for FLX1" \
+    --text-align=center \
     --form \
     --field="Update FastFLX1 tweaks":fbtn "bash -c '/opt/fastflx1/update.sh'" \
     --field="Go to staging":fbtn "bash -c 'sudo apt install furios-apt-config-staging furios-apt-config-debian-staging -y && sudo apt update && sudo apt install furios-apt-krypton-staging -y && sudo apt update && sudo apt upgrade -y --allow-downgrades && sudo apt update && sudo apt upgrade -y --allow-downgrades'" \
