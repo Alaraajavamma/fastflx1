@@ -1,6 +1,7 @@
 #!/bin/bash
 
-yad --title="FastFLX1" \
+yad --name="fastflx1" \
+    --title="FastFLX1" \
     --text="Fast tweaks for FLX1" \
     --text-align=center \
     --form \
