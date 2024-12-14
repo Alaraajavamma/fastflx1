@@ -1,0 +1,14 @@
+#!/bin/bash
+
+yad --title="FastFLX1" \
+    --image=/opt/fastflx1/fastxl1.svg \
+    --text="Fast tweaks for FLX1" \
+    --form \
+    --field="Record rear":fbtn "bash -c '/opt/fastvideo/record.sh rear'" \
+    --field="Record front":fbtn "bash -c '/opt/fastvideo/record.sh front'" \
+    --field="Open Videos folder":fbtn "bash -c 'xdg-open ${HOME}/Videos/'" \
+    --field="Open latest video file":fbtn "bash -c 'cd /opt/fastvideo/ && ./latest.sh'" \
+    --field="Delete latest video file":fbtn "bash -c 'cd /opt/fastvideo/ && ./deletelatest.sh'" \
+    --field="Rename latest video file":fbtn "bash -c 'cd /opt/fastvideo/ && ./renamelatest.sh'" \
+    --buttons-layout=center \
+    --button="Quit"\
