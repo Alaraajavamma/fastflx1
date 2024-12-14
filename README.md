@@ -1,7 +1,7 @@
 # FastFLX1 - some tweaks for best linux phone in the market
 
 This simple tool adds some small tweaks to your FLX1. 
-Notice: If you have done some own tweaks to your ~. files it might be good idea to make backup because this setup will override some of them. 
+**Notice: If you have done some own tweaks to your ~. files it might be good idea to make backup because this setup will override some of them. ** 
 
 Mainly: 
 1. Alarm volume script which will ensure that your alarm clock will allways play with full sound - and GUI interface to restart this service script if it fails
@@ -10,6 +10,7 @@ Mainly:
 4. GUI interface for changing Squeekboard layout 
 5. Asisstant-button tweaks which are partially work-in-proggress but it shows proof-of-concept how to make assintant-button behave differentially based on certain conditions (locked / unlocked currently) 
 6. Disable annoying volume change sound (blop - blop when change volume)
+7. If you use finnish layout in squeekboard you will get the ultimate universal layout made by me 
 
 I am working on this slowly and will add more (GUI) features soonish (or remove some parts what Barry and Jesus from Furilabs make unnecessary ;) ). If you wan't to help feel free to send me message, open issue or so. 
 
