@@ -90,6 +90,7 @@ done
 
 # Create desktop entries
 ln -s "${PWD}/files/fastflx1.desktop" "${HOME}/.local/share/applications/fastflx1.desktop"
+ln -s "${PWD}/files/fastflx1.desktop" "${HOME}/.local/share/applications/yad-icon-browser.desktop"
 ln -s "${PWD}/configs/alarmvol.desktop" "${HOME}/.config/autostart/alarmvol.desktop"
 ln -s "${PWD}/configs/dialtone.desktop" "${HOME}/.config/autostart/dialtone.desktop"
 
