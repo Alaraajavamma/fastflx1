@@ -1,0 +1,26 @@
+#!/bin/bash
+
+unlocked() {
+    wtype -k Control_L+V
+}
+
+# Function to toggle the flashlight
+locked() {
+echo "work in progress"
+}
+
+
+# Identify the session ID
+session_id=$(loginctl list-sessions | grep $(whoami) | awk 'NR==2 {print $1}')
+# Check lock status of the session
+idle_hint=$(loginctl show-session $session_id -p LockedHint)
+
+if [[ "$idle_hint" == *"yes"* ]]; then
+    locked
+    echo "Locked"
+elif [[ "$idle_hint" == *"no"* ]]; then
+    unlocked
+    echo "Unlocked"
+else 
+    echo "Failed to determine lockscreen state"
+fi
