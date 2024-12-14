@@ -4,7 +4,6 @@ unlocked() {
     wtype -k Control_L+V
 }
 
-# Function to toggle the flashlight
 locked() {
 echo "work in progress"
 }
