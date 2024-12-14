@@ -42,39 +42,33 @@ if [ "$(id -u)" -eq 0 ]; then
 	    # Apply chmod +x to all symlinked scripts in /opt/fastflx1/scripts
 	sudo chmod + x "/opt/fastflx1/scripts/alarmvol" "/opt/fastflx1/scripts/dialtone" "/opt/fastflx1/scripts/double-press" "/opt/fastflx1/scripts/fastflx1" "/opt/fastflx1/scripts/gnome-weather-location" "/opt/fastflx1/scripts/long-press" "/opt/fastflx1/scripts/short-press" "/opt/fastflx1/scripts/squeekboard-scale" 
 
-		# Move config folders to the user's .config directory
-		for config_folder in /opt/fastflx1/configs/*; do
-		    if [ -d "$config_folder" ]; then
-		            folder_name=$(basename "$config_folder")
-			            mv -f "$config_folder" "${HOME}/.config/$folder_name"
-				            echo "Moved $config_folder to ${HOME}/.config/$folder_name"
-					        fi
-						done
-
-						# Move share folders to the user's .local/share directory
-						for share_folder in /opt/fastflx1/share/*; do
-						    if [ -d "$share_folder" ]; then
-						            folder_name=$(basename "$share_folder")
-							            mv -f "$share_folder" "${HOME}/.local/share/$folder_name"
-								            echo "Moved $share_folder to ${HOME}/.local/share/$folder_name"
-									        fi
-										done
-
-										# Create desktop entries
-										ln -sf "${PWD}/files/fastflx1.desktop" "${HOME}/.local/share/applications/fastflx1.desktop"
-										ln -sf "${PWD}/files/fastflx1.desktop" "${HOME}/.local/share/applications/yad-icon-browser.desktop"
-										ln -sf "${PWD}/configs/alarmvol.desktop" "${HOME}/.config/autostart/alarmvol.desktop"
-										ln -sf "${PWD}/configs/dialtone.desktop" "${HOME}/.config/autostart/dialtone.desktop"
-
-										# Add FastFLX1 paths to the system's PATH
-										grep -qxF 'export PATH=$PATH:/opt/fastflx1' ~/.bashrc || echo 'export PATH=$PATH:/opt/fastflx1' >> ~/.bashrc
-										grep -qxF 'export PATH=$PATH:/opt/fastflx1/scripts' ~/.bashrc || echo 'export PATH=$PATH:/opt/fastflx1/scripts' >> ~/.bashrc
-
-										# Reload bashrc to apply changes
-										source ~/.bashrc
+	# Move config folders to the user's .config directory
+	cp -r ${PWD}/configs/assistant-button ${HOME}/.config/
+	cp -r ${PWD}/configs/autostart ${HOME}/.config/
+	cp -r ${PWD}/configs/feedbackd-button ${HOME}/.config/
+	cp -r ${PWD}/configs/gtk-3.0-button ${HOME}/.config/
+	# Move local folders to the local directory
+	cp -r ${PWD}/share/keyboards ${HOME}/.local/share/
+	cp -r ${PWD}/share/sounds ${HOME}/.local/share/
 
 
-										# Set custom sound theme
-										gsettings set org.gnome.desktop.sound theme-name __custom
 
-										echo "FastFLX1 setup complete"
+
+		# Create desktop entries
+		ln -sf "${PWD}/files/fastflx1.desktop" "${HOME}/.local/share/applications/fastflx1.desktop"
+		ln -sf "${PWD}/files/yad-icon-browser.desktop" "${HOME}/.local/share/applications/yad-icon-browser.desktop"
+		ln -sf "${PWD}/configs/alarmvol.desktop" "${HOME}/.config/autostart/alarmvol.desktop"
+		ln -sf "${PWD}/configs/dialtone.desktop" "${HOME}/.config/autostart/dialtone.desktop"
+
+		# Add FastFLX1 paths to the system's PATH
+		grep -qxF 'export PATH=$PATH:/opt/fastflx1' ~/.bashrc || echo 'export PATH=$PATH:/opt/fastflx1' >> ~/.bashrc
+		grep -qxF 'export PATH=$PATH:/opt/fastflx1/scripts' ~/.bashrc || echo 'export PATH=$PATH:/opt/fastflx1/scripts' >> ~/.bashrc
+
+		# Reload bashrc to apply changes
+		source ~/.bashrc
+
+
+		# Set custom sound theme
+		gsettings set org.gnome.desktop.sound theme-name __custom
+
+		echo "FastFLX1 setup complete"
