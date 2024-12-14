@@ -31,26 +31,16 @@ if [ "$(id -u)" -eq 0 ]; then
 	sudo ln -sf "${PWD}/README.md" "/opt/fastflx1/README.md"
 
 	# Ensure the scripts are executable
-	chmod +x "${PWD}/uninstall.sh" "${PWD}/update.sh"
+	sudo chmod +x "${PWD}/uninstall.sh" "${PWD}/update.sh"
 
-# Apply chmod +x for all scripts in the "scripts" folder
-if [ -d "${PWD}/scripts" ]; then
-    for script in "${PWD}/scripts"/*; do
-        if [ -f "$script" ]; then
-            chmod +x "$script" || echo "Failed to make $script executable"
-        fi
-    done
-else
-    echo "Scripts directory does not exist: ${PWD}/scripts"
-fi
+	# Apply chmod +x for all scripts in the "scripts" folder
+	sudo chmod + x "${PWD}/scripts/alarmvol" "${PWD}/scripts/dialtone" "${PWD}/scripts/double-press" "${PWD}/scripts/fastflx1" "${PWD}/scripts/gnome-weather-location" "${PWD}/scripts/long-press" "${PWD}/scripts/short-press" "${PWD}/scripts/squeekboard-scale" 
 
 	    # Apply chmod +x to symlink targets for uninstall/update scripts
-	    chmod +x "/opt/fastflx1/uninstall.sh" "/opt/fastflx1/update.sh"
+	sudo chmod +x "/opt/fastflx1/uninstall.sh" "/opt/fastflx1/update.sh"
 
 	    # Apply chmod +x to all symlinked scripts in /opt/fastflx1/scripts
-	    for script in /opt/fastflx1/scripts/*; do
-	        [ -f "$script" ] && chmod +x "$script"
-		done
+	sudo chmod + x "/opt/fastflx1/scripts/alarmvol" "/opt/fastflx1/scripts/dialtone" "/opt/fastflx1/scripts/double-press" "/opt/fastflx1/scripts/fastflx1" "/opt/fastflx1/scripts/gnome-weather-location" "/opt/fastflx1/scripts/long-press" "/opt/fastflx1/scripts/short-press" "/opt/fastflx1/scripts/squeekboard-scale" 
 
 		# Move config folders to the user's .config directory
 		for config_folder in /opt/fastflx1/configs/*; do
