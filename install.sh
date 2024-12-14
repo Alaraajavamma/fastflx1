@@ -1,4 +1,6 @@
-Check if the script is being run as root
+#!/bin/bash
+
+#Check if the script is being run as root
 if [ "$(id -u)" -eq 0 ]; then
     echo "Script must not be run as root" >&2
         exit 1
@@ -31,10 +33,16 @@ if [ "$(id -u)" -eq 0 ]; then
 	# Ensure the scripts are executable
 	chmod +x "${PWD}/uninstall.sh" "${PWD}/update.sh"
 
-	# Apply chmod +x for all scripts in the "scripts" folder
-	for script in "${PWD}/scripts"/*; do
-	    [ -f "$script" ] && chmod +x "$script"
-	    done
+# Apply chmod +x for all scripts in the "scripts" folder
+if [ -d "${PWD}/scripts" ]; then
+    for script in "${PWD}/scripts"/*; do
+        if [ -f "$script" ]; then
+            chmod +x "$script" || echo "Failed to make $script executable"
+        fi
+    done
+else
+    echo "Scripts directory does not exist: ${PWD}/scripts"
+fi
 
 	    # Apply chmod +x to symlink targets for uninstall/update scripts
 	    chmod +x "/opt/fastflx1/uninstall.sh" "/opt/fastflx1/update.sh"
