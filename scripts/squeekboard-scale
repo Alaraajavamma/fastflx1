@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Get the current value of the keyboard scale
+current_scale=$(gsettings get sm.puri.Squeekboard keyboard-scale)
+
+# Create the yad dialog with the current value included in the message
+input=$(yad --name="squeekboard-scale" \
+        --title="Scale Squeekboard" \
+        --entry \
+        --text "Your current value is: $current_scale.\nDefault is 0.7.\nEnter your preferred scale:" \
+        --text-align=center \
+        --buttons-layout=center \
+        --button=Scale:0)
+
+# If the user cancels or doesn't provide input, exit
+if [ -z "$input" ]; then
+    echo "No input provided. Exiting."
+    exit 1
+fi
+
+# Debugging: Print the input value (optional)
+printf 'INPUT: %s\n' "$input"
+
+# Set the scale value using gsettings
+gsettings set sm.puri.Squeekboard keyboard-scale "$input"
