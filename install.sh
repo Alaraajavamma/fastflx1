@@ -1,12 +1,6 @@
 #!/bin/bash
 
-#Check if the script is being run as root
-if [ "$(id -u)" -eq 0 ]; then
-    echo "Script must not be run as root" >&2
-        exit 1
-	fi
-
-	echo "FastFLX1 is an easy way to add some cool workarounds and features to your FLX1 device"
+echo "FastFLX1 is an easy way to add some cool workarounds and features to your FLX1 device"
 
 	# Update and upgrade the system
 	sudo apt update && sudo apt upgrade -y --allow-downgrades
@@ -71,4 +65,4 @@ if [ "$(id -u)" -eq 0 ]; then
 		# Set custom sound theme
 		gsettings set org.gnome.desktop.sound theme-name __custom
 
-		echo "FastFLX1 setup complete"
+echo "FastFLX1 setup complete"
