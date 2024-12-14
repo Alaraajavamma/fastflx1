@@ -9,13 +9,14 @@ echo "FastFLX1 is easy to way to add some cool workarounds and features to your 
 
 
 sudo apt update
-sudo apt upgrade --allow-downgrades
+sudo apt upgrade -y --allow-downgrades
 sudo apt update
-sudo apt upgrade --allow-downgrades
-sudo apt install wtype
+sudo apt upgrade -y --allow-downgrades
+sudo apt install wtype yad 
 
 mkdir -p "${HOME}/.config/autostart/"
 mkdir -p "${HOME}/.local/share/applications/"
+sudo mkdir -p /opt/fastflx1/
 sudo mkdir -p /opt/fastflx1/scripts
 sudo mkdir -p /opt/fastflx1/configs
 sudo mkdir -p /opt/fastflx1/files
@@ -29,3 +30,6 @@ sudo ln -s "${PWD}/update.sh" "/opt/fastflx1/"
 sudo ln -s "${PWD}/README.md" "/opt/fastflx1/"
 ## ln -s "${PWD}/desktop/fastcontacts.desktop" "${HOME}/.local/share/applications/fastcontacts.desktop" (reminder)
 ## ln -s "${PWD}/desktop/fasthistory.desktop" "${HOME}/.config/autostart/fasthistory.desktop" (reminder)
+
+echo 'export PATH=$PATH:/opt/fastflx1' >> ~/.bashrc
+echo 'export PATH=$PATH:/opt/fastflx1/scripts' >> ~/.bashrc
