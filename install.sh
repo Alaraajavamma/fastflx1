@@ -25,12 +25,14 @@ mkdir -p "${HOME}/.local/share/applications/"
 sudo mkdir -p /opt/fastflx1/
 sudo mkdir -p /opt/fastflx1/scripts
 sudo mkdir -p /opt/fastflx1/configs
+sudo mkdir -p /opt/fastflx1/share
 sudo mkdir -p /opt/fastflx1/files
 
 # Create symbolic links for the scripts and directories
 sudo ln -s "${PWD}/" "/opt/fastflx1/"
 sudo ln -s "${PWD}/scripts/" "/opt/fastflx1/scripts"
 sudo ln -s "${PWD}/configs/" "/opt/fastflx1/configs"
+sudo ln -s "${PWD}/share/" "/opt/fastflx1/configs"
 sudo ln -s "${PWD}/files/" "/opt/fastflx1/files"
 sudo ln -s "${PWD}/install.sh" "/opt/fastflx1/"
 sudo ln -s "${PWD}/uninstall.sh" "/opt/fastflx1/"
@@ -58,6 +60,33 @@ for script in "/opt/fastflx1/scripts"/*; do
         chmod +x "$script"
     fi
 done
+
+# Move config folders to the user's .config directory
+# Make sure the target directory exists
+mkdir -p "${HOME}/.config/"
+
+# Move the entire configs folder from /opt/fastflx1/configs to ~/.config
+for config_folder in /opt/fastflx1/configs/*; do
+    if [ -d "$config_folder" ]; then
+        folder_name=$(basename "$config_folder")
+        mv "$config_folder" "${HOME}/.config/$folder_name"
+        echo "Moved $config_folder to ${HOME}/.config/$folder_name"
+    fi
+done
+
+# Move config folders to the user's .config directory
+# Make sure the target directory exists
+mkdir -p "${HOME}/.local/share"
+
+# Move the entire configs folder from /opt/fastflx1/configs to ~/.config
+for share_folder in /opt/fastflx1/share/*; do
+    if [ -d "$share_folder" ]; then
+        folder_name=$(basename "$share_folder")
+        mv "$share_folder" "${HOME}/.local/share/$folder_name"
+        echo "Moved $share_folder to ${HOME}/.local/share/$folder_name"
+    fi
+done
+
 
 # Create desktop entries
 ln -s "${PWD}/files/fastflx1.desktop" "${HOME}/.local/share/applications/fastflx1.desktop"
