@@ -1,82 +1,82 @@
-#!/bin/bash
-
-# Check if the script is being run as root
+Check if the script is being run as root
 if [ "$(id -u)" -eq 0 ]; then
     echo "Script must not be run as root" >&2
-    exit 1
-fi
+        exit 1
+	fi
 
-echo "FastFLX1 is an easy way to add some cool workarounds and features to your FLX1 device"
+	echo "FastFLX1 is an easy way to add some cool workarounds and features to your FLX1 device"
 
-# Update and upgrade the system
-sudo apt update && sudo apt upgrade -y --allow-downgrades
+	# Update and upgrade the system
+	sudo apt update && sudo apt upgrade -y --allow-downgrades
+	sudo apt update && sudo apt upgrade -y --allow-downgrades
 
-# Install required packages
-sudo apt install -y wtype yad
+	# Install required packages
+	sudo apt install -y wtype yad
 
-# Create necessary directories
-mkdir -p "${HOME}/.config/autostart/" "${HOME}/.local/share/applications/"
-sudo mkdir -p /opt/fastflx1/{scripts,configs,share,files}
+	# Create necessary directories
+	mkdir -p "${HOME}/.config/autostart/" "${HOME}/.local/share/applications/"
+	sudo mkdir -p /opt/fastflx1/{scripts,configs,share,files}
 
-# Create symbolic links for the scripts and directories
-sudo ln -sf "${PWD}" "/opt/fastflx1"
-sudo ln -sf "${PWD}/scripts" "/opt/fastflx1/scripts"
-sudo ln -sf "${PWD}/configs" "/opt/fastflx1/configs"
-sudo ln -sf "${PWD}/share" "/opt/fastflx1/share"
-sudo ln -sf "${PWD}/files" "/opt/fastflx1/files"
-sudo ln -sf "${PWD}/install.sh" "/opt/fastflx1/install.sh"
-sudo ln -sf "${PWD}/uninstall.sh" "/opt/fastflx1/uninstall.sh"
-sudo ln -sf "${PWD}/update.sh" "/opt/fastflx1/update.sh"
-sudo ln -sf "${PWD}/README.md" "/opt/fastflx1/README.md"
+	# Create symbolic links for the scripts and directories
+	sudo ln -sf "${PWD}" "/opt/fastflx1"
+	sudo ln -sf "${PWD}/scripts" "/opt/fastflx1/scripts"
+	sudo ln -sf "${PWD}/configs" "/opt/fastflx1/configs"
+	sudo ln -sf "${PWD}/share" "/opt/fastflx1/share"
+	sudo ln -sf "${PWD}/files" "/opt/fastflx1/files"
+	sudo ln -sf "${PWD}/install.sh" "/opt/fastflx1/install.sh"
+	sudo ln -sf "${PWD}/uninstall.sh" "/opt/fastflx1/uninstall.sh"
+	sudo ln -sf "${PWD}/update.sh" "/opt/fastflx1/update.sh"
+	sudo ln -sf "${PWD}/README.md" "/opt/fastflx1/README.md"
 
-# Ensure the scripts are executable
-chmod +x "${PWD}/uninstall.sh" "${PWD}/update.sh"
+	# Ensure the scripts are executable
+	chmod +x "${PWD}/uninstall.sh" "${PWD}/update.sh"
 
-# Apply chmod +x for all scripts in the "scripts" folder
-for script in "${PWD}/scripts"/*; do
-    [ -f "$script" ] && chmod +x "$script"
-done
+	# Apply chmod +x for all scripts in the "scripts" folder
+	for script in "${PWD}/scripts"/*; do
+	    [ -f "$script" ] && chmod +x "$script"
+	    done
 
-# Apply chmod +x to symlink targets for uninstall/update scripts
-chmod +x "/opt/fastflx1/uninstall.sh" "/opt/fastflx1/update.sh"
+	    # Apply chmod +x to symlink targets for uninstall/update scripts
+	    chmod +x "/opt/fastflx1/uninstall.sh" "/opt/fastflx1/update.sh"
 
-# Apply chmod +x to all symlinked scripts in /opt/fastflx1/scripts
-for script in /opt/fastflx1/scripts/*; do
-    [ -f "$script" ] && chmod +x "$script"
-done
+	    # Apply chmod +x to all symlinked scripts in /opt/fastflx1/scripts
+	    for script in /opt/fastflx1/scripts/*; do
+	        [ -f "$script" ] && chmod +x "$script"
+		done
 
-# Move config folders to the user's .config directory
-for config_folder in /opt/fastflx1/configs/*; do
-    if [ -d "$config_folder" ]; then
-        folder_name=$(basename "$config_folder")
-        mv -f "$config_folder" "${HOME}/.config/$folder_name"
-        echo "Moved $config_folder to ${HOME}/.config/$folder_name"
-    fi
-done
+		# Move config folders to the user's .config directory
+		for config_folder in /opt/fastflx1/configs/*; do
+		    if [ -d "$config_folder" ]; then
+		            folder_name=$(basename "$config_folder")
+			            mv -f "$config_folder" "${HOME}/.config/$folder_name"
+				            echo "Moved $config_folder to ${HOME}/.config/$folder_name"
+					        fi
+						done
 
-# Move share folders to the user's .local/share directory
-for share_folder in /opt/fastflx1/share/*; do
-    if [ -d "$share_folder" ]; then
-        folder_name=$(basename "$share_folder")
-        mv -f "$share_folder" "${HOME}/.local/share/$folder_name"
-        echo "Moved $share_folder to ${HOME}/.local/share/$folder_name"
-    fi
-done
+						# Move share folders to the user's .local/share directory
+						for share_folder in /opt/fastflx1/share/*; do
+						    if [ -d "$share_folder" ]; then
+						            folder_name=$(basename "$share_folder")
+							            mv -f "$share_folder" "${HOME}/.local/share/$folder_name"
+								            echo "Moved $share_folder to ${HOME}/.local/share/$folder_name"
+									        fi
+										done
 
-# Create desktop entries
-ln -sf "${PWD}/files/fastflx1.desktop" "${HOME}/.local/share/applications/fastflx1.desktop"
-ln -sf "${PWD}/files/fastflx1.desktop" "${HOME}/.local/share/applications/yad-icon-browser.desktop"
-ln -sf "${PWD}/configs/alarmvol.desktop" "${HOME}/.config/autostart/alarmvol.desktop"
-ln -sf "${PWD}/configs/dialtone.desktop" "${HOME}/.config/autostart/dialtone.desktop"
+										# Create desktop entries
+										ln -sf "${PWD}/files/fastflx1.desktop" "${HOME}/.local/share/applications/fastflx1.desktop"
+										ln -sf "${PWD}/files/fastflx1.desktop" "${HOME}/.local/share/applications/yad-icon-browser.desktop"
+										ln -sf "${PWD}/configs/alarmvol.desktop" "${HOME}/.config/autostart/alarmvol.desktop"
+										ln -sf "${PWD}/configs/dialtone.desktop" "${HOME}/.config/autostart/dialtone.desktop"
 
-# Add FastFLX1 paths to the system's PATH
-grep -qxF 'export PATH=$PATH:/opt/fastflx1' ~/.bashrc || echo 'export PATH=$PATH:/opt/fastflx1' >> ~/.bashrc
-grep -qxF 'export PATH=$PATH:/opt/fastflx1/scripts' ~/.bashrc || echo 'export PATH=$PATH:/opt/fastflx1/scripts' >> ~/.bashrc
+										# Add FastFLX1 paths to the system's PATH
+										grep -qxF 'export PATH=$PATH:/opt/fastflx1' ~/.bashrc || echo 'export PATH=$PATH:/opt/fastflx1' >> ~/.bashrc
+										grep -qxF 'export PATH=$PATH:/opt/fastflx1/scripts' ~/.bashrc || echo 'export PATH=$PATH:/opt/fastflx1/scripts' >> ~/.bashrc
 
-# Reload bashrc to apply changes
-source ~/.bashrc
+										# Reload bashrc to apply changes
+										source ~/.bashrc
 
-# Set custom sound theme
-gsettings set org.gnome.desktop.sound theme-name __custom
 
-echo "FastFLX1 setup complete"
+										# Set custom sound theme
+										gsettings set org.gnome.desktop.sound theme-name __custom
+
+										echo "FastFLX1 setup complete"
