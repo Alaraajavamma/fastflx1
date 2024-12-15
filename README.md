@@ -15,12 +15,13 @@ Mainly:
 7. If you use finnish layout in squeekboard you will get the ultimate universal layout made by me 
 
 **Default assistant-button options:**
-Unlocked short-press = paste (it will paste the text from clipboard)
-Unlocked double-press = superkey (it will pop up the Phosh app drawer)
-Unlocked long-press = back button
-Locked / on lock screen short-press = toggle the feedback theme (full - silent - quiet)
-Locked / on lock screen double-press = toggle flashlight
-Locked / on lock screen long-press = it will forcefully close all resource intensive apps
+
+- Unlocked short-press = paste (it will paste the text from clipboard)
+- Unlocked double-press = superkey (it will pop up the Phosh app drawer)
+- Unlocked long-press = back button
+- Locked / on lock screen short-press = toggle the feedback theme (full - silent - quiet)
+- Locked / on lock screen double-press = toggle flashlight
+- Locked / on lock screen long-press = it will forcefully close all resource intensive apps
 
 I am working on this slowly and will add more (GUI) features soonish (or remove some parts what Barry and Jesus from Furilabs make unnecessary ;) ). If you wan't to help feel free to send me message, open issue or so. 
 
