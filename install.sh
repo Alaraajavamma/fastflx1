@@ -1,70 +1,46 @@
 #!/bin/bash
 
-# Update and upgrade system packages
-echo "Updating and upgrading system packages..."
-sudo apt update && sudo apt upgrade -y || {
-    echo "Failed to update or upgrade packages. Exiting." >&2
-    exit 1
-}
-
-# Install required packages
-echo "Installing required packages..."
-sudo apt install -y wtype yad || {
-    echo "Failed to install required packages. Exiting." >&2
-    exit 1
-}
-
-# Define base directory and ensure it exists
-BASE_DIR="/home/furios/.git/fastflx1"
-if [ ! -d "$BASE_DIR" ]; then
-    echo "Base directory $BASE_DIR does not exist. Exiting." >&2
+if [ "$(id -u)" -eq 0 ]; then
+    echo "Script must not be ran as root"
     exit 1
 fi
 
-# Copy configuration and share files
-echo "Copying configuration and share files..."
-cp -r "$BASE_DIR/configs/"* /home/furios/.config/ || echo "Failed to copy configuration files."
-cp -r "$BASE_DIR/share/"* /home/furios/.local/share/ || echo "Failed to copy share files."
+sudo apt update
+sudo apt upgrade -y
+sudo apt update
+sudo apt upgrade -y
+sudo apt update
+sudo apt upgrade -y
+sudo apt install -y yad wtype 
 
-# Set permissions for scripts
-echo "Setting executable permissions for scripts..."
-SCRIPTS=(
-    "uninstall.sh"
-    "update.sh"
-    "scripts/*"
-)
-for SCRIPT in "${SCRIPTS[@]}"; do
-    sudo chmod +x "$BASE_DIR/$SCRIPT" || echo "Failed to set permissions for $SCRIPT."
-done
+sudo chmod +x "${HOME}/.git/fastflx1/uninstall.sh"
+sudo chmod +x "${HOME}/.git/fastflx1/update.sh"
 
-# Copy scripts to /usr/bin and set permissions
-echo "Copying scripts to /usr/bin..."
-sudo cp "$BASE_DIR/scripts/"* /usr/bin/ || {
-    echo "Failed to copy scripts to /usr/bin. Exiting." >&2
-    exit 1
-}
-for BIN_SCRIPT in alarmvol dialtone double-press fastflx1 gnome-weather-location long-press short-press squeekboard-scale; do
-    sudo chmod +x "/usr/bin/$BIN_SCRIPT" || echo "Failed to set permissions for /usr/bin/$BIN_SCRIPT."
-done
+sudo cp "${HOME}/.git/fastflx1/scripts/*" "/usr/bin/"
+sudo chmod +x /usr/bin/alarmvol
+sudo chmod +x /usr/bin/dialtone
+sudo chmod +x /usr/bin/double-press
+sudo chmod +x /usr/bin/fastflx1
+sudo chmod +x /usr/bin/gnome-weather-location
+sudo chmod +x /usr/bin/long-press
+sudo chmod +x /usr/bin/short-press
+sudo chmod +x /usr/bin/squeekboard-scale
 
-# Copy desktop entry files
-echo "Copying desktop entry files..."
-cp "$BASE_DIR/files/fastflx1.desktop" /home/furios/.local/share/applications/ || echo "Failed to copy fastflx1.desktop."
-cp "$BASE_DIR/files/yad-icon-browser.desktop" /home/furios/.local/share/applications/ || echo "Failed to copy yad-icon-browser.desktop."
+mkdir -p "${HOME}/.config/assistant-button/"
+cp "${HOME}/.git/fastflx1/configs/assistant-button/*" "${HOME}/.config/assistant-button/"
 
-# Copy autostart configuration
-echo "Copying autostart configuration..."
-cp "$BASE_DIR/configs/alarmvol.desktop" /home/furios/.config/autostart/ || echo "Failed to copy alarmvol.desktop."
-cp "$BASE_DIR/configs/dialtone.desktop" /home/furios/.config/autostart/ || echo "Failed to copy dialtone.desktop."
+mkdir -p "${HOME}/.config/feedbackd/"
+cp "${HOME}/.git/fastflx1/configs/feedbackd/*" "${HOME}/.config/feedbackd/"
 
-# Set GNOME desktop sound theme
-echo "Setting GNOME desktop sound theme..."
-if command -v gsettings >/dev/null 2>&1; then
-    gsettings set org.gnome.desktop.sound theme-name "__custom" || {
-        echo "Failed to set GNOME sound theme."
-    }
-else
-    echo "gsettings not found. Skipping sound theme configuration."
-fi
+mkdir -p "${HOME}/.config/gtk-3.0/"
+cp "${HOME}/.git/fastflx1/configs/gtk-3.0/*" "${HOME}/.config/gtk-3.0/"
 
-echo "Setup completed successfully."
+
+mkdir -p "${HOME}/.local/share/applications/"
+mkdir -p "${HOME}/.config/autostart/"
+cp "${HOME}/.git/fastflx1/files/fastflx1.desktop" "${HOME}/.local/share/applications/"
+cp "${HOME}/.git/fastflx1/files/yad-icon-browser.desktop" "${HOME}/.local/share/applications/"
+cp "${HOME}/.git/fastflx1/configs/autostart/alarmvol.desktop" "${HOME}/.local/share/applications/"
+cp "${HOME}/.git/fastflx1/configs/autostart/dialtone.desktop" "${HOME}/.local/share/applications/"
+
+gsettings set org.gnome.desktop.sound theme-name __custom
