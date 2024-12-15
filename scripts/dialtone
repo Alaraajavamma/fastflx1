@@ -44,9 +44,9 @@ changes() {
         else
             # Vibrate and blink led if call is not yet active
             cd /sys/class/leds/vibrator && echo 50 > duration && echo 1 > activate
-            cd /sys/class/leds/green && echo 12 > brigthness
+            echo 12 > /sys/class/leds/green/brigthness
             sleep 0.5  # Shorter interval for faster vibration response
-            cd /sys/class/leds/green && echo 0 > brigthness
+            echo 0 > /sys/class/leds/green/brigthness
         fi
     done
 
