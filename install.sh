@@ -1,5 +1,5 @@
 #!/bin/bash
-sudo apt install -y yad wtype curl
+sudo apt install -y yad wtype curl wl-clipboard
 
 # Set permissions for uninstall and update scripts
 sudo chmod +x "${HOME}/.git/fastflx1/uninstall.sh" "${HOME}/.git/fastflx1/update.sh"
@@ -43,4 +43,5 @@ cp "${HOME}/.git/fastflx1/configs/autostart/"{alarmvol.desktop,dialtone.desktop}
 
 # Set custom sound theme
 gsettings set org.gnome.desktop.sound theme-name __custom
+
 
