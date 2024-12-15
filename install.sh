@@ -1,10 +1,4 @@
 #!/bin/bash
-
-if [ "$(id -u)" -eq 0 ]; then
-    echo "Script must not be ran as root"
-    exit 1
-fi
-
 sudo apt update
 sudo apt upgrade -y
 sudo apt update
