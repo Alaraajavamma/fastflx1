@@ -1,11 +1,55 @@
 #!/bin/bash
 
 unlocked() {
-    wtype -k Control_L+V
+        wtype -k XF86Back
 }
 
 locked() {
-echo "work in progress"
+
+# List of processes that should not be killed (case insensitive)
+EXCLUDE_PROCESSES=("systemd" "bash" "sshd" "phosh")
+
+# Resource thresholds (customize as needed)
+CPU_THRESHOLD=80  # Percentage
+MEM_THRESHOLD=80  # Percentage
+
+# Function to check if a process is in the exclusion list
+is_excluded() {
+    local process_name=$1
+    for excluded in "${EXCLUDE_PROCESSES[@]}"; do
+        if [[ "${process_name,,}" == "${excluded,,}" ]]; then
+            return 0
+        fi
+    done
+    return 1
+}
+
+# Main function
+check_and_kill() {
+    # Get processes sorted by resource usage
+    # Using `ps` to fetch CPU and memory usage
+    ps -eo pid,comm,%cpu,%mem --sort=-%cpu,-%mem | while read -r pid name cpu mem; do
+        # Skip header line
+        if [[ "$pid" == "PID" ]]; then
+            continue
+        fi
+
+        # Skip excluded processes
+        if is_excluded "$name"; then
+            continue
+        fi
+
+        # Kill process if it exceeds thresholds
+        if (( $(echo "$cpu > $CPU_THRESHOLD" | bc -l) || $(echo "$mem > $MEM_THRESHOLD" | bc -l) )); then
+            echo "Killing process $name (PID: $pid, CPU: $cpu%, MEM: $mem%)"
+            kill -9 "$pid" || echo "Failed to kill $name (PID: $pid)"
+        fi
+    done
+}
+
+# Run the main function
+check_and_kill
+	
 }
 
 
