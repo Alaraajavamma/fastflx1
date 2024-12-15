@@ -44,21 +44,6 @@ cp "${HOME}/.git/fastflx1/configs/autostart/"{alarmvol.desktop,dialtone.desktop}
 # Set custom sound theme
 gsettings set org.gnome.desktop.sound theme-name __custom
 
+sudo usermod -aG system furios
 
-# Define the rule file location
-RULE_FILE="/etc/udev/rules.d/99-leds.rules"
-
-# Check if the rule file already exists
-if [[ ! -f "$RULE_FILE" ]]; then
-    # Create the udev rule to set permissions for the brightness file
-    # Create the udev rule file
-	echo 'SUBSYSTEM=="leds", KERNEL=="green", MODE="0666"' | sudo tee /etc/udev/rules.d/99-leds.rules > /dev/null
-
-    echo "Udev rule created at $RULE_FILE"
-else
-    echo "Udev rule already exists at $RULE_FILE"
-fi
-
-# Reload the udev rules to apply the new permission
-sudo udevadm control --reload
-echo "Udev rules reloaded."
+sudo reboot
