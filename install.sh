@@ -39,7 +39,7 @@ app_dir="${HOME}/.local/share/applications"
 autostart_dir="${HOME}/.config/autostart"
 mkdir -p "${app_dir}" "${autostart_dir}"
 cp "${HOME}/.git/fastflx1/files/"{fastflx1.desktop,yad-icon-browser.desktop} "${app_dir}/"
-cp "${HOME}/.git/fastflx1/configs/autostart/"{alarmvol.desktop,dialtone.desktop} "${app_dir}/"
+cp "${HOME}/.git/fastflx1/configs/autostart/"{alarmvol.desktop,dialtone.desktop} "${autostart_dir}/"
 
 # Set custom sound theme
 gsettings set org.gnome.desktop.sound theme-name __custom
