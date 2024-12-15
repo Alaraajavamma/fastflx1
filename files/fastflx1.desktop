@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=Update-FastFLX1
 Exec=bash -c 'fastflx1'
-Terminal=true
-Icon=/opt/fastflx1/files/fastflx1.svg
+Terminal=false
+Icon=/home/furios/.git/fastflx1/files/fastflx1.svg
 Type=Application
