@@ -1,7 +1,9 @@
 # FastFLX1 - some tweaks for best linux phone in the market
 
 This simple tool adds some small tweaks to your FLX1. 
-**Notice: If you have done some own tweaks to your ~. files it might be good idea to make backup because this setup will override some of them. ** 
+**Notice: If you have done some own tweaks to your ~. files it might be good idea to make backup because this setup will override some of them.**
+
+Update or remove this via desktop actions - aka. long press from the desktop icon
 
 Mainly: 
 1. Alarm volume script which will ensure that your alarm clock will allways play with full sound - and GUI interface to restart this service script if it fails
