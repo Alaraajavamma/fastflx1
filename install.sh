@@ -37,17 +37,15 @@ echo "FastFLX1 is an easy way to add some cool workarounds and features to your 
 	sudo chmod + x "/opt/fastflx1/scripts/alarmvol" "/opt/fastflx1/scripts/dialtone" "/opt/fastflx1/scripts/double-press" "/opt/fastflx1/scripts/fastflx1" "/opt/fastflx1/scripts/gnome-weather-location" "/opt/fastflx1/scripts/long-press" "/opt/fastflx1/scripts/short-press" "/opt/fastflx1/scripts/squeekboard-scale" 
 
 	# Move config folders to the user's .config directory
-	cp -r ${PWD}/configs/assistant-button ${HOME}/.config/
-	cp -r ${PWD}/configs/autostart ${HOME}/.config/
-	cp -r ${PWD}/configs/feedbackd-button ${HOME}/.config/
-	cp -r ${PWD}/configs/gtk-3.0-button ${HOME}/.config/
+	cp -r ${PWD}/configs/assistant-button/* ${HOME}/.config/assistant-button/
+	cp -r ${PWD}/configs/autostart/* ${HOME}/.config/autostart/
+	cp -r ${PWD}/configs/feedbackd-button/* ${HOME}/.config/feedbackd-button/
+	cp -r ${PWD}/configs/gtk-3.0-button/* ${HOME}/.config/gtk-3.0-button/
+
 	# Move local folders to the local directory
-	cp -r ${PWD}/share/keyboards ${HOME}/.local/share/
-	cp -r ${PWD}/share/sounds ${HOME}/.local/share/
-
-
-
-
+	cp -r ${PWD}/share/keyboards/* ${HOME}/.local/share/keyboards/
+	cp -r ${PWD}/share/sounds* ${HOME}/.local/share/sounds/
+	
 		# Create desktop entries
 		ln -sf "${PWD}/files/fastflx1.desktop" "${HOME}/.local/share/applications/fastflx1.desktop"
 		ln -sf "${PWD}/files/yad-icon-browser.desktop" "${HOME}/.local/share/applications/yad-icon-browser.desktop"
