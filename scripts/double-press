@@ -1,7 +1,7 @@
 #!/bin/bash
 
 unlocked() {
-    wtype -k Control_L+C
+    wtype -k Super_L
 }
 
 # Function to toggle the flashlight
