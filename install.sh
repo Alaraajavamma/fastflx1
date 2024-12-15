@@ -44,6 +44,35 @@ cp "${HOME}/.git/fastflx1/configs/autostart/"{alarmvol.desktop,dialtone.desktop}
 # Set custom sound theme
 gsettings set org.gnome.desktop.sound theme-name __custom
 
+# Define the udev rule
+RULE="SUBSYSTEM==\"leds\", KERNEL==\"green:brightness\", MODE=\"0660\""
+
+# Define the udev rules file
+RULE_FILE="/etc/udev/rules.d/99-led-brightness.rules"
+
+# Check if the rule file already exists
+if [ ! -f "$RULE_FILE" ]; then
+    echo "Creating udev rule file: $RULE_FILE"
+    sudo touch "$RULE_FILE"  # Create the rule file if it doesn't exist
+fi
+
+# Add the rule to the file if it's not already present
+if ! grep -Fxq "$RULE" "$RULE_FILE"; then
+    echo "Adding udev rule to $RULE_FILE"
+    echo "$RULE" | sudo tee -a "$RULE_FILE" > /dev/null  # Append the rule to the file
+else
+    echo "Udev rule already exists in $RULE_FILE"
+fi
+
+# Reload udev to apply the changes
+echo "Reloading udev rules"
+sudo udevadm control --reload-rules
+
+# Optionally trigger the udev event to apply immediately
+sudo udevadm trigger
+
+echo "Udev rule added and reloaded successfully."
+
 sudo usermod -aG system furios
 
 sudo reboot
