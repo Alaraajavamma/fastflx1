@@ -2,7 +2,7 @@
 sudo apt update && sudo apt upgrade -y
 sudo apt update && sudo apt upgrade -y
 sudo apt update && sudo apt upgrade -y
-sudo apt instal ĺ -y wtype yad
+sudo apt instalĺ -y wtype yad
 cp -r /home/furios/.git/fastflx1/configs/* /home/furios/.config/
 cp -r /home/furios/.git/fastflx1/share/* /home/furios/.local/share/
 sudo chmod +x /home/furios/.git/fastflx1/uninstall.sh
