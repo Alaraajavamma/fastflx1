@@ -1,68 +1,62 @@
 #!/bin/bash
-sudo apt update
-sudo apt upgrade -y
-sudo apt update
-sudo apt upgrade -y
-sudo apt update
-sudo apt upgrade -y
 sudo apt install -y yad wtype 
 
-sudo chmod +x "${HOME}/.git/fastflx1/uninstall.sh"
-sudo chmod +x "${HOME}/.git/fastflx1/update.sh"
+# Set permissions for uninstall and update scripts
+sudo chmod +x "${HOME}/.git/fastflx1/uninstall.sh" "${HOME}/.git/fastflx1/update.sh"
 
-sudo cp "${HOME}/.git/fastflx1/scripts/alarmvol" /usr/bin/
-sudo cp "${HOME}/.git/fastflx1/scripts/dialtone" /usr/bin/
-sudo cp "${HOME}/.git/fastflx1/scripts/double-press" /usr/bin/
-sudo cp "${HOME}/.git/fastflx1/scripts/fastflx1" /usr/bin/
-sudo cp "${HOME}/.git/fastflx1/scripts/gnome-weather-location" /usr/bin/
-sudo cp "${HOME}/.git/fastflx1/scripts/long-press" /usr/bin/
-sudo cp "${HOME}/.git/fastflx1/scripts/short-press" /usr/bin/
-sudo cp "${HOME}/.git/fastflx1/scripts/squeekboard-scale" /usr/bin/
-sudo chmod +x /usr/bin/alarmvol
-sudo chmod +x /usr/bin/dialtone
-sudo chmod +x /usr/bin/double-press
-sudo chmod +x /usr/bin/fastflx1
-sudo chmod +x /usr/bin/gnome-weather-location
-sudo chmod +x /usr/bin/long-press
-sudo chmod +x /usr/bin/short-press
-sudo chmod +x /usr/bin/squeekboard-scale
+# Copy scripts to /usr/bin and set permissions
+for script in alarmvol dialtone double-press fastflx1 gnome-weather-location long-press short-press squeekboard-scale; do
+    sudo cp "${HOME}/.git/fastflx1/scripts/${script}" "/usr/bin/"
+    sudo chmod +x "/usr/bin/${script}"
+done
 
-mkdir -p "${HOME}/.config/assistant-button/"
-cp "${HOME}/.git/fastflx1/configs/assistant-button/short_press" "${HOME}/.config/assistant-button/"
-cp "${HOME}/.git/fastflx1/configs/assistant-button/double_press" "${HOME}/.config/assistant-button/"
-cp "${HOME}/.git/fastflx1/configs/assistant-button/long_press" "${HOME}/.config/assistant-button/"
+# Create necessary config directories and copy files
+mkdir -p "${HOME}/.config/assistant-button"
+cp "${HOME}/.git/fastflx1/configs/assistant-button/"{short_press,double_press,long_press} "${HOME}/.config/assistant-button/"
 
 mkdir -p "${HOME}/.config/feedbackd/themes"
 cp "${HOME}/.git/fastflx1/configs/feedbackd/themes/default.json" "${HOME}/.config/feedbackd/themes"
 
-mkdir -p "${HOME}/.config/gtk-3.0/"
+mkdir -p "${HOME}/.config/gtk-3.0"
 cp "${HOME}/.git/fastflx1/configs/gtk-3.0/gtk.css" "${HOME}/.config/gtk-3.0/"
 
-mkdir -p "${HOME}/.local/share/squeekboard/keyboards"
-mkdir -p "${HOME}/.local/share/squeekboard/keyboards/email"
-mkdir -p "${HOME}/.local/share/squeekboard/keyboards/emoji"
-mkdir -p "${HOME}/.local/share/squeekboard/keyboards/number"
-mkdir -p "${HOME}/.local/share/squeekboard/keyboards/pin"
-mkdir -p "${HOME}/.local/share/squeekboard/keyboards/terminal"
-mkdir -p "${HOME}/.local/share/squeekboard/keyboards/url"
-cp "${HOME}/.git/fastflx1/share/fi.yaml" "${HOME}/.local/share/squeekboard/keyboards"
-cp "${HOME}/.git/fastflx1/share/fi.yaml" "${HOME}/.local/share/squeekboard/keyboards/email"
-cp "${HOME}/.git/fastflx1/share/fi.yaml" "${HOME}/.local/share/squeekboard/keyboards/emoji"
-cp "${HOME}/.git/fastflx1/share/fi.yaml" "${HOME}/.local/share/squeekboard/keyboards/number"
-cp "${HOME}/.git/fastflx1/share/fi.yaml" "${HOME}/.local/share/squeekboard/keyboards/pin"
-cp "${HOME}/.git/fastflx1/share/fi.yaml" "${HOME}/.local/share/squeekboard/keyboards/terminal"
-cp "${HOME}/.git/fastflx1/share/fi.yaml" "${HOME}/.local/share/squeekboard/keyboards/url"
+# Handle squeekboard keyboards
+keyboard_dir="${HOME}/.local/share/squeekboard/keyboards"
+mkdir -p "${keyboard_dir}" # Base directory
+for subdir in email emoji number pin terminal url; do
+    mkdir -p "${keyboard_dir}/${subdir}"
+    cp "${HOME}/.git/fastflx1/share/fi.yaml" "${keyboard_dir}/${subdir}/"
+done
+cp "${HOME}/.git/fastflx1/share/fi.yaml" "${keyboard_dir}/"
 
-mkdir -p "${HOME}/.local/share/sounds/__custom"
-cp "${HOME}/.git/fastflx1/share/alarm-clock-elapsed.oga" "${HOME}/.local/share/sounds/__custom"
-cp "${HOME}/.git/fastflx1/share/audio-volume-change.oga" "${HOME}/.local/share/sounds/__custom"
+# Custom sounds directory
+sound_dir="${HOME}/.local/share/sounds/__custom"
+mkdir -p "${sound_dir}"
+cp "${HOME}/.git/fastflx1/share/"{alarm-clock-elapsed.oga,audio-volume-change.oga} "${sound_dir}/"
 
+# Applications and autostart files
+app_dir="${HOME}/.local/share/applications"
+autostart_dir="${HOME}/.config/autostart"
+mkdir -p "${app_dir}" "${autostart_dir}"
+cp "${HOME}/.git/fastflx1/files/"{fastflx1.desktop,yad-icon-browser.desktop} "${app_dir}/"
+cp "${HOME}/.git/fastflx1/configs/autostart/"{alarmvol.desktop,dialtone.desktop} "${autostart_dir}/"
+cp "${HOME}/.git/fastflx1/configs/autostart/"{alarmvol.desktop,dialtone.desktop} "${app_dir}/"
 
-mkdir -p "${HOME}/.local/share/applications/"
-mkdir -p "${HOME}/.config/autostart/"
-cp "${HOME}/.git/fastflx1/files/fastflx1.desktop" "${HOME}/.local/share/applications/"
-cp "${HOME}/.git/fastflx1/files/yad-icon-browser.desktop" "${HOME}/.local/share/applications/"
-cp "${HOME}/.git/fastflx1/configs/autostart/alarmvol.desktop" "${HOME}/.local/share/applications/"
-cp "${HOME}/.git/fastflx1/configs/autostart/dialtone.desktop" "${HOME}/.local/share/applications/"
-
+# Set custom sound theme
 gsettings set org.gnome.desktop.sound theme-name __custom
+
+# Define the rule file location
+RULE_FILE="/etc/udev/rules.d/99-leds.rules"
+
+# Check if the rule file already exists
+if [[ ! -f "$RULE_FILE" ]]; then
+    # Create the udev rule to set permissions for the brightness file
+    echo 'KERNEL=="leds/green/brightness", MODE="0666"' | sudo tee "$RULE_FILE" > /dev/null
+    echo "Udev rule created at $RULE_FILE"
+else
+    echo "Udev rule already exists at $RULE_FILE"
+fi
+
+# Reload the udev rules to apply the new permission
+sudo udevadm control --reload
+echo "Udev rules reloaded."
