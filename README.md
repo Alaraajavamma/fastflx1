@@ -14,7 +14,7 @@ Mainly:
 6. Disable annoying volume change sound (blop - blop when change volume) - for this you need also change once some default notification sound from phosh-mobile-settings - feedback (no idea why but it somehow activates the __custom sound theme which is kind of needed to make this work)
 7. If you use finnish layout in squeekboard you will get the ultimate universal layout made by me 
 
-**Default assistant-button options: **
+**Default assistant-button options:**
 Unlocked short-press = paste (it will paste the text from clipboard)
 Unlocked double-press = superkey (it will pop up the Phosh app drawer)
 Unlocked long-press = back button
