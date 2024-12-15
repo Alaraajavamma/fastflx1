@@ -11,7 +11,7 @@ Mainly:
 3. Simple GUI interface for changing from staging to prod or via versa - or upgrade your system trough terminal 
 4. GUI interface for changing Squeekboard layout 
 5. Asisstant-button tweaks which are partially work-in-proggress but it shows proof-of-concept how to make assintant-button behave differentially based on certain conditions (locked / unlocked currently) 
-6. Disable annoying volume change sound (blop - blop when change volume)
+6. Disable annoying volume change sound (blop - blop when change volume) - for this you need also change once some default notification sound from phosh-mobile-settings - feedback (no idea why but it somehow activates the __custom sound theme which is kind of needed to make this work)
 7. If you use finnish layout in squeekboard you will get the ultimate universal layout made by me 
 
 I am working on this slowly and will add more (GUI) features soonish (or remove some parts what Barry and Jesus from Furilabs make unnecessary ;) ). If you wan't to help feel free to send me message, open issue or so. 
