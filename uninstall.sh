@@ -15,7 +15,7 @@ sudo rm /usr/bin/gnome-weather-location
 sudo rm /usr/bin/long-press
 sudo rm /usr/bin/short-press
 sudo rm /usr/bin/squeekboard-scale
-sudo apt remove yad
+sudo apt remove yad wl-clipboard
 gsettings set org.gnome.desktop.sound theme-name default
 cd ~ && rm -rf .git/fastflx1
 sudo rm -rf /opt/fastflx1
