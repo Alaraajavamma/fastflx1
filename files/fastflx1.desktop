@@ -3,4 +3,15 @@ Name=FastFLX1
 Exec=bash -c 'fastflx1'
 Terminal=false
 Icon=/home/furios/.git/fastflx1/files/fastflx1.svg
+Actions=update;remove;
 Type=Application
+
+[Desktop Action update]
+Name=Update FastFLX1
+Exec=kgx -- bash -c 'cd ~ && cd .git && cd fastflx1 && ./update.sh'
+Terminal=true
+
+[Desktop Action remove]
+Name=Remove FastFLX1
+Exec=kgx -- bash -c 'cd ~ && cd .git && cd fastflx1 && ./uninstall.sh'
+Terminal=true
