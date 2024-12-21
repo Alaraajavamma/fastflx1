@@ -7,9 +7,11 @@ yad --name="fastflx1" \
     --form \
     --field="Go to staging":fbtn "kgx -- bash -c 'sudo apt install furios-apt-config-staging furios-apt-config-debian-staging -y && sudo apt update && sudo apt install furios-apt-krypton-staging -y && sudo apt update && sudo apt upgrade -y --allow-downgrades && sudo apt update && sudo apt upgrade -y --allow-downgrades'" \
     --field="Go to production":fbtn "kgx -- bash -c 'sudo apt remove furios-apt-config-staging furios-apt-config-debian-staging furios-apt-config-krypton-staging -y && sudo apt update && sudo apt upgrade -y --allow-downgrades && sudo apt update && sudo apt upgrade -y --allow-downgrades'" \
+    --field="Install/remove Branchy app":fbtn "kgx -e 'bash -c \"if dpkg -l | grep -q furios-app-branchy; then sudo apt remove -y furios-app-branchy; else sudo apt install -y furios-app-branchy; fi\"'" \
     --field="Upgrade FuriOS":fbtn "kgx -- bash -c 'sudo apt update && sudo apt upgrade -y --allow-downgrades && sudo apt update && sudo apt upgrade -y --allow-downgrades'" \
     --field="Set city to Weather":fbtn "kgx -- bash -c 'gnome-weather-location'" \
     --field="Restart Tweak services":fbtn "bash -c 'pkill -f alarmvol && pkill -f dialtone & dialtone & alarmvol'" \
     --field="Change Squeekboard scale":fbtn "bash -c 'squeekboard-scale'" \
     --buttons-layout=center \
     --button="Quit"\
+
