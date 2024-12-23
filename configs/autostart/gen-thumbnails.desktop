@@ -1,0 +1,8 @@
+[Desktop Entry]
+Version=0.1
+Name=Gen-Thumbnails
+Comment=Generate thumbnails for Nautilus and filepicker
+Exec=bash -c 'gen-thumbnails'
+Icon=org.gnome.Terminal
+Terminal=false
+Type=Application
