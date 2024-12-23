@@ -12,6 +12,7 @@ rm -rf ~/.local/share/squeekboard
 sudo rm /usr/bin/alarmvol
 sudo rm /usr/bin/dialtone
 sudo rm /usr/bin/double-press
+sudo rm /usr/bin/gen-thumbnails
 sudo rm /usr/bin/fastflx1
 sudo rm /usr/bin/gnome-weather-location
 sudo rm /usr/bin/long-press
