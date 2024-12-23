@@ -5,7 +5,7 @@ sudo apt install -y yad wtype curl wl-clipboard inotify-tools imagemagick
 sudo chmod +x "${HOME}/.git/fastflx1/uninstall.sh" "${HOME}/.git/fastflx1/update.sh"
 
 # Copy scripts to /usr/bin and set permissions
-for script in alarmvol dialtone double-press fastflx1 gnome-weather-location long-press short-press squeekboard-scale; do
+for script in alarmvol dialtone double-press fastflx1 gnome-weather-location long-press short-press squeekboard-scale gen-thumbnails; do
     sudo cp "${HOME}/.git/fastflx1/scripts/${script}" "/usr/bin/"
     sudo chmod +x "/usr/bin/${script}"
 done
