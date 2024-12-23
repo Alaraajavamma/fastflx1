@@ -8,11 +8,12 @@ Update or remove this via desktop actions - aka. long press from the desktop ico
 Mainly: 
 1. Alarm volume script which will ensure that your alarm clock will allways play with full sound - and GUI interface to restart this service script if it fails
 2. Dialtone script which will make your phone vibrate and blink led in interval when you are calling out (most carriers does not generate dialtone sound in VoLTE so this kind of replaces it) - and GUI interface to restart this service script if it fails
-3. Simple GUI interface for changing from staging to prod or via versa - or upgrade your system trough terminal 
+3. Simple GUI interface for changing from staging to prod or via versa - or upgrade your system trough terminal - or install/uninstall experimental Branchy app
 4. GUI interface for changing Squeekboard (the virtual keyboard) scaling 
 5. Asisstant-button tweaks which are partially work-in-proggress but it shows proof-of-concept how to make assintant-button behave differentially based on certain conditions (locked / unlocked currently) 
 6. Disable annoying volume change sound (blop - blop when change volume) - for this you need also change once some default notification sound from phosh-mobile-settings - feedback (no idea why but it somehow activates the __custom sound theme which is kind of needed to make this work)
-7. If you use finnish layout in squeekboard you will get the ultimate universal layout made by me 
+7. If you use finnish layout in squeekboard you will get the ultimate universal layout made by me
+8. Provide thumbnails (image preview) for all images which are located in home folder but not in hidden folders. Now you can see what file you are choosing when you use file picker - or when you browse your files trough Nautilus. This is build as service which will also monitor new images, name changes, moved images etc. And GUI interface to restart this service script if it fails
 
 **Default assistant-button options:**
 
