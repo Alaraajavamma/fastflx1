@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# Set the input device for lisgd
+export LISGD_INPUT_DEVICE="/dev/input/event2"
+
+#First lisgd instance
+lisgd -d "$LISGD_INPUT_DEVICE" \
+        `#Short swipe from right to left on the bottom`\
+        -g "1,RL,B,*,R,setsid -f wtype -M alt -P tab -m alt -p tab" \
+        `#Short swipe from left to right on bottom`\
+        -g "1,LR,B,*,R,setsid -f wtype -M alt -M shift -P tab -m alt -m shift -p tab" \
+        `#Three finger swipe from up to down starting from top`\
+        -g "3,UD,T,*,R,setsid -f wtype -M alt -P F4 -m alt -p F4" \
+        `#Two finger swipe from up to down starting from top`\
+        -g "2,UD,T,*,R,setsid -f wtype -M ctrl -P a -m ctrl -p a" \
