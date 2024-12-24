@@ -44,7 +44,7 @@ cp "${HOME}/.git/fastflx1/configs/autostart/"{alarmvol.desktop,dialtone.desktop,
 # Set custom sound theme
 gsettings set org.gnome.desktop.sound theme-name __custom
 
-echo -n "Do you want to reboot the system? Type 'Yes' to confirm: "
+echo -n "To start FastFLX1 we need to reboot. Reboot now? Type 'Yes' to confirm: "
 read answer
 if [ "$answer" == "Yes" ]; then
     echo "Rebooting the system..."
