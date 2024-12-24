@@ -10,6 +10,7 @@ rm ~/.config/gtk-3.0/gtk.css
 rm -rf ~/.config/feedbackd
 rm -rf ~/.config/assistant-button
 rm -rf ~/.local/share/squeekboard
+rm -rf ~/.local/share/sounds
 sudo rm /usr/bin/alarmvol
 sudo rm /usr/bin/dialtone
 sudo rm /usr/bin/double-press
