@@ -1,11 +1,11 @@
 #!/bin/bash
-sudo apt install -y yad wtype curl wl-clipboard inotify-tools imagemagick
+sudo apt install -y yad wtype curl wl-clipboard inotify-tools imagemagick lisgd
 
 # Set permissions for uninstall and update scripts
 sudo chmod +x "${HOME}/.git/fastflx1/uninstall.sh" "${HOME}/.git/fastflx1/update.sh"
 
 # Copy scripts to /usr/bin and set permissions
-for script in alarmvol dialtone double-press fastflx1 gnome-weather-location long-press short-press squeekboard-scale gen-thumbnails; do
+for script in alarmvol dialtone double-press fastflx1 gnome-weather-location long-press short-press squeekboard-scale gen-thumbnails gesture-shortcuts; do
     sudo cp "${HOME}/.git/fastflx1/scripts/${script}" "/usr/bin/"
     sudo chmod +x "/usr/bin/${script}"
 done
@@ -39,7 +39,7 @@ app_dir="${HOME}/.local/share/applications"
 autostart_dir="${HOME}/.config/autostart"
 mkdir -p "${app_dir}" "${autostart_dir}"
 cp "${HOME}/.git/fastflx1/files/"{fastflx1.desktop,yad-icon-browser.desktop,display-im6.q16.desktop} "${app_dir}/"
-cp "${HOME}/.git/fastflx1/configs/autostart/"{alarmvol.desktop,dialtone.desktop,gen-thumbnails.desktop} "${autostart_dir}/"
+cp "${HOME}/.git/fastflx1/configs/autostart/"{alarmvol.desktop,dialtone.desktop,gen-thumbnails.desktop,gesture-shortcuts.desktop} "${autostart_dir}/"
 
 # Set custom sound theme
 gsettings set org.gnome.desktop.sound theme-name __custom
