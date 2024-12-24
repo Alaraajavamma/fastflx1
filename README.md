@@ -1,7 +1,7 @@
 # FastFLX1 - some tweaks for best linux phone in the market
 
 This simple tool adds some small tweaks to your FLX1. 
-**Notice: If you have done some own tweaks to your ~. files it might be good idea to make backup because this setup will override some of them.**
+**Notice: If you have done some own tweaks to your ~. files it might be good idea to make backup because this setup will override some of them. This includes also changes what are done via GUI but actually happens in ~. files like changing ringtone from Phosh-mobile-settings**
 
 Update or remove this via desktop actions - aka. long press from the desktop icon
 
@@ -34,6 +34,8 @@ Notice that swipe gestures works ootb like this when FLX1 is in default portrait
 
 I am working on this slowly and will add more (GUI) features soonish (or remove some parts what Barry and Jesus from Furilabs make unnecessary ;) ). If you wan't to help feel free to send me message, open issue or so. 
 
+![Swipe gestures](gestures.png)
+
 ![FastFLX1 in action](fastflxsc.png)
 
 ## How to install?
@@ -43,7 +45,7 @@ I am working on this slowly and will add more (GUI) features soonish (or remove 
 And it should just work
 
 Remove?
-
+Long press desktop icon and it will give you option to Uninstall. Or you can: 
 `cd ~ && cd .git && cd fastflx1 && ./uninstall.sh`
 
 
