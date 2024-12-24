@@ -1,7 +1,8 @@
 #!/bin/bash
 
 unlocked() {
-    wtype -k Super_L
+    clipboard_content=$(wl-paste)
+ 	wtype "$clipboard_content"
 }
 
 # Function to toggle the flashlight
