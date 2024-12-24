@@ -32,7 +32,7 @@ cp "${HOME}/.git/fastflx1/share/fi.yaml" "${keyboard_dir}/"
 # Custom sounds directory
 sound_dir="${HOME}/.local/share/sounds/__custom"
 mkdir -p "${sound_dir}"
-cp "${HOME}/.git/fastflx1/share/"{alarm-clock-elapsed.oga,audio-volume-change.oga} "${sound_dir}/"
+cp "${HOME}/.git/fastflx1/share/"{alarm-clock-elapsed.oga,audio-volume-change.oga,index.theme} "${sound_dir}/"
 
 # Applications and autostart files
 app_dir="${HOME}/.local/share/applications"
