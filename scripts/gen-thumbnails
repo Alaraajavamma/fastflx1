@@ -34,11 +34,13 @@ generate_thumbnail() {
                 local DIR=$(dirname "$IMAGE")
                 local BASENAME=$(basename "$IMAGE")
 
-                # Avoid appending `_tnfix` multiple times
-                if [[ "$BASENAME" != *_tnfix.* ]]; then
-                    local ERROR_FILE="${DIR}/${BASENAME%.*}_tnfix.${BASENAME##*.}"
+                # Toggle suffix between _tnfix and _tnf to ensure the name changes
+                if [[ "$BASENAME" == *_tnfix.* ]]; then
+                    local ERROR_FILE="${DIR}/${BASENAME%_tnfix.*}_tnf.${BASENAME##*.}"
+                elif [[ "$BASENAME" == *_tnf.* ]]; then
+                    local ERROR_FILE="${DIR}/${BASENAME%_tnf.*}_tnfix.${BASENAME##*.}"
                 else
-                    local ERROR_FILE="$IMAGE"  # Already has `_tnfix`, keep the same name
+                    local ERROR_FILE="${DIR}/${BASENAME%.*}_tnfix.${BASENAME##*.}"
                 fi
 
                 mv "$IMAGE" "$ERROR_FILE"
@@ -53,11 +55,13 @@ generate_thumbnail() {
                 local DIR=$(dirname "$IMAGE")
                 local BASENAME=$(basename "$IMAGE")
 
-                # Avoid appending `_tnfix` multiple times
-                if [[ "$BASENAME" != *_tnfix.* ]]; then
-                    local ERROR_FILE="${DIR}/${BASENAME%.*}_tnfix.${BASENAME##*.}"
+                # Toggle suffix between _tnfix and _tnf to ensure the name changes
+                if [[ "$BASENAME" == *_tnfix.* ]]; then
+                    local ERROR_FILE="${DIR}/${BASENAME%_tnfix.*}_tnf.${BASENAME##*.}"
+                elif [[ "$BASENAME" == *_tnf.* ]]; then
+                    local ERROR_FILE="${DIR}/${BASENAME%_tnf.*}_tnfix.${BASENAME##*.}"
                 else
-                    local ERROR_FILE="$IMAGE"  # Already has `_tnfix`, keep the same name
+                    local ERROR_FILE="${DIR}/${BASENAME%.*}_tnfix.${BASENAME##*.}"
                 fi
 
                 mv "$IMAGE" "$ERROR_FILE"
