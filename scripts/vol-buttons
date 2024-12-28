@@ -19,7 +19,7 @@ handle_command() {
   if [[ "$count" -eq 1 && "$direction" == "up" ]]; then
     # One down + one up = screenshot
     cd /sys/class/leds/vibrator && echo 100 > duration && echo 1 > activate
-    sleep 2
+    sleep 3
 
     SCREENSHOT_PATH="$(xdg-user-dir PICTURES)/Screenshot-$(date +%F-%T).png"
     gdbus call --session --dest org.gnome.Shell.Screenshot \
