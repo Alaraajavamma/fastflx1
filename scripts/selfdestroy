@@ -16,7 +16,7 @@ waiting_for_down=0
 
 # Function to handle long press sequence success
 handle_success() {
-  pkexec rm -rf /home/furios/ && systemctl poweroff
+ pkexec bash -c "rm -rf /home/furios/ && systemctl poweroff"
 }
 
 # Monitor the event file
