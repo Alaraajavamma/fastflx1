@@ -19,8 +19,8 @@ Mainly:
 
 **Default assistant-button options:**
 
-- Unlocked short-press = copy (it will copy highlighted text)
-- Unlocked double-press = paste (it will paste highlighted text)
+- Unlocked short-press = opens clipboard shortcuts (copy, paste, cut, terminal paste, and ctrl+a + copy)
+- Unlocked double-press = opens display scaling shortcuts (300%, 250%, 200%, 150% or 100%)
 - Unlocked long-press = back button
 - Locked / on lock screen short-press = toggle the feedback theme (full - silent - quiet)
 - Locked / on lock screen double-press = toggle flashlight
@@ -29,10 +29,10 @@ Mainly:
 **Default volume-buttons options:**
 
 - They will change volume so that does not change
-- Short presses - first VolUp and right after VolDown = it will paste clipboard content using wl-paste
+- Short presses - first VolUp and right after VolDown = it will take picture with backcamera
 - Short presses - first VolDown and right after VolUp = it will take screenshot and save it to Pictures folder
-- Short presses - first two times VolUp and right after two times VolDown = if display scale is less than 300% it will scale it up in 50% steps (100-150-200-250-300)
-- Short presses - first two times VolDown and right after two times VolUp = if display scale is more than 100% it will scale it down in 50% steps (300-250-200-150-100)
+- Short presses - first two times VolUp and right after two times VolDown = does is nothing currently (ideas are welcome)
+- Short presses - first two times VolDown and right after two times VolUp = does nothing currently (ideas are welcome)
 
 **Default swipe gestures:**
 Notice that swipe gestures works ootb like this when FLX1 is in default portrait mode
