@@ -17,13 +17,18 @@ handle_command() {
   local direction=$2
 
   if [[ "$count" -eq 1 && "$direction" == "up" ]]; then
+  cd /sys/class/leds/vibrator && echo 100 > duration && echo 1 > activate
     #One down + one up = screenshot
     gdbus call --session --dest org.gnome.Shell.Screenshot --object-path /org/gnome/Shell/Screenshot --method org.gnome.Shell.Screenshot.Screenshot true false "$(xdg-user-dir PICTURES)/Screenshot-$(date +%F-%T).png" &
   elif [[ "$count" -eq 1 && "$direction" == "down" ]]; then
+  cd /sys/class/leds/vibrator && echo 200 > duration && echo 1 > activate
   #One up + one down = paste
     clipboard_content=$(wl-paste)
  	wtype "$clipboard_content" &
   elif [[ "$count" -eq 2 && "$direction" == "up" ]]; then
+  cd /sys/class/leds/vibrator && echo 100 > duration && echo 1 > activate
+  cd /sys/class/leds/vibrator && echo 200 > duration && echo 1 > activate
+
     #Two down + two up = drop display scale in 50% steps
 # Get the current display scale
 current_scale=$(wlr-randr --output HWCOMPOSER-1 | grep -oP 'Scale: \d+\.\d+' | awk '{print $2}')
@@ -48,6 +53,11 @@ output="HWCOMPOSER-1"
 wlr-randr --output "$output" --scale "$new_scale"
 
   elif [[ "$count" -eq 2 && "$direction" == "down" ]]; then
+  cd /sys/class/leds/vibrator && echo 200 > duration && echo 1 > activate
+  cd /sys/class/leds/vibrator && echo 100 > duration && echo 1 > activate
+
+  
+
     #Two up + two down raise the display scale in 50% steps
     # Get the current display scale
 current_scale=$(wlr-randr --output HWCOMPOSER-1 | grep -oP 'Scale: \d+\.\d+' | awk '{print $2}')
