@@ -17,70 +17,58 @@ handle_command() {
   local direction=$2
 
   if [[ "$count" -eq 1 && "$direction" == "up" ]]; then
-  cd /sys/class/leds/vibrator && echo 100 > duration && echo 1 > activate
-    #One down + one up = screenshot
-    gdbus call --session --dest org.gnome.Shell.Screenshot --object-path /org/gnome/Shell/Screenshot --method org.gnome.Shell.Screenshot.Screenshot true false "$(xdg-user-dir PICTURES)/Screenshot-$(date +%F-%T).png" &
+    # One down + one up = screenshot
+    cd /sys/class/leds/vibrator && echo 100 > duration && echo 1 > activate
+
+    SCREENSHOT_PATH="$(xdg-user-dir PICTURES)/Screenshot-$(date +%F-%T).png"
+    gdbus call --session --dest org.gnome.Shell.Screenshot \
+      --object-path /org/gnome/Shell/Screenshot \
+      --method org.gnome.Shell.Screenshot.Screenshot \
+      true false "$SCREENSHOT_PATH" &
+
+    # Notify user
+    if [ $? -eq 0 ]; then
+      echo "Screenshot saved to: $SCREENSHOT_PATH"
+      command -v notify-send >/dev/null && notify-send "Screenshot Taken" "Saved to $SCREENSHOT_PATH"
+    else
+      echo "Failed to take screenshot."
+    fi
   elif [[ "$count" -eq 1 && "$direction" == "down" ]]; then
-  cd /sys/class/leds/vibrator && echo 200 > duration && echo 1 > activate
-  #One up + one down = paste
-    clipboard_content=$(wl-paste)
- 	wtype "$clipboard_content" &
+    # One up + one down = picture
+    cd /sys/class/leds/vibrator && echo 200 > duration && echo 1 > activate
+
+    # Set up directory
+    HOME_DIR="$HOME"
+    PICTURES_DIR="$HOME_DIR/Pictures"
+    mkdir -p "$PICTURES_DIR"
+
+    # Get current date and time for filename
+    DATETIME=$(date +"photo_%Y%m%d_%H%M%S")
+    FILENAME="$PICTURES_DIR/$DATETIME.jpeg"
+
+    # Command to take picture
+    gst-launch-1.0 -e \
+      droidcamsrc camera-device=0 mode=2 ! \
+      videoconvert ! \
+      videoflip video-direction=8 ! \
+      jpegenc snapshot=true ! \
+      filesink location="$FILENAME"
+
+    # Notify user
+    if [ $? -eq 0 ]; then
+      echo "Picture saved to: $FILENAME"
+      command -v notify-send >/dev/null && notify-send "Picture Taken" "Saved to $FILENAME"
+    else
+      echo "Failed to take picture."
+    fi
   elif [[ "$count" -eq 2 && "$direction" == "up" ]]; then
-  cd /sys/class/leds/vibrator && echo 100 > duration && echo 1 > activate
-  cd /sys/class/leds/vibrator && echo 200 > duration && echo 1 > activate
-
-    #Two down + two up = drop display scale in 50% steps
-# Get the current display scale
-current_scale=$(wlr-randr --output HWCOMPOSER-1 | grep -oP 'Scale: \d+\.\d+' | awk '{print $2}')
-echo "Current scale: $current_scale"
-
-# Determine the new scale based on the current scale
-if (( $(echo "$current_scale > 2.5" | bc -l) )); then
-  new_scale=2.5
-elif (( $(echo "$current_scale > 2.0" | bc -l) )); then
-  new_scale=2.0
-elif (( $(echo "$current_scale > 1.5" | bc -l) )); then
-  new_scale=1.5
-elif (( $(echo "$current_scale > 1.0" | bc -l) )); then
-  new_scale=1.0
-else
-  new_scale=$current_scale  # No change if the scale is already at 1.0
-fi
-
-# Apply the new scale
-echo "Setting new scale to: $new_scale"
-output="HWCOMPOSER-1"
-wlr-randr --output "$output" --scale "$new_scale"
-
+    # Two down + two up = wip
+    cd /sys/class/leds/vibrator && echo 100 > duration && echo 1 > activate
+    cd /sys/class/leds/vibrator && echo 200 > duration && echo 1 > activate
   elif [[ "$count" -eq 2 && "$direction" == "down" ]]; then
-  cd /sys/class/leds/vibrator && echo 200 > duration && echo 1 > activate
-  cd /sys/class/leds/vibrator && echo 100 > duration && echo 1 > activate
-
-  
-
-    #Two up + two down raise the display scale in 50% steps
-    # Get the current display scale
-current_scale=$(wlr-randr --output HWCOMPOSER-1 | grep -oP 'Scale: \d+\.\d+' | awk '{print $2}')
-echo "Current scale: $current_scale"
-
-# Determine the new scale based on the current scale
-if (( $(echo "$current_scale < 1.5" | bc -l) )); then
-  new_scale=1.5
-elif (( $(echo "$current_scale < 2.0" | bc -l) )); then
-  new_scale=2.0
-elif (( $(echo "$current_scale < 2.5" | bc -l) )); then
-  new_scale=2.5
-elif (( $(echo "$current_scale < 3.0" | bc -l) )); then
-  new_scale=3.0
-else
-  new_scale=$current_scale  # No change if the scale is already at 3.0
-fi
-
-# Apply the new scale
-echo "Setting new scale to: $new_scale"
-output="HWCOMPOSER-1"
-wlr-randr --output "$output" --scale "$new_scale"
-    
+    # Two up + two down = wip
+    cd /sys/class/leds/vibrator && echo 200 > duration && echo 1 > activate
+    cd /sys/class/leds/vibrator && echo 100 > duration && echo 1 > activate
   fi
 }
 
@@ -125,5 +113,4 @@ while read -r event; do
       fi
     fi
   fi
-
 done < <(evtest "$EVENT_FILE")
