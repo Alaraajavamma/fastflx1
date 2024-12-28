@@ -31,8 +31,8 @@ Mainly:
 - They will change volume so that does not change
 - Short presses - first VolUp and right after VolDown = it will take picture with backcamera
 - Short presses - first VolDown and right after VolUp = it will take screenshot and save it to Pictures folder
-- Short presses - first two times VolUp and right after two times VolDown = does is nothing currently (ideas are welcome)
-- Short presses - first two times VolDown and right after two times VolUp = does nothing currently (ideas are welcome)
+- Short presses - first two times VolUp and right after two times VolDown = opens selection where you can stop, start or restart android container
+- Short presses - first two times VolDown and right after two times VolUp = opens selection where you can pkill -f most ram hungry apps (excluding android container apps and some core apps)
 
 **Default swipe gestures:**
 Notice that swipe gestures works ootb like this when FLX1 is in default portrait mode
