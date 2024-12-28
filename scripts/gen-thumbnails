@@ -33,7 +33,14 @@ generate_thumbnail() {
                 echo "Error generating thumbnail for: $IMAGE"
                 local DIR=$(dirname "$IMAGE")
                 local BASENAME=$(basename "$IMAGE")
-                local ERROR_FILE="${DIR}/${BASENAME%.*}_tnfix.${BASENAME##*.}"
+
+                # Avoid appending `_tnfix` multiple times
+                if [[ "$BASENAME" != *_tnfix.* ]]; then
+                    local ERROR_FILE="${DIR}/${BASENAME%.*}_tnfix.${BASENAME##*.}"
+                else
+                    local ERROR_FILE="$IMAGE"  # Already has `_tnfix`, keep the same name
+                fi
+
                 mv "$IMAGE" "$ERROR_FILE"
                 echo "File renamed due to error: $IMAGE -> $ERROR_FILE"
                 return 1
@@ -45,8 +52,14 @@ generate_thumbnail() {
                 echo "Error setting metadata for: $IMAGE"
                 local DIR=$(dirname "$IMAGE")
                 local BASENAME=$(basename "$IMAGE")
-                local TIMESTAMP=$(date '+%Y%m%d%H%M%S')
-                local ERROR_FILE="${DIR}/${BASENAME%.*}_tnfix.${BASENAME##*.}"
+
+                # Avoid appending `_tnfix` multiple times
+                if [[ "$BASENAME" != *_tnfix.* ]]; then
+                    local ERROR_FILE="${DIR}/${BASENAME%.*}_tnfix.${BASENAME##*.}"
+                else
+                    local ERROR_FILE="$IMAGE"  # Already has `_tnfix`, keep the same name
+                fi
+
                 mv "$IMAGE" "$ERROR_FILE"
                 echo "File renamed due to error: $IMAGE -> $ERROR_FILE"
                 return 1
@@ -58,7 +71,6 @@ generate_thumbnail() {
         echo "Thumbnail already exists for: $IMAGE"
     fi
 }
-
 
 # Function to delete a thumbnail for a given image
 delete_thumbnail() {
