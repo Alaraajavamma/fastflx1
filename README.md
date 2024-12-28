@@ -16,6 +16,7 @@ Mainly:
 8. Provide thumbnails (image preview) for all images which are located in home folder but not in hidden folders. Now you can see what file you are choosing when you use file picker - or when you browse your files trough Nautilus. This is build as service which will also monitor new images, name changes, moved images etc. And GUI interface to restart this service script if it fails
 9. Added some cool swipe gestures using lisgd - options are endless but for now they will change active apps, kill active app or press ctrl+a (look intro below)
 10. Added some shortcuts when you press volume-buttons - options are endless but for now they will use wl-paste to paste the clipboard content (works in terminal), take screenshot, scale display
+11. New self destroy tool - **be very careful** - by pressing first volumeup for 5 seconds and right after that volumedown for 5 seconds you will get prompt and if you inser your password there it will remove your home folder. This can not be recovered. 
 
 **Default assistant-button options:**
 
