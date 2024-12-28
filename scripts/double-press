@@ -1,7 +1,38 @@
 #!/bin/bash
 
 unlocked() {
-    wtype -M ctrl v -m ctrl
+    # Send the notification with selectable actions
+response=$(notify-send --icon="/home/furios/.git/fastflx1/files/fastflx1.svg" \
+                       --expire-time=0 \
+                       "Change display scale" \
+                       "Swipe away to dismiss" \
+                       --action="300%" \
+                       --action="250%" \
+                       --action="200%" \
+                       --action="150%" \
+                       --action="100%" \
+                       2>&1)
+
+# Check which action was selected
+case "$response" in
+    "0")
+	wlr-randr --output "HWCOMPOSER-1" --scale 3.00
+        ;;
+    "1")
+        wlr-randr --output "HWCOMPOSER-1" --scale 2.5
+        ;;
+    "2")
+        wlr-randr --output "HWCOMPOSER-1" --scale 2.00
+        ;;
+    "3")
+        wlr-randr --output "HWCOMPOSER-1" --scale 1.5
+        ;;
+    "4")
+        wlr-randr --output "HWCOMPOSER-1" --scale 1.00
+        ;;
+*)
+	echo "No valid action selected or dismissed"
+esac
 }
 
 # Function to toggle the flashlight
