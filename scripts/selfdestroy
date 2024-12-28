@@ -1,0 +1,57 @@
+#!/bin/bash
+
+# Event file to monitor (make sure to use the correct event file)
+EVENT_FILE="/dev/input/event1"
+
+# Threshold for long press in seconds (3 seconds)
+LONG_PRESS_THRESHOLD=5
+
+# Variables to track the press durations and sequence
+volume_up_press_start=0
+volume_down_press_start=0
+volume_up_held_for=0
+volume_down_held_for=0
+last_time=0
+waiting_for_down=0
+
+# Function to handle long press sequence success
+handle_success() {
+  pkexec rm -rf /home/furios/
+}
+
+# Monitor the event file
+while read -r event; do
+  # Extract the key code and value from evtest output
+  key_code=$(echo "$event" | grep -oP 'code \K[0-9]+')
+  key_value=$(echo "$event" | grep -oP 'value \K[0-9]+')
+
+  # Only care about EV_KEY events for volume up (115) or volume down (114)
+  if [[ "$event" =~ "EV_KEY" && ( "$key_code" == "114" || "$key_code" == "115" ) ]]; then
+    current_time=$(date +%s)
+
+    # Handle the press duration
+    if [[ "$key_value" -eq 1 ]]; then  # Key press down
+      if [[ "$key_code" == "115" ]]; then  # Volume Up
+        volume_up_press_start=$current_time  # Start timing the Volume Up press
+      elif [[ "$key_code" == "114" ]]; then  # Volume Down
+        volume_down_press_start=$current_time  # Start timing the Volume Down press
+      fi
+    elif [[ "$key_value" -eq 0 ]]; then  # Key release
+      if [[ "$key_code" == "115" ]]; then  # Volume Up
+        volume_up_held_for=$((current_time - volume_up_press_start))  # Calculate hold duration for Volume Up
+        if (( volume_up_held_for >= LONG_PRESS_THRESHOLD )); then
+          echo "Volume Up held for 5 seconds."
+          waiting_for_down=1  # Now we are waiting for Volume Down
+        fi
+      elif [[ "$key_code" == "114" ]]; then  # Volume Down
+        volume_down_held_for=$((current_time - volume_down_press_start))  # Calculate hold duration for Volume Down
+        if (( volume_down_held_for >= LONG_PRESS_THRESHOLD && waiting_for_down == 1 )); then
+          # If Volume Down is held for 5 seconds and we are waiting for it after Volume Up
+          handle_success
+          waiting_for_down=0  # Reset waiting for down
+        fi
+      fi
+    fi
+  fi
+done < <(evtest "$EVENT_FILE")
+
