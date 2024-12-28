@@ -43,6 +43,6 @@ phosh-status-page-placeholder > box > label.title {
   font-size: 10px;
 }
 
-.phosh-topbar-button:nth-child(1) {
-  opacity: 0;
-}
+phosh-notification-banner {
+  font-size: 10px;
+  }
