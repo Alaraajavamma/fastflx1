@@ -33,7 +33,7 @@ generate_thumbnail() {
                 echo "Error generating thumbnail for: $IMAGE"
                 local DIR=$(dirname "$IMAGE")
                 local BASENAME=$(basename "$IMAGE")
-                local ERROR_FILE="$DIR/tnfix_$BASENAME"
+                local ERROR_FILE="${DIR}/${BASENAME%.*}_tnfix.${BASENAME##*.}"
                 mv "$IMAGE" "$ERROR_FILE"
                 echo "File renamed due to error: $IMAGE -> $ERROR_FILE"
                 return 1
@@ -46,7 +46,7 @@ generate_thumbnail() {
                 local DIR=$(dirname "$IMAGE")
                 local BASENAME=$(basename "$IMAGE")
                 local TIMESTAMP=$(date '+%Y%m%d%H%M%S')
-                local ERROR_FILE="$DIR/Error_${TIMESTAMP}_$BASENAME"
+                local ERROR_FILE="${DIR}/${BASENAME%.*}_tnfix.${BASENAME##*.}"
                 mv "$IMAGE" "$ERROR_FILE"
                 echo "File renamed due to error: $IMAGE -> $ERROR_FILE"
                 return 1
