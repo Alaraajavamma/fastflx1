@@ -1,10 +1,52 @@
 #!/bin/bash
 
 unlocked() {
- 	wtype -M ctrl -P c -m ctrl -p c
+# Send the notification with selectable actions
+response=$(notify-send --icon="/home/furios/.git/fastflx1/files/fastflx1.svg" \
+                       --expire-time=0 \
+                       "Choose action" \
+                       "Swipe away to dismiss" \
+                       --action="Copy" \
+                       --action="Paste" \
+                       --action="Cut" \
+                       --action="Wl-Paste" \
+                       --action="Ctrl+A Copy" \
+                       2>&1)
+
+# Check which action was selected
+case "$response" in
+    "0")
+        echo "User selected Copy"
+        # Run your Paste-related script here
+        wtype -M ctrl c -m ctrl
+        ;;
+    "1")
+        echo "User selected Paste"
+        # Run your Copy-related script here
+        wtype -M ctrl v -m ctrl
+        ;;
+    "2")
+        echo "User selected Cut"
+        # Run your Cut-related script here
+        wtype -M ctrl x -m ctrl
+        ;;
+    "3")
+        echo "User selected wl-paste"
+        # Run your Cut-related script here
+        clipboard_content=$(wl-paste)
+ 	wtype "$clipboard_content"
+        ;;
+    "4")
+        echo "User selected Ctrl+a coy"
+        # Run your Cut-related script here
+        wtype -M ctrl a -m ctrl && wtype -M ctrl c -m ctrl
+        ;;
+*)
+	echo "No valid action selected or dismissed"
+esac
 }
 
-# Function to toggle the flashlight
+# Function to toggle feedback profile
 locked() {
 	# Find current feedback profile
 	current_profile=$(gsettings get org.sigxcpu.feedbackd profile | tr -d "'")
