@@ -7,6 +7,7 @@ rm ~/.config/autostart/alarmvol.desktop
 rm ~/.config/autostart/gen-thumbnails.desktop
 rm ~/.config/autostart/gesture-shortcuts.desktop
 rm ~/.config/autostart/vol-buttons.desktop
+rm ~/.config/autostart/selfdestroy.desktop
 rm ~/.config/gtk-3.0/gtk.css
 rm -rf ~/.config/feedbackd
 rm -rf ~/.config/assistant-button
@@ -23,6 +24,7 @@ sudo rm /usr/bin/long-press
 sudo rm /usr/bin/short-press
 sudo rm /usr/bin/squeekboard-scale
 sudo rm /usr/bin/vol-buttons
+sudo rm /usr/bin/selfdestroy
 sudo apt remove yad wl-clipboard inotify-tools imagemagick lisgd evtest
 gsettings set org.gnome.desktop.sound theme-name default
 cd ~ && rm -rf .git/fastflx1
