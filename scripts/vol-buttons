@@ -63,13 +63,75 @@ handle_command() {
       echo "Failed to take picture."
     fi
   elif [[ "$count" -eq 2 && "$direction" == "up" ]]; then
-    # Two down + two up = wip
+    # Two down + two up = open selector to kill biggest ram eaters
     cd /sys/class/leds/vibrator && echo 100 > duration && echo 1 > activate
     cd /sys/class/leds/vibrator && echo 200 > duration && echo 1 > activate
+    # Define the list of apps to exclude
+excluded_apps="Isolated|system_server|phosh|phoc|calls|chatty|waydroid|systemd"
+
+# Get the top 5 RAM-consuming applications, excluding the defined apps
+apps=$(ps --no-headers -eo comm,%mem --sort=-%mem | grep -Ev "$excluded_apps" | head -n 3 | awk '{print $1}')
+apps_array=($apps)
+
+# Check if there are apps to show
+if [ ${#apps_array[@]} -eq 0 ]; then
+    echo lol
+fi
+
+# Build the notify-send command with actions for each app
+notification_command="notify-send --expire-time=0 \"Kill a RAM-heavy app\" \"Swipe away to dismiss\""
+for i in "${!apps_array[@]}"; do
+    notification_command+=" --action=\"${apps_array[$i]}\""
+done
+
+# Run the notification and capture the response
+response=$(eval $notification_command 2>&1)
+
+# Match response to the app and execute pkill
+for i in "${!apps_array[@]}"; do
+    if [[ "$response" == "$i" ]]; then
+        pkill -f "${apps_array[$i]}"
+    fi
+done
+    
   elif [[ "$count" -eq 2 && "$direction" == "down" ]]; then
-    # Two up + two down = wip
+    # Two up + two down = start android container shortcut
     cd /sys/class/leds/vibrator && echo 200 > duration && echo 1 > activate
     cd /sys/class/leds/vibrator && echo 100 > duration && echo 1 > activate
+    # Send the notification with selectable actions
+response=$(notify-send --icon="/home/furios/.git/fastflx1/files/fastflx1.svg" \
+                       --expire-time=0 \
+                       "Android container Actions" \
+                       "Select an action for android container" \
+                       --action="Start" \
+                       --action="Stop" \
+                       --action="Restart" \
+                       2>&1)
+
+# Check which action was selected
+case "$response" in
+    "0")
+        # Start Waydroid container
+        pkexec waydroid container start
+        echo "Waydroid container stopped."
+        ;;
+    "1")
+        # Stop Waydroid
+        pkexec waydroid container stop
+        echo "Waydroid shutdown."
+        ;;
+    "2")
+        # Reboot Waydroid
+        pkexec waydroid container restart
+        echo "Waydroid rebooted."
+        ;;
+    *)
+        # Handle dismissal or invalid selection
+        echo "No valid action selected or dismissed"
+        ;;
+esac
+
+    
   fi
 }
 
