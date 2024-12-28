@@ -1,0 +1,119 @@
+#!/bin/bash
+
+# Event file to monitor (make sure to use the correct event file)
+EVENT_FILE="/dev/input/event1"
+
+# Timeout threshold in seconds (2 seconds)
+TIMEOUT_THRESHOLD=2
+
+# Variables to track key presses
+volume_up_count=0
+volume_down_count=0
+last_time=0
+
+# Function to handle commands based on equal up and down presses
+handle_command() {
+  local count=$1
+  local direction=$2
+
+  if [[ "$count" -eq 1 && "$direction" == "up" ]]; then
+    #One down + one up = screenshot
+    gdbus call --session --dest org.gnome.Shell.Screenshot --object-path /org/gnome/Shell/Screenshot --method org.gnome.Shell.Screenshot.Screenshot true false "$(xdg-user-dir PICTURES)/Screenshot-$(date +%F-%T).png" &
+  elif [[ "$count" -eq 1 && "$direction" == "down" ]]; then
+  #One up + one down = paste
+    clipboard_content=$(wl-paste)
+ 	wtype "$clipboard_content" &
+  elif [[ "$count" -eq 2 && "$direction" == "up" ]]; then
+    #Two down + two up = drop display scale in 50% steps
+# Get the current display scale
+current_scale=$(wlr-randr --output HWCOMPOSER-1 | grep -oP 'Scale: \d+\.\d+' | awk '{print $2}')
+echo "Current scale: $current_scale"
+
+# Determine the new scale based on the current scale
+if (( $(echo "$current_scale > 2.5" | bc -l) )); then
+  new_scale=2.5
+elif (( $(echo "$current_scale > 2.0" | bc -l) )); then
+  new_scale=2.0
+elif (( $(echo "$current_scale > 1.5" | bc -l) )); then
+  new_scale=1.5
+elif (( $(echo "$current_scale > 1.0" | bc -l) )); then
+  new_scale=1.0
+else
+  new_scale=$current_scale  # No change if the scale is already at 1.0
+fi
+
+# Apply the new scale
+echo "Setting new scale to: $new_scale"
+output="HWCOMPOSER-1"
+wlr-randr --output "$output" --scale "$new_scale"
+
+  elif [[ "$count" -eq 2 && "$direction" == "down" ]]; then
+    #Two up + two down raise the display scale in 50% steps
+    # Get the current display scale
+current_scale=$(wlr-randr --output HWCOMPOSER-1 | grep -oP 'Scale: \d+\.\d+' | awk '{print $2}')
+echo "Current scale: $current_scale"
+
+# Determine the new scale based on the current scale
+if (( $(echo "$current_scale < 1.5" | bc -l) )); then
+  new_scale=1.5
+elif (( $(echo "$current_scale < 2.0" | bc -l) )); then
+  new_scale=2.0
+elif (( $(echo "$current_scale < 2.5" | bc -l) )); then
+  new_scale=2.5
+elif (( $(echo "$current_scale < 3.0" | bc -l) )); then
+  new_scale=3.0
+else
+  new_scale=$current_scale  # No change if the scale is already at 3.0
+fi
+
+# Apply the new scale
+echo "Setting new scale to: $new_scale"
+output="HWCOMPOSER-1"
+wlr-randr --output "$output" --scale "$new_scale"
+    
+  fi
+}
+
+# Monitor the event file
+while read -r event; do
+  # Extract the key code and value from evtest output
+  key_code=$(echo "$event" | grep -oP 'code \K[0-9]+')
+  key_value=$(echo "$event" | grep -oP 'value \K[0-9]+')
+
+  # Only care about EV_KEY events for volume up (115) or volume down (114)
+  if [[ "$event" =~ "EV_KEY" && ( "$key_code" == "114" || "$key_code" == "115" ) && "$key_value" -eq 1 ]]; then
+    # Get the current time in seconds
+    current_time=$(date +%s)
+
+    # Check if timeout has occurred and reset counters if necessary
+    if (( current_time - last_time >= TIMEOUT_THRESHOLD )); then
+      echo "Timeout occurred. Resetting counters."
+      volume_up_count=0
+      volume_down_count=0
+    fi
+
+    # Update the time of the last key press
+    last_time=$current_time
+
+    # Handle key press logic
+    if [[ "$key_code" == "114" ]]; then  # Volume Down
+      volume_down_count=$((volume_down_count + 1))
+
+      if [[ "$volume_down_count" -eq "$volume_up_count" && "$volume_down_count" -gt 0 && "$volume_down_count" -le 2 ]]; then
+        handle_command "$volume_down_count" "down"
+        volume_up_count=0
+        volume_down_count=0
+      fi
+
+    elif [[ "$key_code" == "115" ]]; then  # Volume Up
+      volume_up_count=$((volume_up_count + 1))
+
+      if [[ "$volume_up_count" -eq "$volume_down_count" && "$volume_up_count" -gt 0 && "$volume_up_count" -le 2 ]]; then
+        handle_command "$volume_up_count" "up"
+        volume_up_count=0
+        volume_down_count=0
+      fi
+    fi
+  fi
+
+done < <(evtest "$EVENT_FILE")
