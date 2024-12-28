@@ -15,6 +15,7 @@ Mainly:
 7. If you use finnish layout in squeekboard you will get the ultimate universal layout made by me
 8. Provide thumbnails (image preview) for all images which are located in home folder but not in hidden folders. Now you can see what file you are choosing when you use file picker - or when you browse your files trough Nautilus. This is build as service which will also monitor new images, name changes, moved images etc. And GUI interface to restart this service script if it fails
 9. Added some cool swipe gestures using lisgd - options are endless but for now they will change active apps, kill active app or press ctrl+a (look intro below)
+10. Added some shortcuts when you press volume-buttons - options are endless but for now they will use wl-paste to paste the clipboard content (works in terminal), take screenshot, scale display
 
 **Default assistant-button options:**
 
@@ -24,6 +25,14 @@ Mainly:
 - Locked / on lock screen short-press = toggle the feedback theme (full - silent - quiet)
 - Locked / on lock screen double-press = toggle flashlight
 - Locked / on lock screen long-press = it will forcefully close all resource intensive apps
+
+**Default volume-buttons options:**
+
+- They will change volume so that does not change
+- Short presses - first VolUp and right after VolDown = it will paste clipboard content using wl-paste
+- Short presses - first VolDown and right after VolUp = it will take screenshot and save it to Pictures folder
+- Short presses - first two times VolUp and right after two times VolDown = if display scale is less than 300% it will scale it up in 50% steps (100-150-200-250-300)
+- Short presses - first two times VolDown and right after two times VolUp = if display scale is more than 100% it will scale it down in 50% steps (300-250-200-150-100)
 
 **Default swipe gestures:**
 Notice that swipe gestures works ootb like this when FLX1 is in default portrait mode
