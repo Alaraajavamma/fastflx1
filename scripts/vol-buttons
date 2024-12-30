@@ -112,19 +112,19 @@ case "$response" in
     "0")
         # Start Waydroid container
         pkexec systemctl start waydroid-container 
-        waydroid session start
+        waydroid session start &
         echo "Waydroid container started."
         ;;
     "1")
         # Stop Waydroid
         waydroid session stop
-        pkexec systemctl start waydroid-container 
+        pkexec systemctl stop waydroid-container 
         echo "Waydroid shutdown."
         ;;
     "2")
         # Reboot Waydroid
         pkexec systemctl restart waydroid-container
-        waydroid session start
+        waydroid session start &
         echo "Waydroid rebooted."
         ;;
     *)
