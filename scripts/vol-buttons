@@ -111,17 +111,20 @@ response=$(notify-send --icon="/home/furios/.git/fastflx1/files/fastflx1.svg" \
 case "$response" in
     "0")
         # Start Waydroid container
-        pkexec waydroid container start
-        echo "Waydroid container stopped."
+        pkexec systemctl start waydroid-container 
+        waydroid session start
+        echo "Waydroid container started."
         ;;
     "1")
         # Stop Waydroid
-        pkexec waydroid container stop
+        waydroid session stop
+        pkexec systemctl start waydroid-container 
         echo "Waydroid shutdown."
         ;;
     "2")
         # Reboot Waydroid
-        pkexec waydroid container restart
+        pkexec systemctl restart waydroid-container
+        waydroid session start
         echo "Waydroid rebooted."
         ;;
     *)
