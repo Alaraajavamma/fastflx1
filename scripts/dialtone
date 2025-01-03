@@ -46,32 +46,28 @@ adjust_volume() {
             # Check if the mode has changed
             if [[ "$speaker_status" != "$last_speaker_status" ]]; then
                 if [[ "$speaker_status" == "CALL_AUDIO_SPEAKER_ON" ]]; then
-                    echo "Speaker mode detected. Ensuring maximum volume..."
-                    wtype -k XF86AudioRaiseVolume
-                    wtype -k XF86AudioRaiseVolume
-                    wtype -k XF86AudioRaiseVolume
-                    wtype -k XF86AudioRaiseVolume
-                    wtype -k XF86AudioRaiseVolume
-                    wtype -k XF86AudioRaiseVolume
-                    
+                    echo "Speaker mode detected. Setting volume to 100%..."
+                    # Find the active call stream index and set volume to 100%
+                    STREAM_INDEX=$(pacmd list-sink-inputs | grep -B 10 "media.role = phone" | grep "index:" | awk '{print $2}')
+                    if [ -n "$STREAM_INDEX" ]; then
+                        pactl set-sink-input-volume $STREAM_INDEX 100%
+                        echo "Volume set to 100% for speaker mode."
+                    fi
                 elif [[ "$speaker_status" == "CALL_AUDIO_SPEAKER_OFF" ]]; then
                     echo "Earpiece mode detected. Adjusting to 40% volume..."
-                    wtype -k XF86AudioLowerVolume
-                    wtype -k XF86AudioLowerVolume
-                    wtype -k XF86AudioLowerVolume
-                    wtype -k XF86AudioLowerVolume
-                    wtype -k XF86AudioLowerVolume
-                    wtype -k XF86AudioLowerVolume
-                    wtype -k XF86AudioRaiseVolume
-                    wtype -k XF86AudioRaiseVolume
-
+                    # Find the active call stream index and set volume to 40%
+                    STREAM_INDEX=$(pacmd list-sink-inputs | grep -B 10 "media.role = phone" | grep "index:" | awk '{print $2}')
+                    if [ -n "$STREAM_INDEX" ]; then
+                        pactl set-sink-input-volume $STREAM_INDEX 40%
+                        echo "Volume set to 40% for earpiece mode."
+                    fi
                 else
                     echo "Unknown speaker status. Continuing..."
                 fi
 
                 # Update the last known status
                 last_speaker_status="$speaker_status"
-            fi  # This is the added 'fi' to properly close the 'if' block.
+            fi  # End of the 'if' block checking for speaker status change
         fi
 
         sleep 0.5  # Tight polling interval
