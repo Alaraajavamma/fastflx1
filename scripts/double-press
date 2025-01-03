@@ -5,7 +5,7 @@ unlocked() {
 auto_maximize=$(gsettings get sm.puri.phoc auto-maximize)
 
 # If it's true, run the notify-send and wait for the response
-if [[ "$auto_maximize" == "true" ]]; then
+if [[ "$auto_maximize" == "false" ]]; then
     response=$(notify-send --icon="/home/furios/.git/fastflx1/files/fastflx1.svg" \
                            --expire-time=0 \
                            "Manage multitask" \
