@@ -28,48 +28,61 @@ direct() {
 }
 
 adjust_volume() {
-    # Variable to store the last known speaker/earpiece mode
+    # Variable to store the last known speaker mode and call status
     last_speaker_status=""
+    call_active="false"
 
-    while true; do
-        # Fetch the output of the command
-        mmcli_output=$(mmcli -m any --voice-list-calls)
+    # Monitor D-Bus for changes to the speaker mode and call state
+    dbus-monitor --session "interface='org.mobian_project.CallAudio'" | while read line; do
+        # Check if the line indicates the start or end of a call (SelectMode)
+        if echo "$line" | grep -q "member=SelectMode"; then
+            # Extract the call state (1 means call active, 0 means call ended)
+            call_state=$(echo "$line" | grep -oP 'uint32 \K\d+')
 
-        # Stop if "No calls were found"
-        if echo "$mmcli_output" | grep -q "No calls were found"; then
-            echo "Call ended. Stopping volume adjustment."
-            break
-        else
-            # Extract current speaker/earpiece mode
-            speaker_status=$(callaudiocli --status | grep "Speaker enabled" | awk '{print $NF}')
-
-            # Check if the mode has changed
-            if [[ "$speaker_status" != "$last_speaker_status" ]]; then
-                if [[ "$speaker_status" == "CALL_AUDIO_SPEAKER_ON" ]]; then
-                    echo "Speaker mode detected. Ensuring maximum volume..."
-                    for i in {1..5}; do
-                        wtype -k XF86AudioRaiseVolume
-                    done
-                elif [[ "$speaker_status" == "CALL_AUDIO_SPEAKER_OFF" ]]; then
-                    echo "Earpiece mode detected. Adjusting to 40% volume..."
-                    for i in {1..5}; do
-                        wtype -k XF86AudioLowerVolume
-                    done
-                    for i in {1..2}; do
-                        wtype -k XF86AudioRaiseVolume
-                    done
-                else
-                    echo "Unknown speaker status. Continuing..."
-                fi
-
-                # Update the last known status
-                last_speaker_status="$speaker_status"
-            else
-                echo "Speaker/earpiece mode unchanged. No adjustment needed."
+            if [[ "$call_state" == "1" ]]; then
+                # Call is active, so allow volume adjustments
+                call_active="true"
+                echo "Call is active. Volume adjustments enabled."
+            elif [[ "$call_state" == "0" ]]; then
+                # Call has ended, stop any volume adjustments
+                call_active="false"
+                echo "Call ended. Volume adjustments disabled."
             fi
         fi
 
-        sleep 0.5  # Tight polling interval
+        # Only proceed with speaker mode changes if a call is active
+        if [[ "$call_active" == "true" ]]; then
+            # Check if the line indicates a speaker mode change (EnableSpeaker)
+            if echo "$line" | grep -q "member=EnableSpeaker"; then
+                # Extract the boolean value (true or false) from the output
+                speaker_status=$(echo "$line" | grep -oP 'boolean \K\w+')
+
+                # Check if the mode has changed
+                if [[ "$speaker_status" != "$last_speaker_status" ]]; then
+                    if [[ "$speaker_status" == "true" ]]; then
+                        echo "Speaker mode enabled. Ensuring maximum volume..."
+                        for i in {1..5}; do
+                            wtype -k XF86AudioRaiseVolume
+                        done
+                    elif [[ "$speaker_status" == "false" ]]; then
+                        echo "Speaker mode disabled (earpiece mode). Adjusting to 40% volume..."
+                        for i in {1..5}; do
+                            wtype -k XF86AudioLowerVolume
+                        done
+                        for i in {1..2}; do
+                            wtype -k XF86AudioRaiseVolume
+                        done
+                    else
+                        echo "Unknown speaker status. Continuing..."
+                    fi
+
+                    # Update the last known status
+                    last_speaker_status="$speaker_status"
+                else
+                    echo "Speaker mode unchanged. No adjustment needed."
+                fi
+            fi
+        fi
     done
 }
 
