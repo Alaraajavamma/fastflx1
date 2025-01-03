@@ -19,12 +19,12 @@ direct() {
     # Check if the second-last word is "outgoing"
     if [[ $(echo "$last_line" | awk '{print $(NF-1)}') == "outgoing" ]]; then
         echo "The call is outgoing. Proceeding with further steps..."
-        changes
+        changes & 
+        adjust_volume
     else
         echo "The call is not outgoing. No action taken."
+        adjust_volume
     fi
-
-    adjust_volume
 }
 
 # Adjust volume based on speaker or earpiece mode
