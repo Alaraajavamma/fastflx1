@@ -65,7 +65,6 @@ adjust_volume() {
                 # Update the last known status
                 last_speaker_status="$speaker_status"
             else
-                echo "Speaker/earpiece mode unchanged. No adjustment needed."
             fi
         fi
 
