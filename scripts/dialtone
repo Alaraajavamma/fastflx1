@@ -32,6 +32,17 @@ adjust_volume() {
     last_speaker_status=""
     call_active="false"
 
+    # Start a background process to monitor for the CallDeleted signal
+    dbus-monitor --system "interface='org.freedesktop.ModemManager1.Modem.Voice',type='signal',member='CallDeleted'" |
+    while read -r line; do
+        if echo "$line" | grep -qE "^signal.*CallDeleted"; then
+            echo "Call deleted. Stopping volume adjustments."
+            # Stop the volume adjustment process by killing the volume_adjustment_pid
+            kill "$volume_adjustment_pid"
+            break  # Exit the loop if call is deleted
+        fi
+    done &  # Run in background
+
     # Monitor D-Bus for changes to the speaker mode and call state
     dbus-monitor --session "interface='org.mobian_project.CallAudio'" | while read line; do
         # Check if the line indicates the start or end of a call (SelectMode)
@@ -83,7 +94,11 @@ adjust_volume() {
                 fi
             fi
         fi
-    done
+    done &
+
+    # Capture the PID of the volume adjustment process
+    volume_adjustment_pid=$!
+    echo "Volume adjustment process started with PID: $volume_adjustment_pid"
 }
 
 # Monitor for call changes
