@@ -30,12 +30,15 @@ direct() {
 # Adjust volume based on speaker or earpiece mode
 adjust_volume() {
     while true; do
-        # Check call status
-        last_line=$(mmcli -m any --voice-list-calls | tail -n 1)
-        status_word=$(echo "$last_line" | awk '{print $NF}' | tr -d '()')
+        # Fetch the output of the command
+        mmcli_output=$(mmcli -m any --voice-list-calls)
 
-        if [[ "$status_word" == "active" || "$status_word" == "activeaccepted" ]]; then
-            # Poll speaker/earpiece mode
+        # Stop if "No calls were found"
+        if echo "$mmcli_output" | grep -q "No calls were found"; then
+            echo "Call ended. Stopping volume adjustment."
+            break
+        else
+            # Extract speaker/earpiece mode
             speaker_status=$(callaudiocli --status | grep "Speaker enabled" | awk '{print $NF}')
 
             if [[ "$speaker_status" == "CALL_AUDIO_SPEAKER_ON" ]]; then
@@ -51,13 +54,12 @@ adjust_volume() {
                 for i in {1..2}; do
                     wtype -k XF86AudioRaiseVolume
                 done
+            else
+                echo "Unknown speaker status. Continuing..."
             fi
-
-            sleep 1
-        elif [[ $(mmcli -m any --voice-list-calls) == *"No calls were found"* ]]; then
-            echo "Call ended. Stopping volume adjustment."
-            break
         fi
+
+        sleep 0.5  # Tight polling interval
     done
 }
 
