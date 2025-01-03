@@ -1,24 +1,22 @@
 #!/bin/bash
 
-# Global variable to determine if we should exit volume adjustment
-should_exit_adjust_volume=false
-
-# Function to monitor for incoming calls
+# Monitor for incoming calls
 monitor() {
-    echo "Starting call monitor..."
     dbus-monitor --system "interface='org.freedesktop.ModemManager1.Modem.Voice',type='signal',member='CallAdded'" |
     while read -r line; do
-        if [[ "$line" == *"CallAdded"* ]]; then
+        if echo "$line" | grep -qE "^signal.*CallAdded"; then
             echo "Call detected. Checking call direction..."
             direct
         fi
     done
 }
 
-# Function to monitor call direction (outgoing or incoming)
+# Monitor call direction (outgoing or incoming)
 direct() {
+    # Run the command and get the last line
     last_line=$(mmcli -m any --voice-list-calls | tail -n 1)
 
+    # Check if the second-last word is "outgoing"
     if [[ $(echo "$last_line" | awk '{print $(NF-1)}') == "outgoing" ]]; then
         echo "The call is outgoing. Proceeding with further steps..."
         changes & 
@@ -29,88 +27,80 @@ direct() {
     fi
 }
 
-# Function to monitor CallDeleted signal and restart monitoring
-monitor_call_deleted() {
-    dbus-monitor --system "interface='org.freedesktop.ModemManager1.Modem.Voice',type='signal',member='CallDeleted'" |
-    while read -r line; do
-        if [[ "$line" == *"CallDeleted"* ]]; then
-            echo "Call deleted. Restarting monitoring..."
-            should_exit_adjust_volume=true  # Set the flag to stop adjusting volume
-            pkill -P $$  # Kill this instance of the monitor
-            monitor &  # Start a new monitoring instance in the background
-            return
-        fi
-    done &
-}
-
-# Function to adjust volume based on speaker mode (earpiece or speaker)
 adjust_volume() {
-    local last_speaker_status=""
+    # Variable to store the last known speaker/earpiece mode
+    last_speaker_status=""
 
-    # Monitor D-Bus for changes to the speaker mode
-    dbus-monitor --session "interface='org.mobian_project.CallAudio'" | while read line; do
-        if echo "$line" | grep -q "member=EnableSpeaker"; then
-            # If the flag is set, exit the function
-            if [ "$should_exit_adjust_volume" = true ]; then
-                echo "Exiting volume adjustment due to CallDeleted signal."
-                break
-            fi
-            
-            speaker_status=$(echo "$line" | grep -oP 'boolean \K\w+')
+    while true; do
+        # Fetch the output of the command
+        mmcli_output=$(mmcli -m any --voice-list-calls)
 
+        # Stop if "No calls were found"
+        if echo "$mmcli_output" | grep -q "No calls were found"; then
+            echo "Call ended. Stopping volume adjustment."
+            break
+        else
+            # Extract current speaker/earpiece mode
+            speaker_status=$(callaudiocli --status | grep "Speaker enabled" | awk '{print $NF}')
+
+            # Check if the mode has changed
             if [[ "$speaker_status" != "$last_speaker_status" ]]; then
-                if [[ "$speaker_status" == "true" ]]; then
-                    echo "Speaker mode enabled. Ensuring maximum volume..."
+                if [[ "$speaker_status" == "CALL_AUDIO_SPEAKER_ON" ]]; then
+                    echo "Speaker mode detected. Ensuring maximum volume..."
                     for i in {1..5}; do
                         wtype -k XF86AudioRaiseVolume
                     done
-                elif [[ "$speaker_status" == "false" ]]; then
-                    echo "Speaker mode disabled (earpiece mode). Adjusting to 40% volume..."
+                elif [[ "$speaker_status" == "CALL_AUDIO_SPEAKER_OFF" ]]; then
+                    echo "Earpiece mode detected. Adjusting to 40% volume..."
                     for i in {1..5}; do
                         wtype -k XF86AudioLowerVolume
                     done
                     for i in {1..2}; do
                         wtype -k XF86AudioRaiseVolume
                     done
+                else
+                    echo "Unknown speaker status. Continuing..."
                 fi
+
+                # Update the last known status
                 last_speaker_status="$speaker_status"
             else
-                echo "Speaker mode unchanged. No adjustment needed."
+                echo "Speaker/earpiece mode unchanged. No adjustment needed."
             fi
         fi
+
+        sleep 0.5  # Tight polling interval
     done
 }
 
-# Function to monitor for call changes and handle feedback
+# Monitor for call changes
 changes() {
     feedbackd_profile=$(gsettings get org.sigxcpu.feedbackd profile | tr -d "'")
-    
+
     while true; do
+        # Run the command and get the last line (updated in each loop iteration)
         last_line=$(mmcli -m any --voice-list-calls | tail -n 1)
         status_word=$(echo "$last_line" | awk '{print $NF}' | tr -d '()')
 
         if [[ "$status_word" == "active" || "$status_word" == "activeaccepted" ]]; then
-            echo "The call status is active. Updating feedback profile..."
+            echo "The call status is active. Proceeding with further steps..."
             gsettings set org.sigxcpu.feedbackd profile silent
-            break
-        elif mmcli -m any --voice-list-calls | grep -q "No calls were found"; then
+            break  # Exit the loop as the call has been accepted
+        elif [[ $(mmcli -m any --voice-list-calls) == *"No calls were found"* ]]; then
             gsettings set org.sigxcpu.feedbackd profile "$feedbackd_profile"
             break
         else
+            # Vibrate and blink led if call is not yet active
             cd /sys/class/leds/vibrator && echo 50 > duration && echo 1 > activate
             echo 12 > /sys/class/leds/green/brightness
-            sleep 0.5
+            sleep 0.5  # Shorter interval for faster vibration response
             echo 0 > /sys/class/leds/green/brightness
         fi
     done
 
+    # Restore profile after exiting the loop
     gsettings set org.sigxcpu.feedbackd profile "$feedbackd_profile"
 }
 
-# Set trap to cleanly exit
-trap "pkill -P $$; exit" SIGINT SIGTERM
-
-# Start monitoring for calls
-monitor &  # Start the calling monitoring process in the background
-monitor_call_deleted  # Start watching for CallDeleted signals
-wait  # Wait for background jobs to finish
+# Main script
+monitor
