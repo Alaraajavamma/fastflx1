@@ -47,17 +47,24 @@ adjust_volume() {
             if [[ "$speaker_status" != "$last_speaker_status" ]]; then
                 if [[ "$speaker_status" == "CALL_AUDIO_SPEAKER_ON" ]]; then
                     echo "Speaker mode detected. Ensuring maximum volume..."
-                    for i in {1..5}; do
-                        wtype -k XF86AudioRaiseVolume
-                    done
+                    wtype -k XF86AudioRaiseVolume
+                    wtype -k XF86AudioRaiseVolume
+                    wtype -k XF86AudioRaiseVolume
+                    wtype -k XF86AudioRaiseVolume
+                    wtype -k XF86AudioRaiseVolume
+                    wtype -k XF86AudioRaiseVolume
+                    
                 elif [[ "$speaker_status" == "CALL_AUDIO_SPEAKER_OFF" ]]; then
                     echo "Earpiece mode detected. Adjusting to 40% volume..."
-                    for i in {1..5}; do
-                        wtype -k XF86AudioLowerVolume
-                    done
-                    for i in {1..2}; do
-                        wtype -k XF86AudioRaiseVolume
-                    done
+                    wtype -k XF86AudioLowerVolume
+                    wtype -k XF86AudioLowerVolume
+                    wtype -k XF86AudioLowerVolume
+                    wtype -k XF86AudioLowerVolume
+                    wtype -k XF86AudioLowerVolume
+                    wtype -k XF86AudioLowerVolume
+                    wtype -k XF86AudioRaiseVolume
+                    wtype -k XF86AudioRaiseVolume
+
                 else
                     echo "Unknown speaker status. Continuing..."
                 fi
