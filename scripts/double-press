@@ -1,38 +1,74 @@
 #!/bin/bash
 
 unlocked() {
-    # Send the notification with selectable actions
-response=$(notify-send --icon="/home/furios/.git/fastflx1/files/fastflx1.svg" \
-                       --expire-time=0 \
-                       "Change display scale" \
-                       "Swipe away to dismiss" \
-                       --action="300%" \
-                       --action="250%" \
-                       --action="200%" \
-                       --action="150%" \
-                       --action="100%" \
-                       2>&1)
+# Check the current value of auto-maximize
+auto_maximize=$(gsettings get sm.puri.phoc auto-maximize)
 
-# Check which action was selected
-case "$response" in
-    "0")
-	wlr-randr --output "HWCOMPOSER-1" --scale 3.00
-        ;;
-    "1")
-        wlr-randr --output "HWCOMPOSER-1" --scale 2.5
-        ;;
-    "2")
-        wlr-randr --output "HWCOMPOSER-1" --scale 2.00
-        ;;
-    "3")
-        wlr-randr --output "HWCOMPOSER-1" --scale 1.5
-        ;;
-    "4")
-        wlr-randr --output "HWCOMPOSER-1" --scale 1.00
-        ;;
-*)
-	echo "No valid action selected or dismissed"
-esac
+# If it's true, run the notify-send and wait for the response
+if [[ "$auto_maximize" == "true" ]]; then
+    response=$(notify-send --icon="/home/furios/.git/fastflx1/files/fastflx1.svg" \
+                           --expire-time=0 \
+                           "Manage multitask" \
+                           "Select multitask action" \
+                           --action="Stop" \
+                           --action="MoveLeft" \
+                           --action="MoveRigth" \
+                           --action="Max" \
+                           --action="Min" \
+                           2>&1)
+
+    # Process the response
+    case "$response" in
+        "0")
+            gsettings set sm.puri.phoc auto-maximize true
+            wlr-randr --output "HWCOMPOSER-1" --scale 3.0 
+            ;;
+        "1")
+            wtype -M win -P left -m win
+            ;;
+        "2")
+            wtype -M win -P right -m win
+            ;;
+        "3")
+            wtype -M win -P up -m win
+            ;;
+        "4")
+            wtype -M win -P down -m win
+            ;;
+        *)
+            echo "No valid action selected or dismissed."
+            ;;
+    esac
+else
+    # Add the same code in the else block
+    response=$(notify-send --icon="/home/furios/.git/fastflx1/files/fastflx1.svg" \
+                           --expire-time=0 \
+                           "Start multitask" \
+                           "Select preferred method" \
+                           --action="Start default" \
+                           --action="Start 175%" \
+                           --action="Start 200%" \
+                           2>&1)
+
+    # Process the response
+    case "$response" in
+        "0")
+            gsettings set sm.puri.phoc auto-maximize false
+            wlr-randr --output "HWCOMPOSER-1" --scale 1.5
+            ;;
+        "1")
+            gsettings set sm.puri.phoc auto-maximize false
+            wlr-randr --output "HWCOMPOSER-1" --scale 1.75
+            ;;
+        "2")
+            gsettings set sm.puri.phoc auto-maximize false
+            wlr-randr --output "HWCOMPOSER-1" --scale 2.0
+            ;;
+        *)
+            echo "No valid action selected or dismissed."
+            ;;
+    esac
+fi
 }
 
 # Function to toggle the flashlight
