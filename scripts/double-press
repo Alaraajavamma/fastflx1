@@ -20,7 +20,7 @@ if [[ "$auto_maximize" == "false" ]]; then
     # Process the response
     case "$response" in
         "0")
-            wtype -M win -P down -m win
+            wtype -M win -P L -m win
             gsettings set sm.puri.phoc auto-maximize true
             wlr-randr --output "HWCOMPOSER-1" --scale 3.0 
             ;;
