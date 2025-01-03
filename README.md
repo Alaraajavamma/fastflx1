@@ -18,6 +18,7 @@ Mainly:
 10. Added some shortcuts when you press volume-buttons - options are endless but for now they will use wl-paste to paste the clipboard content (works in terminal), take screenshot, scale display
 11. New self destroy tool - **be very careful** - by pressing first volumeup for 5 seconds and right after that volumedown for 5 seconds you will get prompt and if you inser your password there it will remove your home folder. This can not be recovered. 
 12. Automatic call volume adjustment which will adjust volume to 40% if you use earpiece and to 100% if you use speaker - you can still adjust volume also manually but this will make sure that you have at least okayish sound all the time
+13. Multitaskin mode - unlock your FLX1 and double-press assistant button - I suggest that you choose Default 150% option. Then open some app and double-press again assistant-button it will give options for active window and it will also give option to go back to regular mode.
 
 **Default assistant-button options:**
 
