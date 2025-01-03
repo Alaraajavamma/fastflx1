@@ -71,8 +71,7 @@ adjust_volume() {
 
                 # Update the last known status
                 last_speaker_status="$speaker_status"
-            else
-            fi
+            fi  # This is the added 'fi' to properly close the 'if' block.
         fi
 
         sleep 0.5  # Tight polling interval
