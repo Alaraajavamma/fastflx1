@@ -22,7 +22,7 @@ Mainly:
 **Default assistant-button options:**
 
 - Unlocked short-press = opens clipboard shortcuts (copy, paste, cut, terminal paste, and ctrl+a + copy)
-- Unlocked double-press = opens display scaling shortcuts (300%, 250%, 200%, 150% or 100%)
+- Unlocked double-press = starts multitasking mode (default scale there is 150% because that works the best) and adds shortcut to move windows in multitasking mode (with double-press) and stopping multitaskin mode (with double-press)
 - Unlocked long-press = back button
 - Locked / on lock screen short-press = toggle the feedback theme (full - silent - quiet)
 - Locked / on lock screen double-press = toggle flashlight
