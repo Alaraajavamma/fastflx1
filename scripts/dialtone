@@ -27,8 +27,10 @@ direct() {
     fi
 }
 
-# Adjust volume based on speaker or earpiece mode
 adjust_volume() {
+    # Variable to store the last known speaker/earpiece mode
+    last_speaker_status=""
+
     while true; do
         # Fetch the output of the command
         mmcli_output=$(mmcli -m any --voice-list-calls)
@@ -38,24 +40,32 @@ adjust_volume() {
             echo "Call ended. Stopping volume adjustment."
             break
         else
-            # Extract speaker/earpiece mode
+            # Extract current speaker/earpiece mode
             speaker_status=$(callaudiocli --status | grep "Speaker enabled" | awk '{print $NF}')
 
-            if [[ "$speaker_status" == "CALL_AUDIO_SPEAKER_ON" ]]; then
-                echo "Speaker mode detected. Ensuring maximum volume..."
-                for i in {1..5}; do
-                    wtype -k XF86AudioRaiseVolume
-                done
-            elif [[ "$speaker_status" == "CALL_AUDIO_SPEAKER_OFF" ]]; then
-                echo "Earpiece mode detected. Adjusting to 40% volume..."
-                for i in {1..5}; do
-                    wtype -k XF86AudioLowerVolume
-                done
-                for i in {1..2}; do
-                    wtype -k XF86AudioRaiseVolume
-                done
+            # Check if the mode has changed
+            if [[ "$speaker_status" != "$last_speaker_status" ]]; then
+                if [[ "$speaker_status" == "CALL_AUDIO_SPEAKER_ON" ]]; then
+                    echo "Speaker mode detected. Ensuring maximum volume..."
+                    for i in {1..5}; do
+                        wtype -k XF86AudioRaiseVolume
+                    done
+                elif [[ "$speaker_status" == "CALL_AUDIO_SPEAKER_OFF" ]]; then
+                    echo "Earpiece mode detected. Adjusting to 40% volume..."
+                    for i in {1..5}; do
+                        wtype -k XF86AudioLowerVolume
+                    done
+                    for i in {1..2}; do
+                        wtype -k XF86AudioRaiseVolume
+                    done
+                else
+                    echo "Unknown speaker status. Continuing..."
+                fi
+
+                # Update the last known status
+                last_speaker_status="$speaker_status"
             else
-                echo "Unknown speaker status. Continuing..."
+                echo "Speaker/earpiece mode unchanged. No adjustment needed."
             fi
         fi
 
