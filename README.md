@@ -17,6 +17,7 @@ Mainly:
 9. Added some cool swipe gestures using lisgd - options are endless but for now they will change active apps, kill active app or press ctrl+a (look intro below)
 10. Added some shortcuts when you press volume-buttons - options are endless but for now they will use wl-paste to paste the clipboard content (works in terminal), take screenshot, scale display
 11. New self destroy tool - **be very careful** - by pressing first volumeup for 5 seconds and right after that volumedown for 5 seconds you will get prompt and if you inser your password there it will remove your home folder. This can not be recovered. 
+12. Automatic call volume adjustment which will adjust volume to 40% if you use earpiece and to 100% if you use speaker - you can still adjust volume also manually but this will make sure that you have at least okayish sound all the time
 
 **Default assistant-button options:**
 
