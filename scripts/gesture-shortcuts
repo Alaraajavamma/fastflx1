@@ -11,4 +11,4 @@ lisgd -d "$LISGD_INPUT_DEVICE" \
         `#Long swipe from left to right from left edge to kill the active window`\
         -g "1,LR,L,L,R,setsid -f wtype -M alt -P F4 -m alt -p F4" \
         `#Long swipe from down to up starting from bottom`\
-        -g "1,DU,B,*,R,setsid -f pkill -f wofi" \
+        -g "1,DU,B,*,R,pkill -f wofi" \
