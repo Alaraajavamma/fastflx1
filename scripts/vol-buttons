@@ -3,8 +3,8 @@
 # Event file to monitor (make sure to use the correct event file)
 EVENT_FILE="/dev/input/event1"
 
-# Timeout threshold in seconds (4 seconds)
-TIMEOUT_THRESHOLD=2
+# Timeout threshold in seconds
+TIMEOUT_THRESHOLD=1
 
 # Variables to track key presses
 volume_up_count=0
@@ -30,7 +30,7 @@ handle_command() {
 
   if [[ "$count" -eq 1 && "$direction" == "up" ]]; then
     # One down + one up = screenshot
-    cd /sys/class/leds/vibrator && echo 4000 > duration && echo 1 > activate && sleep 4
+    cd /sys/class/leds/vibrator && echo 100 > duration && echo 1 > activate &
 
     SCREENSHOT_PATH="$(xdg-user-dir PICTURES)/Screenshot-$(date +%F-%T).png"
     gdbus call --session --dest org.gnome.Shell.Screenshot \
@@ -73,72 +73,6 @@ handle_command() {
     else
       echo "Failed to take picture."
     fi
-  elif [[ "$count" -eq 2 && "$direction" == "up" ]]; then
-    # Two down + two up = open selector to kill biggest ram eaters
-    cd /sys/class/leds/vibrator && echo 100 > duration && echo 1 > activate
-    cd /sys/class/leds/vibrator && echo 200 > duration && echo 1 > activate
-    excluded_apps="Isolated|system_server|phosh|phoc|calls|chatty|waydroid|systemd"
-
-    # Get the top 5 RAM-consuming applications, excluding the defined apps
-    apps=$(ps --no-headers -eo comm,%mem --sort=-%mem | grep -Ev "$excluded_apps" | head -n 3 | awk '{print $1}')
-    apps_array=($apps)
-
-    # Check if there are apps to show
-    if [ ${#apps_array[@]} -eq 0 ]; then
-        echo "No heavy RAM users found."
-        return
-    fi
-
-    # Build the notify-send command with actions for each app
-    notification_command="notify-send --expire-time=0 \"Kill a RAM-heavy app\" \"Swipe away to dismiss\""
-    for i in "${!apps_array[@]}"; do
-        notification_command+=" --action=\"${apps_array[$i]}\""
-    done
-
-    # Run the notification and capture the response
-    response=$(eval $notification_command 2>&1)
-
-    # Match response to the app and execute pkill
-    for i in "${!apps_array[@]}"; do
-        if [[ "$response" == "$i" ]]; then
-            pkill -f "${apps_array[$i]}"
-        fi
-    done
-  elif [[ "$count" -eq 2 && "$direction" == "down" ]]; then
-    # Two up + two down = start android container shortcut
-    cd /sys/class/leds/vibrator && echo 200 > duration && echo 1 > activate
-    cd /sys/class/leds/vibrator && echo 100 > duration && echo 1 > activate
-    response=$(notify-send --icon="/home/furios/.git/fastflx1/files/fastflx1.svg" \
-                           --expire-time=0 \
-                           "Android container Actions" \
-                           "Select an action for android container" \
-                           --action="Start" \
-                           --action="Stop" \
-                           --action="Restart" \
-                           2>&1)
-
-    case "$response" in
-        "0")
-            pkexec systemctl start waydroid-container 
-            waydroid session start &
-            echo "Waydroid container started."
-            ;;
-        "1")
-            waydroid session stop
-            pkexec systemctl stop waydroid-container 
-            echo "Waydroid shutdown."
-            ;;
-        "2")
-            pkexec systemctl restart waydroid-container
-            waydroid session start &
-            echo "Waydroid rebooted."
-            ;;
-        *)
-            echo "No valid action selected or dismissed."
-            ;;
-    esac
-  fi
-}
 
 # Monitor the event file
 while read -r event; do
