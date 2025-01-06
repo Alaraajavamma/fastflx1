@@ -17,7 +17,7 @@ is_call_active() {
   [[ "$call_status" != *"No calls were found"* ]]
 }
 
-# Function to handle commands based on equal up and down presses
+# Function to handle commands based on up and down key presses
 handle_command() {
   # Check for active calls
   if is_call_active; then
@@ -73,6 +73,8 @@ handle_command() {
     else
       echo "Failed to take picture."
     fi
+  fi
+}
 
 # Monitor the event file
 while read -r event; do
