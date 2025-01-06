@@ -21,6 +21,7 @@ Mainly:
 
 **Default assistant-button options:**
 
+- If wofi shortcut panel is open short press from assistant-button is Enter (select)
 - Unlocked short-press = opens wofi-shortcut panel with options to copy, paste, cut, terminal paste, kill active app, show notification drawer and option to close shortcut panel
 - Unlocked double-press = opens wofi-shortcut panel with options to set display scale to 300%, 275%, 250%, 200%, 150% and also you can set the scale-to-fit to ture or false (which will try scale all apps to fit to the screen - true is not recommended but fast fix for some desktop apps) and option to close shortcut panel
 - Unlocked long-press = opens wofi-shortcut panel with options to go back (escape - for android mostly but works in some linux apps too), and then it lists most ram eating apps and option to kill them and option to close shortcut panel
