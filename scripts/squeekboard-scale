@@ -4,13 +4,12 @@
 current_scale=$(gsettings get sm.puri.Squeekboard keyboard-scale)
 notify-send "Your current scale is $current_scale" --icon="/home/furios/.git/fastflx1/files/fastflx1.svg"
 
-# Create options for wofi menu from 0.7 to 1.4, with close option
-OPTIONS=""
+# Create options for wofi menu from 0.7 to 1.4, with close option at the top
+OPTIONS="Close\n"  # Place 'Close' at the top
 for i in $(seq 7 14); do
     scale=$(echo "scale=1; $i/10" | bc)  # Generate scale values in the range of 0.7 to 1.4
     OPTIONS+="Scale to $scale\n"
 done
-OPTIONS+="Close"  # Ensure 'Close' is the last option
 
 # Display the wofi menu with the current value included in the info
 SELECTION=$(echo -e "$OPTIONS" | wofi -d --normal-window --width=100% --height=50%)
@@ -22,7 +21,7 @@ fi
 
 # Extract the selected scale value
 if [[ "$SELECTION" =~ Scale\ to\ ([0-9.]+) ]]; then
-    input=${BASH_REMATCH[1]}
+    input="${BASH_REMATCH[1]}"
 else
     echo "No valid input provided. Exiting."
     exit 1
@@ -31,5 +30,9 @@ fi
 # Debugging: Print the input value (optional)
 printf 'INPUT: %s\n' "$input"
 
-# Set the scale value using gsettings
-gsettings set sm.puri.Squeekboard keyboard-scale "$input"
+# Set the scale value using gsettings and check for success
+if gsettings set sm.puri.Squeekboard keyboard-scale "$input"; then
+    notify-send "Scale set to $input successfully."
+else
+    notify-send "Failed to set scale to $input."
+fi
