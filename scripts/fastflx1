@@ -30,7 +30,7 @@ case "$SELECTION" in
         bash -c 'pkill -f "(vol-shortcuts|dialtone|alarmvol|gen-thumbnails|gesture-shortcuts|vol-buttons|selfdestroy)" & notify-send "Tweak services stopped" --icon="/home/furios/.git/fastflx1/files/fastflx1.svg"'
         ;;
     "8. Change Squeekboard scale")
-        kgx -- bash -c 'squeekboard-scale'
+        bash -c 'squeekboard-scale'
         ;;
     "9. Quit")
         exit 0
