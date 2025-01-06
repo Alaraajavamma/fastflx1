@@ -1,11 +1,9 @@
 mode=drun
 allow_images=false
-height=30%
-width=90%
+width=100%
 normal_window=false
 prompt=
-location=0
+location=2
 hide_search=true
 sort_order=alphabetical
 hide_scroll=true
-click_behaviour=single
