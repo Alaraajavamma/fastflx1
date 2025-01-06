@@ -2,19 +2,29 @@
 
 # Get the current value of the keyboard scale
 current_scale=$(gsettings get sm.puri.Squeekboard keyboard-scale)
+notify-send "Your current scale is $current_scale" --icon="/home/furios/.git/fastflx1/files/fastflx1.svg"
 
-# Create the yad dialog with the current value included in the message
-input=$(yad --name="squeekboard-scale" \
-        --title="Scale Squeekboard" \
-        --entry \
-        --text "Your current value is: $current_scale.\nDefault is 0.7.\nEnter your preferred scale:" \
-        --text-align=center \
-        --buttons-layout=center \
-        --button=Scale:0)
+# Create options for wofi menu from 0.7 to 1.4, with close option
+OPTIONS=""
+for i in $(seq 7 14); do
+    scale=$(echo "scale=1; $i/10" | bc)  # Generate scale values in the range of 0.7 to 1.4
+    OPTIONS+="Scale to $scale\n"
+done
+OPTIONS+="Close"
 
-# If the user cancels or doesn't provide input, exit
-if [ -z "$input" ]; then
-    echo "No input provided. Exiting."
+# Display the wofi menu with the current value included in the info
+SELECTION=$(echo -e "$OPTIONS" | wofi -d --prompt "Select an option:" --lines 8)
+
+# If the user selects "Close", exit
+if [[ "$SELECTION" == "Close" ]]; then
+    exit 0
+fi
+
+# Extract the selected scale value
+if [[ "$SELECTION" =~ Scale\ to\ ([0-9.]+) ]]; then
+    input=${BASH_REMATCH[1]}
+else
+    echo "No valid input provided. Exiting."
     exit 1
 fi
 
