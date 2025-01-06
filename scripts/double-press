@@ -4,12 +4,11 @@ unlocked() {
 	# Check if wofi is running
 	if pgrep -x "wofi" > /dev/null; then
 	# Wofi is running; simulate pressing Enter
-        wtype -P 'up' -p 'up'
-        exit 0
+        pkill -x wofi
 	fi
 	
 # Options for the wofi menu
-OPTIONS="1. Scale display to 300%\n2. Scale display to 275%\n3. Scale display to 250%\n4. Scale display to 200%\n5. Scale display to 150%\n6. Kill active window\n7. Show notification drawer\n8. Close"
+OPTIONS="1. Scale display to 300%\n2. Scale display to 275%\n3. Scale display to 250%\n4. Scale display to 200%\n5. Scale display to 150%\n6. Scale-to-fit true\n7. Scale-to-fit false\n8. Close"
 
 # Display the menu and capture the user's selection
 SELECTION=$(echo -e "$OPTIONS" | wofi -d --prompt "Select an option:" --lines 8)
@@ -31,11 +30,11 @@ case "$SELECTION" in
     "5. Scale display to 150%")
         wlr-randr --output "HWCOMPOSER-1" --scale 1.50
         ;;
-    "6. Kill active window")
-        wtype -M alt -P F4 -m alt -p F4
+    "6. Scale-to-fit true")
+        gsettings set sm.puri.phoc scale-to-fit true
         ;;
-    "7. Show notification drawer")
-        wtype -M logo v -m logo
+    "7. Scale-to-fit false")
+        gsettings set sm.puri.phoc scale-to-fit false
         ;;
     "8. Close")
         pkill -x wofi
