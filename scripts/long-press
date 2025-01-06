@@ -1,6 +1,12 @@
 #!/bin/bash
 
 unlocked() {
+# Check if wofi is running
+	if pgrep -x "wofi" > /dev/null; then
+	# Wofi is running; simulate pressing Enter
+        wtype -P 'return' -p 'return'
+        exit 0
+	fi
         wtype -k XF86Back
 }
 
