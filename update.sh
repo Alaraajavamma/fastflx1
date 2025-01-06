@@ -9,6 +9,7 @@ rm ~/.config/autostart/gesture-shortcuts.desktop
 rm ~/.config/autostart/vol-buttons.desktop
 rm ~/.config/autostart/selfdestroy.desktop
 rm ~/.config/gtk-3.0/gtk.css
+rm -rf ~/.config/wofi
 rm -rf ~/.config/feedbackd
 rm -rf ~/.config/assistant-button
 rm -rf ~/.local/share/squeekboard
