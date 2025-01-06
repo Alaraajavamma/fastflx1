@@ -4,36 +4,43 @@
 current_scale=$(gsettings get sm.puri.Squeekboard keyboard-scale)
 notify-send "Your current scale is $current_scale" --icon="/home/furios/.git/fastflx1/files/fastflx1.svg"
 
-# Create options for wofi menu from 0.7 to 1.3, with close option at the bottom
-OPTIONS=""
-for i in $(seq 7 13); do
-    scale=$(echo "scale=1; $i/10" | bc)  # Generate scale values in the range of 0.7 to 1.3
-    OPTIONS+="Scale to $scale\n"
-done
-OPTIONS+="Close"  # Place 'Close' at the bottom
+# Options for the FastFLX1 tweaks menu
+OPTIONS="1. Scale Squeekboard to 0.7\n2. Scale Squeekboard to 0.8\n3. Scale Squeekboard to 0.9\n4. Scale Squeekboard to 1.0\n5. Scale Squeekboard to 1.1\n6. Scale Squeekboard to 1.2\n7. Scale Squeekboard to 1.3\n8. Scale Squeekboard to 1.4\n9. Quit"
 
-# Display the wofi menu with the current value included in the info
+# Display the menu and capture the user's selection using wofi
 SELECTION=$(echo -e "$OPTIONS" | wofi -d --normal-window --width=100% --height=50%)
 
-# If the user selects "Close", exit
-if [[ "$SELECTION" == "Close" ]]; then
-    exit 0
-fi
-
-# Extract the selected scale value
-if [[ "$SELECTION" =~ Scale\ to\ ([0-9.]+) ]]; then
-    input="${BASH_REMATCH[1]}"
-else
-    echo "No valid input provided. Exiting."
-    exit 1
-fi
-
-# Debugging: Print the input value (optional)
-printf 'INPUT: %s\n' "$input"
-
-# Set the scale value using gsettings and check for success
-if gsettings set sm.puri.Squeekboard keyboard-scale "$input"; then
-    notify-send "Scale set to $input successfully."
-else
-    notify-send "Failed to set scale to $input."
-fi
+# Execute a command based on the selection
+case "$SELECTION" in
+    "1. Scale Squeekboard to 0.7")
+        gsettings set sm.puri.Squeekboard keyboard-scale 0.7
+        ;;
+    "2. Scale Squeekboard to 0.8")
+        gsettings set sm.puri.Squeekboard keyboard-scale 0.8
+        ;;
+    "3. Scale Squeekboard to 0.9")
+        gsettings set sm.puri.Squeekboard keyboard-scale 0.9
+        ;;
+    "4. Scale Squeekboard to 1.0")
+        gsettings set sm.puri.Squeekboard keyboard-scale 1.0
+        ;;
+    "5. Scale Squeekboard to 1.1")
+        gsettings set sm.puri.Squeekboard keyboard-scale 1.1
+        ;;
+    "6. Scale Squeekboard to 1.2")
+        gsettings set sm.puri.Squeekboard keyboard-scale 1.2
+        ;;
+    "7. Scale Squeekboard to 1.3")
+        gsettings set sm.puri.Squeekboard keyboard-scale 1.3
+        ;;
+    "8. Scale Squeekboard to 1.4")
+        gsettings set sm.puri.Squeekboard keyboard-scale 1.4
+        ;;
+    "9. Quit")
+        exit 0
+        ;;
+    *)
+        echo "Invalid selection. Exiting."
+        exit 1
+        ;;
+esac
