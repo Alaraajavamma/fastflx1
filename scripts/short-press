@@ -1,49 +1,52 @@
 #!/bin/bash
 
 unlocked() {
-# Send the notification with selectable actions
-response=$(notify-send --icon="/home/furios/.git/fastflx1/files/fastflx1.svg" \
-                       --expire-time=0 \
-                       "Choose action" \
-                       "Swipe away to dismiss" \
-                       --action="Copy" \
-                       --action="Paste" \
-                       --action="Cut" \
-                       --action="Wl-Paste" \
-                       --action="Ctrl+A Copy" \
-                       2>&1)
+	# Check if wofi is running
+	if pgrep -x "wofi" > /dev/null; then
+	# Wofi is running; simulate pressing Enter
+        wtype -P 'down' -p 'down'
+        exit 0
+	fi
 
-# Check which action was selected
-case "$response" in
-    "0")
-        echo "User selected Copy"
-        # Run your Paste-related script here
+# Options for the wofi menu
+OPTIONS="1. Copy Ctrl+C\n2. Paste Ctrl+V\n3. Cut Ctrl+X\n4. Paste to Terminal (Wl-paste)\n5. Select all & copy Ctrl+A Ctrl+C\n6. Kill active window\n7. Show notification drawer\n8. Close"
+
+# Display the menu and capture the user's selection
+SELECTION=$(echo -e "$OPTIONS" | wofi -d --prompt "Select an option:" --lines 8)
+
+# Execute a command based on the selection
+case "$SELECTION" in
+    "1. Copy Ctrl+C")
         wtype -M ctrl c -m ctrl
         ;;
-    "1")
-        echo "User selected Paste"
-        # Run your Copy-related script here
+    "2. Paste Ctrl+V")
         wtype -M ctrl v -m ctrl
         ;;
-    "2")
-        echo "User selected Cut"
-        # Run your Cut-related script here
+    "3. Cut Ctrl+X")
         wtype -M ctrl x -m ctrl
         ;;
-    "3")
-        echo "User selected wl-paste"
-        # Run your Cut-related script here
+    "4. Paste to Terminal (Wl-paste)")
         clipboard_content=$(wl-paste)
- 	wtype "$clipboard_content"
+        if [[ -z "$clipboard_content" ]]; then
+            notify-send "Clipboard is empty."
+            exit 1
+        fi
+        wtype "$clipboard_content"
         ;;
-    "4")
-        echo "User selected Ctrl+a coy"
-        # Run your Cut-related script here
+    "5. Select all & copy Ctrl+A Ctrl+C")
         wtype -M ctrl a -m ctrl && wtype -M ctrl c -m ctrl
         ;;
-*)
-	echo "No valid action selected or dismissed"
+    "6. Kill active window")
+        wtype -M alt -P F4 -m alt -p F4
+        ;;
+    "7. Show notification drawer")
+        wtype -M logo v -m logo
+        ;;
+    "8. Close")
+        pkill -x wofi
+        ;;
 esac
+
 }
 
 # Function to toggle feedback profile
