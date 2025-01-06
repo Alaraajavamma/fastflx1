@@ -13,7 +13,7 @@ done
 OPTIONS+="Close"  # Ensure 'Close' is the last option
 
 # Display the wofi menu with the current value included in the info
-SELECTION=$(echo -e "$OPTIONS" | wofi -d --prompt "Select an option:" --lines 8)
+SELECTION=$(echo -e "$OPTIONS" | wofi -d --normal-window --width=100% --height=50%)
 
 # If the user selects "Close", exit
 if [[ "$SELECTION" == "Close" ]]; then
