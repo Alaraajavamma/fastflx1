@@ -9,6 +9,7 @@ rm ~/.config/autostart/gesture-shortcuts.desktop
 rm ~/.config/autostart/vol-buttons.desktop
 rm ~/.config/autostart/selfdestroy.desktop
 rm ~/.config/gtk-3.0/gtk.css
+rm -rf ~/.config/wofi/
 rm -rf ~/.config/feedbackd
 rm -rf ~/.config/assistant-button
 rm -rf ~/.local/share/squeekboard
@@ -25,6 +26,6 @@ sudo rm /usr/bin/short-press
 sudo rm /usr/bin/squeekboard-scale
 sudo rm /usr/bin/vol-buttons
 sudo rm /usr/bin/selfdestroy
-sudo apt remove yad wl-clipboard inotify-tools imagemagick lisgd evtest libcallaudio-tools
+sudo apt remove yad wl-clipboard inotify-tools imagemagick lisgd evtest libcallaudio-tools wofi
 gsettings set org.gnome.desktop.sound theme-name default
 cd ~ && rm -rf .git/fastflx1
