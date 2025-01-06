@@ -10,7 +10,7 @@ for i in $(seq 7 14); do
     scale=$(echo "scale=1; $i/10" | bc)  # Generate scale values in the range of 0.7 to 1.4
     OPTIONS+="Scale to $scale\n"
 done
-OPTIONS+="Close"
+OPTIONS+="Close"  # Ensure 'Close' is the last option
 
 # Display the wofi menu with the current value included in the info
 SELECTION=$(echo -e "$OPTIONS" | wofi -d --prompt "Select an option:" --lines 8)
