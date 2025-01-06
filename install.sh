@@ -1,5 +1,5 @@
 #!/bin/bash
-sudo apt install -y yad wtype curl wl-clipboard inotify-tools imagemagick lisgd evtest libcallaudio-tools
+sudo apt install -y yad wtype curl wl-clipboard inotify-tools imagemagick lisgd evtest libcallaudio-tools wofi
 
 # Set permissions for uninstall and update scripts
 sudo chmod +x "${HOME}/.git/fastflx1/uninstall.sh" "${HOME}/.git/fastflx1/update.sh"
@@ -19,6 +19,10 @@ cp "${HOME}/.git/fastflx1/configs/feedbackd/themes/default.json" "${HOME}/.confi
 
 mkdir -p "${HOME}/.config/gtk-3.0"
 cp "${HOME}/.git/fastflx1/configs/gtk-3.0/gtk.css" "${HOME}/.config/gtk-3.0/"
+
+mkdir -p "${HOME}/.config/wofi"
+cp "${HOME}/.git/fastflx1/configs/wofi/style.css" "${HOME}/.config/wofi/"
+cp "${HOME}/.git/fastflx1/configs/wofi/config" "${HOME}/.config/wofi/"
 
 # Handle squeekboard keyboards
 keyboard_dir="${HOME}/.local/share/squeekboard/keyboards"
@@ -52,5 +56,3 @@ if [ "$answer" == "Yes" ]; then
 else
     echo "Reboot canceled."
 fi
-
-
