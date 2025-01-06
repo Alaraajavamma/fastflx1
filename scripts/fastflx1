@@ -4,7 +4,7 @@
 OPTIONS="1. Go to staging\n2. Go to production\n3. Install/remove Branchy app\n4. Upgrade FuriOS\n5. Set city to Weather\n6. Start Tweak services\n7. Stop Tweak services\n8. Change Squeekboard scale\n9. Quit"
 
 # Display the menu and capture the user's selection using wofi
-SELECTION=$(echo -e "$OPTIONS" | wofi -d --normal-window --width=100% --height=92%)
+SELECTION=$(echo -e "$OPTIONS" | wofi -d --normal-window --width=100% --height=50%)
 
 # Execute a command based on the selection
 case "$SELECTION" in
