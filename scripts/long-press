@@ -4,10 +4,57 @@ unlocked() {
 # Check if wofi is running
 	if pgrep -x "wofi" > /dev/null; then
 	# Wofi is running; simulate pressing Enter
-        wtype -P 'return' -p 'return'
-        exit 0
+        pkill -x wofi
 	fi
+    
+# Options for the wofi menu
+most_ram_apps=$(ps --sort=-%mem -eo comm | head -n 6 | awk 'NR>1')
+OPTIONS="1. Back (XF86Back)
+3. Kill RAM-eater #1 (Name: $(echo "$most_ram_apps" | sed -n '1p'))
+3. Kill RAM-eater #2 (Name: $(echo "$most_ram_apps" | sed -n '1p'))
+4. Kill RAM-eater #3 (Name: $(echo "$most_ram_apps" | sed -n '2p'))
+5. Kill RAM-eater #4 (Name: $(echo "$most_ram_apps" | sed -n '3p'))
+6. Kill RAM-eater #5 (Name: $(echo "$most_ram_apps" | sed -n '4p'))
+7. Kill RAM-eater #6 (Name: $(echo "$most_ram_apps" | sed -n '5p'))
+8. Close"
+
+# Display the menu and capture the user's selection
+SELECTION=$(echo -e "$OPTIONS" | wofi -d --prompt "Select an option:" --lines 8)
+
+# Execute a command based on the selection
+case "$SELECTION" in
+    "1. Back (XF86Back)")
         wtype -k XF86Back
+        ;;
+    "2. Kill RAM-eater #1 (Name: $(echo "$most_ram_apps" | sed -n '1p'))")
+	pid=$(ps --sort=-%mem -eo pid | sed -n '1p')
+        [[ -n "$pid" ]] && kill "$pid" && notify-send "Killed process $pid"
+        ;;
+    "3. Kill most RAM-eater #2 (Name: $(echo \"$most_ram_apps\" | sed -n '1p'))")
+        pid=$(ps --sort=-%mem -eo pid | sed -n '2p')
+        [[ -n "$pid" ]] && kill "$pid" && notify-send "Killed process $pid"
+        ;;
+    "4. Kill most RAM-eater #3 (Name: $(echo \"$most_ram_apps\" | sed -n '2p'))")
+        pid=$(ps --sort=-%mem -eo pid | sed -n '3p')
+        [[ -n "$pid" ]] && kill "$pid" && notify-send "Killed process $pid"
+        ;;
+    "5. Kill most RAM-eater #4 (Name: $(echo \"$most_ram_apps\" | sed -n '3p'))")
+        pid=$(ps --sort=-%mem -eo pid | sed -n '4p')
+        [[ -n "$pid" ]] && kill "$pid" && notify-send "Killed process $pid"
+        ;;
+    "6. Kill most RAM-eater #5 (Name: $(echo \"$most_ram_apps\" | sed -n '4p'))")
+        pid=$(ps --sort=-%mem -eo pid | sed -n '5p')
+        [[ -n "$pid" ]] && kill "$pid" && notify-send "Killed process $pid"
+        ;;
+    "7. Kill most RAM-eater #6 (Name: $(echo \"$most_ram_apps\" | sed -n '5p'))")
+        pid=$(ps --sort=-%mem -eo pid | sed -n '6p')
+        [[ -n "$pid" ]] && kill "$pid" && notify-send "Killed process $pid"
+        ;;
+    "8. Close")
+        pkill -x wofi
+        ;;
+esac
+
 }
 
 locked() {
