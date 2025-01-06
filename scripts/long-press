@@ -11,11 +11,11 @@ unlocked() {
 most_ram_apps=$(ps --sort=-%mem -eo comm | head -n 6 | awk 'NR>1')
 OPTIONS="1. Back (XF86Back)
 3. Kill RAM-eater #1 (Name: $(echo "$most_ram_apps" | sed -n '1p'))
-3. Kill RAM-eater #2 (Name: $(echo "$most_ram_apps" | sed -n '1p'))
-4. Kill RAM-eater #3 (Name: $(echo "$most_ram_apps" | sed -n '2p'))
-5. Kill RAM-eater #4 (Name: $(echo "$most_ram_apps" | sed -n '3p'))
-6. Kill RAM-eater #5 (Name: $(echo "$most_ram_apps" | sed -n '4p'))
-7. Kill RAM-eater #6 (Name: $(echo "$most_ram_apps" | sed -n '5p'))
+3. Kill RAM-eater #2 (Name: $(echo "$most_ram_apps" | sed -n '2p'))
+4. Kill RAM-eater #3 (Name: $(echo "$most_ram_apps" | sed -n '3p'))
+5. Kill RAM-eater #4 (Name: $(echo "$most_ram_apps" | sed -n '4p'))
+6. Kill RAM-eater #5 (Name: $(echo "$most_ram_apps" | sed -n '5p'))
+7. Kill RAM-eater #6 (Name: $(echo "$most_ram_apps" | sed -n '6p'))
 8. Close"
 
 # Display the menu and capture the user's selection
