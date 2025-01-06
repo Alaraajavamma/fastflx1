@@ -43,7 +43,7 @@ Notice that swipe gestures works ootb like this when FLX1 is in default portrait
 
 I am working on this slowly and will add more (GUI) features soonish (or remove some parts what Barry and Jesus from Furilabs make unnecessary ;) ). If you wan't to help feel free to send me message, open issue or so. 
 
-![Swipe gestures](gestures.png) ![Multitasking](multitasking.png)![FastFLX1 in action](fastflxsc.png)
+![FastFLX1 in action](fastflxsc.png)
 
 
 ## How to install?
