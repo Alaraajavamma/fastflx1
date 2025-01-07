@@ -5,67 +5,48 @@ current_scale=$(gsettings get sm.puri.Squeekboard keyboard-scale)
 notify-send "Your current scale is $current_scale" --icon="/home/furios/.git/fastflx1/files/fastflx1.svg"
 
 # Options for the FastFLX1 tweaks menu
-OPTIONS="1. Scale Squeekboard to 0.70\n2. Scale Squeekboard to 0.80\n3. Scale Squeekboard to 0.90\n4. Scale Squeekboard to 1.00\n5. Scale Squeekboard to 1.05\n6. Scale Squeekboard to 1.10\n7. Scale Squeekboard to 1.15\n8. Scale Squeekboard to 1.20\n9. Scale Squeekboard to 1.25\n10. Scale Squeekboard to 1.30\n11. Scale Squeekboard to 1.35\n12. Scale Squeekboard to 1.40\n13. Quit"
+OPTIONS="1. Scale Squeekboard to 1.00\n2. Scale Squeekboard to 1.10\n3. Scale Squeekboard to 1.15\n4. Scale Squeekboard to 1.20\n5. Scale Squeekboard to 1.25\n6. Scale Squeekboard to 1.30\n7. Scale Squeekboard to 1.35\n8. Quit"
 
 # Display the menu and capture the user's selection using wofi
-SELECTION=$(echo -e "$OPTIONS" | wofi -d --prompt "Select an option:" --lines 13)
+SELECTION=$(echo -e "$OPTIONS" | wofi -d --prompt "Select an option:" --lines 8)
 
 # Execute a command based on the selection
 case "$SELECTION" in
-    "1. Scale Squeekboard to 0.70")
-        pkill -x feh
-        gsettings set sm.puri.Squeekboard keyboard-scale 0.70
-        ;;
-    "2. Scale Squeekboard to 0.80")
-        pkill -x feh
-        gsettings set sm.puri.Squeekboard keyboard-scale 0.80
-        ;;
-    "3. Scale Squeekboard to 0.90")
-        pkill -x feh
-        gsettings set sm.puri.Squeekboard keyboard-scale 0.90
-        ;;
-    "4. Scale Squeekboard to 1.00")
+    "1. Scale Squeekboard to 1.00")
         pkill -x feh
         gsettings set sm.puri.Squeekboard keyboard-scale 1.00
         ;;
-    "5. Scale Squeekboard to 1.05")
-        pkill -x feh
-        gsettings set sm.puri.Squeekboard keyboard-scale 1.05
-        ;;
-    "6. Scale Squeekboard to 1.10")
+    "2. Scale Squeekboard to 1.10")
         pkill -x feh
         gsettings set sm.puri.Squeekboard keyboard-scale 1.10
         ;;
-    "7. Scale Squeekboard to 1.15")
+    "3. Scale Squeekboard to 1.15")
         pkill -x feh
         gsettings set sm.puri.Squeekboard keyboard-scale 1.15
         ;;
-    "8. Scale Squeekboard to 1.20")
+    "4. Scale Squeekboard to 1.20")
         pkill -x feh
         gsettings set sm.puri.Squeekboard keyboard-scale 1.20
         ;;
-    "9. Scale Squeekboard to 1.25")
+    "5. Scale Squeekboard to 1.25")
         pkill -x feh
         gsettings set sm.puri.Squeekboard keyboard-scale 1.25
         ;;
-    "10. Scale Squeekboard to 1.30")
+    "6. Scale Squeekboard to 1.30")
         pkill -x feh
         gsettings set sm.puri.Squeekboard keyboard-scale 1.30
         ;;
-    "11. Scale Squeekboard to 1.35")
+    "7. Scale Squeekboard to 1.35")
         pkill -x feh
         gsettings set sm.puri.Squeekboard keyboard-scale 1.35
         ;;
-    "12. Scale Squeekboard to 1.40")
-        pkill -x feh
-        gsettings set sm.puri.Squeekboard keyboard-scale 1.40
-        ;;
-    "13. Quit")
+    "8. Quit")
         pkill -x feh
         exit 0
         ;;
     *)
         echo "Invalid selection. Exiting."
+        pkill -x feh
         exit 1
         ;;
 esac
