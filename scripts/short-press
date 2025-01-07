@@ -9,7 +9,7 @@ unlocked() {
 	fi
 
 # Options for the wofi menu
-OPTIONS="1. Copy Ctrl+C\n2. Paste Ctrl+V\n3. Cut Ctrl+X\n4. Paste to Terminal (Wl-paste)\n5. Select all & copy Ctrl+A Ctrl+C\n6. Kill active window\n7. Show notification drawer\n8. Close"
+OPTIONS="1. Copy Ctrl+C\n2. Paste Ctrl+V\n3. Cut Ctrl+X\n4. Paste to Terminal (Wl-paste)\n5. Select all & copy Ctrl+A Ctrl+C\n6. Kill active window\n7. Insert copied number to new contact\n8. Close"
 
 # Display the menu and capture the user's selection
 SELECTION=$(echo -e "$OPTIONS" | wofi -d --prompt "Select an option:" --lines 8)
@@ -39,8 +39,24 @@ case "$SELECTION" in
     "6. Kill active window")
         wtype -M alt -P F4 -m alt -p F4
         ;;
-    "7. Show notification drawer")
-        wtype -M logo v -m logo
+    "7. Insert copied number to new contact")
+        # Open gnome-contacts
+        gnome-contacts &
+
+        # Wait for gnome-contacts to launch (adjust the sleep duration if needed)
+        sleep 2
+
+        # Simulate "Ctrl+N" to open a new contact tab
+        wtype -M ctrl -P n -m ctrl
+
+        # Simulate pressing "Tab" four times
+        wtype -P tab
+        wtype -P tab
+        wtype -P tab
+        wtype -P tab
+
+        # Simulate "Ctrl+V" to paste content
+        wtype -M ctrl -P v -m ctrl
         ;;
     "8. Close")
         pkill -x wofi
