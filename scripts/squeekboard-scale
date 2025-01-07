@@ -60,7 +60,8 @@ case "$SELECTION" in
         pkill -x feh
         exit 1
         ;;
-esac }
+esac 
+pkill -f wofi }
 
 # Start feh in background and then wofi
 start_feh &  # Start feh in the background
