@@ -1,6 +1,19 @@
 #!/bin/bash
 
+# Function to clean up wofi if feh is killed
+cleanup() {
+    pkill -x wofi
+    exit 0
+}
+
+# Set the trap to catch signals and execute the cleanup function
+trap cleanup SIGINT SIGTERM EXIT
+
+# Start feh in the background
 feh --fullscreen "${HOME}/.git/fastflx1/files/tux.jpg" &
+
+# Save the PID of feh
+FEH_PID=$!
 
 # Options for the FastFLX1 tweaks menu
 OPTIONS="1. Switch environment (staging/production)\n2. Upgrade FuriOS\n3. Set city to Weather\n4. Manage Tweak services (start/stop)\n5. Manage Tweak services autostart\n6. Manage custom assistant-button options\n7. Change Squeekboard scale\n8. Quit"
@@ -94,6 +107,7 @@ case "$SELECTION" in
         }
         ;;
     "7. Change Squeekboard scale")
+        pkill -x feh
         bash -c 'squeekboard-scale'
         ;;
     "8. Quit")
