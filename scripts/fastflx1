@@ -113,8 +113,7 @@ case "$SELECTION" in
         exit 1
         ;;
 
-esac 
-pkill -x wofi }
+esac }
 
 # Start feh in background and then wofi
 start_feh &  # Start feh in the background
