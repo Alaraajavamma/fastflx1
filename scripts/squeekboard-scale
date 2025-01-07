@@ -1,20 +1,13 @@
 #!/bin/bash
 
-# Function to clean up wofi if feh is killed
-cleanup() {
+# Start feh and immediately wait for it to finish
+start_feh() {
+    feh --fullscreen "${HOME}/.git/fastflx1/files/tux.jpg"
     pkill -x wofi
-    exit 0
 }
 
-# Set the trap to catch signals and execute the cleanup function
-trap cleanup SIGINT SIGTERM EXIT
-
-# Start feh in the background
-feh --fullscreen "${HOME}/.git/fastflx1/files/tux.jpg" &
-
-# Save the PID of feh
-FEH_PID=$!
-
+# Function to start wofi
+start_wofi() {
 # Get the current value of the keyboard scale
 current_scale=$(gsettings get sm.puri.Squeekboard keyboard-scale)
 notify-send "Your current scale is $current_scale" --icon="/home/furios/.git/fastflx1/files/fastflx1.svg"
@@ -67,4 +60,8 @@ case "$SELECTION" in
         pkill -x feh
         exit 1
         ;;
-esac
+esac }
+
+# Start feh in background and then wofi
+start_feh &  # Start feh in the background
+start_wofi  # Start wofi
