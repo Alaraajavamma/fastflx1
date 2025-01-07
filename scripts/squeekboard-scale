@@ -8,7 +8,7 @@ notify-send "Your current scale is $current_scale" --icon="/home/furios/.git/fas
 OPTIONS="1. Scale Squeekboard to 0.70\n2. Scale Squeekboard to 0.80\n3. Scale Squeekboard to 0.90\n4. Scale Squeekboard to 1.00\n5. Scale Squeekboard to 1.05\n6. Scale Squeekboard to 1.10\n7. Scale Squeekboard to 1.15\n8. Scale Squeekboard to 1.20\n9. Scale Squeekboard to 1.25\n10. Scale Squeekboard to 1.30\n11. Scale Squeekboard to 1.35\n12. Scale Squeekboard to 1.40\n13. Quit"
 
 # Display the menu and capture the user's selection using wofi
-SELECTION=$(echo -e "$OPTIONS" | wofi -d --normal-window --width=100% --height=100%)
+SELECTION=$(echo -e "$OPTIONS" | wofi -d --prompt "Select an option:" --lines 13)
 
 # Execute a command based on the selection
 case "$SELECTION" in
