@@ -2,6 +2,8 @@
 rm ~/.local/share/applications/fastflx1.desktop
 rm ~/.local/share/applications/yad-icon-browser.desktop
 rm ~/.local/share/applications/display-im6.q16.desktop
+rm ~/.local/share/applications/display-im7.q16.desktop
+rm ~/.local/share/applications/feh.desktop
 rm ~/.config/autostart/dialtone.desktop
 rm ~/.config/autostart/alarmvol.desktop
 rm ~/.config/autostart/gen-thumbnails.desktop
