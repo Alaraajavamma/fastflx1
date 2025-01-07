@@ -100,4 +100,10 @@ case "$SELECTION" in
         pkill -x feh
         exit 0
         ;;
+    *)
+        echo "Invalid selection. Exiting."
+        pkill -x feh
+        exit 1
+        ;;
+
 esac
