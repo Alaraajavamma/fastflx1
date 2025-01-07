@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Options for the FastFLX1 tweaks menu
-OPTIONS="1. Go to staging\n2. Go to production\n3. Install/remove Branchy app\n4. Upgrade FuriOS\n5. Set city to Weather\n6. Start Tweak services\n7. Stop Tweak services\n8. Change Squeekboard scale\n9. Quit"
+OPTIONS="1. Go to staging\n2. Go to production\n3. Install/remove Branchy app\n4. Upgrade FuriOS\n5. Set city to Weather\n6. Start Tweak services\n7. Stop Tweak services\n8. Change Squeekboard scale\n9. Disable Tweak services autostart\n10. Re-enable Tweak services autostart\n11. Disable custom assistant-button options\n12. Re-enable custom assistant-button options\n13. Quit"
 
 # Display the menu and capture the user's selection using wofi
 SELECTION=$(echo -e "$OPTIONS" | wofi -d --normal-window --width=100% --height=50%)
@@ -27,12 +27,39 @@ case "$SELECTION" in
         bash -c 'notify-send "Tweak services started" --icon="/home/furios/.git/fastflx1/files/fastflx1.svg" && dialtone & alarmvol & gen-thumbnails & gesture-shortcuts & vol-buttons & selfdestroy'
         ;;
     "7. Stop Tweak services")
-        bash -c 'pkill -f "(vol-shortcuts|dialtone|alarmvol|gen-thumbnails|gesture-shortcuts|vol-buttons|selfdestroy)" & notify-send "Tweak services stopped" --icon="/home/furios/.git/fastflx1/files/fastflx1.svg"'
+        bash -c 'pkill -f "(vol-shortcuts|dialtone|alarmvol|gen-thumbnails|gesture-shortcuts|vol-buttons|selfdestroy)" && notify-send "Tweak services stopped" --icon="/home/furios/.git/fastflx1/files/fastflx1.svg"'
         ;;
     "8. Change Squeekboard scale")
         bash -c 'squeekboard-scale'
         ;;
-    "9. Quit")
+    "9. Disable Tweak services autostart")
+        autostart_dir="${HOME}/.config/autostart"
+        rm -f "${autostart_dir}/alarmvol.desktop" \
+              "${autostart_dir}/dialtone.desktop" \
+              "${autostart_dir}/gen-thumbnails.desktop" \
+              "${autostart_dir}/gesture-shortcuts.desktop" \
+              "${autostart_dir}/vol-buttons.desktop" \
+              "${autostart_dir}/selfdestroy.desktop"
+        notify-send "Tweak services autostart disabled" --icon="/home/furios/.git/fastflx1/files/fastflx1.svg"
+        ;;
+    "10. Re-enable Tweak services autostart")
+        autostart_dir="${HOME}/.config/autostart"
+        cp "${HOME}/.git/fastflx1/configs/autostart/"{alarmvol.desktop,dialtone.desktop,gen-thumbnails.desktop,gesture-shortcuts.desktop,vol-buttons.desktop,selfdestroy.desktop} "${autostart_dir}/"
+        notify-send "Tweak services autostart re-enabled" --icon="/home/furios/.git/fastflx1/files/fastflx1.svg"
+        ;;
+    "11. Disable custom assistant-button options")
+        assistant_button_dir="${HOME}/.config/assistant-button"
+        rm -f "${assistant_button_dir}/short_press" \
+              "${assistant_button_dir}/long_press" \
+              "${assistant_button_dir}/double_press"
+        notify-send "Custom assistant-button options disabled" --icon="/home/furios/.git/fastflx1/files/fastflx1.svg"
+        ;;
+    "12. Re-enable custom assistant-button options")
+        assistant_button_dir="${HOME}/.config/assistant-button"
+        cp "${HOME}/.git/fastflx1/configs/assistant-button/"{short_press,double_press,long_press} "${assistant_button_dir}/"
+        notify-send "Custom assistant-button options re-enabled" --icon="/home/furios/.git/fastflx1/files/fastflx1.svg"
+        ;;
+    "13. Quit")
         exit 0
         ;;
 esac
