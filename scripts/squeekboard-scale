@@ -18,9 +18,6 @@ OPTIONS="1. Scale Squeekboard to 1.00\n2. Scale Squeekboard to 1.10\n3. Scale Sq
 # Display the menu and capture the user's selection using wofi
 SELECTION=$(echo -e "$OPTIONS" | wofi -d --prompt "Select an option:" --lines 8)
 
-# Wait for feh to exit
-wait $FEH_PID
-
 # Execute a command based on the selection
 case "$SELECTION" in
     "1. Scale Squeekboard to 1.00")
