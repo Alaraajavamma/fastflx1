@@ -48,13 +48,17 @@ case "$SELECTION" in
 
         # Simulate "Ctrl+N" to open a new contact tab
         wtype -M ctrl -P n -m ctrl
+        sleep 1
 
         # Simulate pressing "Tab" four times
         wtype -P tab
+        sleep 0.1
         wtype -P tab
+        sleep 0.1
         wtype -P tab
+        sleep 0.1
         wtype -P tab
-
+        sleep 0.1
         # Simulate "Ctrl+V" to paste content
         wtype -M ctrl -P v -m ctrl
         ;;
