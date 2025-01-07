@@ -42,7 +42,7 @@ cp "${HOME}/.git/fastflx1/share/"{alarm-clock-elapsed.oga,audio-volume-change.og
 app_dir="${HOME}/.local/share/applications"
 autostart_dir="${HOME}/.config/autostart"
 mkdir -p "${app_dir}" "${autostart_dir}"
-cp "${HOME}/.git/fastflx1/files/"{fastflx1.desktop,yad-icon-browser.desktop,display-im6.q16.desktop} "${app_dir}/"
+cp "${HOME}/.git/fastflx1/files/"{fastflx1.desktop,yad-icon-browser.desktop,display-im6.q16.desktop,display-im7.q16.desktop,feh.desktop} "${app_dir}/"
 cp "${HOME}/.git/fastflx1/configs/autostart/"{alarmvol.desktop,dialtone.desktop,gen-thumbnails.desktop,gesture-shortcuts.desktop,vol-buttons.desktop,selfdestroy.desktop} "${autostart_dir}/"
 
 # Set custom sound theme
