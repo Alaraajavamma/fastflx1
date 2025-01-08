@@ -9,7 +9,7 @@ unlocked() {
 	fi
 
 # Options for the wofi menu
-OPTIONS="1. Copy Ctrl+C\n2. Paste Ctrl+V\n3. Cut Ctrl+X\n4. Paste to Terminal (Wl-paste)\n5. Select all & copy Ctrl+A Ctrl+C\n6. Kill active window\n7. Insert copied number to new contact\n8. Close"
+OPTIONS="1. Copy Ctrl+C\n2. Paste Ctrl+V\n3. Cut Ctrl+X\n4. Paste to Terminal (Wl-paste)\n5. Select all & copy Ctrl+A Ctrl+C\n6. Kill active window\n7. Add last caller (or copied number) to contacts\n8. Close"
 
 # Display the menu and capture the user's selection
 SELECTION=$(echo -e "$OPTIONS" | wofi -d --prompt "Select an option:" --lines 8)
@@ -39,7 +39,7 @@ case "$SELECTION" in
     "6. Kill active window")
         wtype -M alt -P F4 -m alt -p F4
         ;;
-    "7. Create new contact from last call")
+    "7. Add last caller (or copied number) to contacts")
         # Open gnome-contacts
         gnome-contacts &
 
