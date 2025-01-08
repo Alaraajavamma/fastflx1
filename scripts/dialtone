@@ -22,17 +22,17 @@ callid() { TIME=$(date +"%H:%M")
 phone
 }
 
-# Monitor other partys phonenumber
+# Monitor other party's phone number
 phone() {
-	PHONENUMBER="$(mmcli -m any -o "$VOICECALLID" -K | \
-		grep call.properties.number | \
-		cut -d ':' -f2 | \
-		tr -d  ' ')"
+    PHONENUMBER="$(mmcli -m any -o "$VOICECALLID" -K | \
+        grep call.properties.number | \
+        cut -d ':' -f2 | \
+        tr -d '[:space:]')"  # Remove all spaces and newlines
 
-    PHONENUMBER="$(echo "$PHONENUMBER" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')"
-    echo "$PHONENUMBER" | wl-copy
-		
-		direct
+    # Ensure no extra newlines or spaces and copy it to clipboard
+    echo -n "$PHONENUMBER" | wl-copy  # Use -n to avoid echoing an additional newline
+
+    direct 
 }
 
 
