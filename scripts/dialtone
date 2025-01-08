@@ -5,11 +5,35 @@ monitor() {
     dbus-monitor --system "interface='org.freedesktop.ModemManager1.Modem.Voice',type='signal',member='CallAdded'" |
     while read -r line; do
         if echo "$line" | grep -qE "^signal.*CallAdded"; then
-            echo "Call detected. Checking call direction..."
-            direct
+            echo "Call detected. Checking call id..."
+            callid
         fi
     done
 }
+
+#Monitor callid so we can check phonenumber and call state 
+callid() { TIME=$(date +"%H:%M")
+	DAY=$(date +"%-d.%-m.")
+	VOICECALLID="$(
+    output=$(mmcli -m any --voice-list-calls -a)
+    number=$(echo "$output" | awk -F'/Call/' '{print $2}' | awk '{print $1}')
+    echo $number
+)"
+phone
+}
+
+# Monitor other partys phonenumber
+phone() {
+	PHONENUMBER="$(mmcli -m any -o "$VOICECALLID" -K | \
+		grep call.properties.number | \
+		cut -d ':' -f2 | \
+		tr -d  ' ')"
+
+    echo "$PHONENUMBER" | wl-copy
+		
+		direct
+}
+
 
 # Monitor call direction (outgoing or incoming)
 direct() {
