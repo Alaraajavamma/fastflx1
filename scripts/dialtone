@@ -29,6 +29,7 @@ phone() {
 		cut -d ':' -f2 | \
 		tr -d  ' ')"
 
+    PHONENUMBER="$(echo "$PHONENUMBER" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')"
     echo "$PHONENUMBER" | wl-copy
 		
 		direct
