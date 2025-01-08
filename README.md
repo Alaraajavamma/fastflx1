@@ -18,12 +18,12 @@ Mainly:
 10. Added some shortcuts when you press volume-buttons - look below
 11. New self destroy tool - **be very careful** - by pressing first volumeup for 5 seconds and right after that volumedown for 5 seconds you will get prompt and if you inser your password there it will remove your home folder. This can not be recovered. 
 12. Automatic call volume adjustment which will adjust volume to 40% if you use earpiece and to 100% if you use speaker - you can still adjust volume also manually but this will make sure that you have at least okayish sound all the time
-13. If you receive call from unknown number you can now easily create new contact - just open Calls and recent calls view -> long press and choose "Copy number" then short-press assistant-button and select "Insert copied number to new contact". It will automagicly opens new contact dialog and pastes the number there - you just need to fill name etc.
+13. If you receive call from unknown number you can now easily create new contact. Last callers number is automaticly saved to clipboard if you are using dialtone script so just short-press assistant-button and select "Add last caller (or copied number) to contacts". It will automagicly opens new contact dialog and pastes the number there - you just need to fill name etc. You can also copy number manually because it will use the default paste function
 
 **Default assistant-button options:**
 
 - If wofi shortcut panel is open short press from assistant-button is Enter (select)
-- Unlocked short-press = opens wofi-shortcut panel with options to copy, paste, cut, terminal paste, kill active app, insert copied number to new contact and option to close shortcut panel
+- Unlocked short-press = opens wofi-shortcut panel with options to copy, paste, cut, terminal paste, kill active app, add last caller (or copied number) to contacts and option to close shortcut panel
 - Unlocked double-press = opens wofi-shortcut panel with options to set display scale to 300%, 275%, 250%, 200%, 150% and also you can set the scale-to-fit to ture or false (which will try scale all apps to fit to the screen - true is not recommended but fast fix for some desktop apps) and option to close shortcut panel
 - Unlocked long-press = opens wofi-shortcut panel with options to go back (escape - for android mostly but works in some linux apps too), and then it lists most ram eating apps and option to kill them and option to close shortcut panel
 - Locked / on lock screen short-press = toggle the feedback theme (full - silent - quiet)
