@@ -39,7 +39,7 @@ case "$SELECTION" in
     "6. Kill active window")
         wtype -M alt -P F4 -m alt -p F4
         ;;
-    "7. Insert copied number to new contact")
+    "7. Create new contact from last call")
         # Open gnome-contacts
         gnome-contacts &
 
@@ -52,13 +52,9 @@ case "$SELECTION" in
 
         # Simulate pressing "Tab" four times
         wtype -P tab
-        sleep 0.1
         wtype -P tab
-        sleep 0.1
         wtype -P tab
-        sleep 0.1
         wtype -P tab
-        sleep 0.1
         # Simulate "Ctrl+V" to paste content
         wtype -M ctrl -P v -m ctrl
         ;;
