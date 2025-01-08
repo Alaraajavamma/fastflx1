@@ -40,23 +40,40 @@ case "$SELECTION" in
         wtype -M alt -P F4 -m alt -p F4
         ;;
     "7. Add last caller (or copied number) to contacts")
-        # Open gnome-contacts
-        gnome-contacts &
+    # Check if clipboard contains a valid phone number (numbers only or starts with + followed by digits)
+    CLIPBOARD_CONTENT=$(wl-paste)
+    
+    # Regular expression to match valid phone numbers (numbers only or + followed by digits)
+    if [[ ! "$CLIPBOARD_CONTENT" =~ ^[+]?[0-9]+$ ]]; then
+        # If clipboard content is invalid or empty, show a notification and exit
+        notify-send "Not proceeding - fix your clipboard" --icon="/home/furios/.git/fastflx1/files/fastflx1.svg"
+        return 1
+    fi
 
-        # Wait for gnome-contacts to launch (adjust the sleep duration if needed)
-        sleep 2
+    # Kill gnome-contacts if it's already running
+    if pgrep -x "gnome-contacts" > /dev/null; then
+        killall gnome-contacts
+        sleep 1  # Wait for it to terminate
+    fi
 
-        # Simulate "Ctrl+N" to open a new contact tab
-        wtype -M ctrl -P n -m ctrl
-        sleep 1
+    # Open gnome-contacts
+    gnome-contacts &
 
-        # Simulate pressing "Tab" four times
-        wtype -P tab
-        wtype -P tab
-        wtype -P tab
-        wtype -P tab
-        # Simulate "Ctrl+V" to paste content
-        wtype -M ctrl -P v -m ctrl
+    # Wait for gnome-contacts to launch
+    sleep 2
+
+    # Simulate "Ctrl+N" to open a new contact tab
+    wtype -M ctrl -P n -m ctrl
+    sleep 1
+
+    # Simulate pressing "Tab" four times to navigate through the fields
+    wtype -P tab
+    wtype -P tab
+    wtype -P tab
+    wtype -P tab
+
+    # Simulate "Ctrl+V" to paste content (the phone number)
+    wtype -M ctrl -P v -m ctrl
         ;;
     "8. Close")
         pkill -x wofi
