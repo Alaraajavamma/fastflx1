@@ -1,8 +1,0 @@
-[Desktop Entry]
-Version=0.1
-Name=SelfDestroy
-Comment=Remove your home folder in case of emergency
-Exec=bash -c 'selfdestroy'
-Icon=org.gnome.Terminal
-Terminal=false
-Type=Application
