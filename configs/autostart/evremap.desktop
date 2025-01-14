@@ -1,0 +1,8 @@
+[Desktop Entry]
+Version=0.1
+Name=Evremap
+Comment=Remap volumebuttons for up-down arrows
+Exec=bash -c 'evremap remap ~/.config/evremap/remap.toml & assistant-button-tweak &'
+Icon=org.gnome.Terminal
+Terminal=false
+Type=Application
