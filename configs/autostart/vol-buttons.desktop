@@ -2,7 +2,7 @@
 Version=0.1
 Name=VolButtons
 Comment=Generate cool shortcuts using volume buttons
-Exec=bash -c 'vol-buttons'
+Exec=bash -c 'sleep 5 && vol-buttons'
 Icon=org.gnome.Terminal
 Terminal=false
 Type=Application
