@@ -45,11 +45,11 @@ case "$SELECTION" in
             case "$service_choice" in
                 "1. Start Tweak services")
                     pkill -x feh
-                    bash -c 'notify-send "Tweak services started" --icon="/home/furios/.git/fastflx1/files/fastflx1.svg" && dialtone & alarmvol & gen-thumbnails & gesture-shortcuts & vol-buttons & selfdestroy'
+                    bash -c 'notify-send "Tweak services started" --icon="/home/furios/.git/fastflx1/files/fastflx1.svg" && dialtone & alarmvol & gen-thumbnails & gesture-shortcuts & vol-buttons & assistant-button-tweak'
                     ;;
                 "2. Stop Tweak services")
                     pkill -x feh
-                    bash -c 'pkill -f "(vol-shortcuts|dialtone|alarmvol|gen-thumbnails|gesture-shortcuts|vol-buttons|selfdestroy)" && notify-send "Tweak services stopped" --icon="/home/furios/.git/fastflx1/files/fastflx1.svg"'
+                    bash -c 'pkill -f "(vol-shortcuts|dialtone|alarmvol|gen-thumbnails|gesture-shortcuts|vol-buttons|assistant-button-tweak)" && notify-send "Tweak services stopped" --icon="/home/furios/.git/fastflx1/files/fastflx1.svg"'
                     ;;
             esac
         }
@@ -66,33 +66,39 @@ case "$SELECTION" in
                           "${autostart_dir}/gen-thumbnails.desktop" \
                           "${autostart_dir}/gesture-shortcuts.desktop" \
                           "${autostart_dir}/vol-buttons.desktop" \
-                          "${autostart_dir}/selfdestroy.desktop"
+                          "${autostart_dir}/evremap.desktop"
                     notify-send "Tweak services autostart disabled" --icon="/home/furios/.git/fastflx1/files/fastflx1.svg"
                     ;;
                 "2. Re-enable Tweak services autostart")
                     pkill -x feh
                     autostart_dir="${HOME}/.config/autostart"
-                    cp "${HOME}/.git/fastflx1/configs/autostart/"{alarmvol.desktop,dialtone.desktop,gen-thumbnails.desktop,gesture-shortcuts.desktop,vol-buttons.desktop,selfdestroy.desktop} "${autostart_dir}/"
+                    cp "${HOME}/.git/fastflx1/configs/autostart/"{alarmvol.desktop,dialtone.desktop,gen-thumbnails.desktop,gesture-shortcuts.desktop,vol-buttons.desktop,evremap.desktop} "${autostart_dir}/"
                     notify-send "Tweak services autostart re-enabled" --icon="/home/furios/.git/fastflx1/files/fastflx1.svg"
                     ;;
             esac
         }
         ;;
-    "6. Manage custom assistant-button options")
+    "6. Manage custom buttons options")
         echo -e "1. Disable custom assistant-button options\n2. Re-enable custom assistant-button options" | wofi -d --prompt "Select action:" --lines 2 | {
             read button_choice
             case "$button_choice" in
                 "1. Disable custom assistant-button options")
                     pkill -x feh
+                    pkill -x vol-buttons
+                    pkill -x assistant-button-tweak
+                    pkill -x evremap
                     assistant_button_dir="${HOME}/.config/assistant-button"
                     rm -f "${assistant_button_dir}/short_press" \
                           "${assistant_button_dir}/long_press" \
+                          "${autostart_dir}/evremap.desktop" \
+                          "${autostart_dir}/vol-buttons.desktop" \   
                           "${assistant_button_dir}/double_press"
-                    notify-send "Custom assistant-button options disabled" --icon="/home/furios/.git/fastflx1/files/fastflx1.svg"
+                    notify-send "Custom button options disabled" --icon="/home/furios/.git/fastflx1/files/fastflx1.svg"
                     ;;
                 "2. Re-enable custom assistant-button options")
                     pkill -x feh
                     assistant_button_dir="${HOME}/.config/assistant-button"
+                    cp "${HOME}/.git/fastflx1/configs/autostart/"{vol-buttons.desktop,evremap.desktop} "${autostart_dir}/"
                     cp "${HOME}/.git/fastflx1/configs/assistant-button/"{short_press,double_press,long_press} "${assistant_button_dir}/"
                     notify-send "Custom assistant-button options re-enabled" --icon="/home/furios/.git/fastflx1/files/fastflx1.svg"
                     ;;
