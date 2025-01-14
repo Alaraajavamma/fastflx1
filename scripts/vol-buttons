@@ -1,108 +1,30 @@
 #!/bin/bash
 
-# Event file to monitor (make sure to use the correct event file)
-EVENT_FILE="/dev/input/event1"
+# Function to monitor for incoming calls
+monitor() {
+  dbus-monitor --system "interface='org.freedesktop.ModemManager1.Modem.Voice',type='signal',member='CallAdded'" |
+  while read -r line; do
+    if echo "$line" | grep -qE "^signal.*CallAdded"; then
+    
+      # Stop evremap
+      killall evremap
 
-# Timeout threshold in seconds
-TIMEOUT_THRESHOLD=2
-
-# Variables to track key presses
-volume_up_count=0
-volume_down_count=0
-last_time=0
-
-# Function to check if there are active calls using mmcli
-is_call_active() {
-  call_status=$(mmcli -m any --voice-list-calls 2>/dev/null)
-  [[ "$call_status" != *"No calls were found"* ]]
+      # Loop while the call is active
+      while true; do
+        mmcli_output=$(mmcli -m any --voice-list-calls)
+        if echo "$mmcli_output" | grep -q "No calls were found"; then
+          echo "Call ended. Restarting evremap."
+          evremap remap ~/.config/evremap/remap.toml &
+          break
+        fi
+        sleep 1  # Check for call status every second
+      done
+    fi
+  done
 }
 
-# Function to handle commands based on up and down key presses
-handle_command() {
-  # Check for active calls
-  if is_call_active; then
-    echo "Active call detected. Commands are disabled."
-    return
-  fi
+# Start evremap in the background
+evremap remap ~/.config/evremap/remap.toml &
 
-  local count=$1
-  local direction=$2
-
-  if [[ "$count" -eq 1 && "$direction" == "up" ]]; then
-    # One down + one up = screenshot
-    cd /sys/class/leds/vibrator && echo 100 > duration && echo 1 > activate &
-
-    SCREENSHOT_PATH="$(xdg-user-dir PICTURES)/Screenshot-$(date +%F-%T).png"
-    gdbus call --session --dest org.gnome.Shell.Screenshot \
-      --object-path /org/gnome/Shell/Screenshot \
-      --method org.gnome.Shell.Screenshot.Screenshot \
-      true false "$SCREENSHOT_PATH" &
-
-    # Notify user
-    if [ $? -eq 0 ]; then
-      echo "Screenshot saved to: $SCREENSHOT_PATH"
-      command -v notify-send >/dev/null && notify-send "Screenshot Taken" "Saved to $SCREENSHOT_PATH"
-    else
-      echo "Failed to take screenshot."
-    fi
-  elif [[ "$count" -eq 1 && "$direction" == "down" ]]; then
-    # One up + one down = picture
-    cd /sys/class/leds/vibrator && echo 200 > duration && echo 1 > activate
-
-    # Set up directory
-    HOME_DIR="$HOME"
-    PICTURES_DIR="$HOME_DIR/Pictures"
-    mkdir -p "$PICTURES_DIR"
-
-    # Get current date and time for filename
-    DATETIME=$(date +"photo_%Y%m%d_%H%M%S")
-    FILENAME="$PICTURES_DIR/$DATETIME.jpeg"
-
-    # Command to take picture
-    gst-launch-1.0 -e \
-      droidcamsrc camera-device=0 mode=2 ! \
-      videoconvert ! \
-      videoflip video-direction=8 ! \
-      jpegenc snapshot=true ! \
-      filesink location="$FILENAME"
-
-    # Notify user
-    if [ $? -eq 0 ]; then
-      echo "Picture saved to: $FILENAME"
-      command -v notify-send >/dev/null && notify-send "Picture Taken" "Saved to $FILENAME"
-    else
-      echo "Failed to take picture."
-    fi
-  fi
-}
-
-# Monitor the event file
-while read -r event; do
-  key_code=$(echo "$event" | grep -oP 'code \K[0-9]+')
-  key_value=$(echo "$event" | grep -oP 'value \K[0-9]+')
-
-  if [[ "$event" =~ "EV_KEY" && ( "$key_code" == "114" || "$key_code" == "115" ) && "$key_value" -eq 1 ]]; then
-    current_time=$(date +%s)
-    if (( current_time - last_time >= TIMEOUT_THRESHOLD )); then
-      volume_up_count=0
-      volume_down_count=0
-    fi
-    last_time=$current_time
-
-    if [[ "$key_code" == "114" ]]; then
-      volume_down_count=$((volume_down_count + 1))
-      if [[ "$volume_down_count" -eq "$volume_up_count" && "$volume_down_count" -gt 0 && "$volume_down_count" -le 2 ]]; then
-        handle_command "$volume_down_count" "down"
-        volume_up_count=0
-        volume_down_count=0
-      fi
-    elif [[ "$key_code" == "115" ]]; then
-      volume_up_count=$((volume_up_count + 1))
-      if [[ "$volume_up_count" -eq "$volume_down_count" && "$volume_up_count" -gt 0 && "$volume_up_count" -le 2 ]]; then
-        handle_command "$volume_up_count" "up"
-        volume_up_count=0
-        volume_down_count=0
-      fi
-    fi
-  fi
-done < <(evtest "$EVENT_FILE")
+# Start the call monitoring function
+monitor
