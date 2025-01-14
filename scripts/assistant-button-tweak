@@ -3,6 +3,8 @@
 # Start evremap in the background
 evremap remap ~/.config/evremap/remap.toml &
 
+sleep 5
+
 # Replace with the correct device path for your button
 device="/dev/input/event4"  # Change eventX to your device
 keycode=112  # Keycode to monitor
