@@ -8,6 +8,7 @@ monitor() {
     
       # Stop evremap
       killall evremap
+      killall assistant-button-tweak
 
       # Loop while the call is active
       while true; do
@@ -15,6 +16,7 @@ monitor() {
         if echo "$mmcli_output" | grep -q "No calls were found"; then
           echo "Call ended. Restarting evremap."
           evremap remap ~/.config/evremap/remap.toml &
+          sleep 5 && assistant-button-tweak &
           break
         fi
         sleep 1  # Check for call status every second
