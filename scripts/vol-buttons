@@ -1,32 +1,42 @@
 #!/bin/bash
 
+# Function to check if there are active calls using mmcli
+is_call_active() {
+  call_status=$(mmcli -m any --voice-list-calls 2>/dev/null)
+  [[ "$call_status" != *"No calls were found"* ]]
+}
+
 # Function to monitor for incoming calls
 monitor() {
   dbus-monitor --system "interface='org.freedesktop.ModemManager1.Modem.Voice',type='signal',member='CallAdded'" |
   while read -r line; do
     if echo "$line" | grep -qE "^signal.*CallAdded"; then
-    
-      # Stop evremap
-      killall evremap
-      killall assistant-button-tweak
+      echo "Call detected."
 
       # Loop while the call is active
-      while true; do
-        mmcli_output=$(mmcli -m any --voice-list-calls)
-        if echo "$mmcli_output" | grep -q "No calls were found"; then
-          echo "Call ended. Restarting evremap."
-          evremap remap ~/.config/evremap/remap.toml &
-          sleep 3 && assistant-button-tweak &
-          break
-        fi
+      while is_call_active; do
         sleep 1  # Check for call status every second
       done
+
+      echo "Call ended."
     fi
   done
 }
 
-# Start evremap in the background
-evremap remap ~/.config/evremap/remap.toml &
+# Monitor button presses
+device="/dev/input/event4"  # Replace with the actual device path
+evtest "$device" | while read -r line; do
+  # Extract the key code and value from the event
+  key_code=$(echo "$line" | grep -oP 'code \K[0-9]+')
+  key_value=$(echo "$line" | grep -oP 'value \K[0-9]+')
 
-# Start the call monitoring function
-monitor
+  # Handle button presses (example: volume control)
+  if [ "$key_code" == "103" ] && [ "$key_value" == "1" ]; then
+    wtype -P XF86AudioRaiseVolume
+  elif [ "$key_code" == "108" ] && [ "$key_value" == "1" ]; then
+    wtype -P XF86AudioLowerVolume
+  fi
+done &
+
+# Start the call monitoring function in the background
+monitor &
