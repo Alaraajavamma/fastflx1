@@ -15,10 +15,9 @@ Mainly:
 7. If you use finnish layout in squeekboard you will get the ultimate universal layout made by me
 8. Provide thumbnails (image preview) for all images which are located in home folder but not in hidden folders. Now you can see what file you are choosing when you use file picker - or when you browse your files trough Nautilus. This is build as service which will also monitor new images, name changes, moved images etc. And GUI interface to restart this service script if it fails
 9. Added some cool swipe gestures using lisgd - look below
-10. Added some shortcuts when you press volume-buttons - look below
-11. New self destroy tool - **be very careful** - by pressing first volumeup for 5 seconds and right after that volumedown for 5 seconds you will get prompt and if you inser your password there it will remove your home folder. This can not be recovered. 
-12. Automatic call volume adjustment which will adjust volume to 40% if you use earpiece and to 100% if you use speaker - you can still adjust volume also manually but this will make sure that you have at least okayish sound all the time
-13. If you receive call from unknown number you can now easily create new contact. Last callers number is automaticly saved to clipboard if you are using dialtone script so just short-press assistant-button and select "Add last caller (or copied number) to contacts". It will automagicly opens new contact dialog and pastes the number there - you just need to fill name etc. You can also copy number manually because it will use the default paste function
+10. Automatic call volume adjustment which will adjust volume to 40% if you use earpiece and to 100% if you use speaker - you can still adjust volume also manually but this will make sure that you have at least okayish sound all the time
+11. If you receive call from unknown number you can now easily create new contact. Last callers number is automaticly saved to clipboard if you are using dialtone script so just short-press assistant-button and select "Add last caller (or copied number) to contacts". It will automagicly opens new contact dialog and pastes the number there - you just need to fill name etc. You can also copy number manually because it will use the default paste function
+12. Remapped VolumeUp to normal Up button and VolumeDown to normal Down button. Now the quick shortcuts (when pressing assistant-button) are navigated easily with volumebuttons - press assistant-button shortly to choose preferred action
 
 **Default assistant-button options:**
 
@@ -32,9 +31,7 @@ Mainly:
 
 **Default volume-buttons options:**
 
-- They will change volume so that does not change
-- Short presses - first VolUp and right after VolDown = it will take picture with backcamera
-- Short presses - first VolDown and right after VolUp = it will take screenshot and save it to Pictures folder
+- They will change volume when you are in Call but otherwise they are Up and Down buttons (like arrow keys in keyboard)
 
 **Default swipe gestures:**
 Notice that swipe gestures works ootb like this when FLX1 is in default portrait mode
