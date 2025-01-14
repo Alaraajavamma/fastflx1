@@ -28,7 +28,7 @@ sudo rm /usr/bin/long-press
 sudo rm /usr/bin/short-press
 sudo rm /usr/bin/squeekboard-scale
 sudo rm /usr/bin/vol-buttons
-sudo rm /usr/bin/selfdestroy
+sudo rm /usr/bin/assistant-button-tweak
 sudo apt remove yad wl-clipboard inotify-tools imagemagick lisgd evtest libcallaudio-tools wofi feh libnotify-bin evremap
 gsettings set org.gnome.desktop.sound theme-name default
 cd ~ && rm -rf .git/fastflx1
