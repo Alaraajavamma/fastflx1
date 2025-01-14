@@ -10,8 +10,8 @@ device="/dev/input/event4"  # Change eventX to your device
 keycode=112  # Keycode to monitor
 
 # Timeout threshold in milliseconds
-timeout_threshold=500
-long_press_threshold=1000  # 1 second in milliseconds
+timeout_threshold=300
+long_press_threshold=800  # 1 second in milliseconds
 
 # Variables to track quick presses
 press_count=0
@@ -62,7 +62,7 @@ evtest "$device" | while read -r line; do
             fi
 
             (
-                sleep 0.5
+                sleep 0.3
                 case "$press_count" in
                     1) short-press ;;
                     2) double-press ;;
