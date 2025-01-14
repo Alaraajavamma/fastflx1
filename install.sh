@@ -1,11 +1,11 @@
 #!/bin/bash
-sudo apt install -y wtype curl wl-clipboard inotify-tools imagemagick lisgd evtest libcallaudio-tools wofi feh libnotify-bin
+sudo apt install -y wtype curl wl-clipboard inotify-tools imagemagick lisgd evtest libcallaudio-tools wofi feh libnotify-bin evremap
 
 # Set permissions for uninstall and update scripts
 sudo chmod +x "${HOME}/.git/fastflx1/uninstall.sh" "${HOME}/.git/fastflx1/update.sh"
 
 # Copy scripts to /usr/bin and set permissions
-for script in alarmvol dialtone double-press fastflx1 gnome-weather-location long-press short-press squeekboard-scale gen-thumbnails gesture-shortcuts vol-buttons selfdestroy; do
+for script in alarmvol dialtone double-press fastflx1 gnome-weather-location long-press short-press squeekboard-scale gen-thumbnails gesture-shortcuts vol-buttons assistant-button-tweak ; do
     sudo cp "${HOME}/.git/fastflx1/scripts/${script}" "/usr/bin/"
     sudo chmod +x "/usr/bin/${script}"
 done
@@ -23,6 +23,10 @@ cp "${HOME}/.git/fastflx1/configs/gtk-3.0/gtk.css" "${HOME}/.config/gtk-3.0/"
 mkdir -p "${HOME}/.config/wofi"
 cp "${HOME}/.git/fastflx1/configs/wofi/style.css" "${HOME}/.config/wofi/"
 cp "${HOME}/.git/fastflx1/configs/wofi/config" "${HOME}/.config/wofi/"
+
+mkdir -p "${HOME}/.config/evremap"
+cp "${HOME}/.git/fastflx1/configs/evremap/remap.toml" "${HOME}/.config/evremap/"
+
 
 # Handle squeekboard keyboards
 keyboard_dir="${HOME}/.local/share/squeekboard/keyboards"
@@ -43,7 +47,7 @@ app_dir="${HOME}/.local/share/applications"
 autostart_dir="${HOME}/.config/autostart"
 mkdir -p "${app_dir}" "${autostart_dir}"
 cp "${HOME}/.git/fastflx1/files/"{fastflx1.desktop,yad-icon-browser.desktop,display-im6.q16.desktop,display-im7.q16.desktop,feh.desktop} "${app_dir}/"
-cp "${HOME}/.git/fastflx1/configs/autostart/"{alarmvol.desktop,dialtone.desktop,gen-thumbnails.desktop,gesture-shortcuts.desktop,vol-buttons.desktop,selfdestroy.desktop} "${autostart_dir}/"
+cp "${HOME}/.git/fastflx1/configs/autostart/"{alarmvol.desktop,dialtone.desktop,gen-thumbnails.desktop,gesture-shortcuts.desktop,vol-buttons.desktop,evremap.desktop} "${autostart_dir}/"
 
 # Set custom sound theme
 gsettings set org.gnome.desktop.sound theme-name __custom
