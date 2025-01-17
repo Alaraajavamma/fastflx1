@@ -1,5 +1,7 @@
 #!/bin/bash
 
+sleep 5
+
 # Monitor button presses
 device="/dev/input/event4"  # Replace with the actual device path
 evtest "$device" | while read -r line; do
