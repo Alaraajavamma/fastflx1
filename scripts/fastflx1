@@ -87,17 +87,20 @@ case "$SELECTION" in
                     pkill -x vol-buttons
                     pkill -x assistant-button-tweak
                     pkill -x evremap
+                    autostart_dir="${HOME}/.config/autostart"
                     assistant_button_dir="${HOME}/.config/assistant-button"
                     rm -f "${assistant_button_dir}/short_press" \
                           "${assistant_button_dir}/long_press" \
                           "${autostart_dir}/evremap.desktop" \
-                          "${autostart_dir}/vol-buttons.desktop" \   
+                          "${autostart_dir}/vol-buttons.desktop" \
                           "${assistant_button_dir}/double_press"
                     notify-send "Custom button options disabled" --icon="/home/furios/.git/fastflx1/files/fastflx1.svg"
                     ;;
                 "2. Re-enable custom assistant-button options")
                     pkill -x feh
+                    autostart_dir="${HOME}/.config/autostart"
                     assistant_button_dir="${HOME}/.config/assistant-button"
+                    mkdir -p "$autostart_dir" "$assistant_button_dir"
                     cp "${HOME}/.git/fastflx1/configs/autostart/"{vol-buttons.desktop,evremap.desktop} "${autostart_dir}/"
                     cp "${HOME}/.git/fastflx1/configs/assistant-button/"{short_press,double_press,long_press} "${assistant_button_dir}/"
                     notify-send "Custom assistant-button options re-enabled" --icon="/home/furios/.git/fastflx1/files/fastflx1.svg"
