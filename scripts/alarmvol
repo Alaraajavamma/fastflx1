@@ -4,6 +4,7 @@
 
 perform_action() {
 echo "Alarm clock event detected!"
+wtype -P XF86PowerOff
 amixer set Master 100% unmute
 }
 
