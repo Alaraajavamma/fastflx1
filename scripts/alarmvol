@@ -3,9 +3,16 @@
 # Action to perform when the event is detected
 
 perform_action() {
-echo "Alarm clock event detected!"
-wtype -P XF86PowerOff
-amixer set Master 100% unmute
+    echo "Alarm clock event detected!"
+    
+    # Check the brightness value
+    brightness=$(cat /sys/class/leds/green/brightness)
+    
+    if [ "$brightness" -eq 1 ]; then
+        wtype -P XF86PowerOff
+    fi
+
+    amixer set Master 100% unmute
 }
 
 # Monitor DBus for the specific event and trigger the action
