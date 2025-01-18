@@ -10,7 +10,7 @@ is_overview_active() {
 
 # Function to start wofi
 start_wofi() {
-        
+    wofi_kill &
 # Options for the FastFLX1 tweaks menu
 OPTIONS="1. Switch environment (staging/production)\n2. Upgrade FuriOS\n3. Set city to Weather\n4. Manage Tweak services (start/stop)\n5. Manage Tweak services autostart\n6. Manage custom buttons options\n7. Change Squeekboard scale\n8. Quit"
 
@@ -114,6 +114,20 @@ case "$SELECTION" in
         ;;
 
 esac }
+
+wofi_kill () {
+dbus-monitor "interface='org.freedesktop.DBus.Properties',member='PropertiesChanged',path='/org/gnome/Shell'" | \
+while read -r line; do
+    # Check if the OverviewActive property has changed
+    if echo "$line" | grep -q "string \"OverviewActive\""; then
+        # Read the next line for the boolean value
+        read -r next_line
+        if echo "$next_line" | grep -q "boolean true"; then
+            pkill -x wofi
+        fi
+    fi
+done
+}
 
 # Check if Overview is already active before starting wofi
 if is_overview_active; then
