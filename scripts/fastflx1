@@ -117,7 +117,7 @@ esac }
 
 # Check if Overview is already active before starting wofi
 if is_overview_active; then
-    wtype -M win -K Super_l
+    wtype -M win -k Super_l
     start_wofi
     else
     start_wofi
