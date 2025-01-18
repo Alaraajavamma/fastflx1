@@ -135,6 +135,5 @@ if is_overview_active; then
     wtype -M win -k Super_l
     start_wofi
     else
-    pkill -x wofi
     start_wofi
 fi
