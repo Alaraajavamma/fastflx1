@@ -137,7 +137,7 @@ if is_overview_active; then
     unlocked
     else
     unlocked
-fi
 else 
     echo "Failed to determine lockscreen state"
+fi
 fi
