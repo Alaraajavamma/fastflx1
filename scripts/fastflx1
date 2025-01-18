@@ -119,4 +119,6 @@ esac }
 if is_overview_active; then
     wtype -M win -K Super_l
     start_wofi
+    else
+    start_wofi
 fi
