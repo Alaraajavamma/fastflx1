@@ -1,5 +1,13 @@
 #!/bin/bash
 
+is_overview_active() {
+    gdbus call --session \
+        --dest org.gnome.Shell \
+        --object-path /org/gnome/Shell \
+        --method org.freedesktop.DBus.Properties.Get \
+        org.gnome.Shell OverviewActive | grep -q "true"
+}
+
 unlocked() {
 # Check if wofi is running
 	if pgrep -x "wofi" > /dev/null; then
@@ -115,8 +123,12 @@ if [[ "$idle_hint" == *"yes"* ]]; then
     locked
     echo "Locked"
 elif [[ "$idle_hint" == *"no"* ]]; then
-    unlocked
-    echo "Unlocked"
+    if is_overview_active; then
+        wtype -M win -k Super_l
+        unlocked
+    else
+        unlocked
+    fi
 else 
     echo "Failed to determine lockscreen state"
 fi
