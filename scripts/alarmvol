@@ -6,7 +6,7 @@ perform_action() {
     echo "Alarm clock event detected!"
     
     # Check the brightness value
-    brightness=$(cat /sys/class/leds/green/brightness)
+    brightness=$(cat /sys/class/leds/lcd-backlight/brightness)
     
     if [ "$brightness" -eq 1 ]; then
         wtype -P XF86PowerOff
