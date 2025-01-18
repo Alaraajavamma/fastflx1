@@ -10,9 +10,7 @@ is_overview_active() {
 
 # Function to start wofi
 start_wofi() {
-
-    pkill -x wofi
-    
+        
 # Options for the FastFLX1 tweaks menu
 OPTIONS="1. Switch environment (staging/production)\n2. Upgrade FuriOS\n3. Set city to Weather\n4. Manage Tweak services (start/stop)\n5. Manage Tweak services autostart\n6. Manage custom buttons options\n7. Change Squeekboard scale\n8. Quit"
 
