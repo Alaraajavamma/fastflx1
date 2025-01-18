@@ -81,6 +81,7 @@ if [[ "$idle_hint" == *"yes"* ]]; then
     echo "Locked"
 elif [[ "$idle_hint" == *"no"* ]]; then
     if is_overview_active; then
+        pkill -x wofi
         wtype -M win -k Super_l
         unlocked
     else
