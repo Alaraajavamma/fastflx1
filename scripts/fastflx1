@@ -1,13 +1,16 @@
 #!/bin/bash
 
-# Start feh and immediately wait for it to finish
-start_feh() {
-    feh --fullscreen "${HOME}/.git/fastflx1/files/tux.jpg"
-    pkill -x wofi
+is_overview_active() {
+    gdbus call --session \
+        --dest org.gnome.Shell \
+        --object-path /org/gnome/Shell \
+        --method org.freedesktop.DBus.Properties.Get \
+        org.gnome.Shell OverviewActive | grep -q "true"
 }
 
 # Function to start wofi
 start_wofi() {
+    
 # Options for the FastFLX1 tweaks menu
 OPTIONS="1. Switch environment (staging/production)\n2. Upgrade FuriOS\n3. Set city to Weather\n4. Manage Tweak services (start/stop)\n5. Manage Tweak services autostart\n6. Manage custom buttons options\n7. Change Squeekboard scale\n8. Quit"
 
@@ -21,18 +24,15 @@ case "$SELECTION" in
             read env_choice
             case "$env_choice" in
                 "1. Go to staging")
-                    pkill -x feh
                     kgx -- bash -c 'sudo apt install furios-apt-config-staging furios-apt-config-debian-staging -y && sudo apt update && sudo apt install furios-apt-config-krypton-staging -y && sudo apt update && sudo apt upgrade -y --allow-downgrades'
                     ;;
                 "2. Go to production")
-                    pkill -x feh
                     kgx -- bash -c 'sudo apt remove furios-apt-config-staging furios-apt-config-debian-staging furios-apt-config-krypton-staging -y && sudo apt update && sudo apt upgrade -y --allow-downgrades'
                     ;;
             esac
         }
         ;;
     "2. Upgrade FuriOS")
-        pkill -x feh
         kgx -- bash -c 'sudo apt update && sudo apt upgrade -y --allow-downgrades'
         ;;
     "3. Set city to Weather")
@@ -44,10 +44,10 @@ case "$SELECTION" in
             read service_choice
             case "$service_choice" in
                 "1. Start Tweak services")
-                    bash -c 'notify-send "Tweak services started" --icon="/home/furios/.git/fastflx1/files/fastflx1.svg" && dialtone & alarmvol & gen-thumbnails & gesture-shortcuts & vol-buttons & assistant-button-tweak & pkill -x feh'
+                    bash -c 'notify-send "Tweak services started" --icon="/home/furios/.git/fastflx1/files/fastflx1.svg" && dialtone & alarmvol & gen-thumbnails & gesture-shortcuts & vol-buttons & assistant-button-tweak'
                     ;;
                 "2. Stop Tweak services")
-                    bash -c 'pkill -x "(vol-shortcuts|dialtone|alarmvol|gen-thumbnails|gesture-shortcuts|vol-buttons|assistant-button-tweak)" && pkill -x evremap && notify-send "Tweak services stopped" --icon="/home/furios/.git/fastflx1/files/fastflx1.svg" & pkill -x feh'
+                    bash -c 'pkill -x "(vol-shortcuts|dialtone|alarmvol|gen-thumbnails|gesture-shortcuts|vol-buttons|assistant-button-tweak)" && pkill -x evremap && notify-send "Tweak services stopped" --icon="/home/furios/.git/fastflx1/files/fastflx1.svg"'
                     ;;
             esac
         }
@@ -65,13 +65,11 @@ case "$SELECTION" in
                           "${autostart_dir}/vol-buttons.desktop" \
                           "${autostart_dir}/evremap.desktop"
                     notify-send "Tweak services autostart disabled" --icon="/home/furios/.git/fastflx1/files/fastflx1.svg"
-                    pkill -x feh
                     ;;
                 "2. Re-enable Tweak services autostart")
                     autostart_dir="${HOME}/.config/autostart"
                     cp "${HOME}/.git/fastflx1/configs/autostart/"{alarmvol.desktop,dialtone.desktop,gen-thumbnails.desktop,gesture-shortcuts.desktop,vol-buttons.desktop,evremap.desktop} "${autostart_dir}/"
                     notify-send "Tweak services autostart re-enabled" --icon="/home/furios/.git/fastflx1/files/fastflx1.svg"
-                    pkill -x feh
                     ;;
             esac
         }
@@ -92,7 +90,6 @@ case "$SELECTION" in
                           "${autostart_dir}/vol-buttons.desktop" \
                           "${assistant_button_dir}/double_press"
                     notify-send "Custom button options disabled" --icon="/home/furios/.git/fastflx1/files/fastflx1.svg"
-                    pkill -x feh
                     ;;
                 "2. Re-enable custom assistant-button options")
                     autostart_dir="${HOME}/.config/autostart"
@@ -101,27 +98,25 @@ case "$SELECTION" in
                     cp "${HOME}/.git/fastflx1/configs/autostart/"{vol-buttons.desktop,evremap.desktop} "${autostart_dir}/"
                     cp "${HOME}/.git/fastflx1/configs/assistant-button/"{short_press,double_press,long_press} "${assistant_button_dir}/"
                     notify-send "Custom assistant-button options re-enabled" --icon="/home/furios/.git/fastflx1/files/fastflx1.svg"
-                    pkill -x feh
                     ;;
             esac
         }
         ;;
     "7. Change Squeekboard scale")
         bash -c 'squeekboard-scale'
-        pkill -x feh
         ;;
     "8. Quit")
-        pkill -x feh
         exit 0
         ;;
     *)
         echo "Invalid selection. Exiting."
-        pkill -x feh
         exit 1
         ;;
 
 esac }
 
-# Start feh in background and then wofi
-start_feh &  # Start feh in the background
-start_wofi  # Start wofi
+# Check if Overview is already active before starting wofi
+if is_overview_active; then
+    wtype -M win -K Super_l
+    start_wofi
+fi
