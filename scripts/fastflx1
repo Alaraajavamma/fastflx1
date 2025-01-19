@@ -124,6 +124,7 @@ while read -r line; do
         read -r next_line
         if echo "$next_line" | grep -q "boolean true"; then
             pkill -x wofi
+            break
         fi
     fi
 done
