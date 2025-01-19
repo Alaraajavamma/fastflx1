@@ -9,6 +9,7 @@ is_overview_active() {
 }
 
 unlocked() {
+    wofi_kill &
 	# Check if wofi is running
 	if pgrep -x "wofi" > /dev/null; then
 	# Wofi is running; simulate pressing Enter
@@ -70,6 +71,22 @@ locked() {
     fi
 }
 
+wofi_kill () {
+dbus-monitor "interface='org.freedesktop.DBus.Properties',member='PropertiesChanged',path='/org/gnome/Shell'" | \
+while read -r line; do
+    # Check if the OverviewActive property has changed
+    if echo "$line" | grep -q "string \"OverviewActive\""; then
+        # Read the next line for the boolean value
+        read -r next_line
+        if echo "$next_line" | grep -q "boolean true"; then
+            if pgrep -x wofi > /dev/null; then
+          pkill -x wofi
+        fi
+            break
+        fi
+    fi
+done
+}
 
 # Identify the session ID
 session_id=$(loginctl list-sessions | grep $(whoami) | awk 'NR==2 {print $1}')
