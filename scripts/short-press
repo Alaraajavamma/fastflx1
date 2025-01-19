@@ -69,11 +69,11 @@ case "$SELECTION" in
     gnome-contacts &
 
     # Wait for gnome-contacts to launch
-    sleep 2
+    sleep 1.7
 
     # Simulate "Ctrl+N" to open a new contact tab
     wtype -M ctrl -P n -m ctrl
-    sleep 1
+    sleep 0.3
 
     # Simulate pressing "Tab" four times to navigate through the fields
     wtype -P tab
