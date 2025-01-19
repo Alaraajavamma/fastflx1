@@ -1,15 +1,18 @@
 #!/bin/bash
 
-# Start feh and immediately wait for it to finish
-start_feh() {
-    feh --fullscreen "${HOME}/.git/fastflx1/files/tux.jpg"
-    pkill -x wofi
+is_overview_active() {
+    gdbus call --session \
+        --dest org.gnome.Shell \
+        --object-path /org/gnome/Shell \
+        --method org.freedesktop.DBus.Properties.Get \
+        org.gnome.Shell OverviewActive | grep -q "true"
 }
 
 # Function to start wofi
 start_wofi() {
+        wofi_kill &
 # Get the current value of the keyboard scale
-current_scale=$(gsettings get sm.puri.Squeekboard keyboard-scale)
+current_scale=$(gsettings get sm.puri.Squeekboard scale-in-vertical-screen-orientation)
 notify-send "Your current scale is $current_scale" --icon="/home/furios/.git/fastflx1/files/fastflx1.svg"
 
 # Options for the FastFLX1 tweaks menu
@@ -21,35 +24,27 @@ SELECTION=$(echo -e "$OPTIONS" | wofi -d --prompt "Select an option:" --lines 8)
 # Execute a command based on the selection
 case "$SELECTION" in
     "1. Scale Squeekboard to 1.00")
-        pkill -x feh
-        gsettings set sm.puri.Squeekboard keyboard-scale 1.00
+        gsettings set sm.puri.Squeekboard scale-in-vertical-screen-orientation 1.00
         ;;
     "2. Scale Squeekboard to 1.10")
-        pkill -x feh
-        gsettings set sm.puri.Squeekboard keyboard-scale 1.10
+        gsettings set sm.puri.Squeekboard scale-in-vertical-screen-orientation 1.10
         ;;
     "3. Scale Squeekboard to 1.15")
-        pkill -x feh
-        gsettings set sm.puri.Squeekboard keyboard-scale 1.15
+        gsettings set sm.puri.Squeekboard scale-in-vertical-screen-orientation 1.15
         ;;
     "4. Scale Squeekboard to 1.20")
-        pkill -x feh
-        gsettings set sm.puri.Squeekboard keyboard-scale 1.20
+        gsettings set sm.puri.Squeekboard scale-in-vertical-screen-orientation 1.20
         ;;
     "5. Scale Squeekboard to 1.25")
-        pkill -x feh
-        gsettings set sm.puri.Squeekboard keyboard-scale 1.25
+        gsettings set sm.puri.Squeekboard scale-in-vertical-screen-orientation 1.25
         ;;
     "6. Scale Squeekboard to 1.30")
-        pkill -x feh
-        gsettings set sm.puri.Squeekboard keyboard-scale 1.30
+        gsettings set sm.puri.Squeekboard scale-in-vertical-screen-orientation 1.30
         ;;
     "7. Scale Squeekboard to 1.35")
-        pkill -x feh
-        gsettings set sm.puri.Squeekboard keyboard-scale 1.35
+        gsettings set sm.puri.Squeekboard scale-in-vertical-screen-orientation 1.35
         ;;
     "8. Quit")
-        pkill -x feh
         exit 0
         ;;
     *)
@@ -59,7 +54,27 @@ case "$SELECTION" in
         ;;
 esac }
 
-# Start feh in background and then wofi
-sleep 0.5
-start_feh &  # Start feh in the background
-start_wofi  # Start wofi
+wofi_kill () {
+dbus-monitor "interface='org.freedesktop.DBus.Properties',member='PropertiesChanged',path='/org/gnome/Shell'" | \
+while read -r line; do
+    # Check if the OverviewActive property has changed
+    if echo "$line" | grep -q "string \"OverviewActive\""; then
+        # Read the next line for the boolean value
+        read -r next_line
+        if echo "$next_line" | grep -q "boolean true"; then
+            if pgrep -x wofi > /dev/null; then
+          pkill -x wofi
+        fi
+            break
+        fi
+    fi
+done
+}
+
+   if is_overview_active; then
+        pkill -x wofi
+        wtype -M win -k Super_l
+        start_wofi
+    else
+        start_wofi
+    fi
