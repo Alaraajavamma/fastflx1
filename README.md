@@ -31,7 +31,7 @@ Mainly:
 
 **Default volume-buttons options:**
 
-- They will change volume when you are in Call but otherwise they are Up and Down buttons (like arrow keys in keyboard)
+- They will change volume if you have active sink (like music playing or active call). Otherwise they are up and down arrow keys (like arrow keys in keyboard)
 
 **Default swipe gestures:**
 Notice that swipe gestures works ootb like this when FLX1 is in default portrait mode
