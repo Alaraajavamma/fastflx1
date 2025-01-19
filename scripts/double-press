@@ -26,7 +26,7 @@ SELECTION=$(echo -e "$OPTIONS" | wofi -d --prompt "Select an option:" --lines 8)
 case "$SELECTION" in
     "1. Take screenshot")
         take_screenshot &
-        break
+        pkill -x wofi
         ;;
     "2. Take picture")
         take_picture
