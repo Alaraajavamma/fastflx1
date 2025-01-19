@@ -123,7 +123,9 @@ while read -r line; do
         # Read the next line for the boolean value
         read -r next_line
         if echo "$next_line" | grep -q "boolean true"; then
-            pkill -x wofi
+            if pgrep -x wofi > /dev/null; then
+          pkill -x wofi
+        fi
             break
         fi
     fi
