@@ -116,6 +116,7 @@ case "$SELECTION" in
 esac }
 
 wofi_kill () {
+    sleep 0.1
 dbus-monitor "interface='org.freedesktop.DBus.Properties',member='PropertiesChanged',path='/org/gnome/Shell'" | \
 while read -r line; do
     # Check if the OverviewActive property has changed
