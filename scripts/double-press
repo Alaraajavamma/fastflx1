@@ -113,7 +113,6 @@ take_picture() {
     else
       echo "Failed to take picture."
     fi
-  fi
 }
 
 take_screenshot() {
