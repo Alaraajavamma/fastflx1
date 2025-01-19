@@ -47,7 +47,7 @@ case "$SELECTION" in
                     bash -c 'notify-send "Tweak services started" --icon="/home/furios/.git/fastflx1/files/fastflx1.svg" && dialtone & alarmvol & gen-thumbnails & gesture-shortcuts & vol-buttons & assistant-button-tweak'
                     ;;
                 "2. Stop Tweak services")
-                    bash -c 'pkill -x "(vol-shortcuts|dialtone|alarmvol|gen-thumbnails|gesture-shortcuts|vol-buttons|assistant-button-tweak)" && pkill -x evremap && notify-send "Tweak services stopped" --icon="/home/furios/.git/fastflx1/files/fastflx1.svg"'
+                    bash -c 'pkill -x "(vol-shortcuts|dialtone|alarmvol|gen-thumbnails|gesture-shortcuts|vol-buttons|assistant-button-tweak)" & pkill -x evremap & pkill -x lisgd && notify-send "Tweak services stopped" --icon="/home/furios/.git/fastflx1/files/fastflx1.svg"'
                     ;;
             esac
         }
