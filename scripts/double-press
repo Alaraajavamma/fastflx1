@@ -17,7 +17,7 @@ unlocked() {
 	fi
 	
 # Options for the wofi menu
-OPTIONS="1. Take screenshot\n2. Take picture \n3. Scale display to 300%\n4. Scale display to 200%\n5. Scale display to 150%\n6. Scale-to-fit true\n7. Scale-to-fit false\n8. Close"
+OPTIONS="1. Take screenshot\n2. Take picture\n3. Scale display to 300%\n4. Scale display to 200%\n5. Scale display to 150%\n6. Scale-to-fit true\n7. Scale-to-fit false\n8. Close"
 
 # Display the menu and capture the user's selection
 SELECTION=$(echo -e "$OPTIONS" | wofi -d --prompt "Select an option:" --lines 8)
