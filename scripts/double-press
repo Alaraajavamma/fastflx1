@@ -25,7 +25,8 @@ SELECTION=$(echo -e "$OPTIONS" | wofi -d --prompt "Select an option:" --lines 8)
 # Execute a command based on the selection
 case "$SELECTION" in
     "1. Take screenshot")
-        take_screenshot
+        take_screenshot &
+        break
         ;;
     "2. Take picture")
         take_picture
@@ -116,6 +117,7 @@ take_picture() {
 }
 
 take_screenshot() {
+    sleep 1
     SCREENSHOT_PATH="$(xdg-user-dir PICTURES)/Screenshot-$(date +%F-%T).png"
     gdbus call --session --dest org.gnome.Shell.Screenshot \
       --object-path /org/gnome/Shell/Screenshot \
