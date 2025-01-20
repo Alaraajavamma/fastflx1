@@ -8,7 +8,7 @@ perform_action() {
     # Check the brightness value
     brightness=$(cat /sys/class/leds/lcd-backlight/brightness)
     
-    if [ "$brightness" -eq 1 ]; then
+    if [ "$brightness" -eq 0 ]; then
         wtype -P XF86PowerOff
     fi
 
