@@ -6,7 +6,6 @@ rm ~/.local/share/applications/display-im7.q16.desktop
 rm ~/.local/share/applications/feh.desktop
 rm ~/.config/autostart/dialtone.desktop
 rm ~/.config/autostart/alarmvol.desktop
-rm ~/.config/autostart/gen-thumbnails.desktop
 rm ~/.config/autostart/gesture-shortcuts.desktop
 rm ~/.config/autostart/vol-buttons.desktop
 rm ~/.config/autostart/evremap.desktop
@@ -20,7 +19,6 @@ rm -rf ~/.local/share/sounds
 sudo rm /usr/bin/alarmvol
 sudo rm /usr/bin/dialtone
 sudo rm /usr/bin/double-press
-sudo rm /usr/bin/gen-thumbnails
 sudo rm /usr/bin/fastflx1
 sudo rm /usr/bin/gnome-weather-location
 sudo rm /usr/bin/gesture-shortcuts
