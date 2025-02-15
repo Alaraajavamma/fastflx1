@@ -1,28 +1,54 @@
 #!/bin/bash
 
 # Action to perform when the event is detected
-
 perform_action() {
     echo "Alarm clock event detected!"
     
     # Check the brightness value
     brightness=$(cat /sys/class/leds/lcd-backlight/brightness)
-    
+
     if [ "$brightness" -eq 0 ]; then
         wtype -P XF86PowerOff
     fi
-
+    
+    volume_tweak & # Remove after Clocks app volume is fixed
     amixer set Master 100% unmute
 }
 
-# Monitor DBus for the specific event and trigger the action
+# Function to play alarm sound and monitor user interaction
+volume_tweak() {
+    paplay /home/furios/.local/share/sounds/__custom/alarm-clock-elapsed.oga &
 
+    # Monitor D-Bus for the specific signal
+    dbus-monitor "interface='org.freedesktop.Notifications'" |
+    while read -r line; do
+        # Check for ActionInvoked signal
+        if echo "$line" | grep -q "member=ActionInvoked"; then
+            # Read next lines for details
+            read -r line
+            read -r action
+            # Extract action string
+            action=$(echo "$action" | awk -F '"' '{print $2}')
+
+            # Check if it matches the expected format
+            if [[ "$action" == "app.stop-alarm"* ]]; then
+                echo "Detected stop-alarm signal: $action"
+                pkill -f paplay
+            elif [[ "$action" == "app.snooze-alarm"* ]]; then
+                echo "Detected snooze-alarm signal: $action"
+                pkill -f paplay
+            fi
+        fi
+    done
+}
+
+# Monitor DBus for the specific event and trigger the action
 dbus-monitor "type='method_call',interface='org.sigxcpu.Feedback',member='TriggerFeedback'" | \
 while read -r line; do
-if echo "$line" | grep -q '"org.gnome.clocks"'; then
-read -r next_line
-if echo "$next_line" | grep -q '"alarm-clock-elapsed"'; then
-perform_action
-fi
-fi
+    if echo "$line" | grep -q '"org.gnome.clocks"'; then
+        read -r next_line
+        if echo "$next_line" | grep -q '"alarm-clock-elapsed"'; then
+            perform_action
+        fi
+    fi
 done
