@@ -20,7 +20,7 @@ volume_tweak() {
     paplay /home/furios/.local/share/sounds/__custom/alarm-clock-elapsed.oga &
 
     # Monitor D-Bus for the specific signal
-    dbus-monitor "interface='org.freedesktop.Notifications'" |
+    dbus-monitor "interface='org.freedesktop.Notifications'" "interface='org.sigxcpu.Feedback'" |
     while read -r line; do
         # Check for ActionInvoked signal
         if echo "$line" | grep -q "member=ActionInvoked"; then
@@ -39,6 +39,13 @@ volume_tweak() {
                 pkill -f paplay
             fi
         fi
+
+        # Check if the notification was closed
+        if echo "$line" | grep -q "member=NotificationClosed"; then
+            echo "Detected NotificationClosed signal"
+            pkill -f paplay
+        fi
+        
     done
 }
 
