@@ -101,12 +101,12 @@
         {
           "event-name" : "button-pressed",
           "type"       : "VibraRumble",
-          "duration"   : 15
+          "duration"   : 6
         },
         {
           "event-name" : "button-released",
           "type"       : "VibraRumble",
-          "duration"   : 12
+          "duration"   : 3
         },
         {
           "event-name" : "message-new-email",
@@ -202,3 +202,4 @@
     }
   ]
 }
+
