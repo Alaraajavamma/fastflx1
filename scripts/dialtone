@@ -44,58 +44,10 @@ direct() {
     # Check if the second-last word is "outgoing"
     if [[ $(echo "$last_line" | awk '{print $(NF-1)}') == "outgoing" ]]; then
         echo "The call is outgoing. Proceeding with further steps..."
-        changes & 
-        adjust_volume
+        changes
     else
         echo "The call is not outgoing. No action taken."
-        adjust_volume
     fi
-}
-
-adjust_volume() {
-    # Variable to store the last known speaker/earpiece mode
-    last_speaker_status=""
-
-    while true; do
-        # Fetch the output of the command
-        mmcli_output=$(mmcli -m any --voice-list-calls)
-
-        # Stop if "No calls were found"
-        if echo "$mmcli_output" | grep -q "No calls were found"; then
-            echo "Call ended. Stopping volume adjustment."
-            break
-        else
-            # Extract current speaker/earpiece mode
-            speaker_status=$(callaudiocli --status | grep "Speaker enabled" | awk '{print $NF}')
-
-            # Check if the mode has changed
-            if [[ "$speaker_status" != "$last_speaker_status" ]]; then
-                # Find the active call stream index (first sink-input)
-                STREAM_INDEX=$(pacmd list-sink-inputs | grep "index:" | head -n 1 | awk '{print $2}')
-
-                if [[ "$speaker_status" == "CALL_AUDIO_SPEAKER_ON" ]]; then
-                    echo "Speaker mode detected. Setting volume to 100%..."
-                    if [ -n "$STREAM_INDEX" ]; then
-                        pactl set-sink-input-volume $STREAM_INDEX 100%
-                        echo "Volume set to 100% for speaker mode."
-                    fi
-                elif [[ "$speaker_status" == "CALL_AUDIO_SPEAKER_OFF" ]]; then
-                    echo "Earpiece mode detected. Adjusting to 40% volume..."
-                    if [ -n "$STREAM_INDEX" ]; then
-                        pactl set-sink-input-volume $STREAM_INDEX 40%
-                        echo "Volume set to 40% for earpiece mode."
-                    fi
-                else
-                    echo "Unknown speaker status. Continuing..."
-                fi
-
-                # Update the last known status
-                last_speaker_status="$speaker_status"
-            fi  # End of the 'if' block checking for speaker status change
-        fi
-
-        sleep 0.5  # Tight polling interval
-    done
 }
 
 # Monitor for call changes
