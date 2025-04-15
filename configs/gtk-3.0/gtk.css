@@ -16,11 +16,6 @@ phosh-top-panel .phosh-topbar-date {
   font-size: 10px;
 }
 
-.phosh-topbar-button {
-padding: 0 35px;
-margin-top: 5px;
-}
-
 #phosh_quick_settings flowboxchild > button.phosh-qs-active {
     font-size: 10px;
 }
