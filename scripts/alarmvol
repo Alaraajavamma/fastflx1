@@ -11,42 +11,7 @@ perform_action() {
         wtype -P XF86PowerOff
     fi
     
-    volume_tweak & # Remove after Clocks app volume is fixed
-    amixer set Master 100% unmute
-}
-
-# Function to play alarm sound and monitor user interaction
-volume_tweak() {
-    paplay /home/furios/.local/share/sounds/__custom/alarm-clock-elapsed.oga &
-
-    # Monitor D-Bus for the specific signal
-    dbus-monitor "interface='org.freedesktop.Notifications'" "interface='org.sigxcpu.Feedback'" |
-    while read -r line; do
-        # Check for ActionInvoked signal
-        if echo "$line" | grep -q "member=ActionInvoked"; then
-            # Read next lines for details
-            read -r line
-            read -r action
-            # Extract action string
-            action=$(echo "$action" | awk -F '"' '{print $2}')
-
-            # Check if it matches the expected format
-            if [[ "$action" == "app.stop-alarm"* ]]; then
-                echo "Detected stop-alarm signal: $action"
-                pkill -f paplay
-            elif [[ "$action" == "app.snooze-alarm"* ]]; then
-                echo "Detected snooze-alarm signal: $action"
-                pkill -f paplay
-            fi
-        fi
-
-        # Check if the notification was closed
-        if echo "$line" | grep -q "member=NotificationClosed"; then
-            echo "Detected NotificationClosed signal"
-            pkill -f paplay
-        fi
-        
-    done
+        amixer set Master 100% unmute
 }
 
 # Monitor DBus for the specific event and trigger the action
