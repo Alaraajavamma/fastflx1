@@ -1,9 +1,0 @@
-device_name = "mtk-kpd"
-
-[[remap]]
-input = ["KEY_VOLUMEUP"]
-output = ["KEY_UP"]
-
-[[remap]]
-input = ["KEY_VOLUMEDOWN"]
-output = ["KEY_DOWN"]
