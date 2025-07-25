@@ -10,12 +10,12 @@ is_overview_active() {
 
 unlocked() {
     wofi_kill &
-	# Check if wofi is running
-	if pgrep -x "wofi" > /dev/null; then
-	# Wofi is running; simulate pressing Enter
+    # Check if wofi is running
+    if pgrep -x "wofi" > /dev/null; then
+    # Wofi is running; simulate pressing Enter
         pkill -x wofi
-	fi
-	
+    fi
+    
 # Options for the wofi menu
 OPTIONS="1. Take screenshot\n2. Take picture\n3. Scale display to 300%\n4. Scale display to 200%\n5. Scale display to 150%\n6. Scale-to-fit true\n7. Scale-to-fit false\n8. Close"
 
@@ -56,54 +56,56 @@ esac
 # Function to toggle the flashlight
 locked() {
     BUS_NAME="io.furios.Flashlightd"
-OBJECT_PATH="/io/furios/Flashlightd"
-INTERFACE="io.furios.Flashlightd"
+    OBJECT_PATH="/io/furios/Flashlightd"
+    INTERFACE="io.furios.Flashlightd"
 
-# Read the current 'Brightness' property using gdbus
-current_brightness=$(gdbus call --session \
-  --dest "$BUS_NAME" \
-  --object-path "$OBJECT_PATH" \
-  --method org.freedesktop.DBus.Properties.Get \
-  "$INTERFACE" "Brightness" | grep -oP 'uint32 \K[0-9]+')
-
-# Check if the flashlight is currently off (brightness is 0)
-if [ "$current_brightness" -eq 0 ]; then
-    # It's OFF. Turn it ON to its maximum brightness.
-    echo "🔦 Flashlight turned ON. It will automatically turn off in 20 seconds."
-
-    # Get the max brightness value from the service to turn it on fully
-    max_brightness=$(gdbus call --session \
+    # Read the current 'Brightness' property using gdbus
+    current_brightness=$(gdbus call --session \
       --dest "$BUS_NAME" \
       --object-path "$OBJECT_PATH" \
       --method org.freedesktop.DBus.Properties.Get \
-      "$INTERFACE" "MaxBrightness" | grep -oP 'uint32 \K[0-9]+')
+      "$INTERFACE" "Brightness" | grep -oP 'uint32 \K[0-9]+')
 
-    # Set the brightness to the maximum value
-    gdbus call --session \
-      --dest "$BUS_NAME" \
-      --object-path "$OBJECT_PATH" \
-      --method "$INTERFACE.SetBrightness" \
-      "uint32:$max_brightness"
+    # Check if the flashlight is currently off (brightness is 0)
+    if [ "$current_brightness" -eq 0 ]; then
+        # It's OFF. Turn it ON to its maximum brightness.
+        echo "🔦 Flashlight turned ON. It will automatically turn off in 20 seconds."
 
-    # Wait for 20 seconds
-    sleep 20
+        # Get the max brightness value from the service to turn it on fully
+        max_brightness=$(gdbus call --session \
+          --dest "$BUS_NAME" \
+          --object-path "$OBJECT_PATH" \
+          --method org.freedesktop.DBus.Properties.Get \
+          "$INTERFACE" "MaxBrightness" | grep -oP 'uint32 \K[0-9]+')
 
-    # After waiting, turn the flashlight OFF.
-    echo "20 seconds elapsed. Turning flashlight OFF."
-    gdbus call --session \
-      --dest "$BUS_NAME" \
-      --object-path "$OBJECT_PATH" \
-      --method "$INTERFACE.SetBrightness" \
-      "uint32:0"
-else
-    # It's already ON. Turn it off immediately.
-    echo "Flashlight is already on. Turning it OFF now."
-    gdbus call --session \
-      --dest "$BUS_NAME" \
-      --object-path "$OBJECT_PATH" \
-      --method "$INTERFACE.SetBrightness" \
-      "uint32:0"
-fi
+        # Set the brightness to the maximum value -- FIXED
+        gdbus call --session \
+          --dest "$BUS_NAME" \
+          --object-path "$OBJECT_PATH" \
+          --method "$INTERFACE.SetBrightness" \
+          $max_brightness
+
+        # Wait for 20 seconds
+        sleep 20
+
+        # After waiting, turn the flashlight OFF.
+        echo "20 seconds elapsed. Turning flashlight OFF."
+        # FIXED
+        gdbus call --session \
+          --dest "$BUS_NAME" \
+          --object-path "$OBJECT_PATH" \
+          --method "$INTERFACE.SetBrightness" \
+          0
+    else
+        # It's already ON. Turn it off immediately.
+        echo "Flashlight is already on. Turning it OFF now."
+        # FIXED
+        gdbus call --session \
+          --dest "$BUS_NAME" \
+          --object-path "$OBJECT_PATH" \
+          --method "$INTERFACE.SetBrightness" \
+          0
+    fi
 }
 
 wofi_kill () {
@@ -115,8 +117,8 @@ while read -r line; do
         read -r next_line
         if echo "$next_line" | grep -q "boolean true"; then
             if pgrep -x wofi > /dev/null; then
-          pkill -x wofi
-        fi
+                pkill -x wofi
+            fi
             break
         fi
     fi
@@ -143,10 +145,10 @@ take_picture() {
 
     # Notify user
     if [ $? -eq 0 ]; then
-      echo "Picture saved to: $FILENAME"
-      command -v notify-send >/dev/null && notify-send "Picture Taken" "Saved to $FILENAME" --icon="/home/furios/.git/fastflx1/files/fastflx1.svg"
+        echo "Picture saved to: $FILENAME"
+        command -v notify-send >/dev/null && notify-send "Picture Taken" "Saved to $FILENAME" --icon="/home/furios/.git/fastflx1/files/fastflx1.svg"
     else
-      echo "Failed to take picture."
+        echo "Failed to take picture."
     fi
 }
 
@@ -160,10 +162,10 @@ take_screenshot() {
 
     # Notify user
     if [ $? -eq 0 ]; then
-      echo "Screenshot saved to: $SCREENSHOT_PATH"
-      command -v notify-send >/dev/null && notify-send "Screenshot Taken" "Saved to $SCREENSHOT_PATH" --icon="/home/furios/.git/fastflx1/files/fastflx1.svg"
+        echo "Screenshot saved to: $SCREENSHOT_PATH"
+        command -v notify-send >/dev/null && notify-send "Screenshot Taken" "Saved to $SCREENSHOT_PATH" --icon="/home/furios/.git/fastflx1/files/fastflx1.svg"
     else
-      echo "Failed to take screenshot."
+        echo "Failed to take screenshot."
     fi
 }
 
@@ -184,6 +186,6 @@ elif [[ "$idle_hint" == *"no"* ]]; then
     else
         unlocked
     fi
-else 
+else    
     echo "Failed to determine lockscreen state"
 fi
