@@ -55,21 +55,55 @@ esac
 
 # Function to toggle the flashlight
 locked() {
-    current_brightness=$(dbus-send --session --dest=org.droidian.Flashlightd --print-reply=literal \
-                    /org/droidian/Flashlightd org.freedesktop.DBus.Properties.Get \
-                    string:org.droidian.Flashlightd string:Brightness | awk '{print $3}')
+    BUS_NAME="io.furios.Flashlightd"
+OBJECT_PATH="/io/furios/Flashlightd"
+INTERFACE="io.furios.Flashlightd"
 
-    if [ "$current_brightness" -eq 0 ]; then
-        # Turn on the flashlight
-        dbus-send --session --dest=org.droidian.Flashlightd --type=method_call /org/droidian/Flashlightd org.droidian.Flashlightd.SetBrightness uint32:31
-        echo "Flashlight turned on"
-	sleep 20
-        dbus-send --session --dest=org.droidian.Flashlightd --type=method_call /org/droidian/Flashlightd org.droidian.Flashlightd.SetBrightness uint32:0
-    else
-        # Turn off the flashlight
-        dbus-send --session --dest=org.droidian.Flashlightd --type=method_call /org/droidian/Flashlightd org.droidian.Flashlightd.SetBrightness uint32:0
-        echo "Flashlight turned off"
-    fi
+# Read the current 'Brightness' property using gdbus
+current_brightness=$(gdbus call --session \
+  --dest "$BUS_NAME" \
+  --object-path "$OBJECT_PATH" \
+  --method org.freedesktop.DBus.Properties.Get \
+  "$INTERFACE" "Brightness" | grep -oP 'uint32 \K[0-9]+')
+
+# Check if the flashlight is currently off (brightness is 0)
+if [ "$current_brightness" -eq 0 ]; then
+    # It's OFF. Turn it ON to its maximum brightness.
+    echo "🔦 Flashlight turned ON. It will automatically turn off in 20 seconds."
+
+    # Get the max brightness value from the service to turn it on fully
+    max_brightness=$(gdbus call --session \
+      --dest "$BUS_NAME" \
+      --object-path "$OBJECT_PATH" \
+      --method org.freedesktop.DBus.Properties.Get \
+      "$INTERFACE" "MaxBrightness" | grep -oP 'uint32 \K[0-9]+')
+
+    # Set the brightness to the maximum value
+    gdbus call --session \
+      --dest "$BUS_NAME" \
+      --object-path "$OBJECT_PATH" \
+      --method "$INTERFACE.SetBrightness" \
+      "uint32:$max_brightness"
+
+    # Wait for 20 seconds
+    sleep 20
+
+    # After waiting, turn the flashlight OFF.
+    echo "20 seconds elapsed. Turning flashlight OFF."
+    gdbus call --session \
+      --dest "$BUS_NAME" \
+      --object-path "$OBJECT_PATH" \
+      --method "$INTERFACE.SetBrightness" \
+      "uint32:0"
+else
+    # It's already ON. Turn it off immediately.
+    echo "Flashlight is already on. Turning it OFF now."
+    gdbus call --session \
+      --dest "$BUS_NAME" \
+      --object-path "$OBJECT_PATH" \
+      --method "$INTERFACE.SetBrightness" \
+      "uint32:0"
+fi
 }
 
 wofi_kill () {
