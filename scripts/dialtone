@@ -1,5 +1,16 @@
 #!/bin/bash
 
+# Cleans up the audio injection modules and processes.
+cleanup_audio_injection() {
+    local paplay_pid="$1"
+    echo "Stopping custom sound..."
+    if [ -n "$paplay_pid" ] && ps -p "$paplay_pid" > /dev/null; then
+        kill "$paplay_pid"
+    fi
+    pactl list short modules | grep 'source=call_injector.monitor' | cut -f1 | xargs -r -n1 pactl unload-module
+    pactl list short modules | grep 'sink_name=call_injector' | cut -f1 | xargs -r -n1 pactl unload-module
+}
+
 # Monitor for incoming calls
 monitor() {
     dbus-monitor --system "interface='org.freedesktop.ModemManager1.Modem.Voice',type='signal',member='CallAdded'" |
@@ -13,9 +24,9 @@ monitor() {
 
 #Monitor callid so we can check phonenumber and call state 
 callid() { TIME=$(date +"%H:%M")
-	DAY=$(date +"%-d.%-m.")
-	VOICECALLID="$(
-    output=$(mmcli -m any --voice-list-calls -a)
+    DAY=$(date +"%-d.%-m.")
+    VOICECALLID="$(
+    output=$(mmcli -m any --voice-list-calls)
     number=$(echo "$output" | awk -F'/Call/' '{print $2}' | awk '{print $1}')
     echo $number
 )"
@@ -52,7 +63,10 @@ direct() {
 
 # Monitor for call changes
 changes() {
-    feedbackd_profile=$(gsettings get org.sigxcpu.feedbackd profile | tr -d "'")
+    # Variables for sound injection
+    local injection_active=false
+    local paplay_pid=""
+    local sound_file="${HOME}/.git/fastflx1/files/ring8k.wav" # <-- CHANGE THIS PATH
 
     while true; do
         # Run the command and get the last line (updated in each loop iteration)
@@ -60,23 +74,39 @@ changes() {
         status_word=$(echo "$last_line" | awk '{print $NF}' | tr -d '()')
 
         if [[ "$status_word" == "active" || "$status_word" == "activeaccepted" ]]; then
-            echo "The call status is active. Proceeding with further steps..."
-            gsettings set org.sigxcpu.feedbackd profile silent
+            echo "The call status is active. Stopping custom sound."
+            
+            # Cleanup sound before breaking
+            if [ "$injection_active" = true ]; then
+                cleanup_audio_injection "$paplay_pid"
+                injection_active=false
+            fi
+            
             break  # Exit the loop as the call has been accepted
         elif [[ $(mmcli -m any --voice-list-calls) == *"No calls were found"* ]]; then
-            gsettings set org.sigxcpu.feedbackd profile "$feedbackd_profile"
+            # Cleanup sound before breaking
+            if [ "$injection_active" = true ]; then
+                cleanup_audio_injection "$paplay_pid"
+                injection_active=false
+            fi
             break
         else
-            # Vibrate and blink led if call is not yet active
-            cd /sys/class/leds/vibrator && echo 50 > duration && echo 1 > activate
-            echo 12 > /sys/class/leds/green/brightness
-            sleep 0.5  # Shorter interval for faster vibration response
-            echo 0 > /sys/class/leds/green/brightness
+            # If call is dialing, inject custom sound if not already active
+            if [ "$injection_active" = false ]; then
+                echo "Call is dialing. Injecting sound..."
+                # 1. Create a virtual sink
+                pactl load-module module-null-sink sink_name="call_injector"
+                # 2. Play sound into it
+                paplay --device="call_injector" "$sound_file" &
+                paplay_pid=$!
+                # 3. Create loopback to the real call sink
+                pactl load-module module-loopback source="call_injector.monitor" sink="sink.primary_output"
+                
+                injection_active=true
+            fi
         fi
+        sleep 0.5
     done
-
-    # Restore profile after exiting the loop
-    gsettings set org.sigxcpu.feedbackd profile "$feedbackd_profile"
 }
 
 # Main script
