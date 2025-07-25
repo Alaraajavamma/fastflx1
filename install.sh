@@ -1,5 +1,5 @@
 #!/bin/bash
-sudo apt install -y wtype curl wl-clipboard inotify-tools lisgd evtest libcallaudio-tools wofi libnotify-bin evremap
+sudo apt install -y wtype curl wl-clipboard inotify-tools lisgd libcallaudio-tools wofi libnotify-bin
 
 # Set permissions for uninstall and update scripts
 sudo chmod +x "${HOME}/.git/fastflx1/uninstall.sh" "${HOME}/.git/fastflx1/update.sh"
