@@ -105,7 +105,7 @@ changes() {
                 injection_active=true
             fi
         fi
-        sleep 0.5
+        sleep 0.1
     done
 }
 
