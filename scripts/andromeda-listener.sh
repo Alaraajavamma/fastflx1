@@ -1,0 +1,62 @@
+#!/bin/bash
+
+# ==============================================================================
+#
+#   Andromeda Monitor Script (The Listener)
+#
+#   Runs as a normal user, listens for D-Bus signals, and calls the
+#   action script with pkexec when a state change is detected.
+#
+# ==============================================================================
+
+# --- Configuration ---
+# The full path to your action script.
+# Using 'dirname' makes it work even if you call it from another directory.
+ACTION_SCRIPT="$(dirname "$0")/andromeda_actions.sh"
+
+
+# ---
+# Function to check the container's status using the 'andromeda status' command.
+# ---
+check_container_status() {
+    if andromeda status | grep -q "Session: RUNNING"; then
+        echo "RUNNING"
+    else
+        echo "STOPPED"
+    fi
+}
+
+
+# ==============================================================================
+# ==                   MAIN EXECUTION & LISTENER                        ==
+# ==============================================================================
+
+echo "[$(date)] [INIT] Starting Andromeda Monitor..."
+
+# No initial cleanup here, as this script doesn't have root privileges.
+# The cleanup will be handled by the action script.
+
+echo "[$(date)] [INIT] Determining initial container state..."
+LAST_STATE=$(check_container_status)
+echo "[$(date)] [INFO] Initial state is: $LAST_STATE"
+
+echo "[$(date)] [INIT] Listening for 'SessionStateChanged' signal..."
+
+dbus-monitor --system "type='signal',interface='io.furios.Andromeda.ContainerManager',member='SessionStateChanged'" |
+while read -r line; do
+    echo "[$(date)] [DBUS] 'SessionStateChanged' signal detected! Checking new state..."
+    
+    CURRENT_STATE=$(check_container_status)
+    echo "[$(date)] [INFO] Polled state is now: $CURRENT_STATE"
+
+    if [ "$CURRENT_STATE" == "RUNNING" ] && [ "$LAST_STATE" == "STOPPED" ]; then
+        echo "[$(date)] >>> Container START detected. Calling action script..."
+        pkexec bash "$ACTION_SCRIPT" start
+        LAST_STATE="RUNNING"
+
+    elif [ "$CURRENT_STATE" == "STOPPED" ] && [ "$LAST_STATE" == "RUNNING" ]; then
+        echo "[$(date)] >>> Container STOP detected. Calling action script..."
+        pkexec bash "$ACTION_SCRIPT" stop
+        LAST_STATE="STOPPED"
+    fi
+done
