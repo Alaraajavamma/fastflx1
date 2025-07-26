@@ -5,7 +5,7 @@ sudo apt install -y wtype curl wl-clipboard inotify-tools lisgd libcallaudio-too
 sudo chmod +x "${HOME}/.git/fastflx1/uninstall.sh" "${HOME}/.git/fastflx1/update.sh"
 
 # Copy scripts to /usr/bin and set permissions
-for script in alarmvol dialtone double-press fastflx1 gnome-weather-location long-press short-press squeekboard-scale gesture-shortcuts andromeda-listener andromeda-actions assistant-button-tweak ; do
+for script in alarmvol dialtone double-press fastflx1 gnome-weather-location long-press short-press squeekboard-scale gesture-shortcuts andromeda-listener assistant-button-tweak ; do
     sudo cp "${HOME}/.git/fastflx1/scripts/${script}" "/usr/bin/"
     sudo chmod +x "/usr/bin/${script}"
 done
@@ -51,6 +51,22 @@ cp "${HOME}/.git/fastflx1/configs/autostart/"{alarmvol.desktop,andromeda-listene
 
 # Set custom sound theme
 gsettings set org.gnome.desktop.sound theme-name __custom
+
+# --- Configure Sudoers for Andromeda Listener ---
+echo ""
+echo "⚙️ Configuring passwordless sudo for Andromeda Manager..."
+SUDOERS_FILE="/etc/sudoers.d/andromeda-listener"
+SUDOERS_RULE="$USER ALL=(ALL) NOPASSWD: /usr/bin/umount, /usr/bin/mount, /usr/bin/test, /usr/bin/setfacl, /usr/bin/find"
+
+# Use tee to write the file with sudo privileges, and redirect stdout to /dev/null
+echo "$SUDOERS_RULE" | sudo tee "$SUDOERS_FILE" > /dev/null
+
+# Set correct permissions for the sudoers file (readable only by root)
+sudo chmod 440 "$SUDOERS_FILE"
+
+echo "Configuration complete."
+echo ""
+# --- End of Sudoers Configuration ---
 
 echo -n "To start FastFLX1 we need to reboot. Reboot now? Type 'Yes' to confirm: "
 read answer
