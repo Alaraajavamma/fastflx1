@@ -1,0 +1,117 @@
+#!/bin/bash
+
+# ==============================================================================
+#
+#   Andromeda Actions Script (The Worker) - v13.2
+#
+#   This script is called by the monitor and runs entirely as root.
+#   It performs the setup or cleanup based on the argument it receives.
+#
+# ==============================================================================
+
+
+# --- Main Configuration ---
+# We need to know the original user's home directory.
+# The 'pkexec' command preserves the $USER variable, but not $HOME in all cases.
+ORIGINAL_HOME=$(getent passwd "$USER" | cut -d: -f6)
+ANDROID_DIR="$ORIGINAL_HOME/Android"
+
+
+# ---
+# Function to clean up and unmount all detailed bind mounts.
+# ---
+cleanup_detailed_mounts() {
+    echo "[$(date)] [ACTION-CLEANUP] Starting detailed unmount process..."
+    mount | grep "$ANDROID_DIR" | awk '{print $3}' | sort -r | while read -r mountpoint; do
+        if [ "$mountpoint" == "$ANDROID_DIR" ]; then
+            continue
+        fi
+        umount "$mountpoint" || echo "[$(date)] [ACTION-WARN] Could not unmount $mountpoint"
+    done
+    echo "[$(date)] [ACTION-CLEANUP] Detailed unmount process finished."
+}
+
+
+# ---
+# Function to set up all the detailed bind mounts.
+# ---
+setup_detailed_mounts() {
+    echo "[$(date)] [ACTION-SETUP] Starting detailed mount process..."
+
+    local HOST_LINUX_DIR="$ANDROID_DIR/Linux"
+    local ANDROID_OS_DIR="$ANDROID_DIR/Android"
+    
+    mkdir -p "$HOST_LINUX_DIR"
+    mkdir -p "$ANDROID_OS_DIR"
+
+    # Mount Host Linux directories
+    find "$ORIGINAL_HOME" -maxdepth 1 -mindepth 1 -type d | while IFS= read -r dir; do
+        local dir_name
+        dir_name=$(basename "$dir")
+        if [ "$dir_name" == "Android" ]; then
+            continue
+        fi
+        local target_path="$HOST_LINUX_DIR/$dir_name"
+        mkdir -p "$target_path"
+        mount --bind "$dir" "$target_path"
+    done
+
+    # Prepare and Mount Android directories
+    local ANDROMEDA_PATH="$ORIGINAL_HOME/.local/share/andromeda/data/media/0"
+    local WAYDROID_PATH="$ORIGINAL_HOME/.local/share/waydroid/data/media/0"
+    local ANDROID_SOURCE_PATH=""
+
+    if test -d "$ANDROMEDA_PATH"; then
+        ANDROID_SOURCE_PATH="$ANDROMEDA_PATH"
+    elif test -d "$WAYDROID_PATH"; then
+        ANDROID_SOURCE_PATH="$WAYDROID_PATH"
+    else
+        echo "[$(date)] [ACTION-ERROR] Could not find Android data directory."
+        return 1
+    fi
+    
+    setfacl -R -m u:"$USER":rwx "$ANDROID_SOURCE_PATH"
+    
+    find "$ANDROID_SOURCE_PATH" -maxdepth 1 -mindepth 1 -type d | while IFS= read -r dir; do
+        local dir_name
+        dir_name=$(basename "$dir")
+        local target_path="$ANDROID_OS_DIR/$dir_name"
+        mkdir -p "$target_path"
+        mount --bind "$dir" "$target_path"
+    done
+    
+    echo "[$(date)] [ACTION-SETUP] Detailed mount process finished."
+}
+
+
+# ==============================================================================
+# ==                       SCRIPT ENTRYPOINT                            ==
+# ==============================================================================
+
+# Check the first argument ($1) to decide what to do.
+case "$1" in
+    start)
+        # Perform initial cleanup, then set up the new mounts.
+        cleanup_detailed_mounts
+        
+        # We add a small pause here just in case.
+        sleep 2 
+        
+        # Now call the D-Bus method to mount the main shared folder.
+        # We need to run this as the original user.
+        sudo -u "$USER" gdbus call --system \
+            --dest 'io.furios.Andromeda.Container' \
+            --object-path '/ContainerManager' \
+            --method 'io.furios.Andromeda.ContainerManager.MountSharedFolder'
+
+        sleep 5
+        setup_detailed_mounts
+        ;;
+    stop)
+        cleanup_detailed_mounts
+        ;;
+    *)
+        echo "Error: Invalid argument. Use 'start' or 'stop'."
+        exit 1
+        ;;
+esac
