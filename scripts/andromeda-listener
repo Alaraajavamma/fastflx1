@@ -2,18 +2,23 @@
 
 # ==============================================================================
 #
-#   Andromeda Monitor Script (The Listener)
+#   Andromeda Listener
 #
-#   Runs as a normal user, listens for D-Bus signals, and calls the
-#   action script with pkexec when a state change is detected.
+#   This version is modified to be run as a background service by using 'sudo'
+#   non-interactively. This requires a one-time sudoers configuration.
 #
 # ==============================================================================
 
-# --- Configuration ---
-# The full path to your action script.
-# Using 'dirname' makes it work even if you call it from another directory.
-ACTION_SCRIPT="$(dirname "$0")/andromeda-actions"
 
+# --- Main Configuration ---
+ANDROID_DIR="$HOME/Android"
+# Use 'sudo' directly. Requires a passwordless sudoers rule to be configured.
+SUDO_CMD="sudo"
+
+
+# ==============================================================================
+# ==                               FUNCTIONS                                ==
+# ==============================================================================
 
 # ---
 # Function to check the container's status using the 'andromeda status' command.
@@ -27,20 +32,129 @@ check_container_status() {
 }
 
 
+# ---
+# Function to clean up and unmount all detailed bind mounts.
+# ---
+cleanup_detailed_mounts() {
+    echo "[$(date)] [CLEANUP] Starting detailed unmount process..."
+    mount | grep "$ANDROID_DIR" | awk '{print $3}' | sort -r | while read -r mountpoint; do
+        if [ "$mountpoint" == "$ANDROID_DIR" ]; then
+            echo "[$(date)] [CLEANUP] Skipping unmount of main shared directory: $mountpoint"
+            continue
+        fi
+        echo "[$(date)] [UNMOUNT] Attempting to unmount: $mountpoint"
+        $SUDO_CMD umount "$mountpoint" || echo "[$(date)] [WARN] Could not unmount $mountpoint"
+    done
+    echo "[$(date)] [CLEANUP] Detailed unmount process finished."
+}
+
+
+# ---
+# Function to set up all the detailed bind mounts.
+# ---
+setup_detailed_mounts() {
+    echo "[$(date)] [SETUP] Starting detailed mount process..."
+
+    local HOST_LINUX_DIR="$ANDROID_DIR/Linux"
+    local ANDROID_OS_DIR="$ANDROID_DIR/Android"
+
+    echo "[$(date)] [MKDIR] Ensuring directory exists: $HOST_LINUX_DIR"
+    mkdir -p "$HOST_LINUX_DIR"
+    echo "[$(date)] [MKDIR] Ensuring directory exists: $ANDROID_OS_DIR"
+    mkdir -p "$ANDROID_OS_DIR"
+
+    echo "[$(date)] [SETUP] --- Mounting Host Linux Directories ---"
+    # BUG FIX: Use 'find | while read' to correctly handle names with spaces.
+    find "$HOME" -maxdepth 1 -mindepth 1 -type d | while IFS= read -r dir; do
+        local dir_name
+        dir_name=$(basename "$dir")
+        if [ "$dir_name" == "Android" ]; then
+            continue
+        fi
+        
+        local target_path="$HOST_LINUX_DIR/$dir_name"
+        mkdir -p "$target_path"
+        $SUDO_CMD mount --bind "$dir" "$target_path"
+    done
+
+    echo "[$(date)] [SETUP] --- Preparing and Mounting Android Directories ---"
+    local ANDROMEDA_PATH="$HOME/.local/share/andromeda/data/media/0"
+    local WAYDROID_PATH="$HOME/.local/share/waydroid/data/media/0"
+    local ANDROID_SOURCE_PATH=""
+
+    echo "[$(date)] [CHECK] Searching for Android data directory..."
+    if $SUDO_CMD test -d "$ANDROMEDA_PATH"; then
+        ANDROID_SOURCE_PATH="$ANDROMEDA_PATH"
+    elif $SUDO_CMD test -d "$WAYDROID_PATH"; then
+        ANDROID_SOURCE_PATH="$WAYDROID_PATH"
+    else
+        echo "[$(date)] [ERROR] Could not find Android data directory. Aborting mount."
+        return 1
+    fi
+    echo "[$(date)] [INFO] Found Android data at: $ANDROID_SOURCE_PATH"
+    
+    echo "[$(date)] [SETPERMS] Applying recursive permissions to $ANDROID_SOURCE_PATH..."
+    $SUDO_CMD setfacl -R -m u:"$USER":rwx "$ANDROID_SOURCE_PATH"
+    
+    # BUG FIX: Use 'find | while read' to correctly handle names with spaces.
+    $SUDO_CMD find "$ANDROID_SOURCE_PATH" -maxdepth 1 -mindepth 1 -type d | while IFS= read -r dir; do
+        local dir_name
+        dir_name=$(basename "$dir")
+        local target_path="$ANDROID_OS_DIR/$dir_name"
+        mkdir -p "$target_path"
+        $SUDO_CMD mount --bind "$dir" "$target_path"
+    done
+    
+    echo "[$(date)] [SETUP] Detailed mount process finished."
+}
+
+
+# ---
+# Orchestration function that runs when the container STARTS.
+# ---
+on_container_start() {
+    echo "[$(date)] >>> Container START detected."
+    echo "[$(date)] [WAIT] Pausing for 5 seconds to allow services to initialize..."
+    sleep 5
+
+    echo "[$(date)] [ACTION] Calling D-Bus to mount main shared folder..."
+    gdbus call --system \
+        --dest 'io.furios.Andromeda.Container' \
+        --object-path '/ContainerManager' \
+        --method 'io.furios.Andromeda.ContainerManager.MountSharedFolder'
+    
+    echo "[$(date)] [ACTION] Handing off to detailed bind-mount setup function..."
+    setup_detailed_mounts
+    
+    echo "[$(date)] <<< All startup actions complete."
+}
+
+
+# ---
+# Orchestration function that runs when the container STOPS.
+# ---
+on_container_stop() {
+    echo "[$(date)] >>> Container STOP detected."
+    echo "[$(date)] [ACTION] Handing off to cleanup function..."
+    cleanup_detailed_mounts
+    echo "[$(date)] <<< All shutdown actions complete."
+}
+
+
 # ==============================================================================
-# ==                   MAIN EXECUTION & LISTENER                        ==
+# ==                      MAIN EXECUTION & LISTENER                       ==
 # ==============================================================================
 
-echo "[$(date)] [INIT] Starting Andromeda Monitor..."
+echo "[$(date)] [INIT] Starting Andromeda Manager..."
 
-# No initial cleanup here, as this script doesn't have root privileges.
-# The cleanup will be handled by the action script.
+echo "[$(date)] [INIT] Performing initial cleanup to ensure a clean state..."
+cleanup_detailed_mounts
 
 echo "[$(date)] [INIT] Determining initial container state..."
 LAST_STATE=$(check_container_status)
 echo "[$(date)] [INFO] Initial state is: $LAST_STATE"
 
-echo "[$(date)] [INIT] Listening for 'SessionStateChanged' signal..."
+echo "[$(date)] [INIT] Handing control to dbus-monitor. Listening for 'SessionStateChanged' signal..."
 
 dbus-monitor --system "type='signal',interface='io.furios.Andromeda.ContainerManager',member='SessionStateChanged'" |
 while read -r line; do
@@ -50,13 +164,12 @@ while read -r line; do
     echo "[$(date)] [INFO] Polled state is now: $CURRENT_STATE"
 
     if [ "$CURRENT_STATE" == "RUNNING" ] && [ "$LAST_STATE" == "STOPPED" ]; then
-        echo "[$(date)] >>> Container START detected. Calling action script..."
-        pkexec bash "$ACTION_SCRIPT" start
+        on_container_start
         LAST_STATE="RUNNING"
-
     elif [ "$CURRENT_STATE" == "STOPPED" ] && [ "$LAST_STATE" == "RUNNING" ]; then
-        echo "[$(date)] >>> Container STOP detected. Calling action script..."
-        pkexec bash "$ACTION_SCRIPT" stop
+        on_container_stop
         LAST_STATE="STOPPED"
+    else
+        echo "[$(date)] [INFO] State is unchanged ($CURRENT_STATE), taking no action."
     fi
 done
