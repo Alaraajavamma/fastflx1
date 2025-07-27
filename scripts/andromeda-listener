@@ -2,44 +2,34 @@
 
 # ==============================================================================
 #
-#   Andromeda Manager - v11.0 (Simplified Full Mount)
+#   Andromeda listener
 #
-#   - This version mounts the full home and Android data directories directly.
-#   - Unmounting is disabled; mounts persist until reboot or manual unmount.
+#   - This version unconditionally attempts to create the mount points
+#     every time it is executed, regardless of the container's status.
+#   - Mounts are intended to be permanent until reboot or manual unmount.
 #
 # ==============================================================================
 
 
 # --- Main Configuration ---
-ANDROID_DIR="$HOME/Android"
+# The base directory on the host where mount points will be created.
+SHARED_DIR="$HOME/Shared"
 # Use 'sudo' directly. Requires a passwordless sudoers rule to be configured.
 SUDO_CMD="sudo"
 
 
 # ==============================================================================
-# ==                               FUNCTIONS                                ==
+# ==                               FUNCTION                                   ==
 # ==============================================================================
-
-# ---
-# Function to check the container's status using the 'andromeda status' command.
-# ---
-check_container_status() {
-    if andromeda status | grep -q "Session: RUNNING"; then
-        echo "RUNNING"
-    else
-        echo "STOPPED"
-    fi
-}
-
 
 # ---
 # Function to set up the main, full directory bind mounts.
 # ---
 setup_main_mounts() {
-    echo "[$(date)] [SETUP] Starting full directory mount process..."
+    echo "[$(date)] [SETUP] Starting unconditional mount process..."
 
-    local HOST_TARGET_DIR="$ANDROID_DIR/Linux"
-    local ANDROID_TARGET_DIR="$ANDROID_DIR/Android"
+    local HOST_TARGET_DIR="$SHARED_DIR/Linux"
+    local ANDROID_TARGET_DIR="$SHARED_DIR/Android"
 
     echo "[$(date)] [MKDIR] Ensuring target directory exists: $HOST_TARGET_DIR"
     mkdir -p "$HOST_TARGET_DIR"
@@ -76,71 +66,13 @@ setup_main_mounts() {
 }
 
 
-# ---
-# Orchestration function that runs when the container STARTS.
-# ---
-on_container_start() {
-    echo "[$(date)] >>> Container START detected."
-    echo "[$(date)] [WAIT] Pausing for 5 seconds to allow services to initialize..."
-    sleep 5
-
-    echo "[$(date)] [ACTION] Calling D-Bus to mount main shared folder..."
-    gdbus call --system \
-        --dest 'io.furios.Andromeda.Container' \
-        --object-path '/ContainerManager' \
-        --method 'io.furios.Andromeda.ContainerManager.MountSharedFolder'
-    
-    echo "[$(date)] [ACTION] Handing off to main mount setup function..."
-    setup_main_mounts
-    
-    echo "[$(date)] <<< All startup actions complete."
-}
-
-
-# ---
-# Orchestration function that runs when the container STOPS.
-# ---
-on_container_stop() {
-    echo "[$(date)] >>> Container STOP detected."
-    echo "[$(date)] [INFO] Unmounting is disabled by the new configuration. Taking no action."
-    echo "[$(date)] <<< All shutdown actions complete."
-}
-
-
 # ==============================================================================
-# ==                      MAIN EXECUTION & LISTENER                       ==
+# ==                            MAIN EXECUTION                                ==
 # ==============================================================================
 
-echo "[$(date)] [INIT] Starting Andromeda Manager..."
+echo "[$(date)] [INIT] Starting Andromeda Listener (Unconditional Mount Mode)..."
 
-# NOTE: Initial cleanup is removed as per the new "no unmount" logic.
+# Directly call the mount function without any checks.
+setup_main_mounts
 
-echo "[$(date)] [INIT] Determining initial container state..."
-LAST_STATE=$(check_container_status)
-echo "[$(date)] [INFO] Initial state is: $LAST_STATE"
-
-# If container is already running on script start, perform the mounts.
-if [ "$LAST_STATE" == "RUNNING" ]; then
-    echo "[$(date)] [INIT] Container is already running. Triggering start actions now."
-    on_container_start
-fi
-
-echo "[$(date)] [INIT] Handing control to dbus-monitor. Listening for 'SessionStateChanged' signal..."
-
-dbus-monitor --system "type='signal',interface='io.furios.Andromeda.ContainerManager',member='SessionStateChanged'" |
-while read -r line; do
-    echo "[$(date)] [DBUS] 'SessionStateChanged' signal detected! Checking new state..."
-    
-    CURRENT_STATE=$(check_container_status)
-    echo "[$(date)] [INFO] Polled state is now: $CURRENT_STATE"
-
-    if [ "$CURRENT_STATE" == "RUNNING" ] && [ "$LAST_STATE" == "STOPPED" ]; then
-        on_container_start
-        LAST_STATE="RUNNING"
-    elif [ "$CURRENT_STATE" == "STOPPED" ] && [ "$LAST_STATE" == "RUNNING" ]; then
-        on_container_stop
-        LAST_STATE="STOPPED"
-    else
-        echo "[$(date)] [INFO] State is unchanged ($CURRENT_STATE), taking no action."
-    fi
-done
+echo "[$(date)] [DONE] Script execution finished."
