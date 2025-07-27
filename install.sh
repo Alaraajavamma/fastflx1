@@ -52,22 +52,6 @@ cp "${HOME}/.git/fastflx1/configs/autostart/"{alarmvol.desktop,dialtone.desktop,
 # Set custom sound theme
 gsettings set org.gnome.desktop.sound theme-name __custom
 
-echo ""
-echo "Configuring passwordless sudo for andromeda-shared-folders..."
-
-# Define the user and the full paths to the commands used in the script
-SUDOERS_FILE="/etc/sudoers.d/andromeda-shared-folders"
-SUDOERS_RULE="$USER ALL=(ALL) NOPASSWD: /usr/bin/umount, /usr/bin/test, /usr/bin/mount, /usr/bin/mkdir, /usr/bin/chown, /usr/bin/find"
-
-# Use tee to write the file with sudo privileges
-echo "$SUDOERS_RULE" | sudo tee "$SUDOERS_FILE" > /dev/null
-
-# Set correct, secure permissions for the sudoers file
-sudo chmod 440 "$SUDOERS_FILE"
-
-echo "Configuration complete."
-echo ""
-
 echo -n "To start FastFLX1 we need to reboot. Reboot now? Type 'Yes' to confirm: "
 read answer
 if [ "$answer" == "Yes" ]; then
