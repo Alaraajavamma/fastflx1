@@ -33,6 +33,8 @@ if ! $SUDO_CMD test -d "$ANDROID_DATA_PATH"; then
 fi
 echo "[$(date)] [INFO] Using Andromeda data path: $ANDROID_DATA_PATH"
 
+$SUDO_CMD setfacl -R -m u:$USER:rwx "$ANDROID_DATA_PATH"
+
 
 # --- Step 2: Mount Home subdirectories -> Android's 'Shared-Linux' ---
 echo "[$(date)] [SETUP] Preparing target directory: $ANDROID_SHARED_DIR"
