@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# This script is the "hammer".
+
+# The user who should own the files. Passed as the first argument.
+HOST_USER="$1"
+if [ -z "$HOST_USER" ]; then
+    echo "Error: Username must be provided as the first argument."
+    exit 1
+fi
+
+SHARED_GROUP="andromeda-share"
+WATCH_DIR=$(getent passwd "$HOST_USER" | cut -d: -f6)
+
+# Ensure the shared group exists
+groupadd -f "$SHARED_GROUP"
+usermod -a -G "$SHARED_GROUP" "$HOST_USER"
+
+# The infinite loop to watch for changes and fix them
+inotifywait -m -r -q -e create,attrib,modify --format '%w%f' "$WATCH_DIR" | while read -r AFFECTED_FILE; do
+    if [ -e "$AFFECTED_FILE" ]; then
+        chown "$HOST_USER:$SHARED_GROUP" "$AFFECTED_FILE" &>/dev/null
+        if [ -d "$AFFECTED_FILE" ]; then
+            chmod 2775 "$AFFECTED_FILE" &>/dev/null
+        else
+            chmod 664 "$AFFECTED_FILE" &>/dev/null
+        fi
+    fi
+done
