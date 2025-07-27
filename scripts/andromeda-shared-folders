@@ -1,0 +1,80 @@
+#!/bin/bash
+
+# ==============================================================================
+#
+#   andromeda-shared-folders - (Individual Bind Mounts)
+#
+#   - This script implements the strategy of mounting each subdirectory
+#     individually to avoid recursive loops and the 'bindfs' dependency.
+#   - It is designed to be run once per session (e.g., on system boot).
+#
+# ==============================================================================
+
+# --- Configuration ---
+SUDO_CMD="sudo"
+ANDROID_DATA_PATH="$HOME/.local/share/andromeda/data/media/0"
+HOST_SHARED_DIR="$HOME/Shared-Andromeda"
+ANDROID_SHARED_DIR="$ANDROID_DATA_PATH/Shared-Linux"
+
+echo "[$(date)] [INIT] Starting Andromeda Manager (Individual Mount Mode)..."
+
+# --- Step 0: Pre-emptive cleanup ---
+# Tries to unmount the top-level shared directories in case of a previous run.
+echo "[$(date)] [CLEANUP] Attempting to unmount old targets for a clean state..."
+$SUDO_CMD umount "$HOST_SHARED_DIR" &>/dev/null
+$SUDO_CMD umount "$ANDROID_SHARED_DIR" &>/dev/null
+
+
+# --- Step 1: Verify the Andromeda data path ---
+if ! $SUDO_CMD test -d "$ANDROID_DATA_PATH"; then
+    echo "[$(date)] [FATAL] The Andromeda data directory does not exist at: $ANDROID_DATA_PATH"
+    echo "[$(date)] [FATAL] Please ensure Andromeda is installed and has run once. Aborting."
+    exit 1
+fi
+echo "[$(date)] [INFO] Using Andromeda data path: $ANDROID_DATA_PATH"
+
+
+# --- Step 2: Mount Home subdirectories -> Android's 'Shared-Linux' ---
+echo "[$(date)] [SETUP] Preparing target directory: $ANDROID_SHARED_DIR"
+$SUDO_CMD mkdir -p "$ANDROID_SHARED_DIR"
+$SUDO_CMD chown "$USER:$(id -g -n)" "$ANDROID_SHARED_DIR"
+echo "[$(date)] [INFO] Mounting individual Home directories into Android..."
+
+# Find all top-level directories in HOME
+for source_dir in $(find "$HOME" -maxdepth 1 -mindepth 1 -type d); do
+    dirname=$(basename "$source_dir")
+
+    # Check against the exclusion list
+    if [[ "$dirname" != "Android" && "$dirname" != "Shared-Andromeda" && "$dirname" != .* ]]; then
+        target_dir="$ANDROID_SHARED_DIR/$dirname"
+        echo "  -> Mounting '$dirname'"
+        $SUDO_CMD mkdir -p "$target_dir"
+        $SUDO_CMD mount --bind "$source_dir" "$target_dir"
+    else
+        echo "  -> Excluding '$dirname'"
+    fi
+done
+
+
+# --- Step 3: Mount Android subdirectories -> Home's 'Shared-Andromeda' ---
+echo "[$(date)] [SETUP] Preparing target directory: $HOST_SHARED_DIR"
+mkdir -p "$HOST_SHARED_DIR"
+echo "[$(date)] [INFO] Mounting individual Android directories into Home..."
+
+# Find all top-level directories in the Android data path (requires sudo to list)
+for source_dir in $($SUDO_CMD find "$ANDROID_DATA_PATH" -maxdepth 1 -mindepth 1 -type d); do
+    dirname=$(basename "$source_dir")
+
+    # Check against the exclusion list
+    if [[ "$dirname" != "Host" && "$dirname" != "Shared-Linux" && "$dirname" != .* ]]; then
+        target_dir="$HOST_SHARED_DIR/$dirname"
+        echo "  -> Mounting '$dirname'"
+        mkdir -p "$target_dir"
+        $SUDO_CMD mount --bind "$source_dir" "$target_dir"
+    else
+        echo "  -> Excluding '$dirname'"
+    fi
+done
+
+
+echo "[$(date)] [DONE] All individual mount operations are complete."
