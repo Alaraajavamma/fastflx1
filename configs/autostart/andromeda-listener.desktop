@@ -1,8 +1,0 @@
-[Desktop Entry]
-Version=0.1
-Name=Andromeda-listener
-Comment=Monitor andromeda state and mount the home folders
-Exec=bash -c 'andromeda-listener'
-Icon=org.gnome.Terminal
-Terminal=false
-Type=Application
