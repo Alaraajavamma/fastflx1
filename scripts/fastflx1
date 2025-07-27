@@ -102,8 +102,8 @@ case "$SELECTION" in
             esac
         }
         ;;
-    "7. Change Squeekboard scale")
-        bash -c 'squeekboard-scale'
+    "7. Enable andromeda-shared-folders")
+        bash -c 'andromeda-shared-folders'
         ;;
     "8. Quit")
         exit 0
