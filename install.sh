@@ -5,7 +5,7 @@ sudo apt install -y wtype curl wl-clipboard inotify-tools lisgd libcallaudio-too
 sudo chmod +x "${HOME}/.git/fastflx1/uninstall.sh" "${HOME}/.git/fastflx1/update.sh"
 
 # Copy scripts to /usr/bin and set permissions
-for script in alarmvol dialtone double-press fastflx1 gnome-weather-location long-press short-press squeekboard-scale gesture-shortcuts andromeda-listener assistant-button-tweak ; do
+for script in alarmvol dialtone double-press fastflx1 gnome-weather-location long-press short-press squeekboard-scale gesture-shortcuts andromeda-shared-folders assistant-button-tweak ; do
     sudo cp "${HOME}/.git/fastflx1/scripts/${script}" "/usr/bin/"
     sudo chmod +x "/usr/bin/${script}"
 done
@@ -47,16 +47,16 @@ app_dir="${HOME}/.local/share/applications"
 autostart_dir="${HOME}/.config/autostart"
 mkdir -p "${app_dir}" "${autostart_dir}"
 cp "${HOME}/.git/fastflx1/files/"{fastflx1.desktop,yad-icon-browser.desktop,display-im6.q16.desktop,display-im7.q16.desktop,feh.desktop} "${app_dir}/"
-cp "${HOME}/.git/fastflx1/configs/autostart/"{alarmvol.desktop,andromeda-listener.desktop,dialtone.desktop,gesture-shortcuts.desktop,vol-buttons.desktop,evremap.desktop} "${autostart_dir}/"
+cp "${HOME}/.git/fastflx1/configs/autostart/"{alarmvol.desktop,dialtone.desktop,gesture-shortcuts.desktop,vol-buttons.desktop,evremap.desktop} "${autostart_dir}/"
 
 # Set custom sound theme
 gsettings set org.gnome.desktop.sound theme-name __custom
 
 echo ""
-echo "Configuring passwordless sudo for Andromeda Listener..."
+echo "Configuring passwordless sudo for andromeda-shared-folders..."
 
 # Define the user and the full paths to the commands used in the script
-SUDOERS_FILE="/etc/sudoers.d/andromeda-manager"
+SUDOERS_FILE="/etc/sudoers.d/andromeda-shared-folders"
 SUDOERS_RULE="$USER ALL=(ALL) NOPASSWD: /usr/bin/umount, /usr/bin/test, /usr/bin/mount, /usr/bin/mkdir, /usr/bin/chown, /usr/bin/find"
 
 # Use tee to write the file with sudo privileges
