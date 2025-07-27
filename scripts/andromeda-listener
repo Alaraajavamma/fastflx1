@@ -2,62 +2,72 @@
 
 # ==============================================================================
 #
-#   Andromeda Manager - v14.1 (Andromeda-Only Selective Mount)
+#   Andromeda Manager - v14.2 (Robust Selective Mount)
 #
-#   - This script uses 'bindfs' to create two-way mounts with exclusions.
+#   - This is a more robust version that includes pre-emptive unmounting
+#     and post-mount verification to provide clear error messages.
+#   - It uses 'bindfs' to create two-way mounts with exclusions.
 #   - It is designed to work ONLY with the Andromeda data path.
-#   - It should be run once per session (e.g., on system boot).
 #
 #   ** DEPENDENCY: This script requires 'bindfs' to be installed. **
 #
 # ==============================================================================
 
-# --- Main Configuration ---
+# --- Configuration ---
 SUDO_CMD="sudo"
+ANDROID_DATA_PATH="$HOME/.local/share/andromeda/data/media/0"
+HOST_TARGET_DIR="$HOME/Shared-Andromeda"
+ANDROID_TARGET_DIR="$ANDROID_DATA_PATH/Shared-Linux"
 
-echo "[$(date)] [INIT] Starting Andromeda Manager (bindfs Selective Mount Mode)..."
+echo "[$(date)] [INIT] Starting Andromeda Manager (Robust Selective Mount Mode)..."
 
-# --- Step 0: Verify 'bindfs' dependency ---
+# --- Step 0: Pre-emptive cleanup of old mounts ---
+# This prevents errors if the script is run multiple times or after a failure.
+echo "[$(date)] [CLEANUP] Attempting to unmount old targets to ensure a clean state..."
+$SUDO_CMD umount "$HOST_TARGET_DIR" &>/dev/null
+$SUDO_CMD umount "$ANDROID_TARGET_DIR" &>/dev/null
+
+
+# --- Step 1: Verify 'bindfs' dependency ---
 if ! command -v bindfs &> /dev/null; then
-    echo "[$(date)] [ERROR] 'bindfs' is not installed. Please install it to continue."
-    echo "[$(date)] [ERROR] On Debian/Ubuntu: sudo apt install bindfs"
+    echo "[$(date)] [FATAL] 'bindfs' is not installed. Please install it to continue."
+    echo "[$(date)] [FATAL] On Debian/Ubuntu: sudo apt install bindfs"
     exit 1
 fi
 echo "[$(date)] [INFO] 'bindfs' dependency confirmed."
 
-# --- Step 1: Define and verify the Andromeda data path ---
-ANDROID_DATA_PATH="$HOME/.local/share/andromeda/data/media/0"
 
+# --- Step 2: Define and verify the Andromeda data path ---
 if ! $SUDO_CMD test -d "$ANDROID_DATA_PATH"; then
-    echo "[$(date)] [ERROR] The Andromeda data directory does not exist at: $ANDROID_DATA_PATH"
-    echo "[$(date)] [ERROR] Please ensure Andromeda is installed and has run once. Aborting."
+    echo "[$(date)] [FATAL] The Andromeda data directory does not exist at: $ANDROID_DATA_PATH"
+    echo "[$(date)] [FATAL] Please ensure Andromeda is installed and has run once. Aborting."
     exit 1
 fi
 echo "[$(date)] [INFO] Using Andromeda data path: $ANDROID_DATA_PATH"
 
 
-# --- Step 2: Mount Android Data -> ~/Shared-Andromeda (with exclusions) ---
-HOST_TARGET_DIR="$HOME/Shared-Andromeda"
-
+# --- Step 3: Mount Android Data -> ~/Shared-Andromeda (with exclusions) ---
 echo "[$(date)] [SETUP] Preparing mount point: $HOST_TARGET_DIR"
 mkdir -p "$HOST_TARGET_DIR"
 
 echo "[$(date)] [MOUNT] Mounting Android data to host..."
 $SUDO_CMD bindfs \
-    --hide-from-glob='Host' \
+    --hide-from-glob='Android' \
     --hide-from-glob='Shared-Linux' \
     --hide-from-glob='.*' \
     -o "force-user=$USER,force-group=$(id -g -n),nonempty" \
     "$ANDROID_DATA_PATH" "$HOST_TARGET_DIR"
 
-echo "[$(date)] [INFO] Successfully mounted '$ANDROID_DATA_PATH' to '$HOST_TARGET_DIR'"
+# --- VERIFICATION ---
+if ! mount | grep -q "on $HOST_TARGET_DIR type fuse.bindfs"; then
+    echo "[$(date)] [FATAL] Mount failed for $HOST_TARGET_DIR. Check system logs or run with 'strace' for more details."
+    exit 1
+fi
+echo "[$(date)] [SUCCESS] Successfully mounted '$ANDROID_DATA_PATH' to '$HOST_TARGET_DIR'"
 
 
-# --- Step 3: Mount Home -> Android Data/Shared-Linux (with exclusions) ---
-ANDROID_TARGET_DIR="$ANDROID_DATA_PATH/Shared-Linux"
-
+# --- Step 4: Mount Home -> Android Data/Shared-Linux (with exclusions) ---
 echo "[$(date)] [SETUP] Preparing mount point: $ANDROID_TARGET_DIR"
-# The target directory must be created with sudo as its parent is root-owned
 $SUDO_CMD mkdir -p "$ANDROID_TARGET_DIR"
 $SUDO_CMD chown "$USER:$(id -g -n)" "$ANDROID_TARGET_DIR"
 
@@ -69,7 +79,12 @@ $SUDO_CMD bindfs \
     -o "force-user=$USER,force-group=$(id -g -n),nonempty" \
     "$HOME" "$ANDROID_TARGET_DIR"
 
-echo "[$(date)] [INFO] Successfully mounted '$HOME' to '$ANDROID_TARGET_DIR'"
+# --- VERIFICATION ---
+if ! mount | grep -q "on $ANDROID_TARGET_DIR type fuse.bindfs"; then
+    echo "[$(date)] [FATAL] Mount failed for $ANDROID_TARGET_DIR. Check system logs or run with 'strace' for more details."
+    exit 1
+fi
+echo "[$(date)] [SUCCESS] Successfully mounted '$HOME' to '$ANDROID_TARGET_DIR'"
 
 
 echo "[$(date)] [DONE] All selective mount operations are complete."
