@@ -2,77 +2,79 @@
 
 # ==============================================================================
 #
-#   Andromeda listener
+#   Andromeda Manager - v14.0 (bindfs Selective Mount)
 #
-#   - This version unconditionally attempts to create the mount points
-#     every time it is executed, regardless of the container's status.
-#   - Mounts are intended to be permanent until reboot or manual unmount.
+#   - This script uses 'bindfs' to create two-way mounts with exclusions.
+#   - It is designed to be run once per session (e.g., on system boot).
+#   - It does NOT monitor the container state.
+#
+#   ** DEPENDENCY: This script requires 'bindfs' to be installed. **
 #
 # ==============================================================================
-
 
 # --- Main Configuration ---
-# The base directory on the host where mount points will be created.
-SHARED_DIR="$HOME/Shared"
-# Use 'sudo' directly. Requires a passwordless sudoers rule to be configured.
 SUDO_CMD="sudo"
 
+echo "[$(date)] [INIT] Starting Andromeda Manager (bindfs Selective Mount Mode)..."
 
-# ==============================================================================
-# ==                               FUNCTION                                   ==
-# ==============================================================================
+# --- Step 0: Verify 'bindfs' dependency ---
+if ! command -v bindfs &> /dev/null; then
+    echo "[$(date)] [ERROR] 'bindfs' is not installed. Please install it to continue."
+    echo "[$(date)] [ERROR] On Debian/Ubuntu: sudo apt install bindfs"
+    exit 1
+fi
+echo "[$(date)] [INFO] 'bindfs' dependency confirmed."
 
-# ---
-# Function to set up the main, full directory bind mounts.
-# ---
-setup_main_mounts() {
-    echo "[$(date)] [SETUP] Starting unconditional mount process..."
+# --- Step 1: Find the correct Android data path ---
+ANDROMEDA_PATH="$HOME/.local/share/andromeda/data/media/0"
+WAYDROID_PATH="$HOME/.local/share/waydroid/data/media/0"
+ANDROID_DATA_PATH=""
 
-    local HOST_TARGET_DIR="$SHARED_DIR/Linux"
-    local ANDROID_TARGET_DIR="$SHARED_DIR/Android"
-
-    echo "[$(date)] [MKDIR] Ensuring target directory exists: $HOST_TARGET_DIR"
-    mkdir -p "$HOST_TARGET_DIR"
-    echo "[$(date)] [MKDIR] Ensuring target directory exists: $ANDROID_TARGET_DIR"
-    mkdir -p "$ANDROID_TARGET_DIR"
-
-    # --- Mount full host home directory ---
-    echo "[$(date)] [MOUNT] Binding full host home to $HOST_TARGET_DIR"
-    $SUDO_CMD mount --bind "$HOME" "$HOST_TARGET_DIR"
-
-    # --- Find and mount full Android data directory ---
-    local ANDROMEDA_PATH="$HOME/.local/share/andromeda/data/media/0"
-    local WAYDROID_PATH="$HOME/.local/share/waydroid/data/media/0"
-    local ANDROID_SOURCE_PATH=""
-
-    if $SUDO_CMD test -d "$ANDROMEDA_PATH"; then
-        ANDROID_SOURCE_PATH="$ANDROMEDA_PATH"
-    elif $SUDO_CMD test -d "$WAYDROID_PATH"; then
-        ANDROID_SOURCE_PATH="$WAYDROID_PATH"
-    else
-        echo "[$(date)] [ERROR] Could not find Android data directory. Aborting mount."
-        return 1
-    fi
-    
-    echo "[$(date)] [INFO] Found Android data at: $ANDROID_SOURCE_PATH"
-    
-    echo "[$(date)] [SETPERMS] Applying recursive permissions to $ANDROID_SOURCE_PATH..."
-    $SUDO_CMD setfacl -R -m u:"$USER":rwx "$ANDROID_SOURCE_PATH"
-    
-    echo "[$(date)] [MOUNT] Binding full Android data to $ANDROID_TARGET_DIR"
-    $SUDO_CMD mount --bind "$ANDROID_SOURCE_PATH" "$ANDROID_TARGET_DIR"
-    
-    echo "[$(date)] [SETUP] Full directory mount process finished."
-}
+if $SUDO_CMD test -d "$ANDROMEDA_PATH"; then
+    ANDROID_DATA_PATH="$ANDROMEDA_PATH"
+elif $SUDO_CMD test -d "$WAYDROID_PATH"; then
+    ANDROID_DATA_PATH="$WAYDROID_PATH"
+else
+    echo "[$(date)] [ERROR] Could not find an Andromeda or Waydroid data directory. Aborting."
+    exit 1
+fi
+echo "[$(date)] [INFO] Found Android data path at: $ANDROID_DATA_PATH"
 
 
-# ==============================================================================
-# ==                            MAIN EXECUTION                                ==
-# ==============================================================================
+# --- Step 2: Mount Android Data -> ~/Shared-Andromeda (with exclusions) ---
+HOST_TARGET_DIR="$HOME/Shared-Andromeda"
 
-echo "[$(date)] [INIT] Starting Andromeda Listener (Unconditional Mount Mode)..."
+echo "[$(date)] [SETUP] Preparing mount point: $HOST_TARGET_DIR"
+mkdir -p "$HOST_TARGET_DIR"
 
-# Directly call the mount function without any checks.
-setup_main_mounts
+echo "[$(date)] [MOUNT] Mounting Android data to host..."
+$SUDO_CMD bindfs \
+    --hide-from-glob='Android' \
+    --hide-from-glob='Shared-Linux' \
+    --hide-from-glob='.*' \
+    -o "force-user=$USER,force-group=$(id -g -n),nonempty" \
+    "$ANDROID_DATA_PATH" "$HOST_TARGET_DIR"
 
-echo "[$(date)] [DONE] Script execution finished."
+echo "[$(date)] [INFO] Successfully mounted '$ANDROID_DATA_PATH' to '$HOST_TARGET_DIR'"
+
+
+# --- Step 3: Mount Home -> Android Data/Shared-Linux (with exclusions) ---
+ANDROID_TARGET_DIR="$ANDROID_DATA_PATH/Shared-Linux"
+
+echo "[$(date)] [SETUP] Preparing mount point: $ANDROID_TARGET_DIR"
+# The target directory must be created with sudo as its parent is root-owned
+$SUDO_CMD mkdir -p "$ANDROID_TARGET_DIR"
+$SUDO_CMD chown "$USER:$(id -g -n)" "$ANDROID_TARGET_DIR"
+
+echo "[$(date)] [MOUNT] Mounting host home to Android data..."
+$SUDO_CMD bindfs \
+    --hide-from-glob='Android' \
+    --hide-from-glob='Shared-Andromeda' \
+    --hide-from-glob='.*' \
+    -o "force-user=$USER,force-group=$(id -g -n),nonempty" \
+    "$HOME" "$ANDROID_TARGET_DIR"
+
+echo "[$(date)] [INFO] Successfully mounted '$HOME' to '$ANDROID_TARGET_DIR'"
+
+
+echo "[$(date)] [DONE] All selective mount operations are complete."
