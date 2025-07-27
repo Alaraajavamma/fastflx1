@@ -2,11 +2,11 @@
 
 # ==============================================================================
 #
-#   Andromeda Manager - v14.0 (bindfs Selective Mount)
+#   Andromeda Manager - v14.1 (Andromeda-Only Selective Mount)
 #
 #   - This script uses 'bindfs' to create two-way mounts with exclusions.
-#   - It is designed to be run once per session (e.g., on system boot).
-#   - It does NOT monitor the container state.
+#   - It is designed to work ONLY with the Andromeda data path.
+#   - It should be run once per session (e.g., on system boot).
 #
 #   ** DEPENDENCY: This script requires 'bindfs' to be installed. **
 #
@@ -25,20 +25,15 @@ if ! command -v bindfs &> /dev/null; then
 fi
 echo "[$(date)] [INFO] 'bindfs' dependency confirmed."
 
-# --- Step 1: Find the correct Android data path ---
-ANDROMEDA_PATH="$HOME/.local/share/andromeda/data/media/0"
-WAYDROID_PATH="$HOME/.local/share/waydroid/data/media/0"
-ANDROID_DATA_PATH=""
+# --- Step 1: Define and verify the Andromeda data path ---
+ANDROID_DATA_PATH="$HOME/.local/share/andromeda/data/media/0"
 
-if $SUDO_CMD test -d "$ANDROMEDA_PATH"; then
-    ANDROID_DATA_PATH="$ANDROMEDA_PATH"
-elif $SUDO_CMD test -d "$WAYDROID_PATH"; then
-    ANDROID_DATA_PATH="$WAYDROID_PATH"
-else
-    echo "[$(date)] [ERROR] Could not find an Andromeda or Waydroid data directory. Aborting."
+if ! $SUDO_CMD test -d "$ANDROID_DATA_PATH"; then
+    echo "[$(date)] [ERROR] The Andromeda data directory does not exist at: $ANDROID_DATA_PATH"
+    echo "[$(date)] [ERROR] Please ensure Andromeda is installed and has run once. Aborting."
     exit 1
 fi
-echo "[$(date)] [INFO] Found Android data path at: $ANDROID_DATA_PATH"
+echo "[$(date)] [INFO] Using Andromeda data path: $ANDROID_DATA_PATH"
 
 
 # --- Step 2: Mount Android Data -> ~/Shared-Andromeda (with exclusions) ---
@@ -49,7 +44,7 @@ mkdir -p "$HOST_TARGET_DIR"
 
 echo "[$(date)] [MOUNT] Mounting Android data to host..."
 $SUDO_CMD bindfs \
-    --hide-from-glob='Android' \
+    --hide-from-glob='Host' \
     --hide-from-glob='Shared-Linux' \
     --hide-from-glob='.*' \
     -o "force-user=$USER,force-group=$(id -g -n),nonempty" \
