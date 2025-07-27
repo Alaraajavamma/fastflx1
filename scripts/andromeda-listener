@@ -2,40 +2,30 @@
 
 # ==============================================================================
 #
-#   Andromeda Manager - v14.3 (Legacy bindfs Syntax)
+#   Andromeda Listener - (Individual Bind Mounts)
 #
-#   - This version uses the older '--exclude' syntax for bindfs to support
-#     older installations of the tool.
-#   - It includes pre-emptive unmounting and post-mount verification.
-#
-#   ** DEPENDENCY: This script requires 'bindfs' to be installed. **
+#   - This script implements the strategy of mounting each subdirectory
+#     individually to avoid recursive loops and the 'bindfs' dependency.
+#   - It is designed to be run once per session (e.g., on system boot).
 #
 # ==============================================================================
 
 # --- Configuration ---
 SUDO_CMD="sudo"
 ANDROID_DATA_PATH="$HOME/.local/share/andromeda/data/media/0"
-HOST_TARGET_DIR="$HOME/Shared-Andromeda"
-ANDROID_TARGET_DIR="$ANDROID_DATA_PATH/Shared-Linux"
+HOST_SHARED_DIR="$HOME/Shared-Andromeda"
+ANDROID_SHARED_DIR="$ANDROID_DATA_PATH/Shared-Linux"
 
-echo "[$(date)] [INIT] Starting Andromeda Manager (Legacy bindfs Syntax Mode)..."
+echo "[$(date)] [INIT] Starting Andromeda Manager (Individual Mount Mode)..."
 
-# --- Step 0: Pre-emptive cleanup of old mounts ---
-echo "[$(date)] [CLEANUP] Attempting to unmount old targets to ensure a clean state..."
-$SUDO_CMD umount "$HOST_TARGET_DIR" &>/dev/null
-$SUDO_CMD umount "$ANDROID_TARGET_DIR" &>/dev/null
-
-
-# --- Step 1: Verify 'bindfs' dependency ---
-if ! command -v bindfs &> /dev/null; then
-    echo "[$(date)] [FATAL] 'bindfs' is not installed. Please install it to continue."
-    echo "[$(date)] [FATAL] On Debian/Ubuntu: sudo apt install bindfs"
-    exit 1
-fi
-echo "[$(date)] [INFO] 'bindfs' dependency confirmed."
+# --- Step 0: Pre-emptive cleanup ---
+# Tries to unmount the top-level shared directories in case of a previous run.
+echo "[$(date)] [CLEANUP] Attempting to unmount old targets for a clean state..."
+$SUDO_CMD umount "$HOST_SHARED_DIR" &>/dev/null
+$SUDO_CMD umount "$ANDROID_SHARED_DIR" &>/dev/null
 
 
-# --- Step 2: Define and verify the Andromeda data path ---
+# --- Step 1: Verify the Andromeda data path ---
 if ! $SUDO_CMD test -d "$ANDROID_DATA_PATH"; then
     echo "[$(date)] [FATAL] The Andromeda data directory does not exist at: $ANDROID_DATA_PATH"
     echo "[$(date)] [FATAL] Please ensure Andromeda is installed and has run once. Aborting."
@@ -44,45 +34,47 @@ fi
 echo "[$(date)] [INFO] Using Andromeda data path: $ANDROID_DATA_PATH"
 
 
-# --- Step 3: Mount Android Data -> ~/Shared-Andromeda (with exclusions) ---
-echo "[$(date)] [SETUP] Preparing mount point: $HOST_TARGET_DIR"
-mkdir -p "$HOST_TARGET_DIR"
+# --- Step 2: Mount Home subdirectories -> Android's 'Shared-Linux' ---
+echo "[$(date)] [SETUP] Preparing target directory: $ANDROID_SHARED_DIR"
+$SUDO_CMD mkdir -p "$ANDROID_SHARED_DIR"
+$SUDO_CMD chown "$USER:$(id -g -n)" "$ANDROID_SHARED_DIR"
+echo "[$(date)] [INFO] Mounting individual Home directories into Android..."
 
-echo "[$(date)] [MOUNT] Mounting Android data to host..."
-$SUDO_CMD bindfs \
-    --exclude='Host' \
-    --exclude='Shared-Linux' \
-    --exclude='.*' \
-    -o "force-user=$USER,force-group=$(id -g -n),nonempty" \
-    "$ANDROID_DATA_PATH" "$HOST_TARGET_DIR"
+# Find all top-level directories in HOME
+for source_dir in $(find "$HOME" -maxdepth 1 -mindepth 1 -type d); do
+    dirname=$(basename "$source_dir")
 
-# --- VERIFICATION ---
-if ! mount | grep -q "on $HOST_TARGET_DIR type fuse.bindfs"; then
-    echo "[$(date)] [FATAL] Mount failed for $HOST_TARGET_DIR. Check system logs or run with 'strace' for more details."
-    exit 1
-fi
-echo "[$(date)] [SUCCESS] Successfully mounted '$ANDROID_DATA_PATH' to '$HOST_TARGET_DIR'"
-
-
-# --- Step 4: Mount Home -> Android Data/Shared-Linux (with exclusions) ---
-echo "[$(date)] [SETUP] Preparing mount point: $ANDROID_TARGET_DIR"
-$SUDO_CMD mkdir -p "$ANDROID_TARGET_DIR"
-$SUDO_CMD chown "$USER:$(id -g -n)" "$ANDROID_TARGET_DIR"
-
-echo "[$(date)] [MOUNT] Mounting host home to Android data..."
-$SUDO_CMD bindfs \
-    --exclude='Android' \
-    --exclude='Shared-Andromeda' \
-    --exclude='.*' \
-    -o "force-user=$USER,force-group=$(id -g -n),nonempty" \
-    "$HOME" "$ANDROID_TARGET_DIR"
-
-# --- VERIFICATION ---
-if ! mount | grep -q "on $ANDROID_TARGET_DIR type fuse.bindfs"; then
-    echo "[$(date)] [FATAL] Mount failed for $ANDROID_TARGET_DIR. Check system logs or run with 'strace' for more details."
-    exit 1
-fi
-echo "[$(date)] [SUCCESS] Successfully mounted '$HOME' to '$ANDROID_TARGET_DIR'"
+    # Check against the exclusion list
+    if [[ "$dirname" != "Android" && "$dirname" != "Shared-Andromeda" && "$dirname" != .* ]]; then
+        target_dir="$ANDROID_SHARED_DIR/$dirname"
+        echo "  -> Mounting '$dirname'"
+        $SUDO_CMD mkdir -p "$target_dir"
+        $SUDO_CMD mount --bind "$source_dir" "$target_dir"
+    else
+        echo "  -> Excluding '$dirname'"
+    fi
+done
 
 
-echo "[$(date)] [DONE] All selective mount operations are complete."
+# --- Step 3: Mount Android subdirectories -> Home's 'Shared-Andromeda' ---
+echo "[$(date)] [SETUP] Preparing target directory: $HOST_SHARED_DIR"
+mkdir -p "$HOST_SHARED_DIR"
+echo "[$(date)] [INFO] Mounting individual Android directories into Home..."
+
+# Find all top-level directories in the Android data path (requires sudo to list)
+for source_dir in $($SUDO_CMD find "$ANDROID_DATA_PATH" -maxdepth 1 -mindepth 1 -type d); do
+    dirname=$(basename "$source_dir")
+
+    # Check against the exclusion list
+    if [[ "$dirname" != "Host" && "$dirname" != "Shared-Linux" && "$dirname" != .* ]]; then
+        target_dir="$HOST_SHARED_DIR/$dirname"
+        echo "  -> Mounting '$dirname'"
+        mkdir -p "$target_dir"
+        $SUDO_CMD mount --bind "$source_dir" "$target_dir"
+    else
+        echo "  -> Excluding '$dirname'"
+    fi
+done
+
+
+echo "[$(date)] [DONE] All individual mount operations are complete."
