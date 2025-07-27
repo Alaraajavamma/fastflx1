@@ -53,11 +53,11 @@ cp "${HOME}/.git/fastflx1/configs/autostart/"{alarmvol.desktop,andromeda-listene
 gsettings set org.gnome.desktop.sound theme-name __custom
 
 echo ""
-echo "Configuring passwordless sudo for Andromeda Manager (v14.2+)..."
+echo "Configuring passwordless sudo for Andromeda Listener..."
 
 # Define the user and the full paths to the commands used in the script
 SUDOERS_FILE="/etc/sudoers.d/andromeda-manager"
-SUDOERS_RULE="$USER ALL=(ALL) NOPASSWD: /usr/bin/umount, /usr/bin/test, /usr/bin/bindfs, /usr/bin/mkdir, /usr/bin/chown"
+SUDOERS_RULE="$USER ALL=(ALL) NOPASSWD: /usr/bin/umount, /usr/bin/test, /usr/bin/mount, /usr/bin/mkdir, /usr/bin/chown, /usr/bin/find"
 
 # Use tee to write the file with sudo privileges
 echo "$SUDOERS_RULE" | sudo tee "$SUDOERS_FILE" > /dev/null
