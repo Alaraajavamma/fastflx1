@@ -11,109 +11,131 @@ is_overview_active() {
 # Function to start wofi
 start_wofi() {
     wofi_kill &
-# Options for the FastFLX1 tweaks menu
-OPTIONS="1. Switch environment (staging/production)\n2. Upgrade FuriOS\n3. Set city to Weather\n4. Manage Tweak services (start/stop)\n5. Manage Tweak services autostart\n6. Manage custom buttons options\n7. Enable andromeda-shared-folders\n8. Quit"
+    
+    # --- MODIFIED SECTION ---
+    # Define the PID file for the batterysaver service
+    BATTERYSAVER_PID_FILE="/tmp/batterysaver.pid"
 
-# Display the menu and capture the user's selection using wofi
-SELECTION=$(echo -e "$OPTIONS" | wofi -d --prompt "Select an option:" --lines 8)
+    # Dynamically set the text for the batterysaver option
+    if [ -f "$BATTERYSAVER_PID_FILE" ]; then
+        batterysaver_option_text="7. Stop batterysaver"
+    else
+        batterysaver_option_text="7. Start batterysaver"
+    fi
 
-# Execute a command based on the selection
-case "$SELECTION" in
-    "1. Switch environment (staging/production)")
-        echo -e "1. Go to staging\n2. Go to production" | wofi -d --prompt "Select environment:" --lines 2 | {
-            read env_choice
-            case "$env_choice" in
-                "1. Go to staging")
-                    kgx -- bash -c 'sudo apt install furios-apt-config-staging furios-apt-config-debian-staging -y && sudo apt update && sudo apt install furios-apt-config-krypton-staging -y && sudo apt update && sudo apt upgrade -y --allow-downgrades'
-                    ;;
-                "2. Go to production")
-                    kgx -- bash -c 'sudo apt remove furios-apt-config-staging furios-apt-config-debian-staging furios-apt-config-krypton-staging -y && sudo apt update && sudo apt upgrade -y --allow-downgrades'
-                    ;;
-            esac
-        }
-        ;;
-    "2. Upgrade FuriOS")
-        kgx -- bash -c 'sudo apt update && sudo apt upgrade -y --allow-downgrades'
-        ;;
-    "3. Set city to Weather")
-        pkill -x feh
-        kgx -- bash -c 'gnome-weather-location'
-        ;;
-    "4. Manage Tweak services (start/stop)")
-        echo -e "1. Start Tweak services\n2. Stop Tweak services" | wofi -d --prompt "Select action:" --lines 2 | {
-            read service_choice
-            case "$service_choice" in
-                "1. Start Tweak services")
-                    bash -c 'notify-send "Tweak services started" --icon="/home/furios/.git/fastflx1/files/fastflx1.svg" && dialtone & alarmvol & gen-thumbnails & gesture-shortcuts & vol-buttons & assistant-button-tweak'
-                    ;;
-                "2. Stop Tweak services")
-                    bash -c 'pkill -x "(vol-shortcuts|dialtone|alarmvol|gen-thumbnails|gesture-shortcuts|vol-buttons|assistant-button-tweak)" & pkill -x evremap & pkill -x lisgd && notify-send "Tweak services stopped" --icon="/home/furios/.git/fastflx1/files/fastflx1.svg"'
-                    ;;
-            esac
-        }
-        ;;
-    "5. Manage Tweak services autostart")
-        echo -e "1. Disable Tweak services autostart\n2. Re-enable Tweak services autostart" | wofi -d --prompt "Select action:" --lines 2 | {
-            read autostart_choice
-            case "$autostart_choice" in
-                "1. Disable Tweak services autostart")
-                    autostart_dir="${HOME}/.config/autostart"
-                    rm -f "${autostart_dir}/alarmvol.desktop" \
-                          "${autostart_dir}/dialtone.desktop" \
-                          "${autostart_dir}/gen-thumbnails.desktop" \
-                          "${autostart_dir}/gesture-shortcuts.desktop" \
-                          "${autostart_dir}/vol-buttons.desktop" \
-                          "${autostart_dir}/evremap.desktop"
-                    notify-send "Tweak services autostart disabled" --icon="/home/furios/.git/fastflx1/files/fastflx1.svg"
-                    ;;
-                "2. Re-enable Tweak services autostart")
-                    autostart_dir="${HOME}/.config/autostart"
-                    cp "${HOME}/.git/fastflx1/configs/autostart/"{alarmvol.desktop,dialtone.desktop,gen-thumbnails.desktop,gesture-shortcuts.desktop,vol-buttons.desktop,evremap.desktop} "${autostart_dir}/"
-                    notify-send "Tweak services autostart re-enabled" --icon="/home/furios/.git/fastflx1/files/fastflx1.svg"
-                    ;;
-            esac
-        }
-        ;;
-    "6. Manage custom buttons options")
-        echo -e "1. Disable custom assistant-button options\n2. Re-enable custom assistant-button options" | wofi -d --prompt "Select action:" --lines 2 | {
-            read button_choice
-            case "$button_choice" in
-                "1. Disable custom assistant-button options")
-                    pkill -x vol-buttons
-                    pkill -x assistant-button-tweak
-                    pkill -x evremap
-                    autostart_dir="${HOME}/.config/autostart"
-                    assistant_button_dir="${HOME}/.config/assistant-button"
-                    rm -f "${assistant_button_dir}/short_press" \
-                          "${assistant_button_dir}/long_press" \
-                          "${autostart_dir}/evremap.desktop" \
-                          "${autostart_dir}/vol-buttons.desktop" \
-                          "${assistant_button_dir}/double_press"
-                    notify-send "Custom button options disabled" --icon="/home/furios/.git/fastflx1/files/fastflx1.svg"
-                    ;;
-                "2. Re-enable custom assistant-button options")
-                    autostart_dir="${HOME}/.config/autostart"
-                    assistant_button_dir="${HOME}/.config/assistant-button"
-                    mkdir -p "$autostart_dir" "$assistant_button_dir"
-                    cp "${HOME}/.git/fastflx1/configs/autostart/"{vol-buttons.desktop,evremap.desktop} "${autostart_dir}/"
-                    cp "${HOME}/.git/fastflx1/configs/assistant-button/"{short_press,double_press,long_press} "${assistant_button_dir}/"
-                    notify-send "Custom assistant-button options re-enabled" --icon="/home/furios/.git/fastflx1/files/fastflx1.svg"
-                    ;;
-            esac
-        }
-        ;;
-    "7. Enable andromeda-shared-folders")
-        bash -c 'andromeda-shared-folders'
-        ;;
-    "8. Quit")
-        exit 0
-        ;;
-    *)
-        echo "Invalid selection. Exiting."
-        exit 1
-        ;;
+    # Options for the FastFLX1 tweaks menu, with the dynamic option
+    OPTIONS="1. Switch environment (staging/production)\n2. Upgrade FuriOS\n3. Set city to Weather\n4. Manage Tweak services (start/stop)\n5. Manage Tweak services autostart\n6. Manage custom buttons options\n${batterysaver_option_text}\n8. Quit"
+    # --- END MODIFIED SECTION ---
 
-esac }
+    # Display the menu and capture the user's selection using wofi
+    SELECTION=$(echo -e "$OPTIONS" | wofi -d --prompt "Select an option:" --lines 8)
+
+    # Execute a command based on the selection
+    case "$SELECTION" in
+        "1. Switch environment (staging/production)")
+            echo -e "1. Go to staging\n2. Go to production" | wofi -d --prompt "Select environment:" --lines 2 | {
+                read env_choice
+                case "$env_choice" in
+                    "1. Go to staging")
+                        kgx -- bash -c 'sudo apt install furios-apt-config-staging furios-apt-config-debian-staging -y && sudo apt update && sudo apt install furios-apt-config-krypton-staging -y && sudo apt update && sudo apt upgrade -y --allow-downgrades'
+                        ;;
+                    "2. Go to production")
+                        kgx -- bash -c 'sudo apt remove furios-apt-config-staging furios-apt-config-debian-staging furios-apt-config-krypton-staging -y && sudo apt update && sudo apt upgrade -y --allow-downgrades'
+                        ;;
+                esac
+            }
+            ;;
+        "2. Upgrade FuriOS")
+            kgx -- bash -c 'sudo apt update && sudo apt upgrade -y --allow-downgrades'
+            ;;
+        "3. Set city to Weather")
+            pkill -x feh
+            kgx -- bash -c 'gnome-weather-location'
+            ;;
+        "4. Manage Tweak services (start/stop)")
+            echo -e "1. Start Tweak services\n2. Stop Tweak services" | wofi -d --prompt "Select action:" --lines 2 | {
+                read service_choice
+                case "$service_choice" in
+                    "1. Start Tweak services")
+                        bash -c 'notify-send "Tweak services started" --icon="/home/furios/.git/fastflx1/files/fastflx1.svg" && dialtone & alarmvol & gen-thumbnails & gesture-shortcuts & vol-buttons & assistant-button-tweak'
+                        ;;
+                    "2. Stop Tweak services")
+                        bash -c 'pkill -x "(vol-shortcuts|dialtone|alarmvol|gen-thumbnails|gesture-shortcuts|vol-buttons|assistant-button-tweak)" & pkill -x evremap & pkill -x lisgd && notify-send "Tweak services stopped" --icon="/home/furios/.git/fastflx1/files/fastflx1.svg"'
+                        ;;
+                esac
+            }
+            ;;
+        "5. Manage Tweak services autostart")
+            echo -e "1. Disable Tweak services autostart\n2. Re-enable Tweak services autostart" | wofi -d --prompt "Select action:" --lines 2 | {
+                read autostart_choice
+                case "$autostart_choice" in
+                    "1. Disable Tweak services autostart")
+                        autostart_dir="${HOME}/.config/autostart"
+                        rm -f "${autostart_dir}/alarmvol.desktop" \
+                              "${autostart_dir}/dialtone.desktop" \
+                              "${autostart_dir}/gen-thumbnails.desktop" \
+                              "${autostart_dir}/gesture-shortcuts.desktop" \
+                              "${autostart_dir}/vol-buttons.desktop" \
+                              "${autostart_dir}/evremap.desktop"
+                        notify-send "Tweak services autostart disabled" --icon="/home/furios/.git/fastflx1/files/fastflx1.svg"
+                        ;;
+                    "2. Re-enable Tweak services autostart")
+                        autostart_dir="${HOME}/.config/autostart"
+                        cp "${HOME}/.git/fastflx1/configs/autostart/"{alarmvol.desktop,dialtone.desktop,gen-thumbnails.desktop,gesture-shortcuts.desktop,vol-buttons.desktop,evremap.desktop} "${autostart_dir}/"
+                        notify-send "Tweak services autostart re-enabled" --icon="/home/furios/.git/fastflx1/files/fastflx1.svg"
+                        ;;
+                esac
+            }
+            ;;
+        "6. Manage custom buttons options")
+            echo -e "1. Disable custom assistant-button options\n2. Re-enable custom assistant-button options" | wofi -d --prompt "Select action:" --lines 2 | {
+                read button_choice
+                case "$button_choice" in
+                    "1. Disable custom assistant-button options")
+                        pkill -x vol-buttons
+                        pkill -x assistant-button-tweak
+                        pkill -x evremap
+                        autostart_dir="${HOME}/.config/autostart"
+                        assistant_button_dir="${HOME}/.config/assistant-button"
+                        rm -f "${assistant_button_dir}/short_press" \
+                              "${assistant_button_dir}/long_press" \
+                              "${autostart_dir}/evremap.desktop" \
+                              "${autostart_dir}/vol-buttons.desktop" \
+                              "${assistant_button_dir}/double_press"
+                        notify-send "Custom button options disabled" --icon="/home/furios/.git/fastflx1/files/fastflx1.svg"
+                        ;;
+                    "2. Re-enable custom assistant-button options")
+                        autostart_dir="${HOME}/.config/autostart"
+                        assistant_button_dir="${HOME}/.config/assistant-button"
+                        mkdir -p "$autostart_dir" "$assistant_button_dir"
+                        cp "${HOME}/.git/fastflx1/configs/autostart/"{vol-buttons.desktop,evremap.desktop} "${autostart_dir}/"
+                        cp "${HOME}/.git/fastflx1/configs/assistant-button/"{short_press,double_press,long_press} "${assistant_button_dir}/"
+                        notify-send "Custom assistant-button options re-enabled" --icon="/home/furios/.git/fastflx1/files/fastflx1.svg"
+                        ;;
+                esac
+            }
+            ;;
+        "7. Start batterysaver" | "7. Stop batterysaver")
+            if [ -f "$BATTERYSAVER_PID_FILE" ]; then
+                # If the file exists, the service is running, so stop it.
+                batterysaver stop
+                notify-send "Batterysaver stopped" --icon="/home/furios/.git/fastflx1/files/fastflx1.svg"
+            else
+                # If the file doesn't exist, the service is stopped, so start it.
+                batterysaver start
+                notify-send "Batterysaver started" --icon="/home/furios/.git/fastflx1/files/fastflx1.svg"
+            fi
+            ;;
+        "8. Quit")
+            exit 0
+            ;;
+        *)
+            echo "Invalid selection. Exiting."
+            exit 1
+            ;;
+
+    esac
+}
 
 wofi_kill () {
 dbus-monitor "interface='org.freedesktop.DBus.Properties',member='PropertiesChanged',path='/org/gnome/Shell'" | \
@@ -124,8 +146,8 @@ while read -r line; do
         read -r next_line
         if echo "$next_line" | grep -q "boolean true"; then
             if pgrep -x wofi > /dev/null; then
-          pkill -x wofi
-        fi
+                pkill -x wofi
+            fi
             break
         fi
     fi
