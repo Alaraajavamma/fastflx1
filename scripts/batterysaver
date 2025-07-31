@@ -5,7 +5,7 @@
 
 # --- CONFIGURATION ---
 PID_FILE="/tmp/suspended_pids.txt"
-EXCLUDED_APPS=("gnome-calls" "chatty")
+EXCLUDED_APPS=("gnome-calls" "chatty" "gnome-clocks")
 
 # --- FUNCTIONS ---
 build_app_map() {
