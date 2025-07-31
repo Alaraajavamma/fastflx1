@@ -47,26 +47,10 @@ app_dir="${HOME}/.local/share/applications"
 autostart_dir="${HOME}/.config/autostart"
 mkdir -p "${app_dir}" "${autostart_dir}"
 cp "${HOME}/.git/fastflx1/files/"{fastflx1.desktop,yad-icon-browser.desktop,display-im6.q16.desktop,display-im7.q16.desktop,feh.desktop} "${app_dir}/"
-cp "${HOME}/.git/fastflx1/configs/autostart/"{alarmvol.desktop,batterysaver.desktop,dialtone.desktop,gesture-shortcuts.desktop,vol-buttons.desktop,evremap.desktop} "${autostart_dir}/"
+cp "${HOME}/.git/fastflx1/configs/autostart/"{alarmvol.desktop,dialtone.desktop,gesture-shortcuts.desktop,vol-buttons.desktop,evremap.desktop} "${autostart_dir}/"
 
 # Set custom sound theme
 gsettings set org.gnome.desktop.sound theme-name __custom
-
-# --- ADDED SUDO RULE FOR BATTERYSAVER SCRIPT ---
-echo ""
-echo "Configuring passwordless sudo for the batterysaver"
-
-GDBUS_PATH=$(which gdbus)
-if [ -n "$GDBUS_PATH" ]; then
-    SUDOERS_FILE_KILLER="/etc/sudoers.d/batterysaver"
-    SUDOERS_RULE_KILLER="$USER ALL=(ALL) NOPASSWD: $GDBUS_PATH call --system --dest io.furios.Andromeda.Container --object-path /ContainerManager --method io.furios.Andromeda.ContainerManager.KillApp *"
-
-    echo "$SUDOERS_RULE_KILLER" | sudo tee "$SUDOERS_FILE_KILLER" > /dev/null
-    sudo chmod 440 "$SUDOERS_FILE_KILLER"
-else
-    echo "Warning: gdbus command not found. Sudo rule for batterysaver not created."
-fi
-
 
 echo -n "To start FastFLX1 we need to reboot. Reboot now? Type 'Yes' to confirm: "
 read answer
