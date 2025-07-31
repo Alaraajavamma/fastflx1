@@ -1,8 +1,0 @@
-[Desktop Entry]
-Version=0.1
-Name=Batterysaver
-Comment=Suspend and kill apps automaticly
-Exec=bash -c 'batterysaver'
-Icon=org.gnome.Terminal
-Terminal=false
-Type=Application
