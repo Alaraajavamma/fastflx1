@@ -1,16 +1,22 @@
 #!/bin/bash
 
-# Final Script: Suspends native apps and kills Android apps on lock,
-# then resumes native apps on unlock.
+# A script to suspend/kill applications on screen lock and resume them on unlock.
+# Runs as a background service.
+# Usage: batterysaver {start|stop}
 
-# --- CONFIGURATION ---
-PID_FILE="/tmp/suspended_pids.txt"
-EXCLUDED_APPS=("gnome-calls" "chatty" "gnome-clocks")
+# --- CONFIGURATION & SETUP ---
+PID_FILE="/tmp/batterysaver.pid"
+SUSPEND_FILE="/tmp/suspended_pids.txt"
+EXCLUDED_APPS=("gnome-calls" "chatty" "kgx") # Exclude by process or package name
+
+# In-memory map for native apps, populated at start
+declare -A APP_MAP
 
 # --- FUNCTIONS ---
+
 build_app_map() {
-    echo "Building application map in memory..."
-    declare -gA APP_MAP=()
+    echo "Building application map..."
+    APP_MAP=() # Clear the map
     local desktop_files=$(find /usr/share/applications/ ~/.local/share/applications/ -name "*.desktop" 2>/dev/null)
     for file in $desktop_files; do
         local app_id=$(basename "$file" .desktop)
@@ -20,7 +26,6 @@ build_app_map() {
             APP_MAP["$app_id"]="$process_name"
         fi
     done
-    echo "Application map built."
 }
 
 contains_element() {
@@ -31,24 +36,23 @@ contains_element() {
 
 suspend_and_kill_apps() {
     echo "$(date): Screen locked. Suspending/killing apps..."
-    > "$PID_FILE"
+    > "$SUSPEND_FILE" # Clear the PID file for the new session
     if ! [ -x "$(command -v wlrctl)" ]; then
         echo "Error: wlrctl not found."; return 1;
     fi
 
+    local android_apps_to_close=()
     wlrctl window list | awk 'NR>1 {print $1}' | while read -r raw_app_id; do
         local app_id=${raw_app_id%:}
 
         if [[ "$app_id" == android.* ]]; then
+            # --- Handle Android App: Collect for Killing ---
             local package_name=${app_id#android.}
             if ! contains_element "$package_name" "${EXCLUDED_APPS[@]}"; then
-                echo "Killing Android app: $package_name"
-                sudo gdbus call --system \
-                    --dest io.furios.Andromeda.Container \
-                    --object-path /ContainerManager \
-                    --method io.furios.Andromeda.ContainerManager.KillApp "$package_name"
+                android_apps_to_close+=("$app_id")
             fi
         else
+            # --- Handle Native Linux App: Suspend ---
             local process_name=${APP_MAP[$app_id]}
             if [ -z "$process_name" ]; then
                 process_name="$app_id"
@@ -58,36 +62,86 @@ suspend_and_kill_apps() {
                 if [ -n "$pid" ]; then
                     echo "Suspending native process '$process_name' (PID: $pid)"
                     kill -STOP "$pid"
-                    echo "$pid" >> "$PID_FILE"
+                    echo "$pid" >> "$SUSPEND_FILE"
                 fi
             fi
         fi
     done | uniq
-    echo "Finished suspend/kill."
+
+    # Close all collected Android apps at once
+    if [ ${#android_apps_to_close[@]} -gt 0 ]; then
+        echo "Closing Android apps: ${android_apps_to_close[*]}"
+        wlrctl window close "${android_apps_to_close[@]}"
+    fi
+    echo "Finished suspend/kill process."
 }
 
 resume_apps() {
     echo "$(date): Screen unlocked. Resuming apps..."
-    if [ -f "$PID_FILE" ]; then
+    if [ -f "$SUSPEND_FILE" ]; then
         while read -r pid; do
             echo "Resuming native process (PID: $pid)"
             kill -CONT "$pid"
-        done < "$PID_FILE"
-        > "$PID_FILE"
+        done < "$SUSPEND_FILE"
+        > "$SUSPEND_FILE"
     fi
     echo "Finished resuming."
 }
 
-# --- MAIN EXECUTION ---
-build_app_map
-touch "$PID_FILE"
-echo "Starting Dynamic Suspend & Kill script..."
+main_daemon_loop() {
+    # Ensure the suspend file exists
+    touch "$SUSPEND_FILE"
+    # Build the application map once for this session
+    build_app_map
 
-dbus-monitor --session "type='signal',interface='org.gnome.ScreenSaver',member='ActiveChanged'" | \
-while read -r line; do
-    if echo "$line" | grep -q "boolean true"; then
-        suspend_and_kill_apps
-    elif echo "$line" | grep -q "boolean false"; then
-        resume_apps
+    echo "Monitoring for screen lock/unlock events..."
+    dbus-monitor --session "type='signal',interface='org.gnome.ScreenSaver',member='ActiveChanged'" | \
+    while read -r line; do
+        if echo "$line" | grep -q "boolean true"; then
+            suspend_and_kill_apps
+        elif echo "$line" | grep -q "boolean false"; then
+            resume_apps
+        fi
+    done
+}
+
+start() {
+    if [ -f "$PID_FILE" ]; then
+        echo "Service is already running (PID: $(cat $PID_FILE))."
+        exit 1
     fi
-done
+    echo "Starting batterysaver service..."
+    # Start the main loop in the background
+    main_daemon_loop &
+    # Store its PID
+    echo $! > "$PID_FILE"
+    echo "Service started with PID: $(cat $PID_FILE)."
+}
+
+stop() {
+    if [ ! -f "$PID_FILE" ]; then
+        echo "Service is not running."
+        exit 1
+    fi
+    local pid=$(cat "$PID_FILE")
+    echo "Stopping batterysaver service (PID: $pid)..."
+    kill "$pid"
+    rm "$PID_FILE"
+    echo "Service stopped."
+}
+
+# --- MAIN EXECUTION ---
+case "$1" in
+    start)
+        start
+        ;;
+    stop)
+        stop
+        ;;
+    *)
+        echo "Usage: $0 {start|stop}"
+        exit 1
+        ;;
+esac
+
+exit 0
