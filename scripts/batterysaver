@@ -7,7 +7,8 @@
 # --- CONFIGURATION & SETUP ---
 PID_FILE="/tmp/batterysaver.pid"
 SUSPEND_FILE="/tmp/suspended_pids.txt"
-EXCLUDED_APPS=("gnome-calls" "chatty" "kgx") # Exclude by process or package name
+# IMPROVEMENT: Exclude apps using their app_id for better reliability
+EXCLUDED_APPS=("org.gnome.clocks" "sm.puri.Chatty" "org.gnome.Calls")
 
 # In-memory map for native apps, populated at start
 declare -A APP_MAP
@@ -42,23 +43,29 @@ suspend_and_kill_apps() {
     fi
 
     local android_apps_to_close=()
-    wlrctl window list | awk 'NR>1 {print $1}' | while read -r raw_app_id; do
+    # Use process substitution to avoid issues with pipes creating subshells
+    while read -r raw_app_id; do
         local app_id=${raw_app_id%:}
+
+        # --- IMPROVEMENT: Exclude apps by app_id at the very beginning ---
+        if contains_element "$app_id" "${EXCLUDED_APPS[@]}"; then
+            echo "Skipping excluded app: $app_id"
+            continue
+        fi
 
         if [[ "$app_id" == android.* ]]; then
             # --- Handle Android App: Collect for Killing ---
-            local package_name=${app_id#android.}
-            if ! contains_element "$package_name" "${EXCLUDED_APPS[@]}"; then
-                android_apps_to_close+=("$app_id")
-            fi
+            android_apps_to_close+=("$app_id")
         else
             # --- Handle Native Linux App: Suspend ---
             local process_name=${APP_MAP[$app_id]}
             if [ -z "$process_name" ]; then
-                process_name="$app_id"
+                process_name="$app_id" # Fallback to using app_id as process name
             fi
-            if [ -n "$process_name" ] && ! contains_element "$process_name" "${EXCLUDED_APPS[@]}"; then
-                local pid=$(pgrep -f "$process_name" | head -n 1)
+
+            if [ -n "$process_name" ]; then
+                # --- IMPROVEMENT: Use pgrep -x for an exact process name match ---
+                local pid=$(pgrep -x "$process_name" | head -n 1)
                 if [ -n "$pid" ]; then
                     echo "Suspending native process '$process_name' (PID: $pid)"
                     kill -STOP "$pid"
@@ -66,7 +73,7 @@ suspend_and_kill_apps() {
                 fi
             fi
         fi
-    done | uniq
+    done < <(wlrctl window list | awk 'NR>1 {print $1}')
 
     # Close all collected Android apps at once
     if [ ${#android_apps_to_close[@]} -gt 0 ]; then
@@ -75,6 +82,7 @@ suspend_and_kill_apps() {
     fi
     echo "Finished suspend/kill process."
 }
+
 
 resume_apps() {
     echo "$(date): Screen unlocked. Resuming apps..."
