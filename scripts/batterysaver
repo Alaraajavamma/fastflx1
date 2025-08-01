@@ -7,7 +7,7 @@
 # --- CONFIGURATION & SETUP ---
 PID_FILE="/tmp/batterysaver.pid"
 SUSPEND_FILE="/tmp/suspended_pids.txt"
-# IMPROVEMENT: Exclude apps using their app_id for better reliability
+# Exclude apps using their app_id for better reliability
 EXCLUDED_APPS=("org.gnome.clocks" "sm.puri.Chatty" "org.gnome.Calls")
 
 # In-memory map for native apps, populated at start
@@ -15,11 +15,16 @@ declare -A APP_MAP
 
 # --- FUNCTIONS ---
 
+# build_app_map populates a mapping from desktop file app_id to executable name.
 build_app_map() {
     echo "Building application map..."
     APP_MAP=() # Clear the map
-    local desktop_files=$(find /usr/share/applications/ ~/.local/share/applications/ -name "*.desktop" 2>/dev/null)
-    for file in $desktop_files; do
+    # Set shell option to handle filenames with spaces correctly
+    shopt -s nullglob
+    local desktop_files=(/usr/share/applications/*.desktop ~/.local/share/applications/*.desktop)
+    shopt -u nullglob
+
+    for file in "${desktop_files[@]}"; do
         local app_id=$(basename "$file" .desktop)
         local exec_line=$(grep -E '^Exec=' "$file" | head -1)
         if [ -n "$exec_line" ]; then
@@ -29,43 +34,51 @@ build_app_map() {
     done
 }
 
+# contains_element checks if an element exists in an array.
 contains_element() {
   local e match="$1"; shift
   for e; do [[ "$e" == "$match" ]] && return 0; done
   return 1
 }
 
+# suspend_and_kill_apps is the core function called on screen lock.
 suspend_and_kill_apps() {
     echo "$(date): Screen locked. Suspending/killing apps..."
-    > "$SUSPEND_FILE" # Clear the PID file for the new session
+    > "$SUSPEND_FILE"
     if ! [ -x "$(command -v wlrctl)" ]; then
-        echo "Error: wlrctl not found."; return 1;
+        echo "Error: wlrctl command not found. Is it installed and in your PATH?"
+        return 1
     fi
 
-    local android_apps_to_close=()
-    # Use process substitution to avoid issues with pipes creating subshells
-    while read -r raw_app_id; do
-        local app_id=${raw_app_id%:}
+    while read -r raw_app_id_line; do
+        # Clean the app_id string by removing the trailing colon and any other whitespace.
+        local app_id
+        app_id=$(echo "$raw_app_id_line" | sed 's/[:[:space:][:cntrl:]]//g')
 
-        # --- IMPROVEMENT: Exclude apps by app_id at the very beginning ---
+        if [ -z "$app_id" ]; then
+            continue # Skip empty lines
+        fi
+
         if contains_element "$app_id" "${EXCLUDED_APPS[@]}"; then
             echo "Skipping excluded app: $app_id"
             continue
         fi
 
-        if [[ "$app_id" == android.* ]]; then
-            # --- Handle Android App: Collect for Killing ---
-            android_apps_to_close+=("$app_id")
+        # Make the check case-insensitive to match 'android.', 'Android.', etc.
+        if [[ "${app_id,,}" == android.* ]]; then
+            echo "Found Android app '$app_id', attempting to close."
+            if ! timeout 2s wlrctl window close "$app_id"; then
+                 echo "Warning: Failed to close Android app '$app_id'. It may be unresponsive or already closed."
+            fi
         else
-            # --- Handle Native Linux App: Suspend ---
+            # Handle Native Linux App by suspending it
             local process_name=${APP_MAP[$app_id]}
             if [ -z "$process_name" ]; then
-                process_name="$app_id" # Fallback to using app_id as process name
+                process_name="$app_id"
             fi
 
             if [ -n "$process_name" ]; then
-                # --- IMPROVEMENT: Use pgrep -x for an exact process name match ---
-                local pid=$(pgrep -x "$process_name" | head -n 1)
+                local pid=$(pgrep -f "\b$process_name\b" | head -n 1)
                 if [ -n "$pid" ]; then
                     echo "Suspending native process '$process_name' (PID: $pid)"
                     kill -STOP "$pid"
@@ -75,31 +88,29 @@ suspend_and_kill_apps() {
         fi
     done < <(wlrctl window list | awk 'NR>1 {print $1}')
 
-    # Close all collected Android apps at once
-    if [ ${#android_apps_to_close[@]} -gt 0 ]; then
-        echo "Closing Android apps: ${android_apps_to_close[*]}"
-        wlrctl window close "${android_apps_to_close[@]}"
-    fi
     echo "Finished suspend/kill process."
 }
 
-
+# resume_apps is called on screen unlock.
 resume_apps() {
     echo "$(date): Screen unlocked. Resuming apps..."
     if [ -f "$SUSPEND_FILE" ]; then
         while read -r pid; do
-            echo "Resuming native process (PID: $pid)"
-            kill -CONT "$pid"
+            if ps -p "$pid" > /dev/null; then
+                echo "Resuming native process (PID: $pid)"
+                kill -CONT "$pid"
+            else
+                echo "Process with PID $pid no longer exists. Skipping."
+            fi
         done < "$SUSPEND_FILE"
         > "$SUSPEND_FILE"
     fi
     echo "Finished resuming."
 }
 
+# main_daemon_loop monitors D-Bus for screen lock/unlock signals.
 main_daemon_loop() {
-    # Ensure the suspend file exists
-    touch "$SUSPEND_FILE"
-    # Build the application map once for this session
+    >"$SUSPEND_FILE"
     build_app_map
 
     echo "Monitoring for screen lock/unlock events..."
@@ -113,19 +124,19 @@ main_daemon_loop() {
     done
 }
 
+# start launches the main loop as a background daemon process.
 start() {
     if [ -f "$PID_FILE" ]; then
         echo "Service is already running (PID: $(cat $PID_FILE))."
         exit 1
     fi
     echo "Starting batterysaver service..."
-    # Start the main loop in the background
     main_daemon_loop &
-    # Store its PID
     echo $! > "$PID_FILE"
     echo "Service started with PID: $(cat $PID_FILE)."
 }
 
+# stop kills the background daemon process.
 stop() {
     if [ ! -f "$PID_FILE" ]; then
         echo "Service is not running."
@@ -133,9 +144,18 @@ stop() {
     fi
     local pid=$(cat "$PID_FILE")
     echo "Stopping batterysaver service (PID: $pid)..."
-    kill "$pid"
+    
+    # --- FIX: Check if the process exists before trying to kill it ---
+    if ps -p "$pid" > /dev/null; then
+       # Kill the process group to ensure child processes are also terminated
+       kill -- -"$pid"
+       echo "Service stopped."
+    else
+       echo "Service was already stopped (process with PID $pid not found)."
+    fi
+
+    # Always remove the PID file
     rm "$PID_FILE"
-    echo "Service stopped."
 }
 
 # --- MAIN EXECUTION ---
@@ -153,3 +173,4 @@ case "$1" in
 esac
 
 exit 0
+
