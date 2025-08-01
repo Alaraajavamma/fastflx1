@@ -158,6 +158,7 @@ done
 if is_overview_active; then
     pkill -x wofi
     wtype -M win -k Super_l
+    sleep 0.1
     start_wofi
     else
     start_wofi
