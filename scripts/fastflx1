@@ -2,7 +2,8 @@
 
 # Function to start wofi
 start_wofi() {
-    
+    wofi_kill &
+
     # Define the PID file for the batterysaver service
     BATTERYSAVER_PID_FILE="/tmp/batterysaver.pid"
 
@@ -124,6 +125,23 @@ start_wofi() {
             ;;
 
     esac
+}
+
+wofi_kill () {
+dbus-monitor "interface='org.freedesktop.DBus.Properties',member='PropertiesChanged',path='/org/gnome/Shell'" | \
+while read -r line; do
+    # Check if the OverviewActive property has changed
+    if echo "$line" | grep -q "string \"OverviewActive\""; then
+        # Read the next line for the boolean value
+        read -r next_line
+        if echo "$next_line" | grep -q "boolean true"; then
+            if pgrep -x wofi > /dev/null; then
+                pkill -x wofi
+            fi
+            break
+        fi
+    fi
+done
 }
 
 # Kill old wofi instances before starting fastflx1
