@@ -86,7 +86,7 @@ suspend_and_kill_apps() {
                 fi
             fi
         fi
-    done < <(wlrctl window list | awk 'NR>1 {print $1}')
+    done < <(wlrctl window list | awk '{print $1}')
 
     echo "Finished suspend/kill process."
 }
