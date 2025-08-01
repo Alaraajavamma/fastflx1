@@ -1,18 +1,8 @@
 #!/bin/bash
 
-is_overview_active() {
-    gdbus call --session \
-        --dest org.gnome.Shell \
-        --object-path /org/gnome/Shell \
-        --method org.freedesktop.DBus.Properties.Get \
-        org.gnome.Shell OverviewActive | grep -q "true"
-}
-
 # Function to start wofi
 start_wofi() {
-    wofi_kill &
     
-    # --- MODIFIED SECTION ---
     # Define the PID file for the batterysaver service
     BATTERYSAVER_PID_FILE="/tmp/batterysaver.pid"
 
@@ -25,7 +15,6 @@ start_wofi() {
 
     # Options for the FastFLX1 tweaks menu, with the dynamic option
     OPTIONS="1. Switch environment (staging/production)\n2. Upgrade FuriOS\n3. Set city to Weather\n4. Manage Tweak services (start/stop)\n5. Manage Tweak services autostart\n6. Manage custom buttons options\n${batterysaver_option_text}\n8. Quit"
-    # --- END MODIFIED SECTION ---
 
     # Display the menu and capture the user's selection using wofi
     SELECTION=$(echo -e "$OPTIONS" | wofi -d --prompt "Select an option:" --lines 8)
@@ -137,29 +126,7 @@ start_wofi() {
     esac
 }
 
-wofi_kill () {
-dbus-monitor "interface='org.freedesktop.DBus.Properties',member='PropertiesChanged',path='/org/gnome/Shell'" | \
-while read -r line; do
-    # Check if the OverviewActive property has changed
-    if echo "$line" | grep -q "string \"OverviewActive\""; then
-        # Read the next line for the boolean value
-        read -r next_line
-        if echo "$next_line" | grep -q "boolean true"; then
-            if pgrep -x wofi > /dev/null; then
-                pkill -x wofi
-            fi
-            break
-        fi
-    fi
-done
-}
-
-# Check if Overview is already active before starting wofi
-if is_overview_active; then
+# Kill old wofi instances before starting fastflx1
     pkill -x wofi
     wtype -M win -k Super_l
-    sleep 0.1
     start_wofi
-    else
-    start_wofi
-fi
