@@ -1,5 +1,5 @@
 #!/bin/bash
-sudo apt install -y wtype curl wl-clipboard inotify-tools lisgd libcallaudio-tools wofi libnotify-bin bindfs wlrctl
+sudo apt install -y wtype curl wl-clipboard inotify-tools lisgd libcallaudio-tools wofi libnotify-bin bindfs wlrctl libpam-parallel libpam-biomd
 
 # Set permissions for uninstall and update scripts
 sudo chmod +x "${HOME}/.git/fastflx1/uninstall.sh" "${HOME}/.git/fastflx1/update.sh"
@@ -51,6 +51,27 @@ cp "${HOME}/.git/fastflx1/configs/autostart/"{alarmvol.desktop,batterysaver.desk
 
 # Set custom sound theme
 gsettings set org.gnome.desktop.sound theme-name __custom
+
+# --- Configure /etc/pam.d/sudo ---
+echo "Writing configuration to /etc/pam.d/sudo..."
+sudo tee /etc/pam.d/sudo > /dev/null <<'EOF'
+#%PAM-1.0
+
+auth    sufficient pam_parallel.so debug { "mode": "One", "modules": {"biomd": "Fingerprint", "login": "Password"} }
+
+@include common-auth
+@include common-account
+@include common-session-noninteractive
+EOF
+
+# --- Configure /etc/pam.d/biomd ---
+echo "Writing configuration to /etc/pam.d/biomd..."
+sudo tee /etc/pam.d/biomd > /dev/null <<'EOF'
+auth    requisite       pam_biomd.so debug
+account required        pam_permit.so
+EOF
+
+echo "PAM configuration finished."
 
 echo -n "To start FastFLX1 we need to reboot. Reboot now? Type 'Yes' to confirm: "
 read answer
