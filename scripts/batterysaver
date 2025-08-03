@@ -68,7 +68,7 @@ suspend_and_kill_apps() {
         if [[ "${app_id,,}" == android.* ]]; then
             echo "Found Android app '$app_id', attempting to close."
             if ! timeout 2s wlrctl window close "$app_id"; then
-                 echo "Warning: Failed to close Android app '$app_id'. It may be unresponsive or already closed."
+                echo "Warning: Failed to close Android app '$app_id'. It may be unresponsive or already closed."
             fi
         else
             # Handle Native Linux App by suspending it
@@ -78,15 +78,43 @@ suspend_and_kill_apps() {
             fi
 
             if [ -n "$process_name" ]; then
-                local pid=$(pgrep -f "\b$process_name\b" | head -n 1)
-                if [ -n "$pid" ]; then
-                    echo "Suspending native process '$process_name' (PID: $pid)"
-                    kill -STOP "$pid"
-                    echo "$pid" >> "$SUSPEND_FILE"
-                fi
+                # Find all PIDs for the process and suspend them
+                local pids=$(pgrep -f "\b$process_name\b")
+                for pid in $pids; do
+                    if [ -n "$pid" ]; then
+                        echo "Suspending native process '$process_name' (PID: $pid)"
+                        kill -STOP "$pid"
+                        echo "$pid" >> "$SUSPEND_FILE"
+                    fi
+                done
             fi
         fi
     done < <(wlrctl window list | awk '{print $1}')
+
+    # --- MODIFICATION START: Special handling for Firefox ---
+    echo "Performing special check for Firefox process..."
+    # Find all PIDs for processes whose command line contains the word 'firefox'
+    local firefox_pids
+    firefox_pids=$(pgrep -f "\bfirefox\b")
+
+    if [ -n "$firefox_pids" ]; then
+        for pid in $firefox_pids; do
+            # Check if this PID was already suspended by the wlrctl loop above
+            if ! grep -q "^${pid}$" "$SUSPEND_FILE"; then
+                echo "Suspending Firefox process (PID: $pid) not found in window list."
+                if kill -STOP "$pid"; then
+                    echo "$pid" >> "$SUSPEND_FILE"
+                else
+                    echo "Warning: Failed to suspend Firefox PID $pid."
+                fi
+            else
+                echo "Firefox process (PID: $pid) was already handled via window list."
+            fi
+        done
+    else
+        echo "No running Firefox process found."
+    fi
+    # --- MODIFICATION END ---
 
     echo "Finished suspend/kill process."
 }
@@ -147,11 +175,11 @@ stop() {
     
     # --- FIX: Check if the process exists before trying to kill it ---
     if ps -p "$pid" > /dev/null; then
-       # Kill the process group to ensure child processes are also terminated
-       kill -- -"$pid"
-       echo "Service stopped."
+        # Kill the process group to ensure child processes are also terminated
+        kill -- -"$pid"
+        echo "Service stopped."
     else
-       echo "Service was already stopped (process with PID $pid not found)."
+        echo "Service was already stopped (process with PID $pid not found)."
     fi
 
     # Always remove the PID file
@@ -173,4 +201,3 @@ case "$1" in
 esac
 
 exit 0
-
