@@ -1,0 +1,8 @@
+[Desktop Entry]
+Version=0.1
+Name=Batterysaver
+Comment=Batterysaver
+Exec=bash -c 'batterysaver start'
+Icon=org.gnome.Terminal
+Terminal=false
+Type=Application
