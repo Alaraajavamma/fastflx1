@@ -24,6 +24,5 @@ sudo rm /usr/bin/gesture-shortcuts
 sudo rm /usr/bin/long-press
 sudo rm /usr/bin/short-press
 sudo rm /usr/bin/squeekboard-scale
-sudo apt remove wl-clipboard lisgd libcallaudio-tools wofi
 gsettings set org.gnome.desktop.sound theme-name default
 cd ~ && rm -rf .git/fastflx1
