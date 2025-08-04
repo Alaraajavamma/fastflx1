@@ -71,14 +71,14 @@ monitor_andromeda_reset() {
             # Wait 20 seconds, then run the start command in the background
             (
                 sleep 20
-                ${SHARE_SCRIPT_CMD} start
+                pkexec ${SHARE_SCRIPT_CMD} start
             ) &
         
         # Check if the signal is for the session STOPPING
         elif [[ "$line" == *"member=NameLost"* ]]; then
             # Run the stop command immediately in the background
             (
-                ${SHARE_SCRIPT_CMD} stop
+                pkexec ${SHARE_SCRIPT_CMD} stop
             ) &
         fi
     done
@@ -98,7 +98,7 @@ local SHARE_SCRIPT_CMD="andromeda-shared-folders"
     disable_keyboard
     notify_with_countdown "40"
     enable_keyboard
-    ${SHARE_SCRIPT_CMD} start &
+    pkexec ${SHARE_SCRIPT_CMD} start &
 
     # --- Step 2: Start Persistent Monitoring ---
     # After the setup, the reset monitor runs in the background for the rest of the session.
