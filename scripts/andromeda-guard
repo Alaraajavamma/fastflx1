@@ -94,7 +94,7 @@ local SHARE_SCRIPT_CMD="andromeda-shared-folders"
     # --- Step 1: Initial Setup ---
     # This sequence runs once when the script starts after a user logs in.
     # It ensures the keyboard starts in a known, clean state.
-    andromeda session start
+    andromeda session start &
     disable_keyboard
     notify_with_countdown "40"
     enable_keyboard
