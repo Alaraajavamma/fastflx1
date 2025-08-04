@@ -1,82 +1,136 @@
 #!/bin/bash
 
-# ==============================================================================
-#
-#   andromeda-shared-folders - (Individual Bind Mounts)
-#
-#   - This script implements the strategy of mounting each subdirectory
-#     individually to avoid recursive loops and the 'bindfs' dependency.
-#   - It is designed to be run once per session (e.g., on system boot).
-#
-# ==============================================================================
+# A script to manage a two-way, ACL-permissioned mirror between Linux and
+# Andromeda, using a graphical prompt for sudo privileges.
 
 # --- Configuration ---
-SUDO_CMD="sudo"
-ANDROID_DATA_PATH="$HOME/.local/share/andromeda/data/media/0"
-HOST_SHARED_DIR="$HOME/Shared-Andromeda"
-ANDROID_SHARED_DIR="$ANDROID_DATA_PATH/Shared-Linux"
+HOST_USER=$(whoami)
+ANDROID_UID=1023
+PID_FILE="/tmp/andromeda_permission_guardian.pid"
 
-echo "[$(date)] [INIT] Starting Andromeda Manager (Individual Mount Mode)..."
+# --- Mirror: Linux -> Android ---
+LINUX_SHARE_DIR_NAME="Linux-Share"
+LINUX_DIRECTORIES_TO_SHARE=( "Downloads" "Music" "Documents" "Videos" "Pictures" )
+ANDROID_MOUNT_TARGET_FOR_LINUX="$HOME/.local/share/andromeda/data/media/0/${LINUX_SHARE_DIR_NAME}"
 
-# --- Step 0: Pre-emptive cleanup ---
-# Tries to unmount the top-level shared directories in case of a previous run.
-echo "[$(date)] [CLEANUP] Attempting to unmount old targets for a clean state..."
-$SUDO_CMD umount "$HOST_SHARED_DIR" &>/dev/null
-$SUDO_CMD umount "$ANDROID_SHARED_DIR" &>/dev/null
+# --- Mirror: Android -> Linux ---
+ANDROID_SHARE_DIR_NAME="Android-Share"
+ANDROID_DIRECTORIES_TO_SHARE=( "DCIM" "Pictures" "Videos" "Documents" "Music" "Download" )
+HOST_MOUNT_TARGET_FOR_ANDROID="$HOME/${ANDROID_SHARE_DIR_NAME}"
+ANDROID_STORAGE_SOURCE="$HOME/.local/share/andromeda/data/media/0"
 
+# --- Style and Helpers ---
+C_BLUE="\033[1;34m"; C_GREEN="\033[1;32m"; C_YELLOW="\033[1;33m"; C_RED="\033[1;31m"; C_RESET="\033[0m"
+log() { echo -e "${C_GREEN}[$(date +'%T')]${C_RESET} $1"; }
+error() { echo -e "${C_RED}ERROR:${C_RESET} $1" >&2; }
 
-# --- Step 1: Verify the Andromeda data path ---
-if ! $SUDO_CMD test -d "$ANDROID_DATA_PATH"; then
-    echo "[$(date)] [FATAL] The Andromeda data directory does not exist at: $ANDROID_DATA_PATH"
-    echo "[$(date)] [FATAL] Please ensure Andromeda is installed and has run once. Aborting."
-    exit 1
-fi
-echo "[$(date)] [INFO] Using Andromeda data path: $ANDROID_DATA_PATH"
-
-$SUDO_CMD setfacl -R -m u:$USER:rwx "$ANDROID_DATA_PATH"
-
-
-# --- Step 2: Mount Home subdirectories -> Android's 'Shared-Linux' ---
-echo "[$(date)] [SETUP] Preparing target directory: $ANDROID_SHARED_DIR"
-$SUDO_CMD mkdir -p "$ANDROID_SHARED_DIR"
-$SUDO_CMD chown "$USER:$(id -g -n)" "$ANDROID_SHARED_DIR"
-echo "[$(date)] [INFO] Mounting individual Home directories into Android..."
-
-# Find all top-level directories in HOME
-for source_dir in $(find "$HOME" -maxdepth 1 -mindepth 1 -type d); do
-    dirname=$(basename "$source_dir")
-
-    # Check against the exclusion list
-    if [[ "$dirname" != "Android" && "$dirname" != "Shared-Andromeda" && "$dirname" != .* ]]; then
-        target_dir="$ANDROID_SHARED_DIR/$dirname"
-        echo "  -> Mounting '$dirname'"
-        $SUDO_CMD mkdir -p "$target_dir"
-        $SUDO_CMD mount --bind "$source_dir" "$target_dir"
-    else
-        echo "  -> Excluding '$dirname'"
+# --- NEW: Graphical Sudo Prompt Function ---
+acquire_sudo() {
+    log "Requesting administrator privileges..."
+    # Check if we already have a valid sudo ticket
+    if sudo -n true 2>/dev/null; then
+        log "Sudo privileges already acquired."
+        return 0
     fi
-done
-
-
-# --- Step 3: Mount Android subdirectories -> Home's 'Shared-Andromeda' ---
-echo "[$(date)] [SETUP] Preparing target directory: $HOST_SHARED_DIR"
-mkdir -p "$HOST_SHARED_DIR"
-echo "[$(date)] [INFO] Mounting individual Android directories into Home..."
-
-# Find all top-level directories in the Android data path (requires sudo to list)
-for source_dir in $($SUDO_CMD find "$ANDROID_DATA_PATH" -maxdepth 1 -mindepth 1 -type d); do
-    dirname=$(basename "$source_dir")
-
-    # Check against the exclusion list
-    if [[ "$dirname" != "Host" && "$dirname" != "Shared-Linux" && "$dirname" != .* ]]; then
-        target_dir="$HOST_SHARED_DIR/$dirname"
-        echo "  -> Mounting '$dirname'"
-        mkdir -p "$target_dir"
-        $SUDO_CMD mount --bind "$source_dir" "$target_dir"
-    else
-        echo "  -> Excluding '$dirname'"
+    
+    # Use kgx to ask for the password in a separate window.
+    # The -e flag executes the command inside the new terminal.
+    # The 'sudo -v' command simply validates/refreshes the user's sudo timestamp.
+    kgx -e "bash -c \"echo 'Andromeda Share Manager needs administrator privileges to mount filesystems.'; echo; sudo -v\""
+    
+    # Check if the sudo command was successful. If not, exit silently.
+    if ! sudo -n true 2>/dev/null; then
+        # The user likely closed the window or failed the password.
+        exit 0
     fi
+    log "Sudo privileges granted."
+}
+
+
+# --- Core Functions ---
+run_permission_guardian() {
+    log "Permissions Guardian: Starting..."
+    local watch_dirs=("$HOST_MOUNT_TARGET_FOR_ANDROID")
+    for dir in "${LINUX_DIRECTORIES_TO_SHARE[@]}"; do watch_dirs+=("$HOME/$dir"); done
+
+    log "Permissions Guardian: Performing initial permission sync..."
+    for dir in "${watch_dirs[@]}"; do
+        if [ -d "$dir" ]; then
+            sudo setfacl -R \
+                -m "user:${HOST_USER}:rwx" -m "d:user:${HOST_USER}:rwx" \
+                -m "user:${ANDROID_UID}:rwx" -m "d:user:${ANDROID_UID}:rwx" \
+                "$dir"
+        fi
+    done
+    log "Permissions Guardian: Initial sync complete. Monitoring for new files..."
+    inotifywait -m -r -q -e create -e moved_to --format '%w%f' "${watch_dirs[@]}" | while read -r NEW_FILE_PATH; do
+        log "Permissions Guardian: New item detected: ${NEW_FILE_PATH}"
+        sudo setfacl -m "user:${HOST_USER}:rwx" -m "user:${ANDROID_UID}:rwx" "${NEW_FILE_PATH}"
+        log "Permissions Guardian: Permissions fixed for new item."
+    done
+}
+
+do_start() {
+    acquire_sudo || exit 0 # Exit silently if sudo is not granted
+
+    log "--- Starting Andromeda Two-Way Share ---"
+    do_stop >/dev/null 2>&1
+    log "Host User: ${HOST_USER} | Andromeda UID: ${ANDROID_UID}"
+
+    log "Setting up: Linux -> Android"
+    sudo mkdir -p "$ANDROID_MOUNT_TARGET_FOR_LINUX"
+    sudo chown "${ANDROID_UID}:${ANDROID_UID}" "$ANDROID_MOUNT_TARGET_FOR_LINUX"
+    for dir in "${LINUX_DIRECTORIES_TO_SHARE[@]}"; do
+        local source_path="$HOME/$dir"; local target_path="$ANDROID_MOUNT_TARGET_FOR_LINUX/$dir"
+        if [ -d "$source_path" ]; then
+            log "  -> Mounting ${dir}..."; sudo mkdir -p "$target_path"; sudo chown "${ANDROID_UID}:${ANDROID_UID}" "$target_path"; sudo mount --bind "$source_path" "$target_path"
+        fi
+    done
+
+    log "Setting up: Android -> Linux"
+    mkdir -p "$HOST_MOUNT_TARGET_FOR_ANDROID"
+    for dir in "${ANDROID_DIRECTORIES_TO_SHARE[@]}"; do
+        local source_path="$ANDROID_STORAGE_SOURCE/$dir"; local target_path="$HOST_MOUNT_TARGET_FOR_ANDROID/$dir"
+        if [ -d "$source_path" ]; then
+            log "  -> Mounting ${dir}..."; mkdir -p "$target_path"; sudo mount --bind "$source_path" "$target_path"
+        fi
+    done
+
+    log "Launching Permissions Guardian in the background..."
+    run_permission_guardian &
+    echo $! > "$PID_FILE"
+    log "--- Share Setup Complete ---"
+}
+
+do_stop() {
+    acquire_sudo || exit 0 # Exit silently if sudo is not granted
+
+    log "--- Stopping Andromeda Two-Way Share ---"
+    if [ -f "$PID_FILE" ]; then
+        local pid_to_kill=$(cat "$PID_FILE")
+        log "Stopping Permissions Guardian (PID: ${pid_to_kill})..."; pkill -P "$pid_to_kill"; kill "$pid_to_kill" &>/dev/null || true; rm -f "$PID_FILE"
+    fi
+
+    log "Unmounting all shared directories..."
+    for dir in "${LINUX_DIRECTORIES_TO_SHARE[@]}"; do sudo umount "$ANDROID_MOUNT_TARGET_FOR_LINUX/$dir" &>/dev/null || true; done
+    sudo umount "$ANDROID_MOUNT_TARGET_FOR_LINUX" &>/dev/null || true
+    for dir in "${ANDROID_DIRECTORIES_TO_SHARE[@]}"; do sudo umount "$HOST_MOUNT_TARGET_FOR_ANDROID/$dir" &>/dev/null || true; done
+    sudo umount "$HOST_MOUNT_TARGET_FOR_ANDROID" &>/dev/null || true
+    rm -rf "$HOST_MOUNT_TARGET_FOR_ANDROID"
+    log "--- Share Teardown Complete ---"
+}
+
+# --- Main Execution ---
+if [[ $EUID -eq 0 ]]; then error "This script should be run as your normal user, not as root." && exit 1; fi
+for cmd in kgx setfacl inotifywait; do
+    if ! command -v "$cmd" &>/dev/null; then error "'$cmd' is not installed. Please install the required packages." && exit 1; fi
 done
+if [[ -z "$ANDROID_UID" ]]; then error "Could not determine Andromeda UID. Is it running?" && exit 1; fi
 
+case "$1" in
+    start) do_start ;;
+    stop) do_stop ;;
+    *) echo "Usage: $0 [start|stop]" && exit 1 ;;
+esac
 
-echo "[$(date)] [DONE] All individual mount operations are complete."
+exit 0
