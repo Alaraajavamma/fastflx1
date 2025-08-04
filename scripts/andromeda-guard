@@ -98,7 +98,7 @@ local SHARE_SCRIPT_CMD="andromeda-shared-folders"
     disable_keyboard
     notify_with_countdown "40"
     enable_keyboard
-    ${SHARE_SCRIPT_CMD} start
+    ${SHARE_SCRIPT_CMD} start &
 
     # --- Step 2: Start Persistent Monitoring ---
     # After the setup, the reset monitor runs in the background for the rest of the session.
