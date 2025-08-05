@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # --- Configuration ---
-ANDROMEDA_SCRIPT_PATH="/usr/local/bin/andromeda-shared-folders"
+ANDROMEDA_SCRIPT_PATH="/usr/bin/andromeda-shared-folders"
 AUTOSTART_FILE="${HOME}/.config/autostart/andromeda-shared-folders.desktop"
 SUDOERS_FILE="/etc/sudoers.d/99-andromeda-folders-permissions"
 
