@@ -1,21 +1,129 @@
 #!/bin/bash
 
+# --- Configuration ---
+ANDROMEDA_SCRIPT_PATH="/usr/local/bin/andromeda-shared-folders"
+AUTOSTART_FILE="${HOME}/.config/autostart/andromeda-shared-folders.desktop"
+SUDOERS_FILE="/etc/sudoers.d/99-andromeda-folders-permissions"
+
+# --- Helper Functions ---
+
+# This function kills wofi if the user enters the overview/activities mode.
+wofi_kill() {
+    # Run in the background so the main script can continue
+    dbus-monitor "interface='org.freedesktop.DBus.Properties',member='PropertiesChanged',path='/org/gnome/Shell'" | \
+    while read -r line; do
+        # Check if the OverviewActive property has changed to true
+        if echo "$line" | grep -q "string \"OverviewActive\""; then
+            read -r next_line
+            if echo "$next_line" | grep -q "boolean true"; then
+                if pgrep -x wofi > /dev/null; then
+                    pkill -x wofi
+                fi
+                # Exit the monitor loop once wofi is killed
+                break
+            fi
+        fi
+    done &
+}
+
+# This function handles the entire process of enabling the shared folders.
+enable_sharing() {
+    # This multi-line command will be executed in a new terminal window.
+    # Using 'cat <<EOF' makes it easy to write the script without complex escaping.
+    local term_command
+    term_command=$(cat <<EOF
+        # This script runs inside the new terminal. Exit immediately if a command fails.
+        set -e
+
+        echo "--- ENABLING ANDROMEDA SHARED FOLDERS ---"
+        sleep 1
+
+        echo "[STEP 1/5] Mounting shared folders (requires password)..."
+        sudo ${ANDROMEDA_SCRIPT_PATH} mount
+        sleep 1
+
+        echo "[STEP 2/5] Granting passwordless permissions for the guard service..."
+        # Create the content for the sudoers file to allow running the guard without a password.
+        SUDOERS_CONTENT="${USER} ALL=(ALL) NOPASSWD: ${ANDROMEDA_SCRIPT_PATH} start-permission-guard, ${ANDROMEDA_SCRIPT_PATH} stop-permission-guard"
+        echo "\${SUDOERS_CONTENT}" | sudo tee '${SUDOERS_FILE}' > /dev/null
+        sudo chmod 440 '${SUDOERS_FILE}' # Set secure, read-only permissions
+        sleep 1
+
+        echo "[STEP 3/5] Creating autostart entry..."
+        # Create the .desktop file that will run the guard on login.
+        # The 'Exec' command does NOT use 'sudo' because the sudoers rule makes it unnecessary.
+        DESKTOP_FILE_CONTENT="[Desktop Entry]\nVersion=0.1\nName=Andromeda-Shared-Folders\nComment=Starts the service to sync permissions for shared folders\nExec=${ANDROMEDA_SCRIPT_PATH} start-permission-guard\nIcon=folder-remote\nTerminal=false\nType=Application"
+        mkdir -p "$(dirname "${AUTOSTART_FILE}")"
+        echo -e "\${DESKTOP_FILE_CONTENT}" > '${AUTOSTART_FILE}'
+        sleep 1
+        
+        echo "[STEP 4/5] Starting the permission guard for the current session..."
+        # Run the command without sudo, as the permission has just been granted.
+        ${ANDROMEDA_SCRIPT_PATH} start-permission-guard
+        sleep 1
+
+        echo "[STEP 5/5] Setup complete."
+        notify-send "Andromeda Shared Folders Enabled" --icon="folder-remote"
+        echo "This terminal will close in 3 seconds."
+        sleep 3
+EOF
+)
+    # Launch the terminal and execute the command block.
+    kgx -- bash -c "$term_command"
+}
+
+# This function handles the entire process of disabling the shared folders.
+disable_sharing() {
+    local term_command
+    term_command=$(cat <<EOF
+        set -e
+        echo "--- DISABLING ANDROMEDA SHARED FOLDERS ---"
+        sleep 1
+        
+        echo "[STEP 1/4] Stopping the permission guard service..."
+        # Stop the service using the passwordless permission.
+        ${ANDROMEDA_SCRIPT_PATH} stop-permission-guard
+        sleep 1
+
+        echo "[STEP 2/4] Unmounting all shared folders (requires password)..."
+        sudo ${ANDROMEDA_SCRIPT_PATH} unmount
+        sleep 1
+
+        echo "[STEP 3/4] Removing autostart entry..."
+        rm -f '${AUTOSTART_FILE}'
+        sleep 1
+
+        echo "[STEP 4/4] Revoking passwordless permissions..."
+        sudo rm -f '${SUDOERS_FILE}'
+        sleep 1
+
+        echo "Cleanup complete."
+        notify-send "Andromeda Shared Folders Disabled" --icon="folder"
+        echo "This terminal will close in 3 seconds."
+        sleep 3
+EOF
+)
+    # Launch the terminal and execute the command block.
+    kgx -- bash -c "$term_command"
+}
+
+
 # Function to start wofi
 start_wofi() {
-    wofi_kill &
+    # Start the background process to kill wofi on overview
+    wofi_kill
 
-    # Define the PID file for the batterysaver service
-    BATTERYSAVER_PID_FILE="/tmp/batterysaver.pid"
-
-    # Dynamically set the text for the batterysaver option
-    if [ -f "$BATTERYSAVER_PID_FILE" ]; then
-        batterysaver_option_text="7. Stop batterysaver"
+    # --- Dynamic Option for Andromeda Shared Folders ---
+    # Check if the autostart file exists to determine the current state.
+    local andromeda_option_text
+    if [ -f "$AUTOSTART_FILE" ]; then
+        andromeda_option_text="7. Disable android-shared-folders"
     else
-        batterysaver_option_text="7. Start batterysaver"
+        andromeda_option_text="7. Enable android-shared-folders"
     fi
 
     # Options for the FastFLX1 tweaks menu, with the dynamic option
-    OPTIONS="1. Switch environment (staging/production)\n2. Upgrade FuriOS\n3. Set city to Weather\n4. Manage Tweak services (start/stop)\n5. Manage Tweak services autostart\n6. Manage custom buttons options\n${batterysaver_option_text}\n8. Quit"
+    OPTIONS="1. Switch environment (staging/production)\n2. Upgrade FuriOS\n3. Set city to Weather\n4. Manage Tweak services (start/stop)\n5. Manage Tweak services autostart\n6. Manage custom buttons options\n${andromeda_option_text}\n8. Quit"
 
     # Display the menu and capture the user's selection using wofi
     SELECTION=$(echo -e "$OPTIONS" | wofi -d --prompt "Select an option:" --lines 8)
@@ -62,11 +170,11 @@ start_wofi() {
                     "1. Disable Tweak services autostart")
                         autostart_dir="${HOME}/.config/autostart"
                         rm -f "${autostart_dir}/alarmvol.desktop" \
-                              "${autostart_dir}/dialtone.desktop" \
-                              "${autostart_dir}/gen-thumbnails.desktop" \
-                              "${autostart_dir}/gesture-shortcuts.desktop" \
-                              "${autostart_dir}/vol-buttons.desktop" \
-                              "${autostart_dir}/evremap.desktop"
+                                "${autostart_dir}/dialtone.desktop" \
+                                "${autostart_dir}/gen-thumbnails.desktop" \
+                                "${autostart_dir}/gesture-shortcuts.desktop" \
+                                "${autostart_dir}/vol-buttons.desktop" \
+                                "${autostart_dir}/evremap.desktop"
                         notify-send "Tweak services autostart disabled" --icon="/home/furios/.git/fastflx1/files/fastflx1.svg"
                         ;;
                     "2. Re-enable Tweak services autostart")
@@ -88,10 +196,10 @@ start_wofi() {
                         autostart_dir="${HOME}/.config/autostart"
                         assistant_button_dir="${HOME}/.config/assistant-button"
                         rm -f "${assistant_button_dir}/short_press" \
-                              "${assistant_button_dir}/long_press" \
-                              "${autostart_dir}/evremap.desktop" \
-                              "${autostart_dir}/vol-buttons.desktop" \
-                              "${assistant_button_dir}/double_press"
+                                "${assistant_button_dir}/long_press" \
+                                "${autostart_dir}/evremap.desktop" \
+                                "${autostart_dir}/vol-buttons.desktop" \
+                                "${assistant_button_dir}/double_press"
                         notify-send "Custom button options disabled" --icon="/home/furios/.git/fastflx1/files/fastflx1.svg"
                         ;;
                     "2. Re-enable custom assistant-button options")
@@ -105,46 +213,31 @@ start_wofi() {
                 esac
             }
             ;;
-        "7. Start batterysaver" | "7. Stop batterysaver")
-            if [ -f "$BATTERYSAVER_PID_FILE" ]; then
-                # If the file exists, the service is running, so stop it.
-                batterysaver stop
-                notify-send "Batterysaver stopped" --icon="/home/furios/.git/fastflx1/files/fastflx1.svg"
+        "7. Enable android-shared-folders" | "7. Disable android-shared-folders")
+            # This case handles both enabling and disabling.
+            if [ -f "$AUTOSTART_FILE" ]; then
+                # If the file exists, the feature is enabled, so we run the disable function.
+                disable_sharing
             else
-                # If the file doesn't exist, the service is stopped, so start it.
-                batterysaver start
-                notify-send "Batterysaver started" --icon="/home/furios/.git/fastflx1/files/fastflx1.svg"
+                # If the file doesn't exist, the feature is disabled, so we run the enable function.
+                enable_sharing
             fi
             ;;
         "8. Quit")
             exit 0
             ;;
         *)
+            # It's good practice to handle unexpected selections.
             echo "Invalid selection. Exiting."
             exit 1
             ;;
-
     esac
 }
 
-wofi_kill () {
-dbus-monitor "interface='org.freedesktop.DBus.Properties',member='PropertiesChanged',path='/org/gnome/Shell'" | \
-while read -r line; do
-    # Check if the OverviewActive property has changed
-    if echo "$line" | grep -q "string \"OverviewActive\""; then
-        # Read the next line for the boolean value
-        read -r next_line
-        if echo "$next_line" | grep -q "boolean true"; then
-            if pgrep -x wofi > /dev/null; then
-                pkill -x wofi
-            fi
-            break
-        fi
-    fi
-done
-}
-
-# Kill old wofi instances before starting fastflx1
-    pkill -x wofi
-    wtype -M win -k Super_l
-    start_wofi
+# --- Main Execution ---
+# Kill any old wofi instances before starting a new one.
+pkill -x wofi
+# This seems to be a way to ensure the overview is not active before launching.
+wtype -M win -k Super_l
+# Start the main wofi menu function.
+start_wofi
