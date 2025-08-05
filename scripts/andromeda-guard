@@ -68,18 +68,10 @@ monitor_andromeda_reset() {
         # Check if the signal is for the session STARTING
         if [[ "$line" == *"member=NameAcquired"* ]]; then
         handle_session_reset
-            # Wait 20 seconds, then run the start command in the background
-            (
-                sleep 20
-                pkexec ${SHARE_SCRIPT_CMD} start
-            ) &
         
         # Check if the signal is for the session STOPPING
         elif [[ "$line" == *"member=NameLost"* ]]; then
-            # Run the stop command immediately in the background
-            (
-                pkexec ${SHARE_SCRIPT_CMD} stop
-            ) &
+         echo closed
         fi
     done
 }
@@ -94,11 +86,9 @@ local SHARE_SCRIPT_CMD="andromeda-shared-folders"
     # --- Step 1: Initial Setup ---
     # This sequence runs once when the script starts after a user logs in.
     # It ensures the keyboard starts in a known, clean state.
-    andromeda session start &
     disable_keyboard
     notify_with_countdown "40"
     enable_keyboard
-    pkexec ${SHARE_SCRIPT_CMD} start &
 
     # --- Step 2: Start Persistent Monitoring ---
     # After the setup, the reset monitor runs in the background for the rest of the session.
