@@ -38,39 +38,41 @@ enable_sharing() {
         echo "--- ENABLING ANDROMEDA SHARED FOLDERS ---"
         sleep 1
 
-        echo "[STEP 1/5] Mounting shared folders (requires password)..."
+        echo "[STEP 1/4] Mounting shared folders (requires password)..."
         # We explicitly pass TARGET_USER so the script knows who to run for.
         sudo env TARGET_USER=\${USER} ${ANDROMEDA_SCRIPT_PATH} mount
         sleep 1
 
-        echo "[STEP 2/5] Granting passwordless permissions for all sharing commands..."
+        echo "[STEP 2/4] Granting passwordless permissions for all sharing commands..."
         # FIX: Grant NOPASSWD to the entire script for this user. It's simpler and more robust.
         SUDOERS_CONTENT="\${USER} ALL=(ALL) NOPASSWD: ${ANDROMEDA_SCRIPT_PATH}"
         echo "\${SUDOERS_CONTENT}" | sudo tee '${SUDOERS_FILE}' > /dev/null
         sudo chmod 440 '${SUDOERS_FILE}' # Set secure, read-only permissions
         sleep 1
 
-        echo "[STEP 3/5] Creating autostart entry..."
+        echo "[STEP 3/4] Creating autostart entry..."
         # FIX: The desktop file's Exec line must also use 'sudo env' to pass the user context.
         DESKTOP_FILE_CONTENT="[Desktop Entry]\nVersion=0.1\nName=Andromeda-Shared-Folders\nComment=Starts the service to sync permissions for shared folders\nExec=sudo env TARGET_USER=${USER} ${ANDROMEDA_SCRIPT_PATH} start-permission-guard\nIcon=folder-remote\nTerminal=false\nType=Application"
         mkdir -p "$(dirname "${AUTOSTART_FILE}")"
         echo -e "\${DESKTOP_FILE_CONTENT}" > '${AUTOSTART_FILE}'
         sleep 1
         
-        echo "[STEP 4/5] Starting the permission guard for the current session..."
+        echo "[STEP 4/4] Starting the permission guard for the current session..."
         # FIX: Use 'sudo env' here as well. It will be passwordless due to the sudoers rule.
         sudo env TARGET_USER=\${USER} ${ANDROMEDA_SCRIPT_PATH} start-permission-guard
         sleep 1
 
-        echo "[STEP 5/5] Reloading systemd configuration..."
-        # This silences the "(hint) your fstab has been modified" messages on future runs.
-        sudo systemctl daemon-reload
-        sleep 1
-
         echo "---"
-        echo "Setup complete! Shared folders are active and will start automatically on login."
+        echo "Setup complete! Shared folders are active and will start automatically every login."
         notify-send "Andromeda Shared Folders Enabled" --icon="folder-remote"
-        read -p "Press <Enter> to close this window."
+        echo -n "To finish setting shared folders FLX1 needs reboot. Reboot now? Type 'Yes' to confirm: "
+        read answer
+        if [ "$answer" == "Yes" ]; then
+        echo "Rebooting the system..."
+        sudo reboot
+        else
+        echo "Reboot canceled."
+        fi
 EOF
 )
     # Launch the terminal and execute the command block.
