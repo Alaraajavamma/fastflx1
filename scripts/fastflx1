@@ -39,7 +39,8 @@ enable_sharing() {
         sleep 1
 
         echo "[STEP 1/5] Mounting shared folders (requires password)..."
-        sudo ${ANDROMEDA_SCRIPT_PATH} mount
+        # We explicitly pass TARGET_USER so the script knows who to run for.
+        sudo TARGET_USER=${USER} ${ANDROMEDA_SCRIPT_PATH} mount
         sleep 1
 
         echo "[STEP 2/5] Granting passwordless permissions for the guard service..."
@@ -86,7 +87,8 @@ disable_sharing() {
         sleep 1
 
         echo "[STEP 2/4] Unmounting all shared folders (requires password)..."
-        sudo ${ANDROMEDA_SCRIPT_PATH} unmount
+        # We explicitly pass TARGET_USER so the script knows who to run for.
+        sudo TARGET_USER=${USER} ${ANDROMEDA_SCRIPT_PATH} unmount
         sleep 1
 
         echo "[STEP 3/4] Removing autostart entry..."
