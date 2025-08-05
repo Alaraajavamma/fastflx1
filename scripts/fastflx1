@@ -63,16 +63,21 @@ enable_sharing() {
         sleep 1
 
         echo "---"
-        echo "Setup complete! Shared folders are active and will start automatically every login."
+        echo "Setup complete! Shared folders are active and will start automatically on login."
         notify-send "Andromeda Shared Folders Enabled" --icon="folder-remote"
-        echo -n "To finish setting shared folders FLX1 needs reboot. Reboot now? Type 'Yes' to confirm: "
-        read answer
-        if [ "$answer" == "Yes" ]; then
-        echo "Rebooting the system..."
-        sudo reboot
+        
+        # Prompt for reboot
+        read -p "A reboot is recommended to finalize the setup. Type 'Yes' to reboot now: " reboot_choice
+        
+        # Check if the user wants to reboot, ignoring case
+        if [[ "\${reboot_choice^^}" == "YES" ]]; then
+            echo "Rebooting now..."
+            sudo reboot
         else
-        echo "Reboot canceled."
+            echo "Reboot cancelled. Please reboot manually later."
+            read -p "Press <Enter> to close this window."
         fi
+
 EOF
 )
     # Launch the terminal and execute the command block.
