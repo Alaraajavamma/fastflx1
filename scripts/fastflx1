@@ -40,33 +40,37 @@ enable_sharing() {
 
         echo "[STEP 1/5] Mounting shared folders (requires password)..."
         # We explicitly pass TARGET_USER so the script knows who to run for.
-        sudo TARGET_USER=${USER} ${ANDROMEDA_SCRIPT_PATH} mount
+        sudo env TARGET_USER=\${USER} ${ANDROMEDA_SCRIPT_PATH} mount
         sleep 1
 
-        echo "[STEP 2/5] Granting passwordless permissions for the guard service..."
-        # Create the content for the sudoers file to allow running the guard without a password.
-        SUDOERS_CONTENT="${USER} ALL=(ALL) NOPASSWD: ${ANDROMEDA_SCRIPT_PATH} start-permission-guard, ${ANDROMEDA_SCRIPT_PATH} stop-permission-guard"
+        echo "[STEP 2/5] Granting passwordless permissions for all sharing commands..."
+        # FIX: Grant NOPASSWD to the entire script for this user. It's simpler and more robust.
+        SUDOERS_CONTENT="\${USER} ALL=(ALL) NOPASSWD: ${ANDROMEDA_SCRIPT_PATH}"
         echo "\${SUDOERS_CONTENT}" | sudo tee '${SUDOERS_FILE}' > /dev/null
         sudo chmod 440 '${SUDOERS_FILE}' # Set secure, read-only permissions
         sleep 1
 
         echo "[STEP 3/5] Creating autostart entry..."
-        # Create the .desktop file that will run the guard on login.
-        # The 'Exec' command does NOT use 'sudo' because the sudoers rule makes it unnecessary.
-        DESKTOP_FILE_CONTENT="[Desktop Entry]\nVersion=0.1\nName=Andromeda-Shared-Folders\nComment=Starts the service to sync permissions for shared folders\nExec=${ANDROMEDA_SCRIPT_PATH} start-permission-guard\nIcon=folder-remote\nTerminal=false\nType=Application"
+        # FIX: The desktop file's Exec line must also use 'sudo env' to pass the user context.
+        DESKTOP_FILE_CONTENT="[Desktop Entry]\nVersion=0.1\nName=Andromeda-Shared-Folders\nComment=Starts the service to sync permissions for shared folders\nExec=sudo env TARGET_USER=${USER} ${ANDROMEDA_SCRIPT_PATH} start-permission-guard\nIcon=folder-remote\nTerminal=false\nType=Application"
         mkdir -p "$(dirname "${AUTOSTART_FILE}")"
         echo -e "\${DESKTOP_FILE_CONTENT}" > '${AUTOSTART_FILE}'
         sleep 1
         
         echo "[STEP 4/5] Starting the permission guard for the current session..."
-        # Run the command without sudo, as the permission has just been granted.
-        ${ANDROMEDA_SCRIPT_PATH} start-permission-guard
+        # FIX: Use 'sudo env' here as well. It will be passwordless due to the sudoers rule.
+        sudo env TARGET_USER=\${USER} ${ANDROMEDA_SCRIPT_PATH} start-permission-guard
         sleep 1
 
-        echo "[STEP 5/5] Setup complete."
+        echo "[STEP 5/5] Reloading systemd configuration..."
+        # This silences the "(hint) your fstab has been modified" messages on future runs.
+        sudo systemctl daemon-reload
+        sleep 1
+
+        echo "---"
+        echo "Setup complete! Shared folders are active and will start automatically on login."
         notify-send "Andromeda Shared Folders Enabled" --icon="folder-remote"
-        echo "This terminal will close in 3 seconds."
-        sleep 3
+        read -p "Press <Enter> to close this window."
 EOF
 )
     # Launch the terminal and execute the command block.
@@ -82,13 +86,13 @@ disable_sharing() {
         sleep 1
         
         echo "[STEP 1/4] Stopping the permission guard service..."
-        # Stop the service using the passwordless permission.
-        ${ANDROMEDA_SCRIPT_PATH} stop-permission-guard
+        # FIX: Use 'sudo env' to ensure the script knows which user is running it.
+        sudo env TARGET_USER=\${USER} ${ANDROMEDA_SCRIPT_PATH} stop-permission-guard
         sleep 1
 
-        echo "[STEP 2/4] Unmounting all shared folders (requires password)..."
-        # We explicitly pass TARGET_USER so the script knows who to run for.
-        sudo TARGET_USER=${USER} ${ANDROMEDA_SCRIPT_PATH} unmount
+        echo "[STEP 2/4] Unmounting all shared folders..."
+        # This will now be passwordless because of the sudoers rule.
+        sudo env TARGET_USER=\${USER} ${ANDROMEDA_SCRIPT_PATH} unmount
         sleep 1
 
         echo "[STEP 3/4] Removing autostart entry..."
@@ -99,10 +103,10 @@ disable_sharing() {
         sudo rm -f '${SUDOERS_FILE}'
         sleep 1
 
-        echo "Cleanup complete."
+        echo "---"
+        echo "Cleanup complete. Shared folders are disabled."
         notify-send "Andromeda Shared Folders Disabled" --icon="folder"
-        echo "This terminal will close in 3 seconds."
-        sleep 3
+        read -p "Press <Enter> to close this window."
 EOF
 )
     # Launch the terminal and execute the command block.
@@ -137,20 +141,20 @@ start_wofi() {
                 read env_choice
                 case "$env_choice" in
                     "1. Go to staging")
-                        kgx -- bash -c 'sudo apt install furios-apt-config-staging furios-apt-config-debian-staging -y && sudo apt update && sudo apt install furios-apt-config-krypton-staging -y && sudo apt update && sudo apt upgrade -y --allow-downgrades'
+                        kgx -- bash -c 'sudo apt install furios-apt-config-staging furios-apt-config-debian-staging -y && sudo apt update && sudo apt install furios-apt-config-krypton-staging -y && sudo apt update && sudo apt upgrade -y --allow-downgrades; read -p "Press <Enter> to close."'
                         ;;
                     "2. Go to production")
-                        kgx -- bash -c 'sudo apt remove furios-apt-config-staging furios-apt-config-debian-staging furios-apt-config-krypton-staging -y && sudo apt update && sudo apt upgrade -y --allow-downgrades'
+                        kgx -- bash -c 'sudo apt remove furios-apt-config-staging furios-apt-config-debian-staging furios-apt-config-krypton-staging -y && sudo apt update && sudo apt upgrade -y --allow-downgrades; read -p "Press <Enter> to close."'
                         ;;
                 esac
             }
             ;;
         "2. Upgrade FuriOS")
-            kgx -- bash -c 'sudo apt update && sudo apt upgrade -y --allow-downgrades'
+            kgx -- bash -c 'sudo apt update && sudo apt upgrade -y --allow-downgrades; read -p "Press <Enter> to close."'
             ;;
         "3. Set city to Weather")
             pkill -x feh
-            kgx -- bash -c 'gnome-weather-location'
+            gnome-weather-locations
             ;;
         "4. Manage Tweak services (start/stop)")
             echo -e "1. Start Tweak services\n2. Stop Tweak services" | wofi -d --prompt "Select action:" --lines 2 | {
@@ -238,7 +242,7 @@ start_wofi() {
 
 # --- Main Execution ---
 # Kill any old wofi instances before starting a new one.
-pkill -x wofi
+pkill -x wofi || true
 # This seems to be a way to ensure the overview is not active before launching.
 wtype -M win -k Super_l
 # Start the main wofi menu function.
