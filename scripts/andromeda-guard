@@ -54,8 +54,6 @@ handle_session_reset() {
 
 # This function silently monitors for Andromeda session start/stop and triggers the commands
 monitor_andromeda_reset() {
-    # The command for your main script that handles the mounting/unmounting
-    local SHARE_SCRIPT_CMD="andromeda-shared-folders"
 
     # Monitor for both NameAcquired (start) and NameLost (stop) signals
     dbus-monitor --session "type='signal',interface='org.freedesktop.DBus',member='NameAcquired,NameLost'" | \
