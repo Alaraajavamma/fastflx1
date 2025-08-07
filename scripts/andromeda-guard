@@ -52,24 +52,13 @@ handle_session_reset() {
 # This runs in the background after the initial setup.
 # ==============================================================================
 
-# This function silently monitors for Andromeda session start/stop and triggers the commands
+# Monitors for the custom Andromeda reset signal.
 monitor_andromeda_reset() {
-
-    # Monitor for both NameAcquired (start) and NameLost (stop) signals
-    dbus-monitor --session "type='signal',interface='org.freedesktop.DBus',member='NameAcquired,NameLost'" | \
-    while IFS= read -r line; do
-        # We only care about lines that contain the specific Andromeda session name
-        if [[ "$line" != *"io.furios.Andromeda.Session"* ]]; then
-            continue
-        fi
-        
-        # Check if the signal is for the session STARTING
-        if [[ "$line" == *"member=NameAcquired"* ]]; then
-        handle_session_reset
-        
-        # Check if the signal is for the session STOPPING
-        elif [[ "$line" == *"member=NameLost"* ]]; then
-         echo closed
+    dbus-monitor --session "type='signal',interface='org.freedesktop.DBus',member='NameAcquired'" \
+    | while IFS= read -r line; do
+        # If the custom session name appears on the bus, trigger a reset.
+        if [[ "$line" == *"io.furios.Andromeda.Session"* ]]; then
+            handle_session_reset
         fi
     done
 }
@@ -79,8 +68,6 @@ monitor_andromeda_reset() {
 # ==============================================================================
 
 main() {
-
-local SHARE_SCRIPT_CMD="andromeda-shared-folders"
     # --- Step 1: Initial Setup ---
     # This sequence runs once when the script starts after a user logs in.
     # It ensures the keyboard starts in a known, clean state.
