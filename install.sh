@@ -64,6 +64,21 @@ auth    sufficient pam_parallel.so debug { "mode": "One", "modules": {"biomd": "
 @include common-session-noninteractive
 EOF
 
+# --- Configure /etc/pam.d/polkit-1 ---
+echo "Writing configuration to /etc/pam.d/polkit-1..."
+sudo tee /etc/pam.d/polkit-1 > /dev/null <<'EOF'
+#%PAM-1.0
+
+auth    sufficient pam_parallel.so debug { "mode": "One", "modules": {"biomd": " ☝️ ", "login": " 🔐 " } }
+
+@include common-auth
+@include common-account
+@include common-password
+session         required    pam_env.so readenv=1 user_readenv=0
+session         required    pam_env.so readenv=1 envfile=/etc/default/locale user_readenv=0
+@include common-session-noninteractive
+EOF
+
 # --- Configure /etc/pam.d/biomd ---
 echo "Writing configuration to /etc/pam.d/biomd..."
 sudo tee /etc/pam.d/biomd > /dev/null <<'EOF'
