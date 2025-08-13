@@ -38,28 +38,16 @@ enable_sharing() {
         echo "--- ENABLING ANDROMEDA SHARED FOLDERS ---"
         sleep 1
 
-        echo "[STEP 1/4] Mounting shared folders (requires password)..."
+        echo "[STEP 1/2] Mounting shared folders (requires password)..."
         # We explicitly pass TARGET_USER so the script knows who to run for.
         sudo env TARGET_USER=\${USER} ${ANDROMEDA_SCRIPT_PATH} mount
         sleep 1
 
-        echo "[STEP 2/4] Granting passwordless permissions for all sharing commands..."
-        # FIX: Grant NOPASSWD to the entire script for this user. It's simpler and more robust.
-        SUDOERS_CONTENT="\${USER} ALL=(ALL) NOPASSWD: ${ANDROMEDA_SCRIPT_PATH}"
-        echo "\${SUDOERS_CONTENT}" | sudo tee '${SUDOERS_FILE}' > /dev/null
-        sudo chmod 440 '${SUDOERS_FILE}' # Set secure, read-only permissions
-        sleep 1
-
-        echo "[STEP 3/4] Creating autostart entry..."
+        echo "[STEP 2/2] Creating autostart entry..."
         # FIX: The desktop file's Exec line must also use 'sudo env' to pass the user context.
-        DESKTOP_FILE_CONTENT="[Desktop Entry]\nVersion=0.1\nName=Andromeda-Shared-Folders\nComment=Starts the service to sync permissions for shared folders\nExec=sudo env TARGET_USER=${USER} ${ANDROMEDA_SCRIPT_PATH} start-permission-guard\nIcon=folder-remote\nTerminal=false\nType=Application"
+        DESKTOP_FILE_CONTENT="[Desktop Entry]\nVersion=0.1\nName=Andromeda-Shared-Folders\nComment=Starts the service to sync permissions for shared folders\nExec=pkexec ${ANDROMEDA_SCRIPT_PATH} start-permission-guard\nIcon=folder-remote\nTerminal=false\nType=Application"
         mkdir -p "$(dirname "${AUTOSTART_FILE}")"
         echo -e "\${DESKTOP_FILE_CONTENT}" > '${AUTOSTART_FILE}'
-        sleep 1
-        
-        echo "[STEP 4/4] Starting the permission guard for the current session..."
-        # FIX: Use 'sudo env' here as well. It will be passwordless due to the sudoers rule.
-        sudo env TARGET_USER=\${USER} ${ANDROMEDA_SCRIPT_PATH} start-permission-guard
         sleep 1
 
         echo "---"
