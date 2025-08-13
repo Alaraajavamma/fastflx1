@@ -8,10 +8,10 @@ Type=Application
 
 [Desktop Action update]
 Name=Update FastFLX1
-Exec=kgx -- bash -c 'cd ~ && cd .git && cd fastflx1 && ./update.sh'
+Exec=kgx -- bash -c 'cd ~ && cd .git && cd fastflx1 && ./setup.sh update'
 Terminal=true
 
 [Desktop Action remove]
 Name=Remove FastFLX1
-Exec=kgx -- bash -c 'cd ~ && cd .git && cd fastflx1 && ./uninstall.sh'
+Exec=kgx -- bash -c 'cd ~ && cd .git && cd fastflx1 && ./setup.sh uninstall'
 Terminal=true
