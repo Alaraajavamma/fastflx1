@@ -184,8 +184,8 @@ run_permission_guardian() {
     [ -d "$ANDROID_MOUNT_BASE" ] && watch_dirs+=("$ANDROID_MOUNT_BASE")
     
     # ADDED: Also watch the raw Android storage source directly
-    [ -d "$ANDROID_STORAGE_SOURCE" ] && watch_dirs+=("$ANDROID_STORAGE_SOURCE") # <-- ADD THIS LINE
-
+    [ -d "$ANDROID_STORAGE_SOURCE" ] 
+    
     log "Permissions Guardian: Performing initial permission sync..."
     # Apply ACLs to all watched directories recursively
     for dir in "${watch_dirs[@]}"; do
