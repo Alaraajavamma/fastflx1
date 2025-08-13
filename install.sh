@@ -57,7 +57,7 @@ echo "Writing configuration to /etc/pam.d/sudo..."
 sudo tee /etc/pam.d/sudo > /dev/null <<'EOF'
 #%PAM-1.0
 
-auth    sufficient pam_parallel.so debug { "mode": "One", "modules": {"biomd": "Fingerprint", "login": "Password"} }
+auth    sufficient pam_parallel.so debug { "mode": "One", "modules": {"biomd": " ☝️ ", "login": " 🔐 "} }
 
 @include common-auth
 @include common-account
