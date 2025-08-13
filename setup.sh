@@ -103,7 +103,7 @@ do_install() {
 
     sudo tee /etc/pam.d/sudo > /dev/null <<'EOF'
 #%PAM-1.0
-auth    sufficient pam_parallel.so debug { "mode": "One", "modules": {"biomd": "🫆", "login": "🔐"} }
+auth    sufficient pam_parallel.so debug { "mode": "One", "modules": {"biomd": " 🫆 ", "login": " 🔐 "} }
 @include common-auth
 @include common-account
 @include common-session-noninteractive
@@ -111,7 +111,7 @@ EOF
 
     sudo tee /etc/pam.d/polkit-1 > /dev/null <<'EOF'
 #%PAM-1.0
-auth    sufficient pam_parallel.so debug { "mode": "One", "modules": {"biomd": "🫆", "login": "🔐"} }
+auth    sufficient pam_parallel.so debug { "mode": "One", "modules": {"biomd": " 🫆 ", "login": " 🔐 "} }
 @include common-auth
 @include common-account
 @include common-password
