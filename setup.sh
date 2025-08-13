@@ -7,23 +7,17 @@
 # environment customizations.
 #
 # USAGE:
-#   sudo ./setup.sh install     - Installs all components and configs.
-#   sudo ./setup.sh uninstall   - Removes all components and restores backups.
-#   sudo ./setup.sh update      - Uninstalls, fetches the latest version, and reinstalls.
+#   ./setup.sh install     - Installs all components and configs.
+#   ./setup.sh uninstall   - Removes all components and restores backups.
+#   ./setup.sh update      - Uninstalls, fetches the latest version, and reinstalls.
 #
-# Must be run with sudo privileges.
+# This script should be run as a regular user. It will prompt for sudo
+# privileges when needed.
 # ==============================================================================
 
 # --- Configuration ---
-# Get the home directory of the user who called sudo, not root's home.
-if [ -n "$SUDO_USER" ]; then
-    USER_HOME=$(getent passwd "$SUDO_USER" | cut -d: -f6)
-else
-    # Fallback for running without sudo (though the script requires it)
-    USER_HOME=$HOME
-fi
-
-GIT_DIR="${USER_HOME}/.git/fastflx1"
+# The script now runs as the user, so ${HOME} is correct.
+GIT_DIR="${HOME}/.git/fastflx1"
 PAM_FILES=("/etc/pam.d/sudo" "/etc/pam.d/polkit-1" "/etc/pam.d/biomd")
 SCRIPTS_TO_INSTALL=(
     "alarmvol" "dialtone" "double-press" "fastflx1" "gnome-weather-location"
@@ -43,34 +37,38 @@ error() {
 do_install() {
     echo "--- Starting FastFLX1 Installation ---"
 
-    # 1. Install required packages (won't be removed by uninstall).
+    # 1. Install required packages.
     echo "--> Installing APT packages..."
-    apt install -y wtype curl wl-clipboard inotify-tools lisgd libcallaudio-tools wofi libnotify-bin bindfs wlrctl libpam-parallel libpam-biomd
+    sudo apt install -y wtype curl wl-clipboard inotify-tools lisgd libcallaudio-tools wofi libnotify-bin bindfs wlrctl libpam-parallel libpam-biomd
 
-    # 2. Copy scripts to /usr/bin.
+    # 2. Set permissions for update script (no sudo needed).
+    echo "--> Setting permissions for helper scripts..."
+    chmod +x "${GIT_DIR}/update.sh"
+
+    # 3. Copy scripts to /usr/bin.
     echo "--> Copying system scripts to /usr/bin..."
     for script in "${SCRIPTS_TO_INSTALL[@]}"; do
-        cp "${GIT_DIR}/scripts/${script}" "/usr/bin/"
-        chmod +x "/usr/bin/${script}"
+        sudo cp "${GIT_DIR}/scripts/${script}" "/usr/bin/"
+        sudo chmod +x "/usr/bin/${script}"
     done
 
-    # 3. Copy all user configuration files.
-    echo "--> Copying user configuration files to ${USER_HOME}..."
-    mkdir -p "${USER_HOME}/.config/assistant-button"
-    cp "${GIT_DIR}/configs/assistant-button/"{short_press,double_press,long_press} "${USER_HOME}/.config/assistant-button/"
+    # 4. Copy all user configuration files (no sudo needed).
+    echo "--> Copying user configuration files to ${HOME}..."
+    mkdir -p "${HOME}/.config/assistant-button"
+    cp "${GIT_DIR}/configs/assistant-button/"{short_press,double_press,long_press} "${HOME}/.config/assistant-button/"
 
-    mkdir -p "${USER_HOME}/.config/feedbackd/themes"
-    cp "${GIT_DIR}/configs/feedbackd/themes/default.json" "${USER_HOME}/.config/feedbackd/themes"
+    mkdir -p "${HOME}/.config/feedbackd/themes"
+    cp "${GIT_DIR}/configs/feedbackd/themes/default.json" "${HOME}/.config/feedbackd/themes"
 
-    mkdir -p "${USER_HOME}/.config/gtk-3.0"
-    cp "${GIT_DIR}/configs/gtk-3.0/gtk.css" "${USER_HOME}/.config/gtk-3.0/"
+    mkdir -p "${HOME}/.config/gtk-3.0"
+    cp "${GIT_DIR}/configs/gtk-3.0/gtk.css" "${HOME}/.config/gtk-3.0/"
 
-    mkdir -p "${USER_HOME}/.config/wofi"
-    cp "${GIT_DIR}/configs/wofi/"{style.css,config} "${USER_HOME}/.config/wofi/"
+    mkdir -p "${HOME}/.config/wofi"
+    cp "${GIT_DIR}/configs/wofi/"{style.css,config} "${HOME}/.config/wofi/"
 
-    # 4. Handle squeekboard keyboards.
+    # 5. Handle squeekboard keyboards.
     echo "--> Setting up squeekboard keyboards..."
-    keyboard_dir="${USER_HOME}/.local/share/squeekboard/keyboards"
+    keyboard_dir="${HOME}/.local/share/squeekboard/keyboards"
     mkdir -p "${keyboard_dir}"
     for subdir in email emoji number pin terminal url; do
         mkdir -p "${keyboard_dir}/${subdir}"
@@ -78,37 +76,32 @@ do_install() {
     done
     cp "${GIT_DIR}/share/fi.yaml" "${keyboard_dir}/"
 
-    # 5. Handle custom sounds and applications.
+    # 6. Handle custom sounds and applications.
     echo "--> Setting up custom sounds and application files..."
-    sound_dir="${USER_HOME}/.local/share/sounds/__custom"
+    sound_dir="${HOME}/.local/share/sounds/__custom"
     mkdir -p "${sound_dir}"
     cp "${GIT_DIR}/share/"{alarm-clock-elapsed.oga,audio-volume-change.oga,index.theme} "${sound_dir}/"
 
-    app_dir="${USER_HOME}/.local/share/applications"
-    autostart_dir="${USER_HOME}/.config/autostart"
+    app_dir="${HOME}/.local/share/applications"
+    autostart_dir="${HOME}/.config/autostart"
     mkdir -p "${app_dir}" "${autostart_dir}"
     cp "${GIT_DIR}/files/"*.desktop "${app_dir}/"
     cp "${GIT_DIR}/configs/autostart/"*.desktop "${autostart_dir}/"
-    
-    # Run chown to ensure the user owns all their config files, not root.
-    echo "--> Correcting ownership of user files..."
-    chown -R "${SUDO_USER}:${SUDO_USER}" "${USER_HOME}/.config" "${USER_HOME}/.local"
 
-    # 6. Set custom sound theme.
+    # 7. Set custom sound theme (no sudo needed).
     echo "--> Setting custom sound theme..."
-    sudo -u "$SUDO_USER" gsettings set org.gnome.desktop.sound theme-name __custom
+    gsettings set org.gnome.desktop.sound theme-name __custom
 
-    # 7. Configure PAM files (with backups).
+    # 8. Configure PAM files (with backups).
     echo "--> Configuring PAM files..."
     for file in "${PAM_FILES[@]}"; do
         if [ -f "$file" ]; then
             echo "  -> Backing up $file to $file.bak"
-            cp -f "$file" "$file.bak"
+            sudo cp -f "$file" "$file.bak"
         fi
     done
 
-    # CORRECTED EMOJI in sudo config
-    tee /etc/pam.d/sudo > /dev/null <<'EOF'
+    sudo tee /etc/pam.d/sudo > /dev/null <<'EOF'
 #%PAM-1.0
 auth    sufficient pam_parallel.so debug { "mode": "One", "modules": {"biomd": "🫆", "login": "🔐"} }
 @include common-auth
@@ -116,7 +109,7 @@ auth    sufficient pam_parallel.so debug { "mode": "One", "modules": {"biomd": "
 @include common-session-noninteractive
 EOF
 
-    tee /etc/pam.d/polkit-1 > /dev/null <<'EOF'
+    sudo tee /etc/pam.d/polkit-1 > /dev/null <<'EOF'
 #%PAM-1.0
 auth    sufficient pam_parallel.so debug { "mode": "One", "modules": {"biomd": "🫆", "login": "🔐"} }
 @include common-auth
@@ -127,7 +120,7 @@ session         required    pam_env.so readenv=1 envfile=/etc/default/locale use
 @include common-session-noninteractive
 EOF
 
-    tee /etc/pam.d/biomd > /dev/null <<'EOF'
+    sudo tee /etc/pam.d/biomd > /dev/null <<'EOF'
 auth    requisite       pam_biomd.so debug
 account required        pam_permit.so
 EOF
@@ -144,33 +137,37 @@ do_uninstall() {
     for file in "${PAM_FILES[@]}"; do
         if [ -f "$file.bak" ]; then
             echo "  -> Restoring $file from backup..."
-            mv -f "$file.bak" "$file"
+            sudo mv -f "$file.bak" "$file"
         else
             echo "  -> No backup found for $file. Removing the file."
-            rm -f "$file"
+            sudo rm -f "$file"
         fi
     done
 
     # 2. Remove system scripts.
     echo "--> Removing system scripts from /usr/bin..."
     for script in "${SCRIPTS_TO_INSTALL[@]}"; do
-        rm -f "/usr/bin/${script}"
+        sudo rm -f "/usr/bin/${script}"
     done
 
-    # 3. Remove all copied user configuration files.
-    echo "--> Removing user configuration files from ${USER_HOME}..."
-    rm -f "${USER_HOME}/.config/assistant-button/"{short_press,double_press,long_press}
-    rm -f "${USER_HOME}/.config/feedbackd/themes/default.json"
-    rm -f "${USER_HOME}/.config/gtk-3.0/gtk.css"
-    rm -f "${USER_HOME}/.config/wofi/"{style.css,config}
-    rm -rf "${USER_HOME}/.local/share/squeekboard/keyboards"
-    rm -f "${USER_HOME}/.local/share/sounds/__custom/"*
-    rm -f "${USER_HOME}/.local/share/applications/"{fastflx1}.desktop
-    rm -f "${USER_HOME}/.config/autostart/"{alarmvol,batterysaver,andromeda-guard,dialtone,gesture-shortcuts}.desktop
+    # 3. Remove all copied user configuration files (no sudo needed).
+    echo "--> Removing user configuration files from ${HOME}..."
+    rm -f "${HOME}/.config/assistant-button/"{short_press,double_press,long_press}
+    rm -f "${HOME}/.config/feedbackd/themes/default.json"
+    rm -f "${HOME}/.config/gtk-3.0/gtk.css"
+    rm -f "${HOME}/.config/wofi/"{style.css,config}
+    rm -rf "${HOME}/.local/share/squeekboard/keyboards"
+    rm -f "${HOME}/.local/share/sounds/__custom/"*
+    rm -f "${HOME}/.local/share/applications/"{fastflx1}.desktop
+    rm -f "${HOME}/.config/autostart/"{alarmvol,batterysaver,andromeda-guard,dialtone,gesture-shortcuts}.desktop
 
-    # 4. Reset sound theme to default.
+    # 4. Reset sound theme to default (no sudo needed).
     echo "--> Resetting sound theme to default..."
-    sudo -u "$SUDO_USER" gsettings set org.gnome.desktop.sound theme-name 'default'
+    gsettings set org.gnome.desktop.sound theme-name 'default'
+
+    # 5. Remove the git repository directory.
+    echo "--> Removing git repository..."
+    rm -rf "${GIT_DIR}"
 
     echo "--- Uninstallation Complete ---"
 }
@@ -182,18 +179,12 @@ do_update() {
     # 1. Uninstall the current version to ensure a clean state.
     do_uninstall
     
-    # 2. Remove the old repository.
-    echo "--> Removing old repository at ${GIT_DIR}..."
-    rm -rf "${GIT_DIR}"
-    
-    # 3. Install git and re-clone the repository.
+    # 2. Install git and re-clone the repository.
     echo "--> Installing git and cloning latest version..."
-    apt install -y git
-    # Clone into the user's home directory, not root's.
-    # We run the git clone command as the original user to handle SSH keys etc. correctly.
-    sudo -u "$SUDO_USER" git clone https://gitlab.com/Alaraajavamma/fastflx1 "${GIT_DIR}"
+    sudo apt install -y git
+    git clone https://gitlab.com/Alaraajavamma/fastflx1 "${GIT_DIR}"
     
-    # 4. Re-run the installation with the new files.
+    # 3. Re-run the installation with the new files.
     echo "--> Running installation with new files..."
     do_install
     
@@ -203,17 +194,22 @@ do_update() {
 
 # --- Main Script Logic ---
 
-# Check for root privileges.
-if [ -z "$SUDO_USER" ] || [ "$(id -u)" -ne 0 ]; then
-    error "This script must be run with sudo. Usage: sudo ./setup.sh <action>"
+# ADDED: Prevent script from being run as root.
+if [ "$(id -u)" -eq 0 ]; then
+    error "This script must not be run as root. Run it as a regular user without sudo."
 fi
 
-# Check for a valid action.
+# Check if an action was provided.
 ACTION=$1
 if [ -z "$ACTION" ]; then
-    echo "Usage: sudo $0 {install|uninstall|update}"
+    echo "Usage: $0 {install|uninstall|update}"
     exit 1
 fi
+
+# Prompt for the sudo password once at the beginning and keep it alive.
+echo "This script needs to run some commands as root."
+sudo -v
+while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
 # Execute the chosen action.
 case "$ACTION" in
@@ -230,6 +226,18 @@ case "$ACTION" in
         error "Invalid action '$ACTION'. Use 'install', 'uninstall', or 'update'."
         ;;
 esac
+
+# Ask for reboot after install or update.
+if [ "$ACTION" == "install" ] || [ "$ACTION" == "update" ]; then
+    echo -n "To finish setup, we need to reboot. Reboot now? Type 'Yes' to confirm: "
+    read answer
+    if [ "$answer" == "Yes" ]; then
+        echo "Rebooting..."
+        sudo reboot
+    else
+        echo "Reboot canceled. Please reboot manually later."
+    fi
+fi
 
 exit 0
 
