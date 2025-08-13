@@ -45,13 +45,13 @@ I am working on this slowly and will add more (GUI) features soonish (or remove 
 
 ## How to install?
 
-`sudo apt install git && cd ~ && mkdir -p .git && cd .git && git clone https://gitlab.com/Alaraajavamma/fastflx1 && cd fastflx1 && sudo chmod +x setup.sh && ./setup.sh install `
+`sudo apt install git && cd ~ && mkdir -p .git && cd .git && git clone https://gitlab.com/Alaraajavamma/fastflx1 && cd fastflx1 && sudo chmod +x setup.sh && sudo ./setup.sh install `
 
 And it should just work
 
 Remove?
 Long press desktop icon and it will give you option to Uninstall. Or you can: 
-`cd ~ && cd .git && cd fastflx1 && ./setup.sh uninstall`
+`cd ~ && cd .git && cd fastflx1 && sudo ./setup.sh uninstall`
 
 
 ## License
