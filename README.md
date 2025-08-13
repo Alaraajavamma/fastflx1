@@ -51,7 +51,7 @@ And it should just work
 
 Remove?
 Long press desktop icon and it will give you option to Uninstall. Or you can: 
-`cd ~ && cd .git && cd fastflx1 && ./uninstall.sh`
+`cd ~ && cd .git && cd fastflx1 && ./setup.sh uninstall`
 
 
 ## License
