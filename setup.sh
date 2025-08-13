@@ -41,18 +41,14 @@ do_install() {
     echo "--> Installing APT packages..."
     sudo apt install -y wtype curl wl-clipboard inotify-tools lisgd libcallaudio-tools wofi libnotify-bin bindfs wlrctl libpam-parallel libpam-biomd
 
-    # 2. Set permissions for update script (no sudo needed).
-    echo "--> Setting permissions for helper scripts..."
-    chmod +x "${GIT_DIR}/update.sh"
-
-    # 3. Copy scripts to /usr/bin.
+    # 2. Copy scripts to /usr/bin.
     echo "--> Copying system scripts to /usr/bin..."
     for script in "${SCRIPTS_TO_INSTALL[@]}"; do
         sudo cp "${GIT_DIR}/scripts/${script}" "/usr/bin/"
         sudo chmod +x "/usr/bin/${script}"
     done
 
-    # 4. Copy all user configuration files (no sudo needed).
+    # 3. Copy all user configuration files (no sudo needed).
     echo "--> Copying user configuration files to ${HOME}..."
     mkdir -p "${HOME}/.config/assistant-button"
     cp "${GIT_DIR}/configs/assistant-button/"{short_press,double_press,long_press} "${HOME}/.config/assistant-button/"
@@ -66,7 +62,7 @@ do_install() {
     mkdir -p "${HOME}/.config/wofi"
     cp "${GIT_DIR}/configs/wofi/"{style.css,config} "${HOME}/.config/wofi/"
 
-    # 5. Handle squeekboard keyboards.
+    # 4. Handle squeekboard keyboards.
     echo "--> Setting up squeekboard keyboards..."
     keyboard_dir="${HOME}/.local/share/squeekboard/keyboards"
     mkdir -p "${keyboard_dir}"
@@ -76,7 +72,7 @@ do_install() {
     done
     cp "${GIT_DIR}/share/fi.yaml" "${keyboard_dir}/"
 
-    # 6. Handle custom sounds and applications.
+    # 5. Handle custom sounds and applications.
     echo "--> Setting up custom sounds and application files..."
     sound_dir="${HOME}/.local/share/sounds/__custom"
     mkdir -p "${sound_dir}"
@@ -88,11 +84,11 @@ do_install() {
     cp "${GIT_DIR}/files/"*.desktop "${app_dir}/"
     cp "${GIT_DIR}/configs/autostart/"*.desktop "${autostart_dir}/"
 
-    # 7. Set custom sound theme (no sudo needed).
+    # 6. Set custom sound theme (no sudo needed).
     echo "--> Setting custom sound theme..."
     gsettings set org.gnome.desktop.sound theme-name __custom
 
-    # 8. Configure PAM files (with backups).
+    # 7. Configure PAM files (with backups).
     echo "--> Configuring PAM files..."
     for file in "${PAM_FILES[@]}"; do
         if [ -f "$file" ]; then
@@ -175,20 +171,24 @@ do_uninstall() {
 # Function to perform an update.
 do_update() {
     echo "--- Starting FastFLX1 Update ---"
-    
+
     # 1. Uninstall the current version to ensure a clean state.
+    echo "--> Uninstalling the current version for a clean update..."
     do_uninstall
-    
-    # 2. Install git and re-clone the repository.
-    echo "--> Installing git and cloning latest version..."
+
+    # 2. Install git and clone the latest version from the repository.
+    echo "--> Installing git and cloning the latest version..."
     sudo apt install -y git
-    git clone https://gitlab.com/Alaraajavamma/fastflx1 "${GIT_DIR}"
-    
-    # 3. Re-run the installation with the new files.
-    echo "--> Running installation with new files..."
-    do_install
-    
-    echo "--- Update Process Finished ---"
+    git clone https://gitlab.com/Alaraajavamma/fastflx1 "${GIT_DIR}" || error "Failed to clone the repository."
+
+    # 3. Hand over execution to the new setup script to run the install.
+    # The 'exec' command replaces this script's process with the new one.
+    local new_script="${GIT_DIR}/setup.sh"
+    echo "--> Making the new setup script executable..."
+    chmod +x "${new_script}" || error "Failed to make the new script executable."
+
+    echo "--> Handing over to the new setup script for installation..."
+    exec "${new_script}" install
 }
 
 
@@ -228,6 +228,9 @@ case "$ACTION" in
 esac
 
 # Ask for reboot after install or update.
+# This part will be reached by the 'install' action.
+# When 'update' is run, the 'exec' command hands off control, and the new
+# script will run this section after it completes its 'install' step.
 if [ "$ACTION" == "install" ] || [ "$ACTION" == "update" ]; then
     echo -n "To finish setup, we need to reboot. Reboot now? Type 'Yes' to confirm: "
     read answer
@@ -240,4 +243,3 @@ if [ "$ACTION" == "install" ] || [ "$ACTION" == "update" ]; then
 fi
 
 exit 0
-
