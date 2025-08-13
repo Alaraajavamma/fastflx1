@@ -172,6 +172,8 @@ do_uninstall() {
 do_update() {
     echo "--- Starting FastFLX1 Update ---"
 
+    cd "${HOME}" || error "Could not change to home directory."
+
     # 1. Uninstall the current version to ensure a clean state.
     echo "--> Uninstalling the current version for a clean update..."
     do_uninstall
