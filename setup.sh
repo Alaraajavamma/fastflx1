@@ -47,18 +47,14 @@ do_install() {
     echo "--> Installing APT packages..."
     apt install -y wtype curl wl-clipboard inotify-tools lisgd libcallaudio-tools wofi libnotify-bin bindfs wlrctl libpam-parallel libpam-biomd
 
-    # 2. Set permissions for update script.
-    echo "--> Setting permissions for helper scripts..."
-    chmod +x "${GIT_DIR}/update.sh"
-
-    # 3. Copy scripts to /usr/bin.
+    # 2. Copy scripts to /usr/bin.
     echo "--> Copying system scripts to /usr/bin..."
     for script in "${SCRIPTS_TO_INSTALL[@]}"; do
         cp "${GIT_DIR}/scripts/${script}" "/usr/bin/"
         chmod +x "/usr/bin/${script}"
     done
 
-    # 4. Copy all user configuration files.
+    # 3. Copy all user configuration files.
     echo "--> Copying user configuration files to ${USER_HOME}..."
     mkdir -p "${USER_HOME}/.config/assistant-button"
     cp "${GIT_DIR}/configs/assistant-button/"{short_press,double_press,long_press} "${USER_HOME}/.config/assistant-button/"
@@ -72,7 +68,7 @@ do_install() {
     mkdir -p "${USER_HOME}/.config/wofi"
     cp "${GIT_DIR}/configs/wofi/"{style.css,config} "${USER_HOME}/.config/wofi/"
 
-    # 5. Handle squeekboard keyboards.
+    # 4. Handle squeekboard keyboards.
     echo "--> Setting up squeekboard keyboards..."
     keyboard_dir="${USER_HOME}/.local/share/squeekboard/keyboards"
     mkdir -p "${keyboard_dir}"
@@ -82,7 +78,7 @@ do_install() {
     done
     cp "${GIT_DIR}/share/fi.yaml" "${keyboard_dir}/"
 
-    # 6. Handle custom sounds and applications.
+    # 5. Handle custom sounds and applications.
     echo "--> Setting up custom sounds and application files..."
     sound_dir="${USER_HOME}/.local/share/sounds/__custom"
     mkdir -p "${sound_dir}"
@@ -98,11 +94,11 @@ do_install() {
     echo "--> Correcting ownership of user files..."
     chown -R "${SUDO_USER}:${SUDO_USER}" "${USER_HOME}/.config" "${USER_HOME}/.local"
 
-    # 7. Set custom sound theme.
+    # 6. Set custom sound theme.
     echo "--> Setting custom sound theme..."
-    gsettings set org.gnome.desktop.sound theme-name __custom
+    sudo -u "$SUDO_USER" gsettings set org.gnome.desktop.sound theme-name __custom
 
-    # 8. Configure PAM files (with backups).
+    # 7. Configure PAM files (with backups).
     echo "--> Configuring PAM files..."
     for file in "${PAM_FILES[@]}"; do
         if [ -f "$file" ]; then
@@ -174,7 +170,7 @@ do_uninstall() {
 
     # 4. Reset sound theme to default.
     echo "--> Resetting sound theme to default..."
-    gsettings set org.gnome.desktop.sound theme-name 'default'
+    sudo -u "$SUDO_USER" gsettings set org.gnome.desktop.sound theme-name 'default'
 
     echo "--- Uninstallation Complete ---"
 }
