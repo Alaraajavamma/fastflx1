@@ -200,7 +200,7 @@ run_permission_guardian() {
 }
 
 do_start_permission_guard() {
-    wait_for_keyring_unlock
+    wait_for_screen_unlock
     sleep 2
     
     log "--- Starting Permissions Guardian ---"
