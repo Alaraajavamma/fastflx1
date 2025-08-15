@@ -44,8 +44,14 @@ enable_sharing() {
         sleep 1
 
         echo "[STEP 2/2] Creating autostart entry..."
-        # FIX: The desktop file's Exec line must also use 'sudo env' to pass the user context.
-        DESKTOP_FILE_CONTENT="[Desktop Entry]\nVersion=0.1\nName=Andromeda-Shared-Folders\nComment=Starts the service to sync permissions for shared folders\nExec=pkexec ${ANDROMEDA_SCRIPT_PATH} start-permission-guard\nIcon=folder-remote\nTerminal=false\nType=Application"
+        
+        # The Exec line now includes a bash command that first waits for the keyring to be unlocked
+        # and only then executes the permission guardian. This is the key fix.
+        # Note the '"'"' trick to safely embed a single quote for 'Locked'.
+        AUTOSTART_EXEC_COMMAND="bash -c 'while gdbus call --session --dest org.freedesktop.secrets --object-path /org/freedesktop/secrets/collection/login --method org.freedesktop.DBus.Properties.Get org.freedesktop.Secret.Collection '"'"'Locked'"'"' | grep -q true; do sleep 1; done && pkexec ${ANDROMEDA_SCRIPT_PATH} start-permission-guard'"
+        
+        DESKTOP_FILE_CONTENT="[Desktop Entry]\nVersion=0.1\nName=Andromeda-Shared-Folders\nComment=Starts the service to sync permissions for shared folders\nExec=\${AUTOSTART_EXEC_COMMAND}\nIcon=folder-remote\nTerminal=false\nType=Application"
+        
         mkdir -p "$(dirname "${AUTOSTART_FILE}")"
         echo -e "\${DESKTOP_FILE_CONTENT}" > '${AUTOSTART_FILE}'
         sleep 1
