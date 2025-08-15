@@ -200,7 +200,6 @@ run_permission_guardian() {
 }
 
 do_start_permission_guard() {
-
     wait_for_keyring_unlock
     sleep 2
     
@@ -225,17 +224,36 @@ do_start_permission_guard() {
     log "Permissions Guardian started with PID $(cat "$PID_FILE")."
 }
 
-# This function polls the D-Bus secret service to check if the default keyring is actively unlocked before proceeding.
-wait_for_keyring_unlock() {
-    log "Checking for unlocked GNOME Keyring..."
-    # We poll the 'ReadAlias' method on the secret service. The command succeeds
-    # (exit code 0) only when the keyring is unlocked. We use 'grep -vq "Locked"'
-    # to filter out the specific "Locked" error, allowing the loop to continue.
-    until su -c "gdbus call --session --dest org.freedesktop.secrets --object-path /org/freedesktop/secrets --method org.freedesktop.Secret.Service.ReadAlias default 2>&1 | grep -vq 'Locked'" "$HOST_USER" &>/dev/null; do
-        log "Keyring locked, waiting..."
-        sleep 2
+wait_for_screen_unlock() {
+    echo "Waiting for screen to unlock..."
+
+    # Loop indefinitely until the screen is no longer locked.
+    while true; do
+        # Get the ID of the current session.
+        local session_id
+        session_id=$(loginctl session-status | head -n 1 | awk '{print $1}')
+
+        # Check if the session is valid.
+        if [[ -z "$session_id" ]]; then
+            echo "Could not determine session ID. Exiting." >&2
+            return 1
+        fi
+        
+        # Get the 'LockedHint' property for the session.
+        local locked_hint
+        locked_hint=$(loginctl show-session "$session_id" -p LockedHint --value)
+
+        # If LockedHint is 'no', the screen is unlocked, so we exit the loop.
+        if [[ "$locked_hint" == "no" ]]; then
+            break
+        fi
+
+        # If we're still here, the screen is locked. Wait and try again.
+        echo "Screen is locked, waiting..."
+        sleep 1
     done
-    log "Keyring is unlocked and ready!"
+
+    echo "Screen is unlocked. Proceeding."
 }
 
 do_stop_permission_guard() {
