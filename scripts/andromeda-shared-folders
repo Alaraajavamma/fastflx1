@@ -225,14 +225,21 @@ do_start_permission_guard() {
 }
 
 wait_for_keyring_unlock() {
-    echo "Waiting for GNOME Keyring to unlock..."
-    while gdbus call --session \
+    echo "Waiting for GNOME Keyring to unlock (as user ${HOST_USER})..."
+    
+    # Define the command to be run by the user. Note the quotes.
+    local check_command="gdbus call --session \
         --dest org.freedesktop.secrets \
         --object-path /org/freedesktop/secrets/collection/login \
         --method org.freedesktop.DBus.Properties.Get \
-        org.freedesktop.Secret.Collection 'Locked' | grep -q "true"; do
+        org.freedesktop.Secret.Collection 'Locked' | grep -q 'true'"
+
+    # Use 'su' to run the command as the HOST_USER.
+    # The loop continues as long as the command successfully finds "true" (is locked).
+    while su -c "$check_command" "$HOST_USER"; do
         sleep 1
     done
+    
     echo "Keyring is unlocked!"
 }
 
