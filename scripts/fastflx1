@@ -48,7 +48,7 @@ enable_sharing() {
         # The Exec line now includes a bash command that first waits for the keyring to be unlocked
         # and only then executes the permission guardian. This is the key fix.
         # Note the '"'"' trick to safely embed a single quote for 'Locked'.
-        AUTOSTART_EXEC_COMMAND="bash -c 'while gdbus call --session --dest org.freedesktop.secrets --object-path /org/freedesktop/secrets/collection/login --method org.freedesktop.DBus.Properties.Get org.freedesktop.Secret.Collection '"'"'Locked'"'"' | grep -q true; do sleep 1; done && pkexec ${ANDROMEDA_SCRIPT_PATH} start-permission-guard'"
+        AUTOSTART_EXEC_COMMAND="bash -c 'while gdbus call --session --dest org.freedesktop.secrets --object-path /org/freedesktop/secrets/collection/login --method org.freedesktop.DBus.Properties.Get org.freedesktop.Secret.Collection '"'"'Locked'"'"' | grep -q true; do sleep 1; done && sleep 3 && pkexec ${ANDROMEDA_SCRIPT_PATH} start-permission-guard'"
         
         DESKTOP_FILE_CONTENT="[Desktop Entry]\nVersion=0.1\nName=Andromeda-Shared-Folders\nComment=Starts the service to sync permissions for shared folders\nExec=\${AUTOSTART_EXEC_COMMAND}\nIcon=folder-remote\nTerminal=false\nType=Application"
         
@@ -155,7 +155,7 @@ start_wofi() {
             ;;
         "3. Set city to Weather")
             pkill -x feh
-            gnome-weather-locations
+            kgx -- bash -c 'gnome-weather-locations'
             ;;
         "4. Manage Tweak services (start/stop)")
             echo -e "1. Start Tweak services\n2. Stop Tweak services" | wofi -d --prompt "Select action:" --lines 2 | {
