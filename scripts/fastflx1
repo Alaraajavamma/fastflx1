@@ -55,7 +55,7 @@ enable_sharing() {
         echo "[STEP 3/3] Creating autostart .desktop entry..."
         # The Exec= line now calls the sudo command directly. No helper script needed.
         # We use 'bash -c' to reliably include the 'sleep' command for stability.
-        AUTOSTART_EXEC_COMMAND="bash -c 'sleep 3 && sudo ${ANDROMEDA_SCRIPT_PATH} start-permission-guard'"
+        AUTOSTART_EXEC_COMMAND="bash -c 'sudo andromeda-shared-folders start-permission-guard'"
         DESKTOP_FILE_CONTENT="[Desktop Entry]\nVersion=1.0\nName=Andromeda-Shared-Folders\nComment=Starts the service to sync permissions for shared folders\nExec=\${AUTOSTART_EXEC_COMMAND}\nIcon=folder-remote\nTerminal=false\nType=Application"
         
         mkdir -p "$(dirname "${AUTOSTART_FILE}")"
