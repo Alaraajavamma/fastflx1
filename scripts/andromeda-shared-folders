@@ -201,6 +201,7 @@ run_permission_guardian() {
 
 do_start_permission_guard() {
     wait_for_screen_unlock
+    sleep 5
     
     log "--- Starting Permissions Guardian ---"
     do_stop_permission_guard >/dev/null 2>&1
