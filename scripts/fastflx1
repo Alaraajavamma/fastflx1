@@ -63,7 +63,7 @@ echo "Andromeda autostart helper started."
 # 1. Wait for the Freedesktop secrets service (GNOME Keyring) to be available on D-Bus.
 # This is more robust than just trying to call it in a loop.
 echo "Waiting for keyring service (org.freedesktop.secrets)..."
-if ! gdbus wait --session --timeout 60 --activate-name-owner org.freedesktop.secrets; then
+if ! gdbus wait --session --timeout 60 org.freedesktop.secrets; then
     echo "ERROR: Timed out waiting for the keyring service. Aborting."
     exit 1
 fi
@@ -79,7 +79,7 @@ echo "Keyring is unlocked."
 # 3. Wait for the GNOME Shell to be ready.
 # This ensures the graphical Polkit agent is running before we call pkexec.
 echo "Waiting for GNOME Shell to be ready..."
-if ! gdbus wait --session --timeout 60 --activate-name-owner org.gnome.Shell; then
+if ! gdbus wait --session --timeout 60 org.gnome.Shell; then
     echo "WARNING: Timed out waiting for GNOME Shell. pkexec might not show a graphical prompt."
 fi
 echo "GNOME Shell is ready."
@@ -88,7 +88,6 @@ echo "GNOME Shell is ready."
 echo "Starting permission guard..."
 pkexec ${ANDROMEDA_SCRIPT_PATH} start-permission-guard
 echo "Helper script finished."
-sleep 2
 
 HELPER_EOF
         sudo chmod +x "${HELPER_SCRIPT_PATH}"
