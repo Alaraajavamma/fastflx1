@@ -226,22 +226,29 @@ do_start_permission_guard() {
 
 wait_for_keyring_unlock() {
     echo "Waiting for GNOME Keyring to unlock (as user ${HOST_USER})..."
-    
-    # Define the command to be run by the user. Note the quotes.
-    local check_command="gdbus call --session \
+
+    # Capture the D-Bus address from the user's environment
+    local dbus_addr
+    dbus_addr=$(sudo -u "$HOST_USER" bash -lc 'echo $DBUS_SESSION_BUS_ADDRESS')
+
+    if [[ -z "$dbus_addr" ]]; then
+        echo "[ERROR] Could not find D-Bus session for $HOST_USER."
+        return 1
+    fi
+
+    while sudo -u "$HOST_USER" DBUS_SESSION_BUS_ADDRESS="$dbus_addr" \
+        gdbus call --session \
         --dest org.freedesktop.secrets \
         --object-path /org/freedesktop/secrets/collection/login \
         --method org.freedesktop.DBus.Properties.Get \
-        org.freedesktop.Secret.Collection 'Locked' | grep -q 'true'"
-
-    # Use 'su' to run the command as the HOST_USER.
-    # The loop continues as long as the command successfully finds "true" (is locked).
-    while su -c "$check_command" "$HOST_USER"; do
+        org.freedesktop.Secret.Collection 'Locked' \
+        | grep -q 'true'; do
         sleep 1
     done
-    
+
     echo "Keyring is unlocked!"
 }
+
 
 do_stop_permission_guard() {
     log "--- Stopping Permissions Guardian ---"
