@@ -200,8 +200,8 @@ run_permission_guardian() {
 }
 
 do_start_permission_guard() {
-    wait_for_screen_unlock
-    sleep 2
+    wait_for_keyring_unlock
+    sleep 5
     
     log "--- Starting Permissions Guardian ---"
     do_stop_permission_guard >/dev/null 2>&1
@@ -224,17 +224,16 @@ do_start_permission_guard() {
     log "Permissions Guardian started with PID $(cat "$PID_FILE")."
 }
 
-wait_for_screen_unlock() {
-    echo "Waiting for Phosh unlock..."
-
+wait_for_keyring_unlock() {
+    echo "Waiting for GNOME Keyring to unlock..."
     while gdbus call --session \
-        --dest org.gnome.ScreenSaver \
-        --object-path /org/gnome/ScreenSaver \
-        --method org.gnome.ScreenSaver.GetActive | grep -q "true"; do
+        --dest org.freedesktop.secrets \
+        --object-path /org/freedesktop/secrets/collection/login \
+        --method org.freedesktop.DBus.Properties.Get \
+        org.freedesktop.Secret.Collection 'Locked' | grep -q "true"; do
         sleep 1
     done
-
-    echo "Unlocked!"
+    echo "Keyring is unlocked!"
 }
 
 do_stop_permission_guard() {
