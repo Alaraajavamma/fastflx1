@@ -200,9 +200,7 @@ run_permission_guardian() {
 }
 
 do_start_permission_guard() {
-    wait_for_keyring_unlock
-    sleep 5
-    
+      
     log "--- Starting Permissions Guardian ---"
     do_stop_permission_guard >/dev/null 2>&1
 
@@ -222,51 +220,6 @@ do_start_permission_guard() {
     chown "$HOST_USER":"$(id -g "$HOST_USER")" "$PID_FILE"
 
     log "Permissions Guardian started with PID $(cat "$PID_FILE")."
-}
-
-wait_for_keyring_unlock() {
-    echo "Waiting for GNOME Keyring to unlock (as user ${HOST_USER})..."
-
-    # Get the user's runtime dir
-    local runtime_dir
-    runtime_dir=$(getent passwd "$HOST_USER" | cut -d: -f6)
-    runtime_dir="/run/user/$(id -u "$HOST_USER")"
-
-    if [[ ! -d "$runtime_dir" ]]; then
-        echo "[WARNING] No active session for $HOST_USER. Skipping keyring wait."
-        return 0
-    fi
-
-    # Try to get the DBus session address from the user's environment
-    local dbus_addr
-    dbus_addr=$(sudo -u "$HOST_USER" sh -c 'echo $DBUS_SESSION_BUS_ADDRESS')
-
-    if [[ -z "$dbus_addr" ]]; then
-        echo "[WARNING] No DBus session for $HOST_USER. Skipping keyring wait."
-        return 0
-    fi
-
-    local attempt=0
-    local max_attempts=60  # wait up to ~60 seconds
-
-    while sudo -u "$HOST_USER" DBUS_SESSION_BUS_ADDRESS="$dbus_addr" \
-        gdbus call --session \
-        --dest org.freedesktop.secrets \
-        --object-path /org/freedesktop/secrets/collection/login \
-        --method org.freedesktop.DBus.Properties.Get \
-        org.freedesktop.Secret.Collection 'Locked' \
-        2>/dev/null | grep -q 'true'; do
-
-        ((attempt++))
-        if (( attempt >= max_attempts )); then
-            echo "[WARNING] Keyring still locked after $max_attempts seconds. Continuing..."
-            return 0
-        fi
-
-        sleep 1
-    done
-
-    echo "Keyring is unlocked!"
 }
 
 do_stop_permission_guard() {
