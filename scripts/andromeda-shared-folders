@@ -200,6 +200,10 @@ run_permission_guardian() {
 }
 
 do_start_permission_guard() {
+
+    wait_for_keyring_unlock
+    sleep 2
+    
     log "--- Starting Permissions Guardian ---"
     do_stop_permission_guard >/dev/null 2>&1
 
@@ -219,6 +223,19 @@ do_start_permission_guard() {
     chown "$HOST_USER":"$(id -g "$HOST_USER")" "$PID_FILE"
 
     log "Permissions Guardian started with PID $(cat "$PID_FILE")."
+}
+
+# This function polls the D-Bus secret service to check if the default keyring is actively unlocked before proceeding.
+wait_for_keyring_unlock() {
+    log "Checking for unlocked GNOME Keyring..."
+    # We poll the 'ReadAlias' method on the secret service. The command succeeds
+    # (exit code 0) only when the keyring is unlocked. We use 'grep -vq "Locked"'
+    # to filter out the specific "Locked" error, allowing the loop to continue.
+    until su -c "gdbus call --session --dest org.freedesktop.secrets --object-path /org/freedesktop/secrets --method org.freedesktop.Secret.Service.ReadAlias default 2>&1 | grep -vq 'Locked'" "$HOST_USER" &>/dev/null; do
+        log "Keyring locked, waiting..."
+        sleep 2
+    done
+    log "Keyring is unlocked and ready!"
 }
 
 do_stop_permission_guard() {
