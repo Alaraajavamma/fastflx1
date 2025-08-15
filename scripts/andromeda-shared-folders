@@ -201,7 +201,7 @@ run_permission_guardian() {
 
 do_start_permission_guard() {
     wait_for_screen_unlock
-    sleep 5
+    sleep 2
     
     log "--- Starting Permissions Guardian ---"
     do_stop_permission_guard >/dev/null 2>&1
@@ -225,38 +225,16 @@ do_start_permission_guard() {
 }
 
 wait_for_screen_unlock() {
-    log "Waiting for screen to unlock..."
+    echo "Waiting for Phosh unlock..."
 
-    # Loop indefinitely until the screen is no longer locked.
-    while true; do
-        # Get the ID of the user's graphical session.
-        # This is run as the target user to get the correct session.
-        # Note the escaped '\$1' for awk, which is needed inside "su -c".
-        local session_id
-        session_id=$(su -c "loginctl list-sessions --no-legend | grep \"$HOST_USER\" | grep -E 'tty|seat' | awk '{print \$1}' | head -n 1" "$HOST_USER")
-        
-        # Check if the session is valid. If not, the user might not be logged in yet.
-        if [[ -z "$session_id" ]]; then
-            log "Could not determine user's graphical session ID. Waiting..."
-            sleep 2
-            continue
-        fi
-        
-        # Get the 'LockedHint' property for the session, running as the user.
-        local locked_hint
-        locked_hint=$(su -c "loginctl show-session \"$session_id\" -p LockedHint --value" "$HOST_USER")
-
-        # If LockedHint is 'no', the screen is unlocked, so we exit the loop.
-        if [[ "$locked_hint" == "no" ]]; then
-            break
-        fi
-
-        # If we're still here, the screen is locked. Wait and try again.
-        log "Screen is locked, waiting..."
+    while gdbus call --session \
+        --dest org.gnome.ScreenSaver \
+        --object-path /org/gnome/ScreenSaver \
+        --method org.gnome.ScreenSaver.GetActive | grep -q "true"; do
         sleep 1
     done
 
-    log "Screen is unlocked. Proceeding."
+    echo "Unlocked!"
 }
 
 do_stop_permission_guard() {
