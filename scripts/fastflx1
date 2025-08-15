@@ -88,6 +88,7 @@ echo "GNOME Shell is ready."
 echo "Starting permission guard..."
 pkexec ${ANDROMEDA_SCRIPT_PATH} start-permission-guard
 echo "Helper script finished."
+sleep 2
 
 HELPER_EOF
         sudo chmod +x "${HELPER_SCRIPT_PATH}"
