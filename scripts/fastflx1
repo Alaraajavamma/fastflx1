@@ -3,11 +3,9 @@
 # --- Configuration ---
 # Main script that manages mounting and the permission guard
 ANDROMEDA_SCRIPT_PATH="/usr/bin/andromeda-shared-folders"
-# The new helper script that will be created for autostart
-HELPER_SCRIPT_PATH="/usr/bin/andromeda-autostart-helper"
 # The user's local autostart file
 AUTOSTART_FILE="${HOME}/.config/autostart/andromeda-shared-folders.desktop"
-# The sudoers file for passwordless unmounting/stopping
+# The sudoers file for passwordless execution
 SUDOERS_FILE="/etc/sudoers.d/99-andromeda-folders-permissions"
 
 # --- Helper Functions ---
@@ -42,75 +40,35 @@ enable_sharing() {
         echo "--- ENABLING ANDROMEDA SHARED FOLDERS ---"
         sleep 1
 
-        echo "[STEP 1/4] Mounting shared folders (requires password)..."
-        # We explicitly pass TARGET_USER so the script knows who to run for.
+        echo "[STEP 1/3] Mounting shared folders (requires password)..."
         sudo env TARGET_USER=\${USER} ${ANDROMEDA_SCRIPT_PATH} mount
         sleep 1
 
-        echo "[STEP 2/4] Creating autostart helper script..."
-        # Heredoc ('EOF') to prevent variable expansion inside the helper script content.
-        # This helper script contains the robust logic for waiting on system services.
-        sudo tee "${HELPER_SCRIPT_PATH}" > /dev/null <<'HELPER_EOF'
-#!/bin/bash
-
-# This script waits for the keyring and graphical shell to be ready, then starts the permission guard.
-# It logs its output to the system journal for easy debugging.
-# Use 'journalctl -f -t andromeda-helper' to view logs.
-exec > >(systemd-cat -t andromeda-helper) 2>&1
-
-echo "Andromeda autostart helper started."
-
-# 1. Wait for the Freedesktop secrets service (GNOME Keyring) to be available on D-Bus.
-# This is more robust than just trying to call it in a loop.
-echo "Waiting for keyring service (org.freedesktop.secrets)..."
-if ! gdbus wait --session --timeout 60 org.freedesktop.secrets; then
-    echo "ERROR: Timed out waiting for the keyring service. Aborting."
-    exit 1
-fi
-echo "Keyring service is available."
-
-# 2. Now that the service is running, wait for the 'login' collection to be unlocked.
-echo "Waiting for keyring to be unlocked..."
-while gdbus call --session --dest org.freedesktop.secrets --object-path /org/freedesktop/secrets/collection/login --method org.freedesktop.DBus.Properties.Get org.freedesktop.Secret.Collection 'Locked' | grep -q "true"; do
-    sleep 1
-done
-echo "Keyring is unlocked."
-
-# 3. Wait for the GNOME Shell to be ready.
-# This ensures the graphical Polkit agent is running before we call pkexec.
-echo "Waiting for GNOME Shell to be ready..."
-if ! gdbus wait --session --timeout 60 org.gnome.Shell; then
-    echo "WARNING: Timed out waiting for GNOME Shell. pkexec might not show a graphical prompt."
-fi
-echo "GNOME Shell is ready."
-
-# 4. All checks passed. Start the permission guard via pkexec.
-echo "Starting permission guard..."
-sleep 5
-pkexec ${ANDROMEDA_SCRIPT_PATH} start-permission-guard
-echo "Helper script finished."
-
-HELPER_EOF
-        sudo chmod +x "${HELPER_SCRIPT_PATH}"
+        echo "[STEP 2/3] Granting passwordless permissions for autostart..."
+        # This creates a rule allowing the user to run specific andromeda commands with sudo, no password needed.
+        SUDOERS_CONTENT="\${USER} ALL=(root) NOPASSWD: ${ANDROMEDA_SCRIPT_PATH} start-permission-guard, ${ANDROMEDA_SCRIPT_PATH} stop-permission-guard, ${ANDROMEDA_SCRIPT_PATH} unmount"
+        echo "\${SUDOERS_CONTENT}" | sudo tee '${SUDOERS_FILE}' > /dev/null
+        # Set correct permissions for the sudoers file
+        sudo chmod 0440 '${SUDOERS_FILE}'
         sleep 1
 
-        echo "[STEP 3/4] Creating autostart .desktop entry..."
-        # The Exec line is now clean, just calling our new helper script.
-        DESKTOP_FILE_CONTENT="[Desktop Entry]\nVersion=1.0\nName=Andromeda-Shared-Folders\nComment=Starts the service to sync permissions for shared folders\nExec=${HELPER_SCRIPT_PATH}\nIcon=folder-remote\nTerminal=false\nType=Application"
+        echo "[STEP 3/3] Creating autostart .desktop entry..."
+        # The Exec= line now calls the sudo command directly. No helper script needed.
+        # We use 'bash -c' to reliably include the 'sleep' command for stability.
+        AUTOSTART_EXEC_COMMAND="bash -c 'sleep 3 && sudo ${ANDROMEDA_SCRIPT_PATH} start-permission-guard'"
+        DESKTOP_FILE_CONTENT="[Desktop Entry]\nVersion=1.0\nName=Andromeda-Shared-Folders\nComment=Starts the service to sync permissions for shared folders\nExec=\${AUTOSTART_EXEC_COMMAND}\nIcon=folder-remote\nTerminal=false\nType=Application"
         
         mkdir -p "$(dirname "${AUTOSTART_FILE}")"
         echo -e "\${DESKTOP_FILE_CONTENT}" > '${AUTOSTART_FILE}'
         sleep 1
         
-        echo "[STEP 4/4] Finalizing setup..."
         echo "---"
-        echo "Setup complete! Shared folders are active and will start automatically on login."
+        echo "Setup complete! Shared folders will now start automatically without a password prompt."
         notify-send "Andromeda Shared Folders Enabled" --icon="folder-remote"
         
         # Prompt for reboot
         read -p "A reboot is recommended to finalize the setup. Type 'Yes' to reboot now: " reboot_choice
         
-        # Check if the user wants to reboot, ignoring case
         if [[ "\${reboot_choice^^}" == "YES" ]]; then
             echo "Rebooting now..."
             sudo reboot
@@ -132,23 +90,16 @@ disable_sharing() {
         echo "--- DISABLING ANDROMEDA SHARED FOLDERS ---"
         sleep 1
         
-        echo "[STEP 1/5] Stopping the permission guard service (requires password)..."
+        echo "[STEP 1/3] Stopping the permission guard service..."
+        # This is passwordless because of the sudoers rule.
         sudo env TARGET_USER=\${USER} ${ANDROMEDA_SCRIPT_PATH} stop-permission-guard
         sleep 1
 
-        echo "[STEP 2/5] Unmounting all shared folders..."
-        sudo env TARGET_USER=\${USER} ${ANDROMEDA_SCRIPT_PATH} unmount
-        sleep 1
-
-        echo "[STEP 3/5] Removing autostart .desktop entry..."
+        echo "[STEP 2/3] Removing autostart file..."
         rm -f '${AUTOSTART_FILE}'
         sleep 1
 
-        echo "[STEP 4/5] Removing autostart helper script..."
-        sudo rm -f '${HELPER_SCRIPT_PATH}'
-        sleep 1
-
-        echo "[STEP 5/5] Revoking passwordless permissions..."
+        echo "[STEP 3/3] Revoking passwordless permissions..."
         sudo rm -f '${SUDOERS_FILE}'
         sleep 1
 
@@ -169,9 +120,9 @@ start_wofi() {
     wofi_kill
 
     # --- Dynamic Option for Andromeda Shared Folders ---
-    # Check if the autostart file exists to determine the current state.
+    # We now check for the sudoers file to determine the state.
     local andromeda_option_text
-    if [ -f "$AUTOSTART_FILE" ]; then
+    if [ -f "$SUDOERS_FILE" ]; then
         andromeda_option_text="7. Disable android-shared-folders"
     else
         andromeda_option_text="7. Enable android-shared-folders"
@@ -270,11 +221,11 @@ start_wofi() {
             ;;
         "7. Enable android-shared-folders" | "7. Disable android-shared-folders")
             # This case handles both enabling and disabling.
-            if [ -f "$AUTOSTART_FILE" ]; then
-                # If the file exists, the feature is enabled, so we run the disable function.
+            if [ -f "$SUDOERS_FILE" ]; then
+                # If the sudoers file exists, the feature is enabled.
                 disable_sharing
             else
-                # If the file doesn't exist, the feature is disabled, so we run the enable function.
+                # If it doesn't exist, the feature is disabled.
                 enable_sharing
             fi
             ;;
