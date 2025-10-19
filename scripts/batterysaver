@@ -1,306 +1,156 @@
 #!/bin/bash
 
-# A script to manage system resources by suspending/killing applications
-# on screen lock and when CPU/RAM/GPU usage exceeds thresholds.
+# A script to suspend/kill applications on screen lock and resume them on unlock.
 # Runs as a background service.
 # Usage: batterysaver {start|stop}
 
 # --- CONFIGURATION & SETUP ---
 PID_FILE="/tmp/batterysaver.pid"
 SUSPEND_FILE="/tmp/suspended_pids.txt"
+# Exclude apps using their app_id for better reliability
+EXCLUDED_APPS=("org.gnome.clocks" "sm.puri.Chatty" "org.gnome.Calls")
 
-# Live Monitoring Thresholds (Adjust as needed)
-# Suspend if System RAM usage exceeds this percentage
-RAM_THRESHOLD=90
-# Suspend if Top Process CPU usage is high (simple check)
-CPU_THRESHOLD=90
-
-# Core system applications/components that must NEVER be suspended or killed.
-EXCLUDED_APPS=(
-    # --- User Interface & Core Components (Phosh/GNOME) ---
-    "phosh" "phoc" "gnome-shell" "gnome-session" "gnome-session-b"
-    "gsd-power" "gnome-settings-d" "gsd-media-keys" "gsd-xsettings" "lock-screen"
-    "wld" # WLD on Waylandin piirtokirjasto
-
-    # --- Power Management (FuriOS/Droidian Specific) ---
-    "batman"
-
-    # --- Telephony & Networking ---
-    "ofono" "modemmanager" "NetworkManager" "wpa_supplicant" "nm-applet"
-    "gnome-calls" "chatty" "callaudiod" "mmcli"
-    # FuriOS specific telephony
-    "mmsd4ofono" "ofono-toned" "oFono2MM" "Radio"
-
-    # --- Audio & Multimedia ---
-    "pulseaudio" "pipewire" "wireplumber"
-
-    # --- Input, Location & Security, Sensors ---
-    "squeekboard" "stevia" "ibus-daemon" "gnome-keyring"
-    "geoclue" "geoclue-2.0"
-    # FuriOS specific sensors/biometric
-    "sensorfw" "hadess-sensorfw-proxy" "Biometric" "biometric-daemon"
-
-    # --- System Daemons & Android Base ---
-    "dbus-daemon" "systemd" "logind" "init" "tracker-miner-f" "udevd"
-    "kernel" "kworker" "irq" "migration" "watchdog" "bash"
-    
-    # Android container (MUST be stopped via service, not suspended)
-    "andromeda" "flatpak-bubb" "lxc"
-
-    # This script itself
-    "batterysaver"
-)
-
+# In-memory map for native apps, populated at start
+declare -A APP_MAP
 
 # --- FUNCTIONS ---
 
-# is_excluded checks if a process name or app ID is in the exclusion list.
-is_excluded() {
-    local name="$1"
-    for e in "${EXCLUDED_APPS[@]}"; do
-        if [[ "$name" == *"$e"* ]]; then
-            return 0 # True (is excluded)
+# build_app_map populates a mapping from desktop file app_id to executable name.
+build_app_map() {
+    echo "Building application map..."
+    APP_MAP=() # Clear the map
+    # Set shell option to handle filenames with spaces correctly
+    shopt -s nullglob
+    local desktop_files=(/usr/share/applications/*.desktop ~/.local/share/applications/*.desktop)
+    shopt -u nullglob
+
+    for file in "${desktop_files[@]}"; do
+        local app_id=$(basename "$file" .desktop)
+        local exec_line=$(grep -E '^Exec=' "$file" | head -1)
+        if [ -n "$exec_line" ]; then
+            local process_name=$(echo "$exec_line" | sed 's/Exec=//' | awk '{print $1}' | xargs basename)
+            APP_MAP["$app_id"]="$process_name"
         fi
     done
-    return 1 # False (is not excluded)
 }
 
-# notify_user sends a transient notification with an icon.
-# Usage: notify_user "Summary" "Body" "icon-name"
-notify_user() {
-    local summary="$1"
-    local body="$2"
-    local icon="${3:-system-run}" # Use passed icon or default to system-run
-    local timeout_ms=4000
-    
-    if command -v notify-send &> /dev/null; then
-        # The updated notify-send command with icon and hints
-        notify-send --icon="$icon" --hint=int:transient:1 --expire-time="$timeout_ms" --app-name="ResourceGuard" \
-            "$summary" "$body"
-    else
-        echo "RESOURCEGUARD NOTIFICATION: $summary - $body"
+# contains_element checks if an element exists in an array.
+contains_element() {
+  local e match="$1"; shift
+  for e; do [[ "$e" == "$match" ]] && return 0; done
+  return 1
+}
+
+# suspend_and_kill_apps is the core function called on screen lock.
+suspend_and_kill_apps() {
+    echo "$(date): Screen locked. Suspending/killing apps..."
+    > "$SUSPEND_FILE"
+    if ! [ -x "$(command -v wlrctl)" ]; then
+        echo "Error: wlrctl command not found. Is it installed and in your PATH?"
+        return 1
     fi
-}
 
-# suspend_process sends SIGSTOP and records the PID.
-suspend_process() {
-    local pid="$1"
-    local name="$2"
-    if [ -n "$pid" ] && ps -p "$pid" > /dev/null; then
-        echo "Suspending process '$name' (PID: $pid)..."
-        if kill -STOP "$pid"; then
-            echo "$pid:$name" >> "$SUSPEND_FILE"
-            # Notification with a warning icon for suspension
-            notify_user "App Suspended (RAM/CPU/GPU)" "'$name' was temporarily suspended to prevent system freeze." "dialog-warning"
-            return 0
+    while read -r raw_app_id_line; do
+        # Clean the app_id string by removing the trailing colon and any other whitespace.
+        local app_id
+        app_id=$(echo "$raw_app_id_line" | sed 's/[:[:space:][:cntrl:]]//g')
+
+        if [ -z "$app_id" ]; then
+            continue # Skip empty lines
+        fi
+
+        if contains_element "$app_id" "${EXCLUDED_APPS[@]}"; then
+            echo "Skipping excluded app: $app_id"
+            continue
+        fi
+
+        # Make the check case-insensitive to match 'android.', 'Android.', etc.
+        if [[ "${app_id,,}" == android.* ]]; then
+            echo "Found Android app '$app_id', attempting to close."
+            if ! timeout 2s wlrctl window close "$app_id"; then
+                echo "Warning: Failed to close Android app '$app_id'. It may be unresponsive or already closed."
+            fi
         else
-            echo "Warning: Failed to suspend PID $pid."
-            return 1
-        fi
-    fi
-    return 1
-}
-
-# handle_android_hog stops the main Android service and notifies.
-handle_android_hog() {
-    # This prevents multiple stops if the monitor finds multiple Android processes
-    if [ -f /tmp/android_stop_lock ]; then
-        echo "Android stop already in progress or recently executed. Skipping."
-        return 0
-    fi
-    
-    touch /tmp/android_stop_lock
-    # Notification for stopping the Android container
-    notify_user "Android Container Stopped" "Android was the top resource hog. Executing 'andromeda stop'." "android"
-    
-    if command -v andromeda &> /dev/null; then
-        echo "Stopping Android container (andromeda stop)..."
-        # Run in background with timeout to not block the main loop
-        timeout 20s andromeda stop &> /dev/null
-    else
-        echo "Warning: 'andromeda' command not found. Cannot stop Android container."
-    fi
-    
-    # Wait a few seconds before allowing another stop attempt
-    sleep 10
-    rm -f /tmp/android_stop_lock
-}
-
-# find_and_handle_hog identifies the top RAM/CPU/GPU hog and acts on it.
-# $1: Metric ('ram', 'cpu', 'gpu')
-find_and_handle_hog() {
-    local metric="$1"
-    local field
-    local sort_key
-    local p_list
-    
-    # --- 1. Get the list of top user processes ---
-    if [ "$metric" == "ram" ]; then
-        field="%mem"
-        sort_key "-%mem"
-    elif [ "$metric" == "cpu" ]; then
-        field="%cpu"
-        sort_key "-%cpu"
-    elif [ "$metric" == "gpu" ]; then
-        # For GPU, we rely on processes known to be GPU heavy (like browsers/games)
-        # and prioritize by RAM/CPU as a proxy.
-        field="%mem" # Use RAM as the primary proxy for GPU-heavy process
-        sort_key "-%mem"
-    fi
-
-    # Get PID, Executable Name, Metric Value, User for top 10 processes
-    # Filtering for processes owned by the user (UID 1000 is common for first user)
-    p_list=$(ps axo pid,comm,"${field}":4,user --sort "$sort_key" | awk 'NR>1 {print $1,$2,$3,$4}')
-    
-    # --- 2. Check overall system usage (Crucial to prevent full system freeze) ---
-    local current_usage=0
-
-    if [ "$metric" == "ram" ]; then
-        if command -v free &> /dev/null; then
-            local total_ram=$(free | awk '/Mem:/ {print $2}')
-            local used_ram=$(free | awk '/Mem:/ {print $3}')
-            # Use 100 - available_percent for a more accurate 'pressure' check
-            local available_ram=$(free | awk '/Mem:/ {print $7}')
-            current_usage=$(( (total_ram - available_ram) * 100 / total_ram ))
-            if [ "$current_usage" -lt "$RAM_THRESHOLD" ]; then
-                return # System RAM is fine, no need to act
+            # Handle Native Linux App by suspending it
+            local process_name=${APP_MAP[$app_id]}
+            if [ -z "$process_name" ]; then
+                process_name="$app_id"
             fi
-            echo "System RAM usage triggered ($current_usage% > $RAM_THRESHOLD%)."
-        fi
-    elif [ "$metric" == "cpu" ]; then
-        # Check if the top process is itself a hog (a simpler, safer check than system-wide avg)
-        local top_cpu=$(echo "$p_list" | head -n 1 | awk '{print $3}')
-        # If the top process is consuming < 50% CPU, we likely don't need to act immediately
-        if (( $(echo "$top_cpu < 50.0" | bc -l) )); then
-            return
-        fi
-        echo "Top process CPU usage high (>$top_cpu%)."
-    fi
-    
-    # --- 3. Iterate through process list and act on the first non-excluded hog ---
-    local pid name percent user
-    echo "$p_list" | while read pid name percent user; do
-        # Do not suspend processes that are already suspended by this script
-        if grep -q "^${pid}:" "$SUSPEND_FILE"; then
-            continue
-        fi
 
-        # Check for Android app hog
-        if [[ "$name" =~ ^(andromeda|waydroid|anbox|flatpak-bubb|lxc)$ ]] || [[ "$user" == "anbox"* ]] || [[ "$user" == "waydroid"* ]] || [[ "$user" == "andromeda"* ]]; then
-            echo "Found Android-related process: $name (PID: $pid, $metric: $percent%)"
-            handle_android_hog
-            # Do NOT exit the loop here, keep looking for native hogs in case the system is still under pressure
-            continue
+            if [ -n "$process_name" ]; then
+                # Find all PIDs for the process and suspend them
+                local pids=$(pgrep -f "\b$process_name\b")
+                for pid in $pids; do
+                    if [ -n "$pid" ]; then
+                        echo "Suspending native process '$process_name' (PID: $pid)"
+                        kill -STOP "$pid"
+                        echo "$pid" >> "$SUSPEND_FILE"
+                    fi
+                done
+            fi
         fi
-        
-        # Check for Excluded Native App
-        if is_excluded "$name"; then
-            continue
-        fi
-        
-        # --- 4. Handle Native Linux app hog ---
-        echo "Found native hog: $name (PID: $pid, $metric: $percent%)"
+    done < <(wlrctl window list | awk '{print $1}')
 
-        # Apply a process-specific threshold (e.g., must be consuming at least 5% of the resource)
-        if [ "$metric" == "ram" ] && (( $(echo "$percent < 5.0" | bc -l) )); then continue; fi
-        if [ "$metric" == "cpu" ] && (( $(echo "$percent < 5.0" | bc -l) )); then continue; fi
-        
-        if suspend_process "$pid" "$name"; then
-            return # Exit the loop and function after successfully suspending one native hog
-        fi
-    done
-}
+    # --- MODIFICATION START: Special handling for Firefox ---
+    echo "Performing special check for Firefox process..."
+    # Find all PIDs for processes whose command line contains the word 'firefox'
+    local firefox_pids
+    firefox_pids=$(pgrep -f "\bfirefox\b")
 
-# suspend_all_apps is the core function called on screen lock.
-suspend_all_apps() {
-    echo "$(date): Screen locked. Suspending all unexcluded native apps..."
-    > "$SUSPEND_FILE" # Clear the list for the new lock session
-
-    # Get all user-owned processes
-    local p_list=$(ps -eo pid,comm,user | awk 'NR>1 && $3!="root" && $3!~"systemd" {print $1,$2}')
-    local pid name
-
-    echo "$p_list" | while read pid name; do
-        if ! is_excluded "$name"; then
-            # Simple suspend
-            if ps -p "$pid" > /dev/null; then
-                echo "Suspending native process '$name' (PID: $pid) on lock."
+    if [ -n "$firefox_pids" ]; then
+        for pid in $firefox_pids; do
+            # Check if this PID was already suspended by the wlrctl loop above
+            if ! grep -q "^${pid}$" "$SUSPEND_FILE"; then
+                echo "Suspending Firefox process (PID: $pid) not found in window list."
                 if kill -STOP "$pid"; then
-                    echo "$pid:$name" >> "$SUSPEND_FILE"
+                    echo "$pid" >> "$SUSPEND_FILE"
+                else
+                    echo "Warning: Failed to suspend Firefox PID $pid."
                 fi
+            else
+                echo "Firefox process (PID: $pid) was already handled via window list."
             fi
-        fi
-    done
-    
-    # Notification for system lock
-    notify_user "ResourceGuard Activated" "All background apps suspended." "battery"
-    echo "Finished screen lock suspend."
+        done
+    else
+        echo "No running Firefox process found."
+    fi
+    # --- MODIFICATION END ---
+
+    echo "Finished suspend/kill process."
 }
 
 # resume_apps is called on screen unlock.
 resume_apps() {
     echo "$(date): Screen unlocked. Resuming apps..."
     if [ -f "$SUSPEND_FILE" ]; then
-        while IFS=':' read -r pid name; do
-            if ps -p "$pid" > /dev/null 2>/dev/null; then
-                echo "Resuming native process '$name' (PID: $pid)"
+        while read -r pid; do
+            if ps -p "$pid" > /dev/null; then
+                echo "Resuming native process (PID: $pid)"
                 kill -CONT "$pid"
             else
-                echo "Process with PID $pid ($name) no longer exists. Skipping."
+                echo "Process with PID $pid no longer exists. Skipping."
             fi
         done < "$SUSPEND_FILE"
-        > "$SUSPEND_FILE" # Clear the list
+        > "$SUSPEND_FILE"
     fi
-    # Notification for system unlock
-    notify_user "ResourceGuard Deactivated" "Apps resumed for desktop use." "application-exit"
     echo "Finished resuming."
 }
 
-# main_daemon_loop monitors D-Bus for screen lock/unlock signals
-# and runs the live resource monitor in a sub-shell.
+# main_daemon_loop monitors D-Bus for screen lock/unlock signals.
 main_daemon_loop() {
-    # Clean the suspend file at start
-    > "$SUSPEND_FILE"
-    rm -f /tmp/android_stop_lock # Clear any stale lock
-
-    echo "Starting Live Resource Monitor in background..."
-    # Start the monitor in the background
-    live_resource_monitor &
-    local monitor_pid=$!
-    echo "Live monitor started with PID: $monitor_pid"
+    >"$SUSPEND_FILE"
+    build_app_map
 
     echo "Monitoring for screen lock/unlock events..."
-    # The common D-Bus signal for screen lock on GNOME/Phosh
     dbus-monitor --session "type='signal',interface='org.gnome.ScreenSaver',member='ActiveChanged'" | \
     while read -r line; do
         if echo "$line" | grep -q "boolean true"; then
-            suspend_all_apps # Full suspension on lock
+            suspend_and_kill_apps
         elif echo "$line" | grep -q "boolean false"; then
-            resume_apps # Resume all on unlock
+            resume_apps
         fi
     done
-    
-    # Kill the background monitor if the D-Bus loop exits
-    kill "$monitor_pid" 2>/dev/null
 }
-
-# The actual main loop that will run as a service, checking thresholds every few seconds.
-live_resource_monitor() {
-    # Continuously check for high resource usage
-    while true; do
-        # Only check one metric per loop to reduce load
-        find_and_handle_hog "ram"
-        sleep 5
-
-        find_and_handle_hog "cpu"
-        sleep 5
-
-        # Perform a GPU check (using RAM/Process name proxy) less frequently
-        find_and_handle_hog "gpu"
-        sleep 10
-    done
-}
-
 
 # start launches the main loop as a background daemon process.
 start() {
@@ -308,43 +158,32 @@ start() {
         echo "Service is already running (PID: $(cat $PID_FILE))."
         exit 1
     fi
-    echo "Starting ResourceGuard service..."
-    # Launch the main loop in the background and record the PID
-    (
-        trap 'stop' EXIT  # Ensure 'stop' is called if the script itself is killed
-        main_daemon_loop
-    ) &
-    local service_pid=$!
-    echo "$service_pid" > "$PID_FILE"
-    echo "Service started with PID: $service_pid."
+    echo "Starting batterysaver service..."
+    main_daemon_loop &
+    echo $! > "$PID_FILE"
+    echo "Service started with PID: $(cat $PID_FILE)."
 }
 
-# stop kills the background daemon process and its children.
+# stop kills the background daemon process.
 stop() {
     if [ ! -f "$PID_FILE" ]; then
         echo "Service is not running."
-        return 1
-    fi # <--- KORJATTU RIVI 326: 'fi' sulkee 'if' lausekkeen
+        exit 1
+    fi
     local pid=$(cat "$PID_FILE")
-    echo "Stopping ResourceGuard service (PID: $pid)..."
+    echo "Stopping batterysaver service (PID: $pid)..."
     
-    # Kill the process group to ensure child processes (dbus-monitor, live_resource_monitor) are also terminated
+    # --- FIX: Check if the process exists before trying to kill it ---
     if ps -p "$pid" > /dev/null; then
-        kill -SIGTERM -- -"$pid" 2>/dev/null # Send TERM signal to process group
-        sleep 2
-        kill -SIGKILL -- -"$pid" 2>/dev/null # Follow up with KILL if needed
+        # Kill the process group to ensure child processes are also terminated
+        kill -- -"$pid"
         echo "Service stopped."
     else
         echo "Service was already stopped (process with PID $pid not found)."
     fi
 
-    # Always clean up files
-    rm -f "$PID_FILE"
-    rm -f "$SUSPEND_FILE"
-    rm -f /tmp/android_stop_lock
-    resume_apps # Ensure any currently suspended apps are resumed
-    
-    return 0
+    # Always remove the PID file
+    rm "$PID_FILE"
 }
 
 # --- MAIN EXECUTION ---
