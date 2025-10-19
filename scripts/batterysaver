@@ -13,34 +13,35 @@ SUSPEND_FILE="/tmp/suspended_pids.txt"
 # Suspend if System RAM usage exceeds this percentage
 RAM_THRESHOLD=90
 # Suspend if Top Process CPU usage is high (simple check)
-CPU_THRESHOLD=90 
+CPU_THRESHOLD=90
 
 # Core system applications/components that must NEVER be suspended or killed.
 EXCLUDED_APPS=(
     # --- User Interface & Core Components (Phosh/GNOME) ---
     "phosh" "phoc" "gnome-shell" "gnome-session" "gnome-session-b"
     "gsd-power" "gnome-settings-d" "gsd-media-keys" "gsd-xsettings" "lock-screen"
+    "wld" # WLD on Waylandin piirtokirjasto
 
     # --- Power Management (FuriOS/Droidian Specific) ---
-    "batman" 
+    "batman"
 
     # --- Telephony & Networking ---
     "ofono" "modemmanager" "NetworkManager" "wpa_supplicant" "nm-applet"
-    "gnome-calls" "chatty" "callaudiod" "mmcli" 
+    "gnome-calls" "chatty" "callaudiod" "mmcli"
     # FuriOS specific telephony
-    "mmsd4ofono" "ofono-toned" "oFono2MM" "Radio" 
+    "mmsd4ofono" "ofono-toned" "oFono2MM" "Radio"
 
     # --- Audio & Multimedia ---
     "pulseaudio" "pipewire" "wireplumber"
 
     # --- Input, Location & Security, Sensors ---
-    "squeekboard" "stevia" "ibus-daemon" "gnome-keyring" 
-    "geoclue" "geoclue-2.0" 
+    "squeekboard" "stevia" "ibus-daemon" "gnome-keyring"
+    "geoclue" "geoclue-2.0"
     # FuriOS specific sensors/biometric
     "sensorfw" "hadess-sensorfw-proxy" "Biometric" "biometric-daemon"
 
     # --- System Daemons & Android Base ---
-    "dbus-daemon" "systemd" "logind" "init" "tracker-miner-f" "udevd" 
+    "dbus-daemon" "systemd" "logind" "init" "tracker-miner-f" "udevd"
     "kernel" "kworker" "irq" "migration" "watchdog" "bash"
     
     # Android container (MUST be stopped via service, not suspended)
@@ -144,7 +145,7 @@ find_and_handle_hog() {
         # For GPU, we rely on processes known to be GPU heavy (like browsers/games)
         # and prioritize by RAM/CPU as a proxy.
         field="%mem" # Use RAM as the primary proxy for GPU-heavy process
-        sort_key "-%mem" 
+        sort_key "-%mem"
     fi
 
     # Get PID, Executable Name, Metric Value, User for top 10 processes
@@ -159,7 +160,7 @@ find_and_handle_hog() {
             local total_ram=$(free | awk '/Mem:/ {print $2}')
             local used_ram=$(free | awk '/Mem:/ {print $3}')
             # Use 100 - available_percent for a more accurate 'pressure' check
-            local available_ram=$(free | awk '/Mem:/ {print $7}') 
+            local available_ram=$(free | awk '/Mem:/ {print $7}')
             current_usage=$(( (total_ram - available_ram) * 100 / total_ram ))
             if [ "$current_usage" -lt "$RAM_THRESHOLD" ]; then
                 return # System RAM is fine, no need to act
@@ -323,7 +324,7 @@ stop() {
     if [ ! -f "$PID_FILE" ]; then
         echo "Service is not running."
         return 1
-    }
+    fi # <--- KORJATTU RIVI 326: 'fi' sulkee 'if' lausekkeen
     local pid=$(cat "$PID_FILE")
     echo "Stopping ResourceGuard service (PID: $pid)..."
     
