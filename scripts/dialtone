@@ -1,17 +1,6 @@
 #!/bin/bash
 
-# Cleans up the audio injection modules and processes.
-cleanup_audio_injection() {
-    local paplay_pid="$1"
-    echo "Stopping custom sound..."
-    if [ -n "$paplay_pid" ] && ps -p "$paplay_pid" > /dev/null; then
-        kill "$paplay_pid"
-    fi
-    pactl list short modules | grep 'source=call_injector.monitor' | cut -f1 | xargs -r -n1 pactl unload-module
-    pactl list short modules | grep 'sink_name=call_injector' | cut -f1 | xargs -r -n1 pactl unload-module
-}
-
-# Monitor for incoming calls
+# Monitor for calls
 monitor() {
     dbus-monitor --system "interface='org.freedesktop.ModemManager1.Modem.Voice',type='signal',member='CallAdded'" |
     while read -r line; do
@@ -41,73 +30,9 @@ phone() {
         tr -d '[:space:]')"  # Remove all spaces and newlines
 
     # Ensure no extra newlines or spaces and copy it to clipboard
-    echo -n "$PHONENUMBER" | wl-copy  # Use -n to avoid echoing an additional newline
-
-    direct 
+    echo -n "$PHONENUMBER" | wl-copy  # Use -n to avoid echoing an additional newline 
 }
 
-
-# Monitor call direction (outgoing or incoming)
-direct() {
-    # Run the command and get the last line
-    last_line=$(mmcli -m any --voice-list-calls | tail -n 1)
-
-    # Check if the second-last word is "outgoing"
-    if [[ $(echo "$last_line" | awk '{print $(NF-1)}') == "outgoing" ]]; then
-        echo "The call is outgoing. Proceeding with further steps..."
-        changes
-    else
-        echo "The call is not outgoing. No action taken."
-    fi
-}
-
-# Monitor for call changes
-changes() {
-    # Variables for sound injection
-    local injection_active=false
-    local paplay_pid=""
-    local sound_file="${HOME}/.git/fastflx1/files/ring8k.wav" # <-- CHANGE THIS PATH
-
-    while true; do
-        # Run the command and get the last line (updated in each loop iteration)
-        last_line=$(mmcli -m any --voice-list-calls | tail -n 1)
-        status_word=$(echo "$last_line" | awk '{print $NF}' | tr -d '()')
-
-        if [[ "$status_word" == "active" || "$status_word" == "activeaccepted" ]]; then
-            echo "The call status is active. Stopping custom sound."
-            
-            # Cleanup sound before breaking
-            if [ "$injection_active" = true ]; then
-                cleanup_audio_injection "$paplay_pid"
-                injection_active=false
-            fi
-            
-            break  # Exit the loop as the call has been accepted
-        elif [[ $(mmcli -m any --voice-list-calls) == *"No calls were found"* ]]; then
-            # Cleanup sound before breaking
-            if [ "$injection_active" = true ]; then
-                cleanup_audio_injection "$paplay_pid"
-                injection_active=false
-            fi
-            break
-        else
-            # If call is dialing, inject custom sound if not already active
-            if [ "$injection_active" = false ]; then
-                echo "Call is dialing. Injecting sound..."
-                # 1. Create a virtual sink
-                pactl load-module module-null-sink sink_name="call_injector"
-                # 2. Play sound into it
-                paplay --device="call_injector" "$sound_file" &
-                paplay_pid=$!
-                # 3. Create loopback to the real call sink
-                pactl load-module module-loopback source="call_injector.monitor" sink="sink.primary_output"
-                
-                injection_active=true
-            fi
-        fi
-        sleep 0.1
-    done
-}
 
 # Main script
 monitor
