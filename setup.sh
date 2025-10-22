@@ -21,7 +21,7 @@ GIT_DIR="${HOME}/.git/fastflx1"
 PAM_FILES=("/etc/pam.d/sudo" "/etc/pam.d/polkit-1" "/etc/pam.d/biomd")
 SCRIPTS_TO_INSTALL=(
     "alarmvol" "dialtone" "double-press" "fastflx1" "gnome-weather-location"
-    "long-press" "short-press" "batterysaver" "gesture-shortcuts"
+    "long-press" "short-press" "gesture-shortcuts"
     "andromeda-guard" "andromeda-shared-folders"
 )
 
@@ -52,9 +52,6 @@ do_install() {
     echo "--> Copying user configuration files to ${HOME}..."
     mkdir -p "${HOME}/.config/assistant-button"
     cp "${GIT_DIR}/configs/assistant-button/"{short_press,double_press,long_press} "${HOME}/.config/assistant-button/"
-
-    mkdir -p "${HOME}/.config/feedbackd/themes"
-    cp "${GIT_DIR}/configs/feedbackd/themes/default.json" "${HOME}/.config/feedbackd/themes"
 
     mkdir -p "${HOME}/.config/gtk-3.0"
     cp "${GIT_DIR}/configs/gtk-3.0/gtk.css" "${HOME}/.config/gtk-3.0/"
@@ -149,13 +146,12 @@ do_uninstall() {
     # 3. Remove all copied user configuration files (no sudo needed).
     echo "--> Removing user configuration files from ${HOME}..."
     rm -f "${HOME}/.config/assistant-button/"{short_press,double_press,long_press}
-    rm -f "${HOME}/.config/feedbackd/themes/default.json"
     rm -f "${HOME}/.config/gtk-3.0/gtk.css"
     rm -f "${HOME}/.config/wofi/"{style.css,config}
     rm -rf "${HOME}/.local/share/squeekboard/keyboards"
     rm -f "${HOME}/.local/share/sounds/__custom/"*
     rm -f "${HOME}/.local/share/applications/"{fastflx1}.desktop
-    rm -f "${HOME}/.config/autostart/"{alarmvol,batterysaver,andromeda-guard,dialtone,gesture-shortcuts}.desktop
+    rm -f "${HOME}/.config/autostart/"{alarmvol,andromeda-guard,dialtone,gesture-shortcuts}.desktop
 
     # 4. Reset sound theme to default (no sudo needed).
     echo "--> Resetting sound theme to default..."
