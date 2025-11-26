@@ -10,12 +10,6 @@ outlines:
     
 
 views:
-    numbers:
-        - "PgUp PgDn Esc ↑ ↓ ← →"
-        - "1 2 3 4 5 6 7 8 9 0 *"
-        - "# $ / \\ & - _ + ( ) ~"
-        - "! @ \" ' colon ;  =  € % BackSpace"
-        - "show_letters  show_symbols pilkku quest space period Return"
     base:
         - "Ctrl Menu ↑ ↓ ← →"
         - "q w e r t y u i o p å"
@@ -28,6 +22,12 @@ views:
         - "A S D F G H J K L Ö Ä"
         - "Shift_L Z X C V B N M  BackSpace"
         - "show_numbers  show_symbols pilkku quest space period Return"
+    numbers:
+        - "PgUp PgDn Esc ↑ ↓ ← →"
+        - "1 2 3 4 5 6 7 8 9 0 *"
+        - "# $ / \\ & - _ + ( ) ~"
+        - "! @ \" ' colon ;  =  € % BackSpace"
+        - "show_letters  show_symbols pilkku quest space period Return"
     symbols:
         - "Tab Menu Del ↑ ↓ ← →"
         - "`  ÷ × £ ^ { } [ ] © ®"
