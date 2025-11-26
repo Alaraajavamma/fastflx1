@@ -5,8 +5,8 @@ outlines:
     space3: { width: 140.99, height: 39 }
     space2: { width: 70.66, height: 56 }
     special: { width: 35.33, height: 39 }
-    small: { width: 70.66, height: 21.9 }
-    small2: { width: 35.33, height: 21.9 }
+    small: { width: 70.66, height: 39 }
+    small2: { width: 35.33, height: 39 }
     
 
 views:
