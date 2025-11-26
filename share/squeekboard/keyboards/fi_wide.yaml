@@ -3,6 +3,7 @@ outlines:
     default: { width: 38.399, height: 30 }
     small2: { width: 38.399, height: 30 }
     space: { width: 76.798, height: 30 }
+    space2: { width: 153.596, height: 30 }
     space3: { width: 115.197, height: 30 }
     
 
@@ -20,12 +21,12 @@ views:
     numbers:
         - "PgUp PgDn Esc 1 2 3 4 5 6 7 8 9 0 *"
         - "Menu ← → # $ / \\ & - _ + ( ) ~"
-        - "Esc ↑ ↓ Del ! @ \" ' colon ;  =  € % BackSpace"
+        - "Esc ↑ ↓ ! @ \" ' colon ;  =  € % BackSpace"
         - "show_letters  show_symbols shout pilkku quest space period Return"
     symbols:
         - "Tab Menu Del ` ÷ × £ ^ { } [ ] © ®"
         - "Menu ← → 😍 😘 😋 😎 😔 😭 😡 < > ^ |"
-        - "Esc ↑ ↓ Del 👍 🙌 👎 💪 😀 😁 😅 😂 ❤️ BackSpace"
+        - "Esc ↑ ↓ 👍 🙌 👎 💪 😀 😁 😅 😂 ❤️ BackSpace"
         - "show_letters show_numbers shout pilkku quest space period Return"
 
 buttons:
@@ -91,7 +92,7 @@ buttons:
         label: ">" 
        
     space:
-        outline: "space3"
+        outline: "space2"
         text: " "
     Return:
         outline: "space3"
