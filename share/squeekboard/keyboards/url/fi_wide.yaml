@@ -1,31 +1,33 @@
 ---
 outlines:
-    default: { width: 43.446, height: 39 }
-    space: { width: 86.892, height: 39 }
-    space3: { width: 140.99, height: 39 }
+    default: { width: 38.399, height: 30 }
+    small2: { width: 38.399, height: 30 }
+    space: { width: 76.798, height: 30 }
+    space2: { width: 153.596, height: 30 }
+    space3: { width: 115.197, height: 30 }
     
 
 views:
     base:
-        - "q w e r t y u i o p å Ctrl ↑ ↓"
-        - "a s d f g h j k l ö ä Menu ← →"
-        - "Shift_L z x c v b n m BackSpace"
-        - "show_numbers  show_symbols pilkku quest space period Return"
+        - "Ctrl ↑ ↓ q w e r t y u i o p å"
+        - "Menu ← → a s d f g h j k l ö ä"
+        - "Shift_L Esc z x c v b n m Del Tab BackSpace"
+        - "show_numbers show_symbols shout pilkku quest space period Return"
     upper:
-        - "Q W E R T Y U I O P Å Ctrl ↑ ↓"
-        - "A S D F G H J K L Ö Ä Menu ← →"
-        - "Shift_L Z X C V B N M BackSpace"
-        - "show_numbers  show_symbols pilkku quest space period Return"
+        - "Ctrl ↑ ↓ Q W E R T Y U I O P Å"
+        - "Menu ← → A S D F G H J K L Ö Ä"
+        - "Shift_L Esc Z X C V B N M Del Tab BackSpace"
+        - "show_numbers show_symbols shout pilkku quest space period Return"
     numbers:
-        - "1 2 3 4 5 6 7 8 9 0 * PgUp PgDn Esc"
-        - "# $ / \\ & - _ + ( ) ~ Menu ← →"
-        - "! @ \" ' colon ;  =  € % BackSpace"
-        - "show_letters  show_symbols pilkku quest space period Return"
+        - "PgUp PgDn Esc 1 2 3 4 5 6 7 8 9 0 *"
+        - "Menu ← → # $ / \\ & - _ + ( ) ~"
+        - "Esc ↑ ↓ ! @ \" ' colon ;  =  € % BackSpace"
+        - "show_letters show_symbols shout pilkku quest space period Return"
     symbols:
-        - "`  ÷ × £ ^ { } [ ] © ® Tab Menu Del"
-        - "😍 😘 😋 😎 😔 😭 😡 < > ^ | Menu ← →"
-        - "👍 🙌 👎 💪 😀 😁 😅 😂 ❤️ BackSpace"
-        - "show_letters show_numbers pilkku quest space period Return"
+        - "Tab Menu Del ` ÷ × £ ^ { } [ ] © ®"
+        - "Menu ← → 😍 😘 😋 😎 😔 😭 😡 < > ^ |"
+        - "Esc ↑ ↓ 👍 🙌 👎 💪 😀 😁 😅 😂 ❤️ BackSpace"
+        - "show_letters show_numbers shout pilkku quest space period Return"
 
 buttons:
     Shift_L:
@@ -33,7 +35,7 @@ buttons:
             locking:
                 lock_view: "upper"
                 unlock_view: "base"
-        outline: "space2"
+        outline: "space"
         icon: "key-shift"
     BackSpace:
         outline: "space"
@@ -64,7 +66,7 @@ buttons:
         outline: "default"
         label: ">_"
     period:
-        outline: "default"
+        outline: "space"
         text: "."
     shout:
         outline: "default"
@@ -90,65 +92,65 @@ buttons:
         label: ">" 
        
     space:
-        outline: "space3"
+        outline: "space2"
         text: " "
     Return:
-        outline: "space"
+        outline: "space3"
         icon: "key-enter"
         keysym: "Return"
     
     colon:
         text: ":"
     Esc:
-        outline: "default"
+        outline: "small2"
         keysym: "Escape"
     Tab:
-        outline: "default"
+        outline: "small2"
         keysym: "Tab"
     Del:
-        outline: "default"
+        outline: "small2"
         keysym: "Delete"
     Insert:
-        outline: "default"
+        outline: "small2"
         keysym: "Insert"
     Menu:
-        outline: "default"
+        outline: "small2"
         keysym: "Menu"
     Pause:
-        outline: "default"
+        outline: "small2"
         keysym: "Pause"
     Break:
-        outline: "default"
+        outline: "small2"
         keysym: "Break"
     Home:
-        outline: "default"
+        outline: "small2"
         keysym: "Home"
     End:
-        outline: "default"
+        outline: "small2"
         keysym: "End"
     PgUp:
-        outline: "default"
+        outline: "small2"
         keysym: "Page_Up"
     PgDn:
-        outline: "default"
+        outline: "small2"
         keysym: "Page_Down"
     "↑":
-        outline: "default"
+        outline: "small2"
         keysym: "Up"
     "↓":
-        outline: "default"
+        outline: "small2"
         keysym: "Down"
     "←":
-        outline: "default"
+        outline: "small2"
         keysym: "Left"
     "→":
-        outline: "default"
+        outline: "small2"
         keysym: "Right"
     Ctrl:
         modifier: "Control"
-        outline: "default"
+        outline: "small2"
         label: "Ctrl"
     Alt:
         modifier: "Alt"
-        outline: "default"
+        outline: "small2"
         label: "Alt"
