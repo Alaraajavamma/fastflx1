@@ -12,17 +12,17 @@ views:
         - "Ctrl ↑ ↓ q w e r t y u i o p å"
         - "Menu ← → a s d f g h j k l ö ä"
         - "Shift_L Esc z x c v b n m Del Tab BackSpace"
-        - "show_numbers  show_symbols shout pilkku quest space period Return"
+        - "show_numbers show_symbols shout pilkku quest space period Return"
     upper:
         - "Ctrl ↑ ↓ Q W E R T Y U I O P Å"
         - "Menu ← → A S D F G H J K L Ö Ä"
         - "Shift_L Esc Z X C V B N M Del Tab BackSpace"
-        - "show_numbers  show_symbols shout pilkku quest space period Return"
+        - "show_numbers show_symbols shout pilkku quest space period Return"
     numbers:
         - "PgUp PgDn Esc 1 2 3 4 5 6 7 8 9 0 *"
         - "Menu ← → # $ / \\ & - _ + ( ) ~"
         - "Esc ↑ ↓ ! @ \" ' colon ;  =  € % BackSpace"
-        - "show_letters  show_symbols shout pilkku quest space period Return"
+        - "show_letters show_symbols shout pilkku quest space period Return"
     symbols:
         - "Tab Menu Del ` ÷ × £ ^ { } [ ] © ®"
         - "Menu ← → 😍 😘 😋 😎 😔 😭 😡 < > ^ |"
