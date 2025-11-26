@@ -7,16 +7,14 @@ Update or remove this via desktop actions - aka. long press from the desktop ico
 
 Mainly: 
 1. Alarm volume script which will ensure that your alarm clock will allways play with full sound - and GUI interface to restart this service script if it fails
-2. Dialtone script which will generate cool dialtone sound when you are calling out (most carriers does not generate dialtone sound in VoLTE so this kind of replaces it) - and GUI interface to restart this service script if it fails
-3. Simple GUI interface for changing from staging to prod or via versa - or upgrade your system trough terminal - or install/uninstall experimental Branchy app
-4. Andromeda-Guard which disables OSK when Andromeda is loading to prevent half-display container
-5. Asisstant-button tweaks which are partially work-in-proggress but it shows proof-of-concept how to make assintant-button behave differentially based on certain conditions
-6. Disable annoying volume change sound (blop - blop when change volume) - and add better alarm tone. This works now ootb.
-7. If you use finnish layout in squeekboard you will get the ultimate universal layout made by me
-8. Added some cool swipe gestures using lisgd - look below
-9. If you receive call from unknown number you can now easily create new contact. Last callers number is automaticly saved to clipboard if you are using dialtone script so just short-press assistant-button and select "Add last caller (or copied number) to contacts". It will automagicly opens new contact dialog and pastes the number there - you just need to fill name etc. You can also copy number manually because it will use the default paste function
-10. New batterysaver function which will suspend all open linux apps when you lock the sceen (except Calls, Chatty or Clocks) and close Android app windows
-11. By default we will enable fingerprint support for sudo commands in terminal
+2. Simple GUI interface for changing from staging to prod or via versa - or upgrade your system trough terminal - or install/uninstall experimental Branchy app
+3. Andromeda-Guard which disables OSK when Andromeda is loading to prevent half-display container
+4. Asisstant-button tweaks which are partially work-in-proggress but it shows proof-of-concept how to make assintant-button behave differentially based on certain conditions
+5. Disable annoying volume change sound (blop - blop when change volume) - and add better alarm tone. This works now ootb.
+6. If you use finnish layout in squeekboard you will get the ultimate universal layout made by me
+7. Added some cool swipe gestures using lisgd - look below
+8. If you receive call from unknown number you can now easily create new contact. Last callers number is automaticly saved to clipboard if you are using dialtone script so just short-press assistant-button and select "Add last caller (or copied number) to contacts". It will automagicly opens new contact dialog and pastes the number there - you just need to fill name etc. You can also copy number manually because it will use the default paste function
+9. By default we will enable fingerprint support for sudo commands in terminal and for pkexec
 
 **Default assistant-button options:**
 
@@ -28,9 +26,6 @@ Mainly:
 - Locked / on lock screen double-press = toggle flashlight
 - Locked / on lock screen long-press = it will forcefully close all resource intensive apps
 
-**Default volume-buttons options:**
-
-- They will change volume if you have active sink (like music playing or active call). Otherwise they are up and down arrow keys (like arrow keys in keyboard)
 
 **Default swipe gestures:**
 Notice that swipe gestures works ootb like this when FLX1 is in default portrait mode
