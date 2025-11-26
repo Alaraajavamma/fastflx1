@@ -60,14 +60,21 @@ do_install() {
     cp "${GIT_DIR}/configs/wofi/"{style.css,config} "${HOME}/.config/wofi/"
 
     # 4. Handle squeekboard keyboards.
-    echo "--> Setting up squeekboard keyboards..."
-    keyboard_dir="${HOME}/.local/share/squeekboard/keyboards"
-    mkdir -p "${keyboard_dir}"
-    for subdir in email emoji number pin terminal url; do
-        mkdir -p "${keyboard_dir}/${subdir}"
-        cp "${GIT_DIR}/share/fi.yaml" "${keyboard_dir}/${subdir}/"
-    done
-    cp "${GIT_DIR}/share/fi.yaml" "${keyboard_dir}/"
+    echo "--> Copying whole squeekboard keyboards folder..."
+    
+    # Define the source folder containing the keyboards
+    SOURCE_SQUEEKBOARD_DIR="${GIT_DIR}/share/squeekboard"
+    
+    # Define the destination folder: $HOME/.local/share/squeekboard/
+    DEST_SQUEEKBOARD_PARENT_DIR="${HOME}/.local/share/"
+    
+    # Ensure the parent destination directory exists (if not already created by step 5)
+    mkdir -p "${DEST_SQUEEKBOARD_PARENT_DIR}"
+    
+    # Use 'cp -r' to recursively copy the entire 'squeekboard' folder and its contents
+    # from the git directory to the $HOME/.local/share/ location.
+    # This will create $HOME/.local/share/squeekboard/ and everything inside it.
+    cp -r "${SOURCE_SQUEEKBOARD_DIR}" "${DEST_SQUEEKBOARD_PARENT_DIR}"
 
     # 5. Handle custom sounds and applications.
     echo "--> Setting up custom sounds and application files..."
