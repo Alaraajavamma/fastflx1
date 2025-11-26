@@ -3,8 +3,7 @@ outlines:
     default: { width: 38.399, height: 30 }
     small2: { width: 38.399, height: 30 }
     space: { width: 76.798, height: 30 }
-    space2: { width: 153.596, height: 30 }
-    space3: { width: 115.197, height: 30 }
+    space2: { width: 115.197, height: 30 }
     
 
 views:
@@ -66,7 +65,7 @@ buttons:
         outline: "default"
         label: ">_"
     period:
-        outline: "space"
+        outline: "default"
         text: "."
     shout:
         outline: "default"
@@ -95,7 +94,7 @@ buttons:
         outline: "space2"
         text: " "
     Return:
-        outline: "space3"
+        outline: "space2"
         icon: "key-enter"
         keysym: "Return"
     
