@@ -1,7 +1,7 @@
 ---
 outlines:
-    default: { width: 43,446, height: 39 }
-    space: { width: 86,892, height: 39 }
+    default: { width: 43.446, height: 39 }
+    space: { width: 86.892, height: 39 }
     space3: { width: 140.99, height: 39 }
     
 
