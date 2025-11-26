@@ -80,7 +80,7 @@ do_install() {
     echo "--> Setting up custom sounds and application files..."
     sound_dir="${HOME}/.local/share/sounds/__custom"
     mkdir -p "${sound_dir}"
-    cp "${GIT_DIR}/share/"{alarm-clock-elapsed.oga,audio-volume-change.oga,index.theme} "${sound_dir}/"
+    cp "${GIT_DIR}/share/sounds/__custom"{alarm-clock-elapsed.oga,audio-volume-change.oga,index.theme} "${sound_dir}/"
 
     app_dir="${HOME}/.local/share/applications"
     autostart_dir="${HOME}/.config/autostart"
