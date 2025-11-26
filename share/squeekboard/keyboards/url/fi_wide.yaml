@@ -1,0 +1,154 @@
+---
+outlines:
+    default: { width: 43.446, height: 39 }
+    space: { width: 86.892, height: 39 }
+    space3: { width: 140.99, height: 39 }
+    
+
+views:
+    base:
+        - "q w e r t y u i o p å Ctrl ↑ ↓"
+        - "a s d f g h j k l ö ä Menu ← →"
+        - "Shift_L z x c v b n m BackSpace"
+        - "show_numbers  show_symbols pilkku quest space period Return"
+    upper:
+        - "Q W E R T Y U I O P Å Ctrl ↑ ↓"
+        - "A S D F G H J K L Ö Ä Menu ← →"
+        - "Shift_L Z X C V B N M BackSpace"
+        - "show_numbers  show_symbols pilkku quest space period Return"
+    numbers:
+        - "1 2 3 4 5 6 7 8 9 0 * PgUp PgDn Esc"
+        - "# $ / \\ & - _ + ( ) ~ Menu ← →"
+        - "! @ \" ' colon ;  =  € % BackSpace"
+        - "show_letters  show_symbols pilkku quest space period Return"
+    symbols:
+        - "`  ÷ × £ ^ { } [ ] © ® Tab Menu Del"
+        - "😍 😘 😋 😎 😔 😭 😡 < > ^ | Menu ← →"
+        - "👍 🙌 👎 💪 😀 😁 😅 😂 ❤️ BackSpace"
+        - "show_letters show_numbers pilkku quest space period Return"
+
+buttons:
+    Shift_L:
+        action:
+            locking:
+                lock_view: "upper"
+                unlock_view: "base"
+        outline: "space2"
+        icon: "key-shift"
+    BackSpace:
+        outline: "space"
+        icon: "edit-clear-symbolic"
+        action: erase
+    preferences:
+        action: "show_prefs"
+        outline: "default"
+        icon: "keyboard-mode-symbolic"
+    show_numbers:
+        action:
+            set_view: "numbers"
+        outline: "default"
+        label: "❶"
+    show_letters:
+        action:
+            set_view: "base"
+        outline: "default"
+        label: "🅰"
+    show_symbols:
+        action:
+            set_view: "symbols"
+        outline: "default"
+        label: "☻"
+    show_actions:
+        action:
+            set_view: "actions"
+        outline: "default"
+        label: ">_"
+    period:
+        outline: "default"
+        text: "."
+    shout:
+        outline: "default"
+        text: "!"
+    quest:
+        outline: "default"
+        text: "?"
+    pilkku:
+        outline: "default"
+        text: ","
+        label: ","
+    at:
+        outline: "default"
+        text: "@"
+        label: "@"
+    ik:
+        outline: "default"
+        text: "<"
+        label: "<"
+    pk:
+        outline: "default"
+        text: ">"
+        label: ">" 
+       
+    space:
+        outline: "space3"
+        text: " "
+    Return:
+        outline: "space"
+        icon: "key-enter"
+        keysym: "Return"
+    
+    colon:
+        text: ":"
+    Esc:
+        outline: "default"
+        keysym: "Escape"
+    Tab:
+        outline: "default"
+        keysym: "Tab"
+    Del:
+        outline: "default"
+        keysym: "Delete"
+    Insert:
+        outline: "default"
+        keysym: "Insert"
+    Menu:
+        outline: "default"
+        keysym: "Menu"
+    Pause:
+        outline: "default"
+        keysym: "Pause"
+    Break:
+        outline: "default"
+        keysym: "Break"
+    Home:
+        outline: "default"
+        keysym: "Home"
+    End:
+        outline: "default"
+        keysym: "End"
+    PgUp:
+        outline: "default"
+        keysym: "Page_Up"
+    PgDn:
+        outline: "default"
+        keysym: "Page_Down"
+    "↑":
+        outline: "default"
+        keysym: "Up"
+    "↓":
+        outline: "default"
+        keysym: "Down"
+    "←":
+        outline: "default"
+        keysym: "Left"
+    "→":
+        outline: "default"
+        keysym: "Right"
+    Ctrl:
+        modifier: "Control"
+        outline: "default"
+        label: "Ctrl"
+    Alt:
+        modifier: "Alt"
+        outline: "default"
+        label: "Alt"
