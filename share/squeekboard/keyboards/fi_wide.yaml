@@ -3,20 +3,18 @@ outlines:
     default: { width: 43,446, height: 39 }
     space: { width: 86,892, height: 39 }
     space3: { width: 140.99, height: 39 }
-    space2: { width: 86,892, height: 39 }
-    special: { width: 43,446, height: 39 }
     
 
 views:
     base:
         - "q w e r t y u i o p å Ctrl ↑ ↓"
         - "a s d f g h j k l ö ä Menu ← →"
-        - "Shift_L z x c v b n m  BackSpace"
+        - "Shift_L z x c v b n m BackSpace"
         - "show_numbers  show_symbols pilkku quest space period Return"
     upper:
         - "Q W E R T Y U I O P Å Ctrl ↑ ↓"
         - "A S D F G H J K L Ö Ä Menu ← →"
-        - "Shift_L Z X C V B N M  BackSpace"
+        - "Shift_L Z X C V B N M BackSpace"
         - "show_numbers  show_symbols pilkku quest space period Return"
     numbers:
         - "1 2 3 4 5 6 7 8 9 0 * PgUp PgDn Esc"
@@ -38,48 +36,48 @@ buttons:
         outline: "space2"
         icon: "key-shift"
     BackSpace:
-        outline: "space2"
+        outline: "space"
         icon: "edit-clear-symbolic"
         action: erase
     preferences:
         action: "show_prefs"
-        outline: "special"
+        outline: "default"
         icon: "keyboard-mode-symbolic"
     show_numbers:
         action:
             set_view: "numbers"
-        outline: "special"
+        outline: "default"
         label: "❶"
     show_letters:
         action:
             set_view: "base"
-        outline: "special"
+        outline: "default"
         label: "🅰"
     show_symbols:
         action:
             set_view: "symbols"
-        outline: "special"
+        outline: "default"
         label: "☻"
     show_actions:
         action:
             set_view: "actions"
-        outline: "special"
+        outline: "default"
         label: ">_"
     period:
-        outline: "special"
+        outline: "default"
         text: "."
     shout:
-        outline: "special"
+        outline: "default"
         text: "!"
     quest:
-        outline: "special"
+        outline: "default"
         text: "?"
     pilkku:
-        outline: "special"
+        outline: "default"
         text: ","
         label: ","
     at:
-        outline: "special"
+        outline: "default"
         text: "@"
         label: "@"
     ik:
