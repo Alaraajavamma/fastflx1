@@ -20,7 +20,7 @@
 GIT_DIR="${HOME}/.git/fastflx1"
 PAM_FILES=("/etc/pam.d/sudo" "/etc/pam.d/polkit-1" "/etc/pam.d/biomd")
 SCRIPTS_TO_INSTALL=(
-    "alarmvol" "dialtone" "double-press" "fastflx1" "gnome-weather-location"
+    "alarmvol" "double-press" "fastflx1" "gnome-weather-location"
     "long-press" "short-press" "gesture-shortcuts"
     "andromeda-guard" "andromeda-shared-folders"
 )
@@ -158,7 +158,7 @@ do_uninstall() {
     rm -rf "${HOME}/.local/share/squeekboard/keyboards"
     rm -f "${HOME}/.local/share/sounds/__custom/"*
     rm -f "${HOME}/.local/share/applications/"{fastflx1}.desktop
-    rm -f "${HOME}/.config/autostart/"{alarmvol,andromeda-guard,dialtone,gesture-shortcuts}.desktop
+    rm -f "${HOME}/.config/autostart/"{alarmvol,andromeda-guard,gesture-shortcuts}.desktop
 
     # 4. Reset sound theme to default (no sudo needed).
     echo "--> Resetting sound theme to default..."
