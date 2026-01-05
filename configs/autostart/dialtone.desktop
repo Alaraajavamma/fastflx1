@@ -1,8 +1,0 @@
-[Desktop Entry]
-Version=0.1
-Name=DialVibra
-Comment=Vibra when calling
-Exec=bash -c 'dialtone'
-Icon=org.gnome.Terminal
-Terminal=false
-Type=Application
