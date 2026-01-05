@@ -1,6 +1,6 @@
-# FastFLX1 - some tweaks for best linux phone in the market
+# FastFLX1s - some tweaks for best linux phone in the market
 
-This simple tool adds some small tweaks to your FLX1. 
+This simple tool adds some small tweaks to your FLX1s. 
 **Notice: If you have done some own tweaks to your ~. files it might be good idea to make backup because this setup will override some of them. This includes also changes what are done via GUI but actually happens in ~. files like changing ringtone from Phosh-mobile-settings**
 
 Update or remove this via desktop actions - aka. long press from the desktop icon
@@ -13,8 +13,6 @@ Mainly:
 5. Disable annoying volume change sound (blop - blop when change volume) - and add better alarm tone. This works now ootb.
 6. If you use finnish layout in squeekboard you will get the ultimate universal layout made by me
 7. Added some cool swipe gestures using lisgd - look below
-8. If you receive call from unknown number you can now easily create new contact. Last callers number is automaticly saved to clipboard if you are using dialtone script so just short-press assistant-button and select "Add last caller (or copied number) to contacts". It will automagicly opens new contact dialog and pastes the number there - you just need to fill name etc. You can also copy number manually because it will use the default paste function
-9. By default we will enable fingerprint support for sudo commands in terminal and for pkexec
 
 **Default assistant-button options:**
 
@@ -40,7 +38,7 @@ I am working on this slowly and will add more (GUI) features soonish (or remove 
 
 ## How to install?
 
-`sudo apt install git && cd ~ && mkdir -p .git && cd .git && git clone https://gitlab.com/Alaraajavamma/fastflx1 && cd fastflx1 && sudo chmod +x setup.sh && ./setup.sh install `
+`sudo apt install git && cd ~ && mkdir -p .git && cd .git && git clone --branch flx1s https://gitlab.com/Alaraajavamma/fastflx1 && cd fastflx1 && sudo chmod +x setup.sh && ./setup.sh install `
 
 And it should just work
 
