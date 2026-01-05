@@ -138,7 +138,7 @@ do_update() {
     # 2. Install git and clone the latest version from the repository.
     echo "--> Installing git and cloning the latest version..."
     sudo apt install -y git
-    git clone https://gitlab.com/Alaraajavamma/fastflx1 "${GIT_DIR}" || error "Failed to clone the repository."
+    git clone --branch flx1s https://gitlab.com/Alaraajavamma/fastflx1 "${GIT_DIR}" || error "Failed to clone the repository."
 
     # 3. Hand over execution to the new setup script to run the install.
     # The 'exec' command replaces this script's process with the new one.
