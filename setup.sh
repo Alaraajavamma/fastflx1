@@ -18,7 +18,6 @@
 # --- Configuration ---
 # The script now runs as the user, so ${HOME} is correct.
 GIT_DIR="${HOME}/.git/fastflx1"
-PAM_FILES=("/etc/pam.d/sudo" "/etc/pam.d/polkit-1" "/etc/pam.d/biomd")
 SCRIPTS_TO_INSTALL=(
     "alarmvol" "double-press" "fastflx1" "gnome-weather-location"
     "long-press" "short-press" "gesture-shortcuts"
@@ -39,7 +38,7 @@ do_install() {
 
     # 1. Install required packages.
     echo "--> Installing APT packages..."
-    sudo apt install -y wtype curl wl-clipboard inotify-tools lisgd libcallaudio-tools wofi libnotify-bin bindfs wlrctl libpam-parallel libpam-biomd
+    sudo apt install -y wtype curl wl-clipboard inotify-tools lisgd libcallaudio-tools wofi libnotify-bin bindfs wlrctl
 
     # 2. Copy scripts to /usr/bin.
     echo "--> Copying system scripts to /usr/bin..."
@@ -92,39 +91,6 @@ do_install() {
     echo "--> Setting custom sound theme..."
     gsettings set org.gnome.desktop.sound theme-name __custom
 
-    # 7. Configure PAM files (with backups).
-    echo "--> Configuring PAM files..."
-    for file in "${PAM_FILES[@]}"; do
-        if [ -f "$file" ]; then
-            echo "  -> Backing up $file to $file.bak"
-            sudo cp -f "$file" "$file.bak"
-        fi
-    done
-
-    sudo tee /etc/pam.d/sudo > /dev/null <<'EOF'
-#%PAM-1.0
-auth    sufficient pam_parallel.so debug { "mode": "One", "modules": {"biomd": " 🫆 ", "login": " 🔐 "} }
-@include common-auth
-@include common-account
-@include common-session-noninteractive
-EOF
-
-    sudo tee /etc/pam.d/polkit-1 > /dev/null <<'EOF'
-#%PAM-1.0
-auth    sufficient pam_parallel.so debug { "mode": "One", "modules": {"biomd": " 🫆 ", "login": " 🔐 "} }
-@include common-auth
-@include common-account
-@include common-password
-session         required    pam_env.so readenv=1 user_readenv=0
-session         required    pam_env.so readenv=1 envfile=/etc/default/locale user_readenv=0
-@include common-session-noninteractive
-EOF
-
-    sudo tee /etc/pam.d/biomd > /dev/null <<'EOF'
-auth    requisite       pam_biomd.so debug
-account required        pam_permit.so
-EOF
-
     echo "--- Installation Complete ---"
 }
 
@@ -132,25 +98,13 @@ EOF
 do_uninstall() {
     echo "--- Starting FastFLX1 Uninstallation ---"
 
-    # 1. Restore PAM files from backups.
-    echo "--> Restoring original PAM files..."
-    for file in "${PAM_FILES[@]}"; do
-        if [ -f "$file.bak" ]; then
-            echo "  -> Restoring $file from backup..."
-            sudo mv -f "$file.bak" "$file"
-        else
-            echo "  -> No backup found for $file. Removing the file."
-            sudo rm -f "$file"
-        fi
-    done
-
-    # 2. Remove system scripts.
+    # 1. Remove system scripts.
     echo "--> Removing system scripts from /usr/bin..."
     for script in "${SCRIPTS_TO_INSTALL[@]}"; do
         sudo rm -f "/usr/bin/${script}"
     done
 
-    # 3. Remove all copied user configuration files (no sudo needed).
+    # 2. Remove all copied user configuration files (no sudo needed).
     echo "--> Removing user configuration files from ${HOME}..."
     rm -f "${HOME}/.config/assistant-button/"{short_press,double_press,long_press}
     rm -f "${HOME}/.config/gtk-3.0/gtk.css"
@@ -160,11 +114,11 @@ do_uninstall() {
     rm -f "${HOME}/.local/share/applications/"{fastflx1}.desktop
     rm -f "${HOME}/.config/autostart/"{alarmvol,andromeda-guard,gesture-shortcuts}.desktop
 
-    # 4. Reset sound theme to default (no sudo needed).
+    # 3. Reset sound theme to default (no sudo needed).
     echo "--> Resetting sound theme to default..."
     gsettings set org.gnome.desktop.sound theme-name 'default'
 
-    # 5. Remove the git repository directory.
+    # 4. Remove the git repository directory.
     echo "--> Removing git repository..."
     rm -rf "${GIT_DIR}"
 
