@@ -14,7 +14,7 @@ ONLY_RUN_WHEN_LOCKED=true
 # Check if the session is currently locked
 check_if_locked() {
 
-    SESSION_ID=$(loginctl list-sessions | grep $(whoami) | awk '{print $1}' | head -n 1)
+    SESSION_ID=$(loginctl list-sessions | grep $(whoami) | awk 'NR==2 {print $1}')
     
     LOCK_STATUS=$(loginctl show-session "$SESSION_ID" -p LockedHint)
 
