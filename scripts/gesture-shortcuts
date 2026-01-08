@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Set the input device for lisgd
-export LISGD_INPUT_DEVICE="/dev/input/event2"
+export LISGD_INPUT_DEVICE="/dev/input/event3"
 
 lisgd -d "$LISGD_INPUT_DEVICE" \
         `#Short swipe from right to left on the bottom`\
@@ -10,3 +10,5 @@ lisgd -d "$LISGD_INPUT_DEVICE" \
         -g "1,LR,B,*,R,setsid -f wtype -M alt -M shift -P tab -m alt -m shift -p tab" \
         `#Long swipe from left to right from left edge to kill the active window`\
         -g "1,LR,L,L,R,setsid -f wtype -M alt -P F4 -m alt -p F4" \
+        `#Short swipe from left to right on left edge (Go Back)`\
+        -g "1,LR,L,S,R,setsid -f wtype -k XF86Back" \
