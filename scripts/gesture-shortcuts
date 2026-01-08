@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Set the input device for lisgd
-export LISGD_INPUT_DEVICE="/dev/input/event3"
+export LISGD_INPUT_DEVICE="/dev/input/event2"
 
 lisgd -d "$LISGD_INPUT_DEVICE" \
         `#Short swipe from right to left on the bottom`\
