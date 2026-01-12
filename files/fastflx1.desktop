@@ -1,5 +1,5 @@
 [Desktop Entry]
-Name=FastFLX1
+Name=FastFLX1s
 Exec=bash -c 'fastflx1'
 Terminal=false
 Icon=/home/furios/.git/fastflx1/files/fastflx1.svg
