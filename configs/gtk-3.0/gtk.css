@@ -11,6 +11,10 @@ phosh-top-panel image {
   -gtk-icon-transform: scale(0.66);
 }
 
+ phosh-top-panel .indicators {
+  font-size: 10px;
+} 
+
 phosh-top-panel .phosh-topbar-date {
   font-size: 10px;
 }
