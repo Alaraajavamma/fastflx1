@@ -38,7 +38,7 @@ do_install() {
 
     # 1. Install required packages.
     echo "--> Installing APT packages..."
-    sudo apt install -y wtype curl wl-clipboard inotify-tools lisgd libcallaudio-tools wofi libnotify-bin bindfs wlrctl
+    sudo apt install -y wtype curl wl-clipboard inotify-tools lisgd libcallaudio-tools wofi libnotify-bin bindfs wlrctl acl
 
     # 2. Copy scripts to /usr/bin.
     echo "--> Copying system scripts to /usr/bin..."
