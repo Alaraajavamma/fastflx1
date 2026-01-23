@@ -90,21 +90,56 @@ disable_sharing() {
         echo "--- DISABLING ANDROMEDA SHARED FOLDERS ---"
         sleep 1
         
-        echo "[STEP 1/3] Stopping the permission guard service..."
-        # This is passwordless because of the sudoers rule.
+        # [STEP 1] Stop the service first to release file locks (prevent "Device busy" errors)
+        echo "Stopping the permission guard service..."
         sudo env TARGET_USER=\${USER} ${ANDROMEDA_SCRIPT_PATH} stop-permission-guard
         sleep 1
 
-        echo "[STEP 2/3] Removing autostart file..."
+        # [STEP 2] Unmount folders (This automatically removes Android-Share/Linux-Share dirs)
+        echo "Unmounting shared folders..."
+        sudo env TARGET_USER=\${USER} ${ANDROMEDA_SCRIPT_PATH} unmount
+        sleep 1
+
+        # [STEP 3] Restore Ownership and Remove ACLs
+        # We iterate over top-level folders in Home, skipping hidden ones and the Android folder itself.
+        echo "Restoring ownership and removing ACLs from Home folders..."
+        
+        # Get the actual home directory path
+        HOME_DIR=\$(getent passwd "\${USER}" | cut -d: -f6)
+        
+        # Loop through non-hidden folders
+        for dir in "\${HOME_DIR}"/*; do
+            # Only process if it is a directory
+            if [ -d "\$dir" ]; then
+                dirname=\$(basename "\$dir")
+                
+                # Exclude the specific Android data folder to avoid breaking the container
+                if [[ "\$dirname" == "Android" ]]; then
+                     echo "  -> Skipping \$dirname (System Folder)"
+                     continue
+                fi
+
+                echo "  -> Restoring permissions for: \$dirname"
+                # Remove all ACLs (-b) recursively
+                sudo setfacl -R -b "\$dir"
+                # Restore ownership to the user recursively
+                sudo chown -R "\${USER}":"\${USER}" "\$dir"
+            fi
+        done
+        sleep 1
+
+        # [STEP 4] Remove autostart file
+        echo "Removing autostart configuration..."
         rm -f '${AUTOSTART_FILE}'
         sleep 1
 
-        echo "[STEP 3/3] Revoking passwordless permissions..."
+        # [STEP 5] Revoke passwordless permissions
+        echo "Revoking passwordless sudo permissions..."
         sudo rm -f '${SUDOERS_FILE}'
         sleep 1
 
         echo "---"
-        echo "Cleanup complete. Shared folders are disabled."
+        echo "Cleanup complete. Folders unmounted, permissions restored, and service disabled."
         notify-send "Andromeda Shared Folders Disabled" --icon="folder"
         read -p "Press <Enter> to close this window."
 EOF
