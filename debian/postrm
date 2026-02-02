@@ -1,0 +1,43 @@
+#!/bin/bash
+set -e
+
+if [ "$1" = "remove" ]; then
+    # Attempt to find the main user (usually UID 1000 on these phones)
+    TARGET_USER=$(id -nu 1000 2>/dev/null || echo "furios")
+    TARGET_HOME=$(getent passwd "$TARGET_USER" | cut -d: -f6)
+
+    if [ -d "$TARGET_HOME" ]; then
+        echo "Cleaning up FastFLX1 for user $TARGET_USER..."
+
+        # 1. Clean up broken systemd user service symlinks
+        # The unit files in /usr/lib/systemd/user/ are removed by dpkg.
+        # But enabled links in ~/.config/systemd/user/ might remain.
+        rm -f "$TARGET_HOME/.config/systemd/user/default.target.wants/fastflx1-alarm.service"
+        rm -f "$TARGET_HOME/.config/systemd/user/default.target.wants/fastflx1-guard.service"
+        rm -f "$TARGET_HOME/.config/systemd/user/default.target.wants/fastflx1-gestures.service"
+
+        # 2. Restore Andromeda Shared Folders permissions
+        # This is critical to avoid permission issues after uninstall.
+        echo "Restoring folder permissions..."
+        for dir in "$TARGET_HOME"/*; do
+            if [ -d "$dir" ]; then
+                dirname=$(basename "$dir")
+                # Skip Android folder (container data)
+                if [ "$dirname" != "Android" ]; then
+                    # Remove ACLs
+                    setfacl -R -b "$dir" 2>/dev/null || true
+                    # Restore ownership
+                    chown -R "$TARGET_USER:$TARGET_USER" "$dir" 2>/dev/null || true
+                fi
+            fi
+        done
+
+        # 3. Remove configuration files (Optional, but requested "disable all tweaks")
+        # rm -rf "$TARGET_HOME/.config/fastflx1"
+        # rm -rf "$TARGET_HOME/.config/assistant-button"
+
+        echo "FastFLX1 cleanup finished."
+    fi
+fi
+
+#DEBHELPER#

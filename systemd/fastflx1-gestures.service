@@ -1,0 +1,10 @@
+[Unit]
+Description=FastFLX1 Gesture Shortcuts
+After=graphical-session.target
+
+[Service]
+ExecStart=/usr/bin/fastflx1 --monitor gestures
+Restart=always
+
+[Install]
+WantedBy=default.target

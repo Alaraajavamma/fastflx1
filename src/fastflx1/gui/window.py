@@ -3,6 +3,7 @@ gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
 from gi.repository import Gtk, Adw, GLib
 from fastflx1.gui.pages import TweaksPage, ActionsPage, SystemPage
+from fastflx1.gui.buttons_page import ButtonsPage
 from fastflx1.const import APP_NAME
 
 class MainWindow(Adw.PreferencesWindow):
@@ -13,6 +14,9 @@ class MainWindow(Adw.PreferencesWindow):
 
         self.tweaks_page = TweaksPage()
         self.add(self.tweaks_page)
+
+        self.buttons_page = ButtonsPage()
+        self.add(self.buttons_page)
 
         self.actions_page = ActionsPage(self)
         self.add(self.actions_page)

@@ -1,18 +1,30 @@
 import requests
 import urllib.parse
-from gi.repository import Gio
-from fastflx1.utils import logger
+from gi.repository import Gio, GLib
+from fastflx1.utils import logger, run_command
 
 class WeatherManager:
     def __init__(self):
-        self.settings = Gio.Settings.new("org.gnome.Weather")
-        self.flatpak_id = "org.gnome.Weather"
+        # We try to use the schema source for org.gnome.Weather
+        # Note: If running in a flatpak sandbox or if schema is missing, this might fail.
+        # But we are running on host (deb package).
+        self.schema_id = "org.gnome.Weather"
+        self.settings = None
+        try:
+            self.settings = Gio.Settings.new(self.schema_id)
+        except Exception as e:
+            logger.warning(f"Could not load GSettings for {self.schema_id}: {e}")
 
     def search_location(self, query):
+        if not query:
+            return None
         encoded = urllib.parse.quote(query.replace(" ", "+"))
         url = f"https://nominatim.openstreetmap.org/search?q={encoded}&format=json&limit=1"
         try:
             resp = requests.get(url, headers={"User-Agent": "FastFLX1/1.0"})
+            if resp.status_code != 200:
+                logger.error(f"Weather API error: {resp.status_code}")
+                return None
             data = resp.json()
             if not data:
                 return None
@@ -22,70 +34,54 @@ class WeatherManager:
             return None
 
     def add_location(self, location_data):
-        # We need to construct a GVariant compatible with org.gnome.Weather locations
-        # The schema is usually `av` (array of variants).
-        # Inside, it's a specific structure.
-        # Original script:
-        # location="<(uint32 2, <('$name', '', false, [($lat, $lon)], @a(dd) [])>)>"
-        # gsettings set org.gnome.Weather locations "[...]"
+        if not self.settings:
+            logger.error("GSettings not initialized")
+            return False
 
-        name = location_data.get('display_name', '').split(',')[0] # Simplify name
-        lat = float(location_data.get('lat'))
-        lon = float(location_data.get('lon'))
+        try:
+            name = location_data.get('display_name', '').split(',')[0]
+            lat = float(location_data.get('lat'))
+            lon = float(location_data.get('lon'))
 
-        # Radians conversion
-        lat_rad = lat / (180 / 3.141592654)
-        lon_rad = lon / (180 / 3.141592654)
+            # Radians conversion as per original script
+            lat_rad = lat / (180 / 3.141592654)
+            lon_rad = lon / (180 / 3.141592654)
 
-        logger.info(f"Adding location: {name} ({lat}, {lon})")
+            # GVariant text format construction
+            # location="<(uint32 2, <('$name', '', false, [($lat, $lon)], @a(dd) [])>)>"
+            # Note: The original script used < ... > for variant
 
-        # Constructing GVariant in Python is cleaner
-        # The signature for a location seems to be `(u(sbsa(dd)a(dd)))` roughly?
-        # Actually the script output: `<(uint32 2, <('$name', '', false, [($lat, $lon)], @a(dd) [])>)>`
-        # This looks like `v`. The variant contains a tuple.
-        # The tuple is `(uint32, Variant)`.
-        # The inner Variant is `(string, string, boolean, array of (double, double), array of (double, double))`?
+            variant_str = f"<(uint32 2, <('{name}', '', false, [({lat_rad}, {lon_rad})], @a(dd) [])>)>"
 
-        # Let's try to fetch current value and see format.
-        current_locs = self.settings.get_value("locations")
+            logger.info(f"Parsing variant string: {variant_str}")
 
-        # Creating the new location variant
-        # We can construct it using GLib.Variant.parse if we have the signature.
-        # Or build it with GLib.Variant constructors.
+            # Parse the variant string. Signature for 'locations' is 'av'.
+            # The string represents one item (a variant 'v').
+            new_location_variant = GLib.Variant.parse(GLib.VariantType("v"), variant_str, None)
 
-        # Let's stringify it like the bash script did, it might be easier to pass to Variant.parse
-        # location_str = f"<(uint32 2, <('{name}', '', false, [({lat_rad}, {lon_rad})], @a(dd) [])>)>"
-        # Actually constructing the variant object is better.
+            # Get current list
+            current_value = self.settings.get_value("locations")
 
-        # Inner struct: (name, code, is_current, coordinates, ???)
-        # coords = [(lat_rad, lon_rad)]
+            # Create a new builder for the array
+            builder = GLib.VariantBuilder(GLib.VariantType("av"))
 
-        inner_variant_val = GLib.Variant("(sbsa(dd)a(dd))", (
-            name,
-            "",
-            False,
-            [(lat_rad, lon_rad)],
-            []
-        ))
+            # Add existing items
+            if current_value:
+                iter_ = current_value.iter()
+                while True:
+                    child = iter_.next_value()
+                    if not child:
+                        break
+                    builder.add_value(child)
 
-        outer_variant = GLib.Variant("(uv)", (2, inner_variant_val))
+            # Add new item
+            builder.add_value(new_location_variant)
 
-        # Variant wrapper around that?
-        # The setting is `av` (array of variants).
-        location_variant = GLib.Variant("v", outer_variant)
+            new_array = builder.end()
+            self.settings.set_value("locations", new_array)
+            logger.info(f"Added location: {name}")
+            return True
 
-        # Build new list
-        new_list = []
-        if current_locs:
-            for i in range(current_locs.n_children()):
-                new_list.append(current_locs.get_child_value(i))
-
-        new_list.append(location_variant)
-
-        new_value = GLib.Variant("av", new_list)
-        self.settings.set_value("locations", new_value)
-
-        # TODO: Handle flatpak logic if needed (via flatpak run --command=gsettings)
-        # But native is preferred.
-
-from gi.repository import GLib
+        except Exception as e:
+            logger.error(f"Failed to add location: {e}")
+            return False

@@ -5,9 +5,11 @@ from gi.repository import Gtk, Adw, GLib
 from fastflx1.const import SERVICE_ALARM, SERVICE_GUARD, SERVICE_GESTURES, ICON_APP
 from fastflx1.utils import run_command, logger
 from fastflx1.gui.dialogs import ExecutionDialog
+from fastflx1.gui.weather_dialog import WeatherDialog
 from fastflx1.actions.shortcuts import ShortcutsManager
 from fastflx1.system.package_manager import PackageManager
 from fastflx1.system.andromeda import AndromedaManager
+from fastflx1.system.keyboard import KeyboardManager
 from fastflx1.system.weather import WeatherManager
 
 class TweaksPage(Adw.PreferencesPage):
@@ -77,8 +79,18 @@ class ActionsPage(Adw.PreferencesPage):
 
         add_btn(icon="camera-photo-symbolic", callback=self.shortcuts.take_screenshot)
         add_btn(icon="system-shutdown-symbolic", callback=self.shortcuts.kill_active_window, color_class="destructive-action")
-        # Flashlight (toggle) - maybe stateful button?
         add_btn(icon="flashlight-symbolic", callback=self.shortcuts.toggle_flashlight, color_class="suggested-action")
+
+        # Weather Group
+        weather_group = Adw.PreferencesGroup(title="Weather")
+        self.add(weather_group)
+        weather_row = Adw.ActionRow(title="Add Location")
+        weather_group.add(weather_row)
+
+        weather_btn = Gtk.Button(label="Search...")
+        weather_btn.set_valign(Gtk.Align.CENTER)
+        weather_btn.connect("clicked", self._open_weather_dialog)
+        weather_row.add_suffix(weather_btn)
 
         # Andromeda Group
         andro_group = Adw.PreferencesGroup(title="Andromeda Shared Folders")
@@ -88,11 +100,6 @@ class ActionsPage(Adw.PreferencesPage):
         andro_group.add(mount_row)
 
         def mount_cb():
-            # This runs via execution dialog because it needs root (pkexec)
-            # The AndromedaManager has python methods, but we need to run them as root.
-            # We can use a small python wrapper script or just construct the python command.
-            # `pkexec python3 -c 'from fastflx1.system.andromeda import AndromedaManager; AndromedaManager().mount()'`
-            # This requires PYTHONPATH to be set or package installed.
             cmd = "python3 -c \"from fastflx1.system.andromeda import AndromedaManager; AndromedaManager().mount()\""
             dlg = ExecutionDialog(self.window, "Mounting Shared Folders", cmd, as_root=True)
             dlg.present()
@@ -114,18 +121,55 @@ class ActionsPage(Adw.PreferencesPage):
         unmount_btn.connect("clicked", lambda x: unmount_cb())
         mount_row.add_suffix(unmount_btn)
 
+    def _open_weather_dialog(self, btn):
+        dlg = WeatherDialog(self.window)
+        dlg.present()
+
 class SystemPage(Adw.PreferencesPage):
     def __init__(self, window, **kwargs):
         super().__init__(title="System", icon_name="emblem-system-symbolic", **kwargs)
         self.window = window
         self.pkg_mgr = PackageManager()
-
-        group = Adw.PreferencesGroup(title="Environment")
-        self.add(group)
+        self.kbd_mgr = KeyboardManager()
 
         def run_pkg_cmd(title, cmd):
             dlg = ExecutionDialog(self.window, title, cmd, as_root=True)
             dlg.present()
+
+        # Keyboard Config
+        kbd_group = Adw.PreferencesGroup(title="Keyboard")
+        self.add(kbd_group)
+
+        # Squeekboard install
+        if not self.kbd_mgr.check_squeekboard_installed():
+            install_row = Adw.ActionRow(title="Squeekboard Missing")
+            install_btn = Gtk.Button(label="Install")
+            install_btn.set_valign(Gtk.Align.CENTER)
+            install_btn.connect("clicked", lambda x: run_pkg_cmd("Installing Squeekboard", self.kbd_mgr.install_squeekboard()))
+            install_row.add_suffix(install_btn)
+            kbd_group.add(install_row)
+
+        # Keyboard Selection
+        kbd_select_row = Adw.ComboRow(title="Default Keyboard")
+        kbd_model = Gtk.StringList()
+        kbd_model.append("Squeekboard")
+        kbd_model.append("Phosh OSK (Stub)")
+
+        kbd_select_row.set_model(kbd_model)
+
+        # Set current selection
+        current = self.kbd_mgr.get_current_keyboard()
+        if current == "squeekboard":
+            kbd_select_row.set_selected(0)
+        elif current == "phosh-osk":
+            kbd_select_row.set_selected(1)
+
+        kbd_select_row.connect("notify::selected", self._on_kbd_changed)
+        kbd_group.add(kbd_select_row)
+
+        # Environment Group
+        group = Adw.PreferencesGroup(title="Environment")
+        self.add(group)
 
         # Switch Env
         env_row = Adw.ActionRow(title="Switch Environment")
@@ -163,3 +207,11 @@ class SystemPage(Adw.PreferencesPage):
         branchy_btn.set_valign(Gtk.Align.CENTER)
         branchy_btn.connect("clicked", lambda x: run_pkg_cmd("Installing Branchy", self.pkg_mgr.install_branchy()))
         branchy_row.add_suffix(branchy_btn)
+
+    def _on_kbd_changed(self, row, param):
+        selected = row.get_selected()
+        type_ = "squeekboard" if selected == 0 else "phosh-osk"
+        cmd = self.kbd_mgr.set_keyboard(type_)
+        if cmd:
+            dlg = ExecutionDialog(self.window, "Changing Keyboard", cmd, as_root=True)
+            dlg.present()
