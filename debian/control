@@ -12,7 +12,8 @@ Depends: ${python3:Depends}, ${misc:Depends},
          libadwaita-1-0, gir1.2-adw-1,
          lisgd, wtype, curl, inotify-tools, bindfs, policykit-1,
          gstreamer1.0-tools, gstreamer1.0-plugins-good,
-         alsa-utils, wl-clipboard, git
+         alsa-utils, wl-clipboard, git,
+         libpam-parallel, libpam-biomd
 Description: Tweaks and tools for FuriOS/Linux Phones
  Tweak-FLX1s provides tweaks like alarm volume fix, gesture shortcuts,
  and Andromeda shared folder management, wrapped in a modern GTK4 GUI.

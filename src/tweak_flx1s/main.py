@@ -1,8 +1,15 @@
+"""
+Main entry point for Tweak-FLX1s.
+Copyright (C) 2024 Alaraajavamma <aki@urheiluaki.fi>
+License: GPL-3.0-or-later
+"""
+
 import sys
 import argparse
-from tweak_flx1s.utils import setup_logging, logger
+from tweak_flx1s.utils import setup_logging
 
 def main():
+    """Parses arguments and dispatches actions."""
     setup_logging()
 
     parser = argparse.ArgumentParser(description="Tweak-FLX1s")
@@ -66,6 +73,8 @@ def main():
              mgr.toggle_flashlight()
          elif args.action == "kill-window":
              mgr.kill_active_window()
+         elif args.action == "paste":
+             mgr.paste_clipboard()
          return
 
     from tweak_flx1s.gui.app import start_gui

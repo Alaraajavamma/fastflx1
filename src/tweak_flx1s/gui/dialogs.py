@@ -1,3 +1,9 @@
+"""
+Common dialogs.
+Copyright (C) 2024 Alaraajavamma <aki@urheiluaki.fi>
+License: GPL-3.0-or-later
+"""
+
 import gi
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
@@ -7,6 +13,7 @@ import threading
 from tweak_flx1s.utils import logger
 
 class ExecutionDialog(Adw.MessageDialog):
+    """Dialog that runs a shell command and shows output."""
     def __init__(self, parent, title, command, as_root=False, on_finish=None):
         super().__init__(heading=title, transient_for=parent)
         self.set_default_size(300, 400)

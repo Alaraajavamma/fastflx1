@@ -1,3 +1,9 @@
+"""
+Application entry point for GUI.
+Copyright (C) 2024 Alaraajavamma <aki@urheiluaki.fi>
+License: GPL-3.0-or-later
+"""
+
 import sys
 import gi
 gi.require_version('Gtk', '4.0')
@@ -8,11 +14,11 @@ from tweak_flx1s.gui.window import MainWindow
 from tweak_flx1s.utils import logger
 
 class FastFLX1App(Adw.Application):
+    """Main Application class using libadwaita."""
     def __init__(self, **kwargs):
         super().__init__(application_id=APP_ID,
                          flags=Gio.ApplicationFlags.FLAGS_NONE,
                          **kwargs)
-        # self.set_resource_base_path("/io/FuriOS/Tweak-FLX1s") # No resources yet
 
     def do_startup(self):
         Adw.Application.do_startup(self)
@@ -24,5 +30,6 @@ class FastFLX1App(Adw.Application):
         win.present()
 
 def start_gui():
+    """Starts the GUI application."""
     app = FastFLX1App()
     return app.run(sys.argv)

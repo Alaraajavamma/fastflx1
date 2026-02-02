@@ -1,3 +1,9 @@
+"""
+Button configuration and handling.
+Copyright (C) 2024 Alaraajavamma <aki@urheiluaki.fi>
+License: GPL-3.0-or-later
+"""
+
 import os
 import json
 from tweak_flx1s.utils import logger, run_command
@@ -11,7 +17,7 @@ PREDEFINED_ACTIONS = {
     "Paste (Ctrl+V)": "wtype -M ctrl v -m ctrl",
     "Cut (Ctrl+X)": "wtype -M ctrl x -m ctrl",
     "Select All & Copy": "wtype -M ctrl a -m ctrl && wtype -M ctrl c -m ctrl",
-    "Paste from Clipboard": "bash -c 'CONTENT=$(wl-paste); if [ -z \"$CONTENT\" ]; then notify-send \"Clipboard Empty\"; else wtype \"$CONTENT\"; fi'",
+    "Paste from Clipboard": "tweak-flx1s --action paste",
     "Kill Active Window": "wtype -M alt -P F4 -m alt -p F4",
     "Switch Window": "wtype -M alt -P tab -m alt -p tab",
     "Screenshot": "tweak-flx1s --action screenshot",
@@ -38,10 +44,12 @@ DEFAULT_CONFIG = {
 }
 
 class ButtonManager:
+    """Manages button presses and configuration."""
     def __init__(self):
         self.config = self._load_config()
 
     def _load_config(self):
+        """Loads configuration from JSON file."""
         if not os.path.exists(CONFIG_FILE):
             return DEFAULT_CONFIG
         try:
@@ -52,6 +60,7 @@ class ButtonManager:
             return DEFAULT_CONFIG
 
     def save_config(self, new_config=None):
+        """Saves configuration to JSON file."""
         if new_config:
             self.config = new_config
         os.makedirs(os.path.dirname(CONFIG_FILE), exist_ok=True)

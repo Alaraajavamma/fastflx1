@@ -1,3 +1,9 @@
+"""
+Action execution helpers.
+Copyright (C) 2024 Alaraajavamma <aki@urheiluaki.fi>
+License: GPL-3.0-or-later
+"""
+
 import os
 import subprocess
 from tweak_flx1s.utils import logger, run_command
@@ -27,6 +33,7 @@ def is_locked():
         return False
 
 def is_wofi_running():
+    """Checks if wofi is currently running."""
     try:
         subprocess.check_call(["pgrep", "-x", "wofi"], stdout=subprocess.DEVNULL)
         return True
@@ -34,11 +41,13 @@ def is_wofi_running():
         return False
 
 def execute_command(cmd):
+    """Executes a shell command in background."""
     if cmd:
         logger.info(f"Executing command: {cmd}")
         subprocess.Popen(cmd, shell=True)
 
 def show_wofi_menu(items):
+    """Shows a wofi menu with given items."""
     if len(items) > 7:
         logger.warning("Too many items for Wofi menu, truncating to 7.")
         items = items[:7]

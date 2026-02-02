@@ -1,4 +1,7 @@
 #!/bin/bash
+# Copyright (C) 2024 Alaraajavamma <aki@urheiluaki.fi>
+# License: GPL-3.0-or-later
+
 set -e
 
 if [ "$1" = "remove" ]; then
@@ -9,15 +12,12 @@ if [ "$1" = "remove" ]; then
     if [ -d "$TARGET_HOME" ]; then
         echo "Cleaning up Tweak-FLX1s for user $TARGET_USER..."
 
-        # 1. Clean up broken systemd user service symlinks
-        # The unit files in /usr/lib/systemd/user/ are removed by dpkg.
-        # But enabled links in ~/.config/systemd/user/ might remain.
+        # Clean up broken systemd user service symlinks
         rm -f "$TARGET_HOME/.config/systemd/user/default.target.wants/tweak-flx1s-alarm.service"
         rm -f "$TARGET_HOME/.config/systemd/user/default.target.wants/tweak-flx1s-guard.service"
         rm -f "$TARGET_HOME/.config/systemd/user/default.target.wants/tweak-flx1s-gestures.service"
 
-        # 2. Restore Andromeda Shared Folders permissions
-        # This is critical to avoid permission issues after uninstall.
+        # Restore Andromeda Shared Folders permissions
         echo "Restoring folder permissions..."
         for dir in "$TARGET_HOME"/*; do
             if [ -d "$dir" ]; then
@@ -32,12 +32,21 @@ if [ "$1" = "remove" ]; then
             fi
         done
 
-        # 3. Remove configuration files
+        # Remove configuration files
         rm -rf "$TARGET_HOME/.config/tweak-flx1s"
         rm -rf "$TARGET_HOME/.cache/tweak-flx1s"
 
         echo "Tweak-FLX1s cleanup finished."
     fi
+
+    # Restore PAM configuration if backups exist
+    PAM_FILES=("sudo" "polkit-1" "biomd" "common-password")
+    for file in "${PAM_FILES[@]}"; do
+        if [ -f "/etc/pam.d/${file}.bak" ]; then
+            echo "Restoring /etc/pam.d/${file}..."
+            mv "/etc/pam.d/${file}.bak" "/etc/pam.d/${file}"
+        fi
+    done
 fi
 
 #DEBHELPER#

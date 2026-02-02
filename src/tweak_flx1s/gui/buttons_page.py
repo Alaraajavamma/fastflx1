@@ -1,3 +1,9 @@
+"""
+Buttons configuration page.
+Copyright (C) 2024 Alaraajavamma <aki@urheiluaki.fi>
+License: GPL-3.0-or-later
+"""
+
 import gi
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
@@ -6,6 +12,7 @@ from tweak_flx1s.actions.buttons import ButtonManager, PREDEFINED_ACTIONS
 from tweak_flx1s.utils import logger
 
 class WofiMenuEditor(Adw.Window):
+    """Editor window for Wofi menus."""
     def __init__(self, parent, items, on_save):
         super().__init__(transient_for=parent, modal=True, title="Edit Menu")
         self.set_default_size(350, 500)
@@ -141,6 +148,7 @@ class WofiMenuEditor(Adw.Window):
         self.close()
 
 class ButtonsPage(Adw.PreferencesPage):
+    """Page for configuring buttons."""
     def __init__(self, **kwargs):
         super().__init__(title="Buttons", icon_name="input-keyboard-symbolic", **kwargs)
         self.manager = ButtonManager()

@@ -1,3 +1,9 @@
+"""
+PAM configuration management.
+Copyright (C) 2024 Alaraajavamma <aki@urheiluaki.fi>
+License: GPL-3.0-or-later
+"""
+
 import os
 import shutil
 import re

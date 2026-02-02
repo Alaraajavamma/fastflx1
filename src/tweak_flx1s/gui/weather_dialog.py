@@ -1,11 +1,19 @@
+"""
+Weather dialog.
+Copyright (C) 2024 Alaraajavamma <aki@urheiluaki.fi>
+License: GPL-3.0-or-later
+"""
+
 import gi
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
 from gi.repository import Gtk, Adw, GLib
 from tweak_flx1s.system.weather import WeatherManager
 from tweak_flx1s.utils import logger
+import threading
 
 class WeatherDialog(Adw.Window):
+    """Dialog for searching and adding weather locations."""
     def __init__(self, parent):
         super().__init__(transient_for=parent, modal=True, title="Add Location")
         self.set_default_size(350, 200)
@@ -66,9 +74,6 @@ class WeatherDialog(Adw.Window):
         btn.set_sensitive(False)
         self.result_label.set_label("Searching...")
 
-        # Run in thread or async usually, but for simplicity here we assume fast network or block briefly
-        # (Ideally use GLib.idle_add/Thread for network IO in GTK)
-        import threading
         t = threading.Thread(target=self._perform_search, args=(query,))
         t.start()
 
@@ -78,13 +83,6 @@ class WeatherDialog(Adw.Window):
 
     def _on_search_complete(self, data):
         self.search_entry.set_sensitive(True)
-        # Re-enable search button? Accessing widget via hierarchy or stored ref?
-        # I didn't store search_btn.
-        # But this is okay, user can re-trigger by editing text maybe?
-        # Or I should have stored it.
-        # But `search_btn` is local in `__init__`.
-        # Actually I need to re-enable it.
-        # Let's just say once search is done, user sees result.
 
         if data:
             self.current_data = data

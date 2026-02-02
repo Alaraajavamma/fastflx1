@@ -1,3 +1,9 @@
+"""
+Gestures configuration page.
+Copyright (C) 2024 Alaraajavamma <aki@urheiluaki.fi>
+License: GPL-3.0-or-later
+"""
+
 import gi
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
@@ -20,6 +26,7 @@ GESTURE_TEMPLATES = {
 }
 
 class GestureEditor(Adw.Window):
+    """Editor for individual gestures."""
     def __init__(self, parent, gesture_data, on_save):
         super().__init__(transient_for=parent, modal=True, title="Edit Gesture")
         self.set_default_size(400, 600)
@@ -162,6 +169,7 @@ class GestureEditor(Adw.Window):
         self.close()
 
 class GesturesPage(Adw.PreferencesPage):
+    """Page for configuring gestures."""
     def __init__(self, **kwargs):
         super().__init__(title="Gestures", icon_name="input-touchpad-symbolic", **kwargs)
         self.manager = GesturesManager()

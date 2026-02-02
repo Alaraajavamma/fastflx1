@@ -1,10 +1,19 @@
+"""
+Phofono installation management.
+Copyright (C) 2024 Alaraajavamma <aki@urheiluaki.fi>
+License: GPL-3.0-or-later
+"""
+
 import os
 import shutil
 from tweak_flx1s.utils import logger, run_command
 from tweak_flx1s.const import CACHE_DIR
 
 class PhofonoManager:
+    """Manages Phofono package installation and removal."""
+
     def check_installed(self):
+        """Checks if phofono is installed."""
         try:
              run_command("dpkg -s phofono", check=True)
              return True
@@ -12,6 +21,7 @@ class PhofonoManager:
              return False
 
     def prepare_install(self):
+        """Prepares environment for phofono installation."""
         logger.info("Preparing install: stopping services...")
         run_command("systemctl --user stop calls-daemon", check=False)
         run_command("systemctl --user mask calls-daemon", check=False)
@@ -28,6 +38,7 @@ class PhofonoManager:
         return os.path.join(work_dir, "phofono")
 
     def get_install_root_cmd(self, repo_dir):
+        """Returns root script for installation."""
         script = f"""
 set -e
 cd "{repo_dir}"
@@ -45,6 +56,7 @@ echo "Root tasks complete."
         return script
 
     def finish_install(self):
+        """Finalizes installation as user."""
         logger.info("Finishing install: configuring user services...")
         dbus_dir = os.path.expanduser("~/.local/share/dbus-1/services/")
         os.makedirs(dbus_dir, exist_ok=True)
@@ -61,6 +73,7 @@ echo "Root tasks complete."
             shutil.rmtree(work_dir)
 
     def get_uninstall_root_cmd(self):
+        """Returns root script for uninstallation."""
         script = """
 set -e
 echo "Removing package..."
@@ -77,6 +90,7 @@ echo "Root tasks complete."
         return script
 
     def finish_uninstall(self):
+        """Finalizes uninstallation as user."""
         logger.info("Finishing uninstall: restoring user services...")
         run_command("systemctl --user unmask calls-daemon", check=False)
 
