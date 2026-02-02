@@ -44,7 +44,6 @@ class AndromedaManager:
 
         fstab_entries = []
 
-        # 1. Linux -> Android
         logger.info("Mounting Linux -> Android...")
         self._ensure_dir(self.LINUX_MOUNT_BASE, self.ANDROID_UID, self.ANDROID_UID, 0o775)
 
@@ -64,7 +63,6 @@ class AndromedaManager:
             except Exception as e:
                 logger.error(f"Failed to mount {item}: {e}")
 
-        # 2. Android -> Linux
         logger.info("Mounting Android -> Linux...")
         run_command(["sudo", "-u", self.HOST_USER, "mkdir", "-p", self.ANDROID_MOUNT_BASE])
         run_command(["chmod", "775", self.ANDROID_MOUNT_BASE])
@@ -90,10 +88,8 @@ class AndromedaManager:
         else:
             logger.warning(f"Andromeda storage not found: {self.ANDROID_STORAGE_SOURCE}")
 
-        # 3. Update fstab
         self._update_fstab(fstab_entries)
 
-        # 4. Start Permission Guard Service
         service = f"fastflx1-andromeda-fs@{self.HOST_USER}.service"
         logger.info(f"Starting service {service}...")
         try:
@@ -161,7 +157,6 @@ class AndromedaManager:
         logger.info("Permission Guardian: Starting watch...")
 
         watch_dirs = []
-        # Linux dirs
         for item in os.listdir(self.HOST_HOME):
             if item.startswith("."): continue
             if self._is_excluded(item, self.LINUX_EXCLUDE_FOLDERS): continue
@@ -169,15 +164,12 @@ class AndromedaManager:
             if os.path.isdir(path):
                 watch_dirs.append(path)
 
-        # Android base
         if os.path.isdir(self.ANDROID_MOUNT_BASE):
             watch_dirs.append(self.ANDROID_MOUNT_BASE)
 
-        # Initial Sync
         for d in watch_dirs:
-            # Recursive ACL update
-            cmd = ["setfacl", "-Rn",
-                   "-m", f"u:{self.HOST_USER}:rwx,d:u:{self.HOST_USER}:rwx,u:{self.ANDROID_UID}:rwx,d:u:{self.ANDROID_UID}:rwx",
+            cmd = ["setfacl", "-R",
+                   "-m", f"m:rwx,u:{self.HOST_USER}:rwx,d:u:{self.HOST_USER}:rwx,u:{self.ANDROID_UID}:rwx,d:u:{self.ANDROID_UID}:rwx",
                    d]
             run_command(cmd)
 
@@ -193,7 +185,7 @@ class AndromedaManager:
                 new_file = line.strip()
                 logger.info(f"New file detected: {new_file}")
 
-                cmd_update = ["setfacl", "-m", f"u:{self.HOST_USER}:rwx,u:{self.ANDROID_UID}:rwx", new_file]
+                cmd_update = ["setfacl", "-m", f"m:rwx,u:{self.HOST_USER}:rwx,u:{self.ANDROID_UID}:rwx", new_file]
                 run_command(cmd_update, check=False)
         except KeyboardInterrupt:
             process.terminate()
