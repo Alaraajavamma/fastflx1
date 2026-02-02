@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=FastFLX1
+Comment=Tweaks and tools for FuriOS
+Exec=fastflx1
+Terminal=false
+Icon=fastflx1
+Type=Application
+Categories=Utility;Settings;
