@@ -49,6 +49,20 @@ class AndromedaManager:
     def _is_excluded(name, exclude_list):
         return name in exclude_list
 
+    def is_mounted(self):
+        """Checks if shared folders are currently mounted."""
+        mounts = run_command("mount", check=False)
+        return self.LINUX_MOUNT_BASE in mounts or self.ANDROID_MOUNT_BASE in mounts
+
+    def toggle_mount(self):
+        """Toggles the mount state."""
+        if self.is_mounted():
+            self.unmount()
+            return False
+        else:
+            self.mount()
+            return True
+
     def mount(self):
         """Mounts shared folders."""
         if os.geteuid() != 0:
@@ -76,6 +90,8 @@ class AndromedaManager:
 
             try:
                 run_command(["mount", "--bind", source, target])
+                # setfacl
+                run_command(["setfacl", "-m", f"m:rwx,u:{self.HOST_USER}:rwx,u:{self.ANDROID_UID}:rwx", target], check=False)
                 fstab_entries.append(f"{source} {target} none bind 0 0")
             except Exception as e:
                 logger.error(f"Failed to mount {item}: {e}")
@@ -99,6 +115,7 @@ class AndromedaManager:
 
                 try:
                     run_command(["mount", "--bind", source, target])
+                    run_command(["setfacl", "-m", f"m:rwx,u:{self.HOST_USER}:rwx,u:{self.ANDROID_UID}:rwx", target], check=False)
                     fstab_entries.append(f"{source} {target} none bind 0 0")
                 except Exception as e:
                     logger.error(f"Failed to mount {item}: {e}")
@@ -185,6 +202,7 @@ class AndromedaManager:
             watch_dirs.append(self.ANDROID_MOUNT_BASE)
 
         for d in watch_dirs:
+            # -m m:rwx ensures the mask allows rwx
             cmd = ["setfacl", "-R",
                    "-m", f"m:rwx,u:{self.HOST_USER}:rwx,d:u:{self.HOST_USER}:rwx,u:{self.ANDROID_UID}:rwx,d:u:{self.ANDROID_UID}:rwx",
                    d]
@@ -202,6 +220,7 @@ class AndromedaManager:
                 new_file = line.strip()
                 logger.info(f"New file detected: {new_file}")
 
+                # Strict mask enforcement
                 cmd_update = ["setfacl", "-m", f"m:rwx,u:{self.HOST_USER}:rwx,u:{self.ANDROID_UID}:rwx", new_file]
                 run_command(cmd_update, check=False)
         except KeyboardInterrupt:

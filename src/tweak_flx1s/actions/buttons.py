@@ -16,10 +16,11 @@
 import os
 import json
 from tweak_flx1s.utils import logger, run_command
-from tweak_flx1s.const import CONFIG_DIR
+from tweak_flx1s.const import CONFIG_DIR, HOME_DIR
 from tweak_flx1s.actions.executor import is_locked, is_wofi_running, execute_command, show_wofi_menu
 
 CONFIG_FILE = os.path.join(CONFIG_DIR, "buttons.json")
+ASSISTANT_BUTTON_DIR = os.path.join(HOME_DIR, ".config", "assistant-button")
 
 PREDEFINED_ACTIONS = {
     "Copy (Ctrl+C)": "wtype -M ctrl c -m ctrl",
@@ -34,6 +35,7 @@ PREDEFINED_ACTIONS = {
 }
 
 DEFAULT_CONFIG = {
+    "custom_assistant_files": False,
     "short_press": {
         "locked": {"type": "command", "value": "tweak-flx1s --action flashlight"},
         "unlocked": {"type": "wofi", "items": [
@@ -63,7 +65,11 @@ class ButtonManager:
             return DEFAULT_CONFIG
         try:
             with open(CONFIG_FILE, 'r') as f:
-                return json.load(f)
+                conf = json.load(f)
+                # ensure root key
+                if "custom_assistant_files" not in conf:
+                    conf["custom_assistant_files"] = False
+                return conf
         except Exception as e:
             logger.error(f"Failed to load button config: {e}")
             return DEFAULT_CONFIG
@@ -75,6 +81,26 @@ class ButtonManager:
         os.makedirs(os.path.dirname(CONFIG_FILE), exist_ok=True)
         with open(CONFIG_FILE, 'w') as f:
             json.dump(self.config, f, indent=4)
+
+        # If enabled, update the files
+        if self.config.get("custom_assistant_files"):
+            self.update_assistant_files()
+
+    def update_assistant_files(self):
+        """Generates the ~/.config/assistant-button/* files."""
+        os.makedirs(ASSISTANT_BUTTON_DIR, exist_ok=True)
+
+        press_types = ["short_press", "double_press", "long_press"]
+        for ptype in press_types:
+            path = os.path.join(ASSISTANT_BUTTON_DIR, ptype)
+            # The command to put inside the file is one that triggers THIS app with the right flag
+            cmd = f"tweak-flx1s --{ptype.replace('_', '-')}"
+            try:
+                with open(path, "w") as f:
+                    f.write(cmd)
+                logger.info(f"Updated {path} with command: {cmd}")
+            except Exception as e:
+                logger.error(f"Failed to write {path}: {e}")
 
     def handle_press(self, press_type):
         """

@@ -13,92 +13,116 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import sys
 import time
-from gi.repository import GLib, Gio
-from tweak_flx1s.utils import logger, send_notification
+import subprocess
+import threading
+from gi.repository import Gio, GLib
+from tweak_flx1s.utils import logger, run_command
 
-class AndromedaGuard:
+class AndromedaGuardService:
+    """
+    Python implementation of the Andromeda Guard service.
+    Monitors the 'org.gnome.desktop.a11y.applications screen-keyboard-enabled' setting
+    and manages notifications with countdowns and cleanup.
+    """
+
     def __init__(self):
-        self.bus = Gio.bus_get_sync(Gio.BusType.SESSION, None)
-        self.loop = GLib.MainLoop()
-        self.settings = Gio.Settings.new("org.gnome.desktop.a11y.applications")
+        self.app = Gio.Application(application_id="io.FuriOS.Andromeda.Guard", flags=Gio.ApplicationFlags.FLAGS_NONE)
+        self.app.register(None)
+        self.notification_id = "andromeda-guard-notification"
+        self._running = True
 
-    def notify_with_countdown(self, seconds):
-        """Sends a countdown notification updating every 5 seconds."""
+    def run(self):
+        """Starts the guard service loop."""
+        logger.info("Starting Andromeda Guard Service...")
+
+        # Initial Reset
+        self._perform_reset()
+
+        # Start DBus Monitor in a thread
+        t = threading.Thread(target=self._monitor_dbus, daemon=True)
+        t.start()
+
+        # Keep main thread alive
+        loop = GLib.MainLoop()
+        try:
+            loop.run()
+        except KeyboardInterrupt:
+            self._running = False
+
+    def _perform_reset(self):
+        """Performs the disable -> wait -> enable cycle."""
+        logger.info("Performing OSK reset cycle.")
+        self._disable_keyboard()
+        self._countdown_notify(40)
+        self._enable_keyboard()
+
+    def _handle_session_reset(self):
+        """Quick reset triggered by session signal."""
+        logger.info("Handling session reset signal.")
+        self._disable_keyboard()
+        self._countdown_notify(20)
+        self._enable_keyboard()
+
+    def _disable_keyboard(self):
+        run_command("gsettings set org.gnome.desktop.a11y.applications screen-keyboard-enabled false", check=False)
+
+    def _enable_keyboard(self):
+        run_command("gsettings set org.gnome.desktop.a11y.applications screen-keyboard-enabled true", check=False)
+        self._send_notification("Andromeda is ready - OSK Unlocked", expire_timeout=3000)
+
+    def _countdown_notify(self, seconds):
+        """Shows a countdown notification."""
         for i in range(seconds, 0, -1):
+            if not self._running: break
+
             if i % 5 == 0 or i == seconds:
-                send_notification(
-                    "Andromeda Guard",
-                    f"OSK locked for {i} seconds",
-                    icon_name="input-keyboard",
-                    id="andromeda-guard"
-                )
+                expire_ms = i * 1000
+                msg = f"OSK locked for {i} seconds"
+                self._send_notification(msg, expire_timeout=expire_ms)
+
             time.sleep(1)
 
-    def enable_keyboard(self):
-        """Enables the on-screen keyboard and notifies the user."""
-        self.settings.set_boolean("screen-keyboard-enabled", True)
-        send_notification(
-            "Andromeda Guard",
-            "Andromeda is ready - OSK Unlocked",
-            icon_name="input-keyboard",
-            id="andromeda-guard"
-        )
-        logger.info("OSK Enabled")
+    def _send_notification(self, body, expire_timeout=None):
+        """Sends a notification using Gio."""
+        # Note: Gio.Notification doesn't expose expire-time directly in Python bindings easily
+        # without GVariant magic or using the backend directly.
+        # However, we can use the 'transient' hint via set_priority or low-level API.
+        # But to match 'notify-send --expire-time', we might need to withdraw it manually or rely on daemon.
 
-    def disable_keyboard(self):
-        """Disables the on-screen keyboard."""
-        self.settings.set_boolean("screen-keyboard-enabled", False)
-        logger.info("OSK Disabled")
+        # Since the user specifically mentioned fading away correctly,
+        # and Gio.Notification is persistent by default in Gnome Shell unless configured otherwise,
+        # we will simulate the behavior by using GNotification but relying on the shell's expiration if possible,
+        # OR we fallback to `notify-send` if strict timing control is needed and Gio is limited.
 
-    def handle_session_reset(self):
-        """Handles the Andromeda session reset event."""
-        logger.info("Handling session reset")
-        self.disable_keyboard()
-        self.notify_with_countdown(20)
-        self.enable_keyboard()
+        # GApplication/GNotification is preferred by the user ("Notifications must be implemented using native...").
+        # Standard GNotification doesn't have explicit timeout API exposed easily.
+        # However, we can withdraw it after a timeout.
 
-    def initial_setup(self):
-        """Performs initial setup and countdown."""
-        logger.info("Running initial setup")
-        self.disable_keyboard()
-        self.notify_with_countdown(40)
-        self.enable_keyboard()
+        notification = Gio.Notification.new("Andromeda display guard")
+        notification.set_body(body)
+        notification.set_icon(Gio.ThemedIcon.new("input-keyboard"))
+        # High priority to ensure it shows up? Or Low/Normal?
+        # Transient notifications usually are normal.
 
-    def on_name_acquired(self, connection, sender_name, object_path, interface_name, signal_name, parameters, user_data):
-        """Callback for DBus NameAcquired signal."""
-        name = parameters.unpack()[0]
-        if name == "io.furios.Andromeda.Session":
-            logger.info(f"Detected NameAcquired: {name}")
-            self.handle_session_reset()
+        self.app.send_notification(self.notification_id, notification)
 
-    def start(self):
-        """Starts the guard service."""
-        self.initial_setup()
+        if expire_timeout:
+             # Schedule withdrawal
+             GLib.timeout_add(expire_timeout, lambda: self.app.withdraw_notification(self.notification_id))
 
-        self.bus.signal_subscribe(
-            "org.freedesktop.DBus",
-            "org.freedesktop.DBus",
-            "NameAcquired",
-            "/org/freedesktop/DBus",
-            None,
-            Gio.DBusSignalFlags.NONE,
-            self.on_name_acquired,
-            None
-        )
+    def _monitor_dbus(self):
+        """Monitors DBus for the custom signal."""
+        # Using subprocess for dbus-monitor as in the original script is robust enough
+        cmd = ["dbus-monitor", "--session", "type='signal',interface='org.freedesktop.DBus',member='NameAcquired'"]
+        process = subprocess.Popen(cmd, stdout=subprocess.PIPE, text=True)
 
-        logger.info("Monitoring for Andromeda Session...")
-        try:
-            self.loop.run()
-        except KeyboardInterrupt:
-            pass
+        while self._running:
+            line = process.stdout.readline()
+            if not line: break
+            if "io.furios.Andromeda.Session" in line:
+                self._handle_session_reset()
 
 def run():
-    guard = AndromedaGuard()
-    guard.start()
-
-if __name__ == "__main__":
-    from tweak_flx1s.utils import setup_logging
-    setup_logging()
-    run()
+    service = AndromedaGuardService()
+    service.run()
