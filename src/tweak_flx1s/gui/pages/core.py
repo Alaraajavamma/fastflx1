@@ -17,7 +17,7 @@ import gi
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
 from gi.repository import Gtk, Adw, GLib
-from tweak_flx1s.const import SERVICE_ALARM, SERVICE_GUARD, SERVICE_GESTURES, ICON_APP
+from tweak_flx1s.const import SERVICE_ALARM, SERVICE_GUARD, SERVICE_GESTURES
 from tweak_flx1s.utils import run_command, logger
 from tweak_flx1s.gui.dialogs import ExecutionDialog
 from tweak_flx1s.gui.weather_dialog import WeatherDialog
@@ -25,7 +25,6 @@ from tweak_flx1s.actions.shortcuts import ShortcutsManager
 from tweak_flx1s.system.package_manager import PackageManager
 from tweak_flx1s.system.andromeda import AndromedaManager
 from tweak_flx1s.system.keyboard import KeyboardManager
-from tweak_flx1s.system.weather import WeatherManager
 from tweak_flx1s.system.pam import PamManager
 from tweak_flx1s.utils import get_device_model
 
@@ -59,13 +58,16 @@ class TweaksPage(Adw.PreferencesPage):
         try:
             out = run_command(f"systemctl --user is-enabled {service}", check=False)
             return out == "enabled"
-        except:
+        except Exception as e:
+            logger.warning(f"Failed to check status for {service}: {e}")
             return False
 
     def _on_switch_toggled(self, row, param, service):
         action = "enable --now" if row.get_active() else "disable --now"
         logger.info(f"{action} {service}")
-        run_command(f"systemctl --user {action} {service}", check=False)
+        result = run_command(f"systemctl --user {action} {service}", check=False)
+        if result is None:
+            logger.error(f"Failed to {action} {service}")
 
 class ActionsPage(Adw.PreferencesPage):
     """Page for one-off actions."""
@@ -93,7 +95,14 @@ class ActionsPage(Adw.PreferencesPage):
                 btn.add_css_class(color_class)
 
             btn.set_valign(Gtk.Align.CENTER)
-            btn.connect("clicked", lambda x: callback())
+
+            def safe_callback(_):
+                try:
+                    callback()
+                except Exception as e:
+                    logger.error(f"Action failed: {e}")
+
+            btn.connect("clicked", safe_callback)
             row.add_suffix(btn)
 
         add_btn(icon="camera-photo-symbolic", callback=self.shortcuts.take_screenshot)
@@ -117,14 +126,20 @@ class ActionsPage(Adw.PreferencesPage):
         andro_group.add(mount_row)
 
         def mount_cb():
-            cmd = "python3 -c \"from tweak_flx1s.system.andromeda import AndromedaManager; AndromedaManager().mount()\""
-            dlg = ExecutionDialog(self.window, "Mounting Shared Folders", cmd, as_root=True)
-            dlg.present()
+            try:
+                cmd = "python3 -c \"from tweak_flx1s.system.andromeda import AndromedaManager; AndromedaManager().mount()\""
+                dlg = ExecutionDialog(self.window, "Mounting Shared Folders", cmd, as_root=True)
+                dlg.present()
+            except Exception as e:
+                logger.error(f"Mount callback failed: {e}")
 
         def unmount_cb():
-            cmd = "python3 -c \"from tweak_flx1s.system.andromeda import AndromedaManager; AndromedaManager().unmount()\""
-            dlg = ExecutionDialog(self.window, "Unmounting Shared Folders", cmd, as_root=True)
-            dlg.present()
+            try:
+                cmd = "python3 -c \"from tweak_flx1s.system.andromeda import AndromedaManager; AndromedaManager().unmount()\""
+                dlg = ExecutionDialog(self.window, "Unmounting Shared Folders", cmd, as_root=True)
+                dlg.present()
+            except Exception as e:
+                logger.error(f"Unmount callback failed: {e}")
 
         mount_btn = Gtk.Button(label="Mount")
         mount_btn.add_css_class("suggested-action")
@@ -139,8 +154,11 @@ class ActionsPage(Adw.PreferencesPage):
         mount_row.add_suffix(unmount_btn)
 
     def _open_weather_dialog(self, btn):
-        dlg = WeatherDialog(self.window)
-        dlg.present()
+        try:
+            dlg = WeatherDialog(self.window)
+            dlg.present()
+        except Exception as e:
+            logger.error(f"Failed to open weather dialog: {e}")
 
 class SystemPage(Adw.PreferencesPage):
     """Page for system-level settings."""
@@ -151,8 +169,11 @@ class SystemPage(Adw.PreferencesPage):
         self.kbd_mgr = KeyboardManager()
 
         def run_pkg_cmd(title, cmd):
-            dlg = ExecutionDialog(self.window, title, cmd, as_root=True)
-            dlg.present()
+            try:
+                dlg = ExecutionDialog(self.window, title, cmd, as_root=True)
+                dlg.present()
+            except Exception as e:
+                logger.error(f"Failed to start execution dialog for {title}: {e}")
 
         kbd_group = Adw.PreferencesGroup(title="Keyboard")
         self.add(kbd_group)
@@ -230,10 +251,13 @@ class SystemPage(Adw.PreferencesPage):
         pass_row.add_suffix(pass_spin)
 
         def set_pass_len():
-            length = int(pass_spin.get_value())
-            cmd = f"python3 -c \"from tweak_flx1s.system.pam import PamManager; print(PamManager().set_min_password_length({length}))\""
-            dlg = ExecutionDialog(self.window, "Setting Password Policy", cmd, as_root=True)
-            dlg.present()
+            try:
+                length = int(pass_spin.get_value())
+                cmd = f"python3 -c \"from tweak_flx1s.system.pam import PamManager; print(PamManager().set_min_password_length({length}))\""
+                dlg = ExecutionDialog(self.window, "Setting Password Policy", cmd, as_root=True)
+                dlg.present()
+            except Exception as e:
+                logger.error(f"Failed to set password length: {e}")
 
         pass_btn = Gtk.Button(label="Apply")
         pass_btn.set_valign(Gtk.Align.CENTER)
@@ -245,9 +269,12 @@ class SystemPage(Adw.PreferencesPage):
             sec_group.add(fp_row)
 
             def config_fp():
-                cmd = "python3 -c \"from tweak_flx1s.system.pam import PamManager; print(PamManager().configure_fingerprint())\""
-                dlg = ExecutionDialog(self.window, "Configuring Fingerprint", cmd, as_root=True)
-                dlg.present()
+                try:
+                    cmd = "python3 -c \"from tweak_flx1s.system.pam import PamManager; print(PamManager().configure_fingerprint())\""
+                    dlg = ExecutionDialog(self.window, "Configuring Fingerprint", cmd, as_root=True)
+                    dlg.present()
+                except Exception as e:
+                    logger.error(f"Failed to configure fingerprint: {e}")
 
             fp_btn = Gtk.Button(label="Enable")
             fp_btn.set_valign(Gtk.Align.CENTER)
@@ -255,9 +282,12 @@ class SystemPage(Adw.PreferencesPage):
             fp_row.add_suffix(fp_btn)
 
     def _on_kbd_changed(self, row, param):
-        selected = row.get_selected()
-        type_ = "squeekboard" if selected == 0 else "phosh-osk"
-        cmd = self.kbd_mgr.set_keyboard(type_)
-        if cmd:
-            dlg = ExecutionDialog(self.window, "Changing Keyboard", cmd, as_root=True)
-            dlg.present()
+        try:
+            selected = row.get_selected()
+            type_ = "squeekboard" if selected == 0 else "phosh-osk"
+            cmd = self.kbd_mgr.set_keyboard(type_)
+            if cmd:
+                dlg = ExecutionDialog(self.window, "Changing Keyboard", cmd, as_root=True)
+                dlg.present()
+        except Exception as e:
+            logger.error(f"Failed to change keyboard: {e}")
