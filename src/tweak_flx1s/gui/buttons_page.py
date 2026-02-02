@@ -168,9 +168,23 @@ class ButtonsPage(Adw.PreferencesPage):
         self.manager = ButtonManager()
         self.config = self.manager.config
 
+        # Global Settings Group
+        settings_group = Adw.PreferencesGroup(title="Global Settings")
+        self.add(settings_group)
+
+        custom_toggle = Adw.SwitchRow(title="Use Custom Assistant Button Files")
+        custom_toggle.set_subtitle("Writes to ~/.config/assistant-button/ for external use")
+        custom_toggle.set_active(self.config.get("custom_assistant_files", False))
+        custom_toggle.connect("notify::active", self._on_custom_toggle)
+        settings_group.add(custom_toggle)
+
         self._build_section("short_press", "Short Press")
         self._build_section("double_press", "Double Press")
         self._build_section("long_press", "Long Press")
+
+    def _on_custom_toggle(self, row, param):
+        self.config["custom_assistant_files"] = row.get_active()
+        self.manager.save_config(self.config)
 
     def _build_section(self, key, title):
         """Builds the UI section for a button press type."""

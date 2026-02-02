@@ -20,10 +20,9 @@ from gi.repository import Gtk, Adw, Gio, GLib
 from loguru import logger
 from tweak_flx1s.const import APP_NAME
 from tweak_flx1s.gui.pages.info_page import InfoPage
-from tweak_flx1s.gui.pages import TweaksPage, ActionsPage, SystemPage
-from tweak_flx1s.gui.buttons_page import ButtonsPage
-from tweak_flx1s.gui.gestures_page import GesturesPage
-from tweak_flx1s.gui.phofono_page import PhofonoPage
+from tweak_flx1s.gui.pages.tweaks_page import TweaksPage
+from tweak_flx1s.gui.pages.system_page import SystemPage
+from tweak_flx1s.gui.pages.actions_page import ActionsPage
 
 try:
     _
@@ -46,14 +45,26 @@ class MainWindow(Adw.Window):
 
         # Header
         header = Adw.HeaderBar()
+        # Remove default window controls
+        header.set_show_end_title_buttons(False)
+        header.set_show_start_title_buttons(False)
+
         title_lbl = Gtk.Label(label=APP_NAME, css_classes=["title"])
         header.set_title_widget(title_lbl)
 
+        # Info Button (Left)
         info_btn = Gtk.Button(icon_name="dialog-information-symbolic")
         info_btn.add_css_class("flat")
         info_btn.add_css_class("circular")
         info_btn.connect("clicked", lambda b: InfoPage.show(self))
         header.pack_start(info_btn)
+
+        # Close Button (Right) - Custom
+        close_btn = Gtk.Button(icon_name="window-close-symbolic")
+        close_btn.add_css_class("flat")
+        close_btn.add_css_class("circular")
+        close_btn.connect("clicked", self._on_close_clicked)
+        header.pack_end(close_btn)
 
         main_vbox.append(header)
 
@@ -62,25 +73,19 @@ class MainWindow(Adw.Window):
         self.stack.set_vexpand(True)
         main_vbox.append(self.stack)
 
-        # Pages
-        self.tweaks_page = TweaksPage()
+        # Pages (Tweaks, System, Actions)
+        self.tweaks_page = TweaksPage(self)
         self.stack.add_titled(self.tweaks_page, "tweaks", _("Tweaks")).set_icon_name("preferences-system-symbolic")
-
-        self.buttons_page = ButtonsPage()
-        self.stack.add_titled(self.buttons_page, "buttons", _("Buttons")).set_icon_name("input-keyboard-symbolic")
-
-        self.gestures_page = GesturesPage()
-        self.stack.add_titled(self.gestures_page, "gestures", _("Gestures")).set_icon_name("input-touchpad-symbolic")
-
-        self.phofono_page = PhofonoPage(self)
-        self.stack.add_titled(self.phofono_page, "phofono", "Phofono").set_icon_name("call-start-symbolic")
-
-        self.actions_page = ActionsPage(self)
-        self.stack.add_titled(self.actions_page, "actions", _("Actions")).set_icon_name("input-gaming-symbolic")
 
         self.system_page = SystemPage(self)
         self.stack.add_titled(self.system_page, "system", _("System")).set_icon_name("emblem-system-symbolic")
 
+        self.actions_page = ActionsPage(self)
+        self.stack.add_titled(self.actions_page, "actions", _("Actions")).set_icon_name("input-gaming-symbolic")
+
         # Switcher
         self.switcher = Adw.ViewSwitcherBar(stack=self.stack, reveal=True)
         main_vbox.append(self.switcher)
+
+    def _on_close_clicked(self, btn):
+        self.close()

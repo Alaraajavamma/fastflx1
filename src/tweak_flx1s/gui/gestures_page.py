@@ -17,7 +17,7 @@ import gi
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
 from gi.repository import Gtk, Adw, GLib, Gio
-from tweak_flx1s.actions.gestures import GesturesManager
+from tweak_flx1s.actions.gestures import GesturesManager, GESTURE_TEMPLATES
 from tweak_flx1s.actions.buttons import PREDEFINED_ACTIONS
 from tweak_flx1s.gui.buttons_page import WofiMenuEditor
 from tweak_flx1s.utils import logger, run_command
@@ -27,17 +27,6 @@ try:
     _
 except NameError:
     from gettext import gettext as _
-
-GESTURE_TEMPLATES = {
-    "Swipe Left (RL)": "1,RL,*,*,R",
-    "Swipe Right (LR)": "1,LR,*,*,R",
-    "Swipe Up (BT)": "1,BT,*,*,R",
-    "Swipe Down (TB)": "1,TB,*,*,R",
-    "Left Edge Swipe Right": "1,LR,L,*,R",
-    "Right Edge Swipe Left": "1,RL,R,*,R",
-    "Top Edge Swipe Down": "1,TB,T,*,R",
-    "Bottom Edge Swipe Up": "1,BT,B,*,R"
-}
 
 class GestureEditor(Adw.Window):
     """Editor for individual gestures."""
