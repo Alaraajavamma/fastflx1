@@ -1,0 +1,5 @@
+PyGObject
+loguru
+requests
+dbus-python
+psutil
