@@ -10,7 +10,27 @@ def main():
     parser.add_argument("--action", help="Perform a one-off action")
     parser.add_argument("--user", help="Specify target user (for system services)")
 
+    # Button event handlers
+    parser.add_argument("--short-press", action="store_true", help="Handle short press event")
+    parser.add_argument("--double-press", action="store_true", help="Handle double press event")
+    parser.add_argument("--long-press", action="store_true", help="Handle long press event")
+
     args, unknown = parser.parse_known_args()
+
+    if args.short_press:
+        from fastflx1.actions.buttons import ButtonManager
+        ButtonManager().handle_press("short_press")
+        return
+
+    if args.double_press:
+        from fastflx1.actions.buttons import ButtonManager
+        ButtonManager().handle_press("double_press")
+        return
+
+    if args.long_press:
+        from fastflx1.actions.buttons import ButtonManager
+        ButtonManager().handle_press("long_press")
+        return
 
     if args.monitor:
         if args.monitor == "alarm":

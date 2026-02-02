@@ -1,8 +1,6 @@
-data/systemd/fastflx1-alarm.service usr/lib/systemd/user/
-data/systemd/fastflx1-guard.service usr/lib/systemd/user/
-data/systemd/fastflx1-gestures.service usr/lib/systemd/user/
-data/systemd/fastflx1-andromeda-fs@.service lib/systemd/system/
-data/com.gitlab.fastflx1.desktop usr/share/applications/
-files/fastflx1.svg usr/share/icons/hicolor/scalable/apps/
-share/* usr/share/fastflx1/share/
-configs/* usr/share/fastflx1/configs/
+scripts/* usr/bin
+files/fastflx1.desktop usr/share/applications
+files/fastflx1.svg usr/share/icons/hicolor/scalable/apps
+systemd/*.service usr/lib/systemd/user/
+share/squeekboard usr/share/fastflx1/
+files/ring8k.wav usr/share/fastflx1/
