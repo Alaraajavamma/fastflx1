@@ -1,6 +1,6 @@
 scripts/* usr/bin
-files/fastflx1.desktop usr/share/applications
-files/fastflx1.svg usr/share/icons/hicolor/scalable/apps
+files/io.FuriOS.Tweak-FLX1s.desktop usr/share/applications
+files/io.FuriOS.Tweak-FLX1s.svg usr/share/icons/hicolor/scalable/apps
 systemd/*.service usr/lib/systemd/user/
-share/squeekboard usr/share/fastflx1/
-files/ring8k.wav usr/share/fastflx1/
+share/squeekboard usr/share/tweak-flx1s/
+files/ring8k.wav usr/share/tweak-flx1s/

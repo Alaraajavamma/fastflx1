@@ -1,7 +1,7 @@
 import requests
 import urllib.parse
 from gi.repository import Gio, GLib
-from fastflx1.utils import logger, run_command
+from tweak_flx1s.utils import logger, run_command
 
 class WeatherManager:
     def __init__(self):

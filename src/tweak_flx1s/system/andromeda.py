@@ -3,8 +3,8 @@ import sys
 import subprocess
 import shutil
 import time
-from fastflx1.utils import logger, run_command
-from fastflx1.const import HOME_DIR
+from tweak_flx1s.utils import logger, run_command
+from tweak_flx1s.const import HOME_DIR
 
 class AndromedaManager:
     """

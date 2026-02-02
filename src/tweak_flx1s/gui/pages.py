@@ -2,15 +2,15 @@ import gi
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
 from gi.repository import Gtk, Adw, GLib
-from fastflx1.const import SERVICE_ALARM, SERVICE_GUARD, SERVICE_GESTURES, ICON_APP
-from fastflx1.utils import run_command, logger
-from fastflx1.gui.dialogs import ExecutionDialog
-from fastflx1.gui.weather_dialog import WeatherDialog
-from fastflx1.actions.shortcuts import ShortcutsManager
-from fastflx1.system.package_manager import PackageManager
-from fastflx1.system.andromeda import AndromedaManager
-from fastflx1.system.keyboard import KeyboardManager
-from fastflx1.system.weather import WeatherManager
+from tweak_flx1s.const import SERVICE_ALARM, SERVICE_GUARD, SERVICE_GESTURES, ICON_APP
+from tweak_flx1s.utils import run_command, logger
+from tweak_flx1s.gui.dialogs import ExecutionDialog
+from tweak_flx1s.gui.weather_dialog import WeatherDialog
+from tweak_flx1s.actions.shortcuts import ShortcutsManager
+from tweak_flx1s.system.package_manager import PackageManager
+from tweak_flx1s.system.andromeda import AndromedaManager
+from tweak_flx1s.system.keyboard import KeyboardManager
+from tweak_flx1s.system.weather import WeatherManager
 
 class TweaksPage(Adw.PreferencesPage):
     def __init__(self, **kwargs):
@@ -26,7 +26,6 @@ class TweaksPage(Adw.PreferencesPage):
     def _add_service_row(self, group, title, subtitle, service_name):
         row = Adw.SwitchRow(title=title, subtitle=subtitle)
 
-        # Check status
         is_active = self._is_active(service_name)
         row.set_active(is_active)
 
@@ -52,23 +51,19 @@ class ActionsPage(Adw.PreferencesPage):
         self.shortcuts = ShortcutsManager()
         self.andromeda = AndromedaManager()
 
-        # Shortcuts Group
         group = Adw.PreferencesGroup(title="Quick Actions")
         self.add(group)
 
-        # Row with buttons
         row = Adw.ActionRow(title="Shortcuts")
         group.add(row)
 
-        # Helper to add buttons
         def add_btn(icon=None, label=None, callback=None, color_class=None):
             btn = Gtk.Button()
             if icon:
                 btn.set_icon_name(icon)
-                btn.add_css_class("circular") # Round if icon only
+                btn.add_css_class("circular")
             if label:
                 btn.set_label(label)
-                # If text only (no icon passed), it is rect by default.
 
             if color_class:
                 btn.add_css_class(color_class)
@@ -81,7 +76,6 @@ class ActionsPage(Adw.PreferencesPage):
         add_btn(icon="system-shutdown-symbolic", callback=self.shortcuts.kill_active_window, color_class="destructive-action")
         add_btn(icon="flashlight-symbolic", callback=self.shortcuts.toggle_flashlight, color_class="suggested-action")
 
-        # Weather Group
         weather_group = Adw.PreferencesGroup(title="Weather")
         self.add(weather_group)
         weather_row = Adw.ActionRow(title="Add Location")
@@ -92,7 +86,6 @@ class ActionsPage(Adw.PreferencesPage):
         weather_btn.connect("clicked", self._open_weather_dialog)
         weather_row.add_suffix(weather_btn)
 
-        # Andromeda Group
         andro_group = Adw.PreferencesGroup(title="Andromeda Shared Folders")
         self.add(andro_group)
 
@@ -100,12 +93,12 @@ class ActionsPage(Adw.PreferencesPage):
         andro_group.add(mount_row)
 
         def mount_cb():
-            cmd = "python3 -c \"from fastflx1.system.andromeda import AndromedaManager; AndromedaManager().mount()\""
+            cmd = "python3 -c \"from tweak_flx1s.system.andromeda import AndromedaManager; AndromedaManager().mount()\""
             dlg = ExecutionDialog(self.window, "Mounting Shared Folders", cmd, as_root=True)
             dlg.present()
 
         def unmount_cb():
-            cmd = "python3 -c \"from fastflx1.system.andromeda import AndromedaManager; AndromedaManager().unmount()\""
+            cmd = "python3 -c \"from tweak_flx1s.system.andromeda import AndromedaManager; AndromedaManager().unmount()\""
             dlg = ExecutionDialog(self.window, "Unmounting Shared Folders", cmd, as_root=True)
             dlg.present()
 
@@ -136,11 +129,9 @@ class SystemPage(Adw.PreferencesPage):
             dlg = ExecutionDialog(self.window, title, cmd, as_root=True)
             dlg.present()
 
-        # Keyboard Config
         kbd_group = Adw.PreferencesGroup(title="Keyboard")
         self.add(kbd_group)
 
-        # Squeekboard install
         if not self.kbd_mgr.check_squeekboard_installed():
             install_row = Adw.ActionRow(title="Squeekboard Missing")
             install_btn = Gtk.Button(label="Install")
@@ -149,7 +140,6 @@ class SystemPage(Adw.PreferencesPage):
             install_row.add_suffix(install_btn)
             kbd_group.add(install_row)
 
-        # Keyboard Selection
         kbd_select_row = Adw.ComboRow(title="Default Keyboard")
         kbd_model = Gtk.StringList()
         kbd_model.append("Squeekboard")
@@ -157,7 +147,6 @@ class SystemPage(Adw.PreferencesPage):
 
         kbd_select_row.set_model(kbd_model)
 
-        # Set current selection
         current = self.kbd_mgr.get_current_keyboard()
         if current == "squeekboard":
             kbd_select_row.set_selected(0)
@@ -167,11 +156,9 @@ class SystemPage(Adw.PreferencesPage):
         kbd_select_row.connect("notify::selected", self._on_kbd_changed)
         kbd_group.add(kbd_select_row)
 
-        # Environment Group
         group = Adw.PreferencesGroup(title="Environment")
         self.add(group)
 
-        # Switch Env
         env_row = Adw.ActionRow(title="Switch Environment")
         group.add(env_row)
 
@@ -185,7 +172,6 @@ class SystemPage(Adw.PreferencesPage):
         prod_btn.connect("clicked", lambda x: run_pkg_cmd("Switching to Production", self.pkg_mgr.switch_to_production()))
         env_row.add_suffix(prod_btn)
 
-        # Upgrade
         upg_group = Adw.PreferencesGroup(title="Updates")
         self.add(upg_group)
         upg_row = Adw.ActionRow(title="System Upgrade")
@@ -197,7 +183,6 @@ class SystemPage(Adw.PreferencesPage):
         upg_btn.connect("clicked", lambda x: run_pkg_cmd("Upgrading System", self.pkg_mgr.upgrade_system()))
         upg_row.add_suffix(upg_btn)
 
-        # Branchy
         branchy_group = Adw.PreferencesGroup(title="Experimental")
         self.add(branchy_group)
         branchy_row = Adw.ActionRow(title="Install Branchy App Store")

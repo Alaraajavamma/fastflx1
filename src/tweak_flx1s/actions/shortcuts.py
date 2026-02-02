@@ -3,8 +3,8 @@ import subprocess
 import time
 import datetime
 from gi.repository import Gio, GLib
-from fastflx1.utils import logger, run_command
-from fastflx1.const import HOME_DIR
+from tweak_flx1s.utils import logger, run_command
+from tweak_flx1s.const import HOME_DIR
 
 class ShortcutsManager:
     def __init__(self):

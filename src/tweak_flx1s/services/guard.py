@@ -2,7 +2,7 @@ import sys
 import time
 import subprocess
 from gi.repository import GLib, Gio
-from fastflx1.utils import logger, run_command
+from tweak_flx1s.utils import logger, run_command
 
 class AndromedaGuard:
     def __init__(self):
@@ -84,6 +84,6 @@ def run():
     guard.start()
 
 if __name__ == "__main__":
-    from fastflx1.utils import setup_logging
+    from tweak_flx1s.utils import setup_logging
     setup_logging()
     run()

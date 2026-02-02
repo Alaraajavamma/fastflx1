@@ -1,5 +1,5 @@
 import subprocess
-from fastflx1.utils import logger, run_command
+from tweak_flx1s.utils import logger, run_command
 
 class PackageManager:
     def switch_to_staging(self):

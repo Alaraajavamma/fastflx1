@@ -1,9 +1,9 @@
 [Unit]
-Description=FastFLX1 Gesture Shortcuts
+Description=Tweak-FLX1s Alarm Volume Fix
 After=graphical-session.target
 
 [Service]
-ExecStart=/usr/bin/fastflx1 --monitor gestures
+ExecStart=/usr/bin/tweak-flx1s --monitor alarm
 Restart=always
 
 [Install]

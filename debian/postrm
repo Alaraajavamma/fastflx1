@@ -7,14 +7,14 @@ if [ "$1" = "remove" ]; then
     TARGET_HOME=$(getent passwd "$TARGET_USER" | cut -d: -f6)
 
     if [ -d "$TARGET_HOME" ]; then
-        echo "Cleaning up FastFLX1 for user $TARGET_USER..."
+        echo "Cleaning up Tweak-FLX1s for user $TARGET_USER..."
 
         # 1. Clean up broken systemd user service symlinks
         # The unit files in /usr/lib/systemd/user/ are removed by dpkg.
         # But enabled links in ~/.config/systemd/user/ might remain.
-        rm -f "$TARGET_HOME/.config/systemd/user/default.target.wants/fastflx1-alarm.service"
-        rm -f "$TARGET_HOME/.config/systemd/user/default.target.wants/fastflx1-guard.service"
-        rm -f "$TARGET_HOME/.config/systemd/user/default.target.wants/fastflx1-gestures.service"
+        rm -f "$TARGET_HOME/.config/systemd/user/default.target.wants/tweak-flx1s-alarm.service"
+        rm -f "$TARGET_HOME/.config/systemd/user/default.target.wants/tweak-flx1s-guard.service"
+        rm -f "$TARGET_HOME/.config/systemd/user/default.target.wants/tweak-flx1s-gestures.service"
 
         # 2. Restore Andromeda Shared Folders permissions
         # This is critical to avoid permission issues after uninstall.
@@ -32,11 +32,11 @@ if [ "$1" = "remove" ]; then
             fi
         done
 
-        # 3. Remove configuration files (Optional, but requested "disable all tweaks")
-        # rm -rf "$TARGET_HOME/.config/fastflx1"
-        # rm -rf "$TARGET_HOME/.config/assistant-button"
+        # 3. Remove configuration files
+        rm -rf "$TARGET_HOME/.config/tweak-flx1s"
+        rm -rf "$TARGET_HOME/.cache/tweak-flx1s"
 
-        echo "FastFLX1 cleanup finished."
+        echo "Tweak-FLX1s cleanup finished."
     fi
 fi
 
