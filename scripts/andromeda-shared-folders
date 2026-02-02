@@ -187,14 +187,14 @@ run_permission_guardian() {
     # Apply ACLs to all watched directories recursively
     for dir in "${watch_dirs[@]}"; do
         log "  -> Applying ACLs to ${C_GREEN}${dir}${C_RESET}..."
-        setfacl -Rn -m u:${HOST_USER}:rwx,d:u:${HOST_USER}:rwx,u:${ANDROID_UID}:rwx,d:u:${ANDROID_UID}:rwx "$dir"
+        setfacl -R -m m:rwx,u:${HOST_USER}:rwx,d:u:${HOST_USER}:rwx,u:${ANDROID_UID}:rwx,d:u:${ANDROID_UID}:rwx "$dir"
     done
     
     log "Permissions Guardian: Initial sync complete. Monitoring for new files..."
     
     inotifywait -m -r -q -e create -e moved_to --format '%w%f' "${watch_dirs[@]}" | while read -r NEW_FILE_PATH; do
         log "Permissions Guardian: New item: ${NEW_FILE_PATH}"
-        setfacl -m u:${HOST_USER}:rwx,u:${ANDROID_UID}:rwx "${NEW_FILE_PATH}"
+        setfacl -m m:rwx,u:${HOST_USER}:rwx,u:${ANDROID_UID}:rwx "${NEW_FILE_PATH}"
         log "Permissions Guardian: Permissions fixed."
     done
 }
@@ -266,7 +266,7 @@ fi
 # Check if the Andromeda directory exists
 if [[ ! -d "$ANDROID_STORAGE_SOURCE" ]]; then
     error "Andromeda storage not found at: ${ANDROID_STORAGE_SOURCE}"
-    error "Is Andromeda (Waydroid/Anbox) installed and has it been started at least once?"
+    error "Is Andromeda installed and has it been started at least once?"
     exit 1
 fi
 
