@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fastflx1"
+version = "0.1.0"
+description = "FastFLX1 - Tweaks and tools for FuriOS/Linux Phones"
+readme = "README.md"
+authors = [
+  { name = "FastFLX1 Developer", email = "dev@example.com" },
+]
+license = { text = "MIT" }
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: POSIX :: Linux",
+]
+requires-python = ">=3.9"
+dependencies = [
+    "PyGObject",
+    "loguru",
+    "requests",
+    "dbus-python",
+    "psutil",
+]
+
+[project.scripts]
+fastflx1 = "fastflx1.main:main"
+
+[project.urls]
+"Homepage" = "https://gitlab.com/Alaraajavamma/fastflx1"

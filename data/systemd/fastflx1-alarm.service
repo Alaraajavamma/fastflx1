@@ -1,0 +1,11 @@
+[Unit]
+Description=FastFLX1 Alarm Volume Monitor
+After=graphical-session.target
+
+[Service]
+ExecStart=/usr/bin/fastflx1 --monitor alarm
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=graphical-session.target
