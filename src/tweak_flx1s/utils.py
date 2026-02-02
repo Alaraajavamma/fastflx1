@@ -40,3 +40,17 @@ def run_command(command, check=True):
 def check_dependency(name):
     """Checks if a command line tool exists."""
     return shutil.which(name) is not None
+
+def get_device_model():
+    """
+    Returns the device model based on 'uname -n'.
+    Expected values: 'FuriPhoneFLX1', 'FuriPhoneFLX1s', or 'Unknown'.
+    """
+    try:
+        model = run_command("uname -n", check=False)
+        if model in ["FuriPhoneFLX1", "FuriPhoneFLX1s"]:
+            return model
+        return "Unknown"
+    except Exception as e:
+        logger.error(f"Failed to detect device model: {e}")
+        return "Unknown"

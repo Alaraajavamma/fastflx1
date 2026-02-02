@@ -11,6 +11,8 @@ from tweak_flx1s.system.package_manager import PackageManager
 from tweak_flx1s.system.andromeda import AndromedaManager
 from tweak_flx1s.system.keyboard import KeyboardManager
 from tweak_flx1s.system.weather import WeatherManager
+from tweak_flx1s.system.pam import PamManager
+from tweak_flx1s.utils import get_device_model
 
 class TweaksPage(Adw.PreferencesPage):
     def __init__(self, **kwargs):
@@ -192,6 +194,42 @@ class SystemPage(Adw.PreferencesPage):
         branchy_btn.set_valign(Gtk.Align.CENTER)
         branchy_btn.connect("clicked", lambda x: run_pkg_cmd("Installing Branchy", self.pkg_mgr.install_branchy()))
         branchy_row.add_suffix(branchy_btn)
+
+        sec_group = Adw.PreferencesGroup(title="Security")
+        self.add(sec_group)
+
+        pass_row = Adw.ActionRow(title="Minimum Password Length")
+        sec_group.add(pass_row)
+
+        pass_spin = Gtk.SpinButton.new_with_range(1, 100, 1)
+        pass_spin.set_value(1)
+        pass_spin.set_valign(Gtk.Align.CENTER)
+        pass_row.add_suffix(pass_spin)
+
+        def set_pass_len():
+            length = int(pass_spin.get_value())
+            cmd = f"python3 -c \"from tweak_flx1s.system.pam import PamManager; print(PamManager().set_min_password_length({length}))\""
+            dlg = ExecutionDialog(self.window, "Setting Password Policy", cmd, as_root=True)
+            dlg.present()
+
+        pass_btn = Gtk.Button(label="Apply")
+        pass_btn.set_valign(Gtk.Align.CENTER)
+        pass_btn.connect("clicked", lambda x: set_pass_len())
+        pass_row.add_suffix(pass_btn)
+
+        if get_device_model() == "FuriPhoneFLX1":
+            fp_row = Adw.ActionRow(title="Fingerprint Authentication", subtitle="Configure PAM for fingerprint support")
+            sec_group.add(fp_row)
+
+            def config_fp():
+                cmd = "python3 -c \"from tweak_flx1s.system.pam import PamManager; print(PamManager().configure_fingerprint())\""
+                dlg = ExecutionDialog(self.window, "Configuring Fingerprint", cmd, as_root=True)
+                dlg.present()
+
+            fp_btn = Gtk.Button(label="Enable")
+            fp_btn.set_valign(Gtk.Align.CENTER)
+            fp_btn.connect("clicked", lambda x: config_fp())
+            fp_row.add_suffix(fp_btn)
 
     def _on_kbd_changed(self, row, param):
         selected = row.get_selected()

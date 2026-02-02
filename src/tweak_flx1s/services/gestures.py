@@ -2,7 +2,7 @@ import os
 import subprocess
 import signal
 import sys
-from tweak_flx1s.utils import logger
+from tweak_flx1s.utils import logger, get_device_model
 from tweak_flx1s.actions.gestures import GesturesManager
 
 class GestureMonitor:
@@ -10,7 +10,14 @@ class GestureMonitor:
     Monitors gestures using lisgd.
     """
     def __init__(self):
-        self.device = os.environ.get("LISGD_INPUT_DEVICE", "/dev/input/event2")
+        self.device = os.environ.get("LISGD_INPUT_DEVICE")
+        if not self.device:
+            model = get_device_model()
+            if model == "FuriPhoneFLX1s":
+                self.device = "/dev/input/event3"
+            else:
+                self.device = "/dev/input/event2"
+
         self.process = None
         self.manager = GesturesManager()
 
