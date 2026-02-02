@@ -1,18 +1,29 @@
-"""
-Main entry point for Tweak-FLX1s.
-Copyright (C) 2024 Alaraajavamma <aki@urheiluaki.fi>
-License: GPL-3.0-or-later
-"""
+# Copyright (C) 2026 alaraajavamma aki@urheiluaki.fi
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import sys
 import argparse
 from tweak_flx1s.utils import setup_logging
+from tweak_flx1s.core.i18n import install_i18n
 
 def main():
     """Parses arguments and dispatches actions."""
-    setup_logging()
+    install_i18n()
 
     parser = argparse.ArgumentParser(description="Tweak-FLX1s")
+    parser.add_argument("--debug", action="store_true", help="Enable debug logging")
     parser.add_argument("--monitor", help="Start a monitor service")
     parser.add_argument("--action", help="Perform a one-off action")
     parser.add_argument("--user", help="Specify target user (for system services)")
@@ -23,6 +34,7 @@ def main():
     parser.add_argument("--long-press", action="store_true", help="Handle long press event")
 
     args, unknown = parser.parse_known_args()
+    setup_logging(debug=args.debug)
 
     if args.trigger_gesture is not None:
         from tweak_flx1s.actions.gestures import GesturesManager

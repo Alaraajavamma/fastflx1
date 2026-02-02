@@ -1,8 +1,17 @@
-"""
-Phofono management page.
-Copyright (C) 2024 Alaraajavamma <aki@urheiluaki.fi>
-License: GPL-3.0-or-later
-"""
+# Copyright (C) 2026 alaraajavamma aki@urheiluaki.fi
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import gi
 gi.require_version('Gtk', '4.0')
@@ -11,6 +20,11 @@ from gi.repository import Gtk, Adw, GLib
 from tweak_flx1s.system.phofono import PhofonoManager
 from tweak_flx1s.gui.dialogs import ExecutionDialog
 from tweak_flx1s.utils import logger
+
+try:
+    _
+except NameError:
+    from gettext import gettext as _
 
 class PhofonoPage(Adw.PreferencesPage):
     """Page for installing/uninstalling Phofono."""
