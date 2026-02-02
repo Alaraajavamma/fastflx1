@@ -1,6 +1,6 @@
-# FastFLX1
+# Tweak-FLX1s
 
-FastFLX1 is a utility application for FuriOS/Linux Phones (FLX1). It provides various tweaks and tools to enhance the user experience.
+Tweak-FLX1s is a utility application for FuriOS/Linux Phones (FLX1). It provides various tweaks and tools to enhance the user experience.
 
 ## Features
 
@@ -20,19 +20,19 @@ Build and install the package:
 
 ```bash
 dpkg-buildpackage -us -uc
-sudo apt install ../fastflx1_*.deb
+sudo apt install ../tweak-flx1s_*.deb
 ```
 
 ### Manual
 
 Ensure dependencies are installed:
 ```bash
-sudo apt install python3-gi python3-loguru python3-requests python3-psutil libadwaita-1-0 gir1.2-adw-1 lisgd wtype curl inotify-tools bindfs
+sudo apt install python3-gi python3-loguru python3-requests python3-psutil libadwaita-1-0 gir1.2-adw-1 lisgd wtype curl inotify-tools bindfs wl-clipboard
 ```
 
 Install the python package:
 ```bash
-pip install .
+pip install . # Note: User prefers deb installation
 ```
 
 ## Usage
@@ -40,14 +40,14 @@ pip install .
 Launch the application from the app drawer or run:
 
 ```bash
-fastflx1
+tweak-flx1s
 ```
 
 ### CLI Options
 
-*   `fastflx1 --action screenshot`
-*   `fastflx1 --action flashlight`
-*   `fastflx1 --monitor alarm` (Internal use)
+*   `tweak-flx1s --action screenshot`
+*   `tweak-flx1s --action flashlight`
+*   `tweak-flx1s --monitor alarm` (Internal use)
 
 ## License
 

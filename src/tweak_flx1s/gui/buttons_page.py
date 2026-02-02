@@ -2,8 +2,8 @@ import gi
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
 from gi.repository import Gtk, Adw, GLib, Gio
-from fastflx1.actions.buttons import ButtonManager
-from fastflx1.utils import logger
+from tweak_flx1s.actions.buttons import ButtonManager, PREDEFINED_ACTIONS
+from tweak_flx1s.utils import logger
 
 class WofiMenuEditor(Adw.Window):
     def __init__(self, parent, items, on_save):
@@ -65,6 +65,9 @@ class WofiMenuEditor(Adw.Window):
             self.list_box.append(row)
 
     def _on_add(self, btn):
+        if len(self.items) >= 7:
+            logger.warning("Max 7 items reached")
+            return
         self._show_item_dialog(None)
 
     def _on_edit(self, btn, idx):
@@ -97,6 +100,26 @@ class WofiMenuEditor(Adw.Window):
         box.append(cmd_entry)
 
         predefined_grp = Adw.PreferencesGroup(title="Predefined")
+        box.append(predefined_grp)
+
+        predefined_row = Adw.ComboRow(title="Select Action")
+        predefined_model = Gtk.StringList()
+        predefined_model.append("Select...")
+        sorted_keys = sorted(PREDEFINED_ACTIONS.keys())
+        for k in sorted_keys:
+            predefined_model.append(k)
+        predefined_row.set_model(predefined_model)
+
+        def on_predefined_selected(row, param):
+            idx = row.get_selected()
+            if idx > 0:
+                key = sorted_keys[idx-1]
+                cmd = PREDEFINED_ACTIONS[key]
+                cmd_entry.set_text(cmd)
+                label_entry.set_text(key)
+
+        predefined_row.connect("notify::selected", on_predefined_selected)
+        predefined_grp.add(predefined_row)
 
         dlg.set_extra_child(box)
 
@@ -141,6 +164,8 @@ class ButtonsPage(Adw.PreferencesPage):
         l_cmd.connect("apply", self._on_cmd_changed, key, "locked")
         locked_expander.add_row(l_cmd)
 
+        self._add_predefined_helper(locked_expander, l_cmd, key, "locked")
+
         unlocked_conf = self.config.get(key, {}).get("unlocked", {})
         unlocked_expander = Adw.ExpanderRow(title="Unlocked State")
         group.add(unlocked_expander)
@@ -156,6 +181,33 @@ class ButtonsPage(Adw.PreferencesPage):
         unlocked_expander.add_row(type_row)
 
         self._refresh_unlocked_ui(key, unlocked_expander, is_wofi)
+
+    def _add_predefined_helper(self, expander, target_entry, key, state):
+        combo = Adw.ComboRow(title="Predefined Action")
+        model = Gtk.StringList()
+        model.append("Select...")
+        sorted_keys = sorted(PREDEFINED_ACTIONS.keys())
+        for k in sorted_keys:
+            model.append(k)
+        combo.set_model(model)
+
+        def on_selected(row, param):
+            idx = row.get_selected()
+            if idx > 0:
+                action_key = sorted_keys[idx-1]
+                cmd = PREDEFINED_ACTIONS[action_key]
+                target_entry.set_text(cmd)
+                if key not in self.config: self.config[key] = {}
+                if state not in self.config[key]: self.config[key][state] = {}
+                self.config[key][state]["value"] = cmd
+                if state == "locked":
+                    self.config[key][state]["type"] = "command"
+
+                self.manager.save_config(self.config)
+
+        combo.connect("notify::selected", on_selected)
+        expander.add_row(combo)
+        return combo
 
     def _on_cmd_changed(self, entry, key, state):
         val = entry.get_text()
@@ -179,6 +231,7 @@ class ButtonsPage(Adw.PreferencesPage):
 
     def _refresh_unlocked_ui(self, key, expander, is_wofi):
          cmd_row = getattr(self, f"{key}_cmd_row", None)
+         predefined_row = getattr(self, f"{key}_predefined_row", None)
          menu_row = getattr(self, f"{key}_menu_row", None)
 
          if not cmd_row:
@@ -187,6 +240,9 @@ class ButtonsPage(Adw.PreferencesPage):
              cmd_row.connect("apply", self._on_cmd_changed, key, "unlocked")
              expander.add_row(cmd_row)
              setattr(self, f"{key}_cmd_row", cmd_row)
+
+             predefined_row = self._add_predefined_helper(expander, cmd_row, key, "unlocked")
+             setattr(self, f"{key}_predefined_row", predefined_row)
 
          if not menu_row:
              menu_row = Adw.ActionRow(title="Menu Items")
@@ -197,6 +253,8 @@ class ButtonsPage(Adw.PreferencesPage):
              setattr(self, f"{key}_menu_row", menu_row)
 
          cmd_row.set_visible(not is_wofi)
+         if predefined_row:
+             predefined_row.set_visible(not is_wofi)
          menu_row.set_visible(is_wofi)
 
     def _on_edit_menu(self, btn, key):

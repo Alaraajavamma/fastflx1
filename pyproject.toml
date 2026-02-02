@@ -3,12 +3,12 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "fastflx1"
+name = "tweak-flx1s"
 version = "0.1.0"
-description = "FastFLX1 - Tweaks and tools for FuriOS/Linux Phones"
+description = "Tweak-FLX1s - Tweaks and tools for FuriOS/Linux Phones"
 readme = "README.md"
 authors = [
-  { name = "FastFLX1 Developer", email = "dev@example.com" },
+  { name = "Alaraajavamma", email = "aki@urheiluaki.fi" },
 ]
 license = { text = "MIT" }
 classifiers = [
@@ -26,7 +26,7 @@ dependencies = [
 ]
 
 [project.scripts]
-fastflx1 = "fastflx1.main:main"
+tweak-flx1s = "tweak_flx1s.main:main"
 
 [project.urls]
 "Homepage" = "https://gitlab.com/Alaraajavamma/fastflx1"

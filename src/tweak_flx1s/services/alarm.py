@@ -1,7 +1,7 @@
 import sys
 import os
 from gi.repository import GLib, Gio
-from fastflx1.utils import logger, run_command
+from tweak_flx1s.utils import logger, run_command
 
 class AlarmMonitor:
     def __init__(self):
@@ -91,6 +91,6 @@ def run():
     monitor.start()
 
 if __name__ == "__main__":
-    from fastflx1.utils import setup_logging
+    from tweak_flx1s.utils import setup_logging
     setup_logging()
     run()

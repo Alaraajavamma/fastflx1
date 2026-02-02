@@ -1,9 +1,9 @@
 [Unit]
-Description=FastFLX1 Andromeda Guard
+Description=Tweak-FLX1s Gesture Shortcuts
 After=graphical-session.target
 
 [Service]
-ExecStart=/usr/bin/fastflx1 --monitor guard
+ExecStart=/usr/bin/tweak-flx1s --monitor gestures
 Restart=always
 
 [Install]

@@ -1,9 +1,9 @@
 [Unit]
-Description=FastFLX1 Alarm Volume Fix
+Description=Tweak-FLX1s Andromeda Guard
 After=graphical-session.target
 
 [Service]
-ExecStart=/usr/bin/fastflx1 --monitor alarm
+ExecStart=/usr/bin/tweak-flx1s --monitor guard
 Restart=always
 
 [Install]

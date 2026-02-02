@@ -2,8 +2,8 @@ import gi
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
 from gi.repository import Gtk, Adw, GLib
-from fastflx1.system.weather import WeatherManager
-from fastflx1.utils import logger
+from tweak_flx1s.system.weather import WeatherManager
+from tweak_flx1s.utils import logger
 
 class WeatherDialog(Adw.Window):
     def __init__(self, parent):
