@@ -1,3 +1,9 @@
+"""
+Main pages for the GUI.
+Copyright (C) 2024 Alaraajavamma <aki@urheiluaki.fi>
+License: GPL-3.0-or-later
+"""
+
 import gi
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
@@ -15,6 +21,7 @@ from tweak_flx1s.system.pam import PamManager
 from tweak_flx1s.utils import get_device_model
 
 class TweaksPage(Adw.PreferencesPage):
+    """Page for general tweaks."""
     def __init__(self, **kwargs):
         super().__init__(title="Tweaks", icon_name="preferences-system-symbolic", **kwargs)
 
@@ -47,6 +54,7 @@ class TweaksPage(Adw.PreferencesPage):
         run_command(f"systemctl --user {action} {service}", check=False)
 
 class ActionsPage(Adw.PreferencesPage):
+    """Page for one-off actions."""
     def __init__(self, window, **kwargs):
         super().__init__(title="Actions", icon_name="input-gaming-symbolic", **kwargs)
         self.window = window
@@ -121,6 +129,7 @@ class ActionsPage(Adw.PreferencesPage):
         dlg.present()
 
 class SystemPage(Adw.PreferencesPage):
+    """Page for system-level settings."""
     def __init__(self, window, **kwargs):
         super().__init__(title="System", icon_name="emblem-system-symbolic", **kwargs)
         self.window = window

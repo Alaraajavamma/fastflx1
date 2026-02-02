@@ -1,54 +1,77 @@
 # Tweak-FLX1s
 
-Tweak-FLX1s is a utility application for FuriOS/Linux Phones (FLX1). It provides various tweaks and tools to enhance the user experience.
+Tweak-FLX1s is a comprehensive utility and tweaking tool designed for FuriOS and Linux Phones (specifically FuriPhoneFLX1 and FLX1s). It provides a modern GTK4/Libadwaita interface to manage system settings, services, and enhancements.
 
 ## Features
 
-*   **GUI Interface:** Modern GTK4/Libadwaita application to manage tweaks.
-*   **Alarm Volume Fix:** Ensures alarm plays at full volume.
-*   **Gesture Shortcuts:** Edge swipe gestures for window management.
-*   **Andromeda Guard:** Fixes OSK issues when running Andromeda (Android).
-*   **System Actions:** Switch between Staging/Production environments, install Branchy app store.
-*   **Quick Actions:** Screenshot, Flashlight, Kill Apps.
-*   **Shared Folders:** Manage file sharing between Linux and Android (Andromeda).
+### 1. Background Services
+*   **Alarm Volume Fix:** Ensures that the alarm clock plays at full volume and wakes up the device even if it is muted or screen is off.
+*   **Andromeda Guard:** Prevents the On-Screen Keyboard (OSK) from interfering with Andromeda (Android compatibility layer) applications by managing the keyboard state during session transitions.
+*   **Gesture Shortcuts:** Enables edge swipe gestures (using `lisgd`) to trigger configurable actions like app switching, closing windows, or custom commands.
+
+### 2. Button Actions
+Configure actions for physical button presses (Short, Double, Long Press).
+*   **Locked State:** Define specific commands when the screen is locked (e.g., Toggle Flashlight).
+*   **Unlocked State:** Launch commands or open a custom "Wofi" menu with up to 7 items.
+*   **Predefined Actions:** Quickly assign actions like Copy, Paste, Screenshot, Flashlight, or Kill Window.
+
+### 3. Phofono Management
+Easily install and manage **Phofono**, a replacement stack for Calls and Chatty.
+*   Automated installation from Git.
+*   Handles system diversions to disable stock apps safely.
+*   Manages background services (`ofono-toned`, `calls-daemon`).
+
+### 4. Andromeda Shared Folders
+Manage file sharing between the Linux host and the Android container.
+*   **Mount/Unmount:** Bind mount Linux home folders to Android and vice versa.
+*   **Permission Guardian:** Automatically watches and fixes permission issues (ACLs) for shared files to ensure both systems can read/write.
+
+### 5. System Tweaks
+*   **Environment Switching:** Switch between Staging and Production repositories for FuriOS.
+*   **System Upgrade:** Run a full system upgrade with a single click.
+*   **Branchy:** Install the experimental "Branchy" app store.
+*   **Keyboard Management:** Switch between Squeekboard and Phosh-OSK (Stub).
+*   **Weather:** Add locations to GNOME Weather from the app.
+
+### 6. Security
+*   **Password Policy:** Set the minimum password length (modifies PAM configuration).
+*   **Fingerprint Authentication:** Enable fingerprint support on FuriPhoneFLX1 (configures `libpam-biomd` and `libpam-parallel`).
 
 ## Installation
 
-### Debian Package (Recommended)
-
-Build and install the package:
+Tweak-FLX1s is packaged as a Debian package.
 
 ```bash
-dpkg-buildpackage -us -uc
-sudo apt install ../tweak-flx1s_*.deb
-```
-
-### Manual
-
-Ensure dependencies are installed:
-```bash
-sudo apt install python3-gi python3-loguru python3-requests python3-psutil libadwaita-1-0 gir1.2-adw-1 lisgd wtype curl inotify-tools bindfs wl-clipboard
-```
-
-Install the python package:
-```bash
-pip install . # Note: User prefers deb installation
+sudo apt install tweak-flx1s
 ```
 
 ## Usage
 
-Launch the application from the app drawer or run:
+Launch the application from the app drawer ("Tweak-FLX1s").
+
+### CLI Arguments
+The application also supports command-line arguments for triggers and services:
+
+*   `--monitor [alarm|guard|gestures|andromeda-fs]`: Start a background monitor service.
+*   `--action [screenshot|flashlight|kill-window|paste]`: Perform a one-off action.
+*   `--trigger-gesture [index]`: Trigger a specific gesture action.
+*   `--[short|double|long]-press`: Handle button press events.
+
+## Uninstallation
+
+To remove the package and restore system configurations:
 
 ```bash
-tweak-flx1s
+sudo apt remove tweak-flx1s
 ```
 
-### CLI Options
+This will:
+*   Remove the application and services.
+*   Restore modified PAM configurations (sudo, polkit, etc.) from backups.
+*   Clean up user configuration files.
+*   Restore permissions on shared folders.
 
-*   `tweak-flx1s --action screenshot`
-*   `tweak-flx1s --action flashlight`
-*   `tweak-flx1s --monitor alarm` (Internal use)
+## Copyright
 
-## License
-
-MIT
+Copyright (C) 2024 Alaraajavamma <aki@urheiluaki.fi>
+License: GPL-3.0-or-later

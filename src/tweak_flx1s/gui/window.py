@@ -1,3 +1,9 @@
+"""
+Main window implementation.
+Copyright (C) 2024 Alaraajavamma <aki@urheiluaki.fi>
+License: GPL-3.0-or-later
+"""
+
 import gi
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
@@ -9,6 +15,7 @@ from tweak_flx1s.gui.phofono_page import PhofonoPage
 from tweak_flx1s.const import APP_NAME
 
 class MainWindow(Adw.PreferencesWindow):
+    """The main application window."""
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.set_title(APP_NAME)

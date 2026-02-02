@@ -1,14 +1,16 @@
+"""
+Gesture monitor service.
+Copyright (C) 2024 Alaraajavamma <aki@urheiluaki.fi>
+License: GPL-3.0-or-later
+"""
+
 import os
 import subprocess
-import signal
-import sys
 from tweak_flx1s.utils import logger, get_device_model
 from tweak_flx1s.actions.gestures import GesturesManager
 
 class GestureMonitor:
-    """
-    Monitors gestures using lisgd.
-    """
+    """Monitors gestures using lisgd."""
     def __init__(self):
         self.device = os.environ.get("LISGD_INPUT_DEVICE")
         if not self.device:
@@ -22,9 +24,7 @@ class GestureMonitor:
         self.manager = GesturesManager()
 
     def start(self):
-        """
-        Starts the lisgd process with configured gestures.
-        """
+        """Starts the lisgd process with configured gestures."""
         logger.info(f"Starting lisgd on {self.device}")
 
         cmd = ["lisgd", "-d", self.device]

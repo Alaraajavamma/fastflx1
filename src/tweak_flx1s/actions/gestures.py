@@ -1,3 +1,9 @@
+"""
+Gesture configuration and handling.
+Copyright (C) 2024 Alaraajavamma <aki@urheiluaki.fi>
+License: GPL-3.0-or-later
+"""
+
 import os
 import json
 from tweak_flx1s.const import CONFIG_DIR
@@ -36,10 +42,12 @@ DEFAULT_CONFIG = {
 }
 
 class GesturesManager:
+    """Manages gesture configuration and execution."""
     def __init__(self):
         self.config = self._load_config()
 
     def _load_config(self):
+        """Loads gesture configuration."""
         if not os.path.exists(CONFIG_FILE):
             return DEFAULT_CONFIG
         try:
@@ -53,6 +61,7 @@ class GesturesManager:
             return DEFAULT_CONFIG
 
     def save_config(self, new_config=None):
+        """Saves gesture configuration."""
         if new_config:
             self.config = new_config
         os.makedirs(os.path.dirname(CONFIG_FILE), exist_ok=True)
@@ -60,6 +69,7 @@ class GesturesManager:
             json.dump(self.config, f, indent=4)
 
     def handle_gesture(self, index):
+        """Handles a triggered gesture by index."""
         try:
             index = int(index)
         except ValueError:

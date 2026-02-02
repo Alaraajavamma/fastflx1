@@ -1,3 +1,9 @@
+"""
+Andromeda system management.
+Copyright (C) 2024 Alaraajavamma <aki@urheiluaki.fi>
+License: GPL-3.0-or-later
+"""
+
 import os
 import sys
 import subprocess
@@ -23,6 +29,7 @@ class AndromedaManager:
         self._reinit_paths()
 
     def _reinit_paths(self):
+        """Re-initializes paths based on the host user."""
         self.HOST_HOME = os.path.expanduser(f"~{self.HOST_USER}") if self.HOST_USER else HOME_DIR
         self.ANDROID_STORAGE_SOURCE = os.path.join(self.HOST_HOME, ".local/share/andromeda/data/media/0")
         self.LINUX_MOUNT_BASE = os.path.join(self.ANDROID_STORAGE_SOURCE, "Linux-Share")
@@ -34,6 +41,7 @@ class AndromedaManager:
         return name in exclude_list
 
     def mount(self):
+        """Mounts shared folders."""
         if os.geteuid() != 0:
             logger.error("Mount operation requires root privileges.")
             return False
@@ -100,11 +108,11 @@ class AndromedaManager:
         return True
 
     def unmount(self):
+        """Unmounts shared folders."""
         if os.geteuid() != 0:
             logger.error("Unmount operation requires root privileges.")
             return False
 
-        # Stop Permission Guard Service
         service = f"fastflx1-andromeda-fs@{self.HOST_USER}.service"
         logger.info(f"Stopping service {service}...")
         try:
@@ -191,12 +199,14 @@ class AndromedaManager:
             process.terminate()
 
     def _ensure_dir(self, path, uid, gid, mode):
+        """Ensures a directory exists with specific permissions."""
         if not os.path.exists(path):
             os.makedirs(path)
         os.chown(path, int(uid), int(gid))
         os.chmod(path, mode)
 
     def _update_fstab(self, entries):
+        """Updates fstab with new mount entries."""
         if not entries: return
         try:
             with open("/etc/fstab", "r") as f:
@@ -226,6 +236,7 @@ class AndromedaManager:
             logger.error(f"Error updating fstab: {e}")
 
     def _clean_fstab(self):
+        """Removes Andromeda entries from fstab."""
         try:
             with open("/etc/fstab", "r") as f:
                 lines = f.readlines()

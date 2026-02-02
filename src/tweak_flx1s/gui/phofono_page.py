@@ -1,3 +1,9 @@
+"""
+Phofono management page.
+Copyright (C) 2024 Alaraajavamma <aki@urheiluaki.fi>
+License: GPL-3.0-or-later
+"""
+
 import gi
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
@@ -7,6 +13,7 @@ from tweak_flx1s.gui.dialogs import ExecutionDialog
 from tweak_flx1s.utils import logger
 
 class PhofonoPage(Adw.PreferencesPage):
+    """Page for installing/uninstalling Phofono."""
     def __init__(self, window, **kwargs):
         super().__init__(title="Phofono", icon_name="call-start-symbolic", **kwargs)
         self.window = window

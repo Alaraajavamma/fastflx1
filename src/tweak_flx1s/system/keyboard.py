@@ -1,12 +1,17 @@
+"""
+Keyboard management.
+Copyright (C) 2024 Alaraajavamma <aki@urheiluaki.fi>
+License: GPL-3.0-or-later
+"""
+
 import subprocess
 import os
 
 class KeyboardManager:
+    """Manages virtual keyboard selection (Phosh-OSK vs Squeekboard)."""
+
     def check_squeekboard_installed(self):
-        # Check if squeekboard package is installed or the binary exists.
-        # "sudo apt install squeekboard" implies it's a deb.
-        # fastflx1 is installed as deb, so we can check dpkg or look for binary.
-        # dpkg -s squeekboard
+        """Checks if squeekboard package is installed."""
         try:
             subprocess.check_call(["dpkg", "-s", "squeekboard"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
             return True
@@ -14,22 +19,13 @@ class KeyboardManager:
             return False
 
     def install_squeekboard(self):
+        """Returns command to install squeekboard."""
         return "apt install squeekboard -y"
 
     def get_current_keyboard(self):
-        # We need to parse update-alternatives --config Phosh-OSK
-        # But --config is interactive. --query is better if available, but --config is standard.
-        # `update-alternatives --display Phosh-OSK`
+        """Determines currently active virtual keyboard."""
         try:
             out = subprocess.check_output(["update-alternatives", "--display", "Phosh-OSK"], text=True)
-            # Output format:
-            # Phosh-OSK - auto mode
-            #   link best version is ...
-            #   current best version is ...
-            #   ...
-            # /usr/share/applications/sm.puri.Squeekboard.desktop - priority 50
-            # ...
-            # 'link currently points to ...'
 
             for line in out.splitlines():
                  if line.startswith(" link currently points to"):
@@ -43,11 +39,7 @@ class KeyboardManager:
             return "unknown"
 
     def set_keyboard(self, keyboard_type):
-        # keyboard_type: 'squeekboard' or 'phosh-osk'
-        # We need to set the alternative.
-        # Path for squeekboard: /usr/share/applications/sm.puri.Squeekboard.desktop
-        # Path for phosh-osk: /usr/share/phosh-osk-stub/sm.puri.Phosh.OskStub.desktop
-
+        """Returns command to set virtual keyboard."""
         path = ""
         if keyboard_type == "squeekboard":
              path = "/usr/share/applications/sm.puri.Squeekboard.desktop"
