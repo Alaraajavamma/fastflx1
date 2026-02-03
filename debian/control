@@ -2,7 +2,8 @@ Source: tweak-flx1s
 Section: utils
 Priority: optional
 Maintainer: Alaraajavamma <aki@urheiluaki.fi>
-Build-Depends: debhelper-compat (= 12), python3, dh-python, python3-setuptools
+Build-Depends: debhelper-compat (= 12), python3, dh-python, python3-setuptools,
+               python3-gi, python3-loguru, python3-requests, python3-psutil
 Standards-Version: 4.5.0
 
 Package: tweak-flx1s
