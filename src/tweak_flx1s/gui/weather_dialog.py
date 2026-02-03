@@ -107,6 +107,6 @@ class WeatherDialog(Adw.Window):
             success = self.manager.add_location(self.current_data)
             if success:
                 # Close dialog
-                self.close()
+                GLib.idle_add(lambda: self.close() or False)
             else:
                 self.result_label.set_label("Error adding location.")

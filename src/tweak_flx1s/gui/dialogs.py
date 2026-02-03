@@ -22,6 +22,11 @@ import threading
 from loguru import logger
 from tweak_flx1s.actions.buttons import PREDEFINED_ACTIONS
 
+try:
+    _
+except NameError:
+    from gettext import gettext as _
+
 class ExecutionDialog(Adw.MessageDialog):
     """Dialog that runs a shell command and shows output."""
     def __init__(self, parent, title, command, as_root=False, on_finish=None):
@@ -104,7 +109,7 @@ class ExecutionDialog(Adw.MessageDialog):
 
     def _on_response(self, dialog, response_id):
         if response_id == "close":
-             GLib.timeout_add(50, lambda: self.close() or False)
+             GLib.idle_add(lambda: self.close() or False)
 
 class WofiMenuEditor(Adw.Window):
     """Editor window for Wofi menus."""
@@ -209,7 +214,7 @@ class WofiMenuEditor(Adw.Window):
         predefined_model.append("Select...")
         sorted_keys = sorted(PREDEFINED_ACTIONS.keys())
         for k in sorted_keys:
-            predefined_model.append(k)
+            predefined_model.append(_(k))
         predefined_row.set_model(predefined_model)
 
         def on_predefined_selected(row, param):
@@ -218,7 +223,7 @@ class WofiMenuEditor(Adw.Window):
                 key = sorted_keys[idx-1]
                 cmd = PREDEFINED_ACTIONS[key]
                 cmd_entry.set_text(cmd)
-                label_entry.set_text(key)
+                label_entry.set_text(_(key))
 
         predefined_row.connect("notify::selected", on_predefined_selected)
         predefined_grp.add(predefined_row)
@@ -233,6 +238,8 @@ class WofiMenuEditor(Adw.Window):
                 else:
                     self.items[idx] = new_item
                 self._refresh_list()
+            # Wrap close call
+            GLib.idle_add(lambda: d.close() or False)
 
         dlg.connect("response", response_cb)
         dlg.present()
@@ -240,7 +247,8 @@ class WofiMenuEditor(Adw.Window):
     def _on_save_clicked(self, btn):
         if self.on_save:
             self.on_save(self.items)
-        self.close()
+        # Wrap close call
+        GLib.idle_add(lambda: self.close() or False)
 
 class ActionSelectionDialog(Adw.Window):
     """Dialog to select an action type and configure it."""
@@ -305,7 +313,7 @@ class ActionSelectionDialog(Adw.Window):
 
         for key in sorted_keys:
             val = PREDEFINED_ACTIONS[key]
-            row = Adw.ActionRow(title=key)
+            row = Adw.ActionRow(title=_(key))
             chk = Gtk.CheckButton(valign=Gtk.Align.CENTER)
             chk.set_group(cmd_chk)
             chk.set_active(self.config.get("type") == "command" and current_val == val)
@@ -347,4 +355,5 @@ class ActionSelectionDialog(Adw.Window):
 
         if self.on_save:
             self.on_save(self.config)
-        self.close()
+        # Wrap close call
+        GLib.idle_add(lambda: self.close() or False)

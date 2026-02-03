@@ -29,39 +29,39 @@ except NameError:
 class ButtonsPage(Adw.PreferencesPage):
     """Page for configuring buttons."""
     def __init__(self, **kwargs):
-        super().__init__(title="Buttons", icon_name="input-keyboard-symbolic", **kwargs)
+        super().__init__(title=_("Buttons"), icon_name="input-keyboard-symbolic", **kwargs)
         self.manager = ButtonManager()
         self.config = self.manager.config
         self.rows = {}
 
-        self._build_section("short_press", "Short Press")
-        self._build_section("double_press", "Double Press")
-        self._build_section("long_press", "Long Press")
+        self._build_section("short_press", _("Short Press"))
+        self._build_section("double_press", _("Double Press"))
+        self._build_section("long_press", _("Long Press"))
 
     def _build_section(self, key, title):
         """Builds the UI section for a button press type."""
         group = Adw.PreferencesGroup(title=title)
         self.add(group)
 
-        custom_row = Adw.SwitchRow(title="Use Custom Assistant File")
-        custom_row.set_subtitle("Write ~/.config/assistant-button/...")
+        custom_row = Adw.SwitchRow(title=_("Use Custom Assistant File"))
+        custom_row.set_subtitle(_("Write ~/.config/assistant-button/..."))
         custom_row.set_active(self.config.get(key, {}).get("use_custom_file", False))
         custom_row.connect("notify::active", self._on_custom_toggled, key)
         group.add(custom_row)
 
-        locked_row = Adw.ActionRow(title="Locked Action")
+        locked_row = Adw.ActionRow(title=_("Locked Action"))
         self._update_subtitle(locked_row, key, "locked")
 
-        locked_btn = Gtk.Button(label="Edit", valign=Gtk.Align.CENTER)
+        locked_btn = Gtk.Button(label=_("Edit"), valign=Gtk.Align.CENTER)
         locked_btn.connect("clicked", self._on_edit, key, "locked")
         locked_row.add_suffix(locked_btn)
         group.add(locked_row)
         self.rows[(key, "locked")] = locked_row
 
-        unlocked_row = Adw.ActionRow(title="Unlocked Action")
+        unlocked_row = Adw.ActionRow(title=_("Unlocked Action"))
         self._update_subtitle(unlocked_row, key, "unlocked")
 
-        unlocked_btn = Gtk.Button(label="Edit", valign=Gtk.Align.CENTER)
+        unlocked_btn = Gtk.Button(label=_("Edit"), valign=Gtk.Align.CENTER)
         unlocked_btn.connect("clicked", self._on_edit, key, "unlocked")
         unlocked_row.add_suffix(unlocked_btn)
         group.add(unlocked_row)
@@ -78,16 +78,16 @@ class ButtonsPage(Adw.PreferencesPage):
         val = entry.get("value", "")
 
         if atype == "wofi":
-            row.set_subtitle("Wofi Menu")
+            row.set_subtitle(_("Wofi Menu"))
         else:
             found = False
             for pname, pcmd in PREDEFINED_ACTIONS.items():
                 if pcmd == val:
-                    row.set_subtitle(pname)
+                    row.set_subtitle(_(pname))
                     found = True
                     break
             if not found:
-                row.set_subtitle(val if val else "No Action")
+                row.set_subtitle(val if val else _("No Action"))
 
     def _on_custom_toggled(self, row, param, key):
         if key not in self.config: self.config[key] = {}

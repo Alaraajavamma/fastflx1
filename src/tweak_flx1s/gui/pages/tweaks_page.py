@@ -39,37 +39,37 @@ class TweaksPage(Adw.PreferencesPage):
     Android Shared Folders, Custom Sounds, Appearance.
     """
     def __init__(self, window, **kwargs):
-        super().__init__(title="Tweaks", icon_name="preferences-system-symbolic", **kwargs)
+        super().__init__(title=_("Tweaks"), icon_name="preferences-system-symbolic", **kwargs)
         self.window = window
         self.andromeda = AndromedaManager()
         self.sounds = SoundManager()
 
-        appearance_grp = Adw.PreferencesGroup(title="Appearance")
+        appearance_grp = Adw.PreferencesGroup(title=_("Appearance"))
         self.add(appearance_grp)
 
-        css_row = Adw.SwitchRow(title="GTK3 CSS Tweak", subtitle="Apply custom UI scaling tweaks for GTK3 apps")
+        css_row = Adw.SwitchRow(title=_("GTK3 CSS Tweak"), subtitle=_("Apply custom UI scaling tweaks for GTK3 apps"))
         css_row.set_active(self._is_gtk_tweak_active())
         css_row.connect("notify::active", self._on_css_toggled)
         appearance_grp.add(css_row)
 
-        svc_group = Adw.PreferencesGroup(title="Background Services")
+        svc_group = Adw.PreferencesGroup(title=_("Background Services"))
         self.add(svc_group)
 
-        self._add_service_row(svc_group, "Alarm Volume Fix", "Ensure alarm plays at full volume", SERVICE_ALARM)
-        self._add_service_row(svc_group, "Andromeda Guard", "Prevent OSK issues", SERVICE_GUARD)
+        self._add_service_row(svc_group, _("Alarm Volume Fix"), _("Ensure alarm plays at full volume"), SERVICE_ALARM)
+        self._add_service_row(svc_group, _("Andromeda Guard"), _("Prevent OSK issues"), SERVICE_GUARD)
 
-        shared_group = Adw.PreferencesGroup(title="Andromeda Integration")
+        shared_group = Adw.PreferencesGroup(title=_("Andromeda Integration"))
         self.add(shared_group)
 
-        shared_row = Adw.SwitchRow(title="Shared Folders", subtitle="Mount ~/.local/share/andromeda to ~/Android-Share")
+        shared_row = Adw.SwitchRow(title=_("Shared Folders"), subtitle=_("Mount ~/.local/share/andromeda to ~/Android-Share"))
         shared_row.set_active(self.andromeda.is_mounted())
         shared_row.connect("notify::active", self._on_shared_toggled)
         shared_group.add(shared_row)
 
-        sound_group = Adw.PreferencesGroup(title="Audio")
+        sound_group = Adw.PreferencesGroup(title=_("Audio"))
         self.add(sound_group)
 
-        sound_row = Adw.SwitchRow(title="Custom Sound Theme", subtitle="Use fastflx1 custom sounds")
+        sound_row = Adw.SwitchRow(title=_("Custom Sound Theme"), subtitle=_("Use fastflx1 custom sounds"))
         sound_row.set_active(self.sounds.is_custom_theme_active())
         sound_row.connect("notify::active", self._on_sound_toggled)
         sound_group.add(sound_row)
@@ -133,12 +133,12 @@ class TweaksPage(Adw.PreferencesPage):
         if is_active:
             if not self.andromeda.is_mounted():
                 cmd = f"python3 -c \"import sys; from tweak_flx1s.system.andromeda import AndromedaManager; AndromedaManager(user=sys.argv[1]).mount()\" {shlex.quote(user)}"
-                dlg = ExecutionDialog(self.window, "Mounting Shared Folders", cmd, as_root=True)
+                dlg = ExecutionDialog(self.window, _("Mounting Shared Folders"), cmd, as_root=True)
                 dlg.present()
         else:
             if self.andromeda.is_mounted():
                 cmd = f"python3 -c \"import sys; from tweak_flx1s.system.andromeda import AndromedaManager; AndromedaManager(user=sys.argv[1]).unmount()\" {shlex.quote(user)}"
-                dlg = ExecutionDialog(self.window, "Unmounting Shared Folders", cmd, as_root=True)
+                dlg = ExecutionDialog(self.window, _("Unmounting Shared Folders"), cmd, as_root=True)
                 dlg.present()
 
     def _on_sound_toggled(self, row, param):

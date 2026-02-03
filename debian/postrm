@@ -12,10 +12,32 @@ if [ "$1" = "remove" ]; then
     if [ -d "$TARGET_HOME" ]; then
         echo "Cleaning up Tweak-FLX1s for user $TARGET_USER..."
 
+        # Stop and disable user services
+        if [ -x "/bin/systemctl" ]; then
+             systemctl stop tweak-flx1s-andromeda-fs@$TARGET_USER.service 2>/dev/null || true
+             systemctl disable tweak-flx1s-andromeda-fs@$TARGET_USER.service 2>/dev/null || true
+        fi
+
         # Clean up broken systemd user service symlinks
         rm -f "$TARGET_HOME/.config/systemd/user/default.target.wants/tweak-flx1s-alarm.service"
         rm -f "$TARGET_HOME/.config/systemd/user/default.target.wants/tweak-flx1s-guard.service"
         rm -f "$TARGET_HOME/.config/systemd/user/default.target.wants/tweak-flx1s-gestures.service"
+
+        # Unmount shared folders if mounted
+        echo "Unmounting shared folders..."
+        ANDROID_SHARE="$TARGET_HOME/Android-Share"
+        LINUX_SHARE="$TARGET_HOME/.local/share/andromeda/data/media/0/Linux-Share"
+
+        umount -l "$ANDROID_SHARE" 2>/dev/null || true
+        umount -l "$LINUX_SHARE" 2>/dev/null || true
+
+        # Remove mount points
+        if [ -d "$ANDROID_SHARE" ]; then
+            rmdir "$ANDROID_SHARE" 2>/dev/null || true
+        fi
+        if [ -d "$LINUX_SHARE" ]; then
+            rmdir "$LINUX_SHARE" 2>/dev/null || true
+        fi
 
         # Restore Andromeda Shared Folders permissions
         echo "Restoring folder permissions..."
@@ -31,6 +53,12 @@ if [ "$1" = "remove" ]; then
                 fi
             fi
         done
+
+        # Remove custom components
+        echo "Removing custom components..."
+        rm -rf "$TARGET_HOME/.local/share/squeekboard"
+        rm -rf "$TARGET_HOME/.local/share/sounds"
+        rm -f "$TARGET_HOME/.config/gtk-3.0/gtk.css"
 
         # Remove configuration files
         rm -rf "$TARGET_HOME/.config/tweak-flx1s"
