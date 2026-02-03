@@ -29,7 +29,7 @@ def setup_logging(debug=False):
     if debug:
         logger.add(sys.stderr, level="DEBUG")
     else:
-        logger.add(sys.stderr, level="WARNING")
+        logger.add(sys.stderr, level="INFO")
 
 def run_command(command, check=True):
     """

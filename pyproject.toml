@@ -5,27 +5,19 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "tweak-flx1s"
 version = "0.1.0"
-description = "Tweak-FLX1s - Tweaks and tools for FuriOS/Linux Phones"
-readme = "README.md"
+description = "Tweak tool for FuriPhone FLX1s"
 authors = [
-  { name = "Alaraajavamma", email = "aki@urheiluaki.fi" },
+    {name = "Alaraajavamma", email = "aki@urheiluaki.fi"},
 ]
-license = "GPL-3.0-or-later"
-classifiers = [
-    "Programming Language :: Python :: 3",
-    "Operating System :: POSIX :: Linux",
-]
-requires-python = ">=3.9"
+license = {text = "GPL-3.0-or-later"}
 dependencies = [
-    "PyGObject",
+    "pygobject",
     "loguru",
-    "requests",
-    "dbus-python",
-    "psutil",
 ]
+requires-python = ">=3.8"
 
 [project.scripts]
 tweak-flx1s = "tweak_flx1s.main:main"
 
-[project.urls]
-"Homepage" = "https://gitlab.com/Alaraajavamma/fastflx1"
+[tool.setuptools.packages.find]
+where = ["src"]

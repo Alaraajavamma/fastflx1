@@ -30,8 +30,18 @@ class KeyboardManager:
 
     def check_squeekboard_installed(self):
         """Checks if squeekboard package is installed."""
-        res = run_command("dpkg -l squeekboard", check=False)
-        return res is not None and "ii  squeekboard" in res
+        try:
+            # Check dpkg first
+            res = run_command("dpkg -l squeekboard", check=False)
+            if res and "ii  squeekboard" in res:
+                 return True
+            # Fallback to binary check
+            if shutil.which("squeekboard"):
+                 return True
+            return False
+        except Exception as e:
+            logger.error(f"Failed to check squeekboard installation: {e}")
+            return False
 
     def get_current_keyboard(self):
         """Returns the currently selected keyboard alternative."""
@@ -48,7 +58,8 @@ class KeyboardManager:
                     if "stevia" in path: return "phosh-osk-stevia"
                     return path
             return "unknown"
-        except Exception:
+        except Exception as e:
+            logger.error(f"Failed to get current keyboard: {e}")
             return "unknown"
 
     def get_available_keyboards(self):
@@ -58,6 +69,7 @@ class KeyboardManager:
         options = []
         try:
             # Try query first as it might give more info
+            logger.info("Querying available keyboards...")
             out = run_command("update-alternatives --query phosh-osk", check=False)
             if out:
                 for line in out.splitlines():
@@ -72,6 +84,7 @@ class KeyboardManager:
 
             # If query failed or empty, try list
             if not options:
+                 logger.info("Query returned no results, trying list...")
                  out = run_command("update-alternatives --list phosh-osk", check=False)
                  if out:
                     paths = out.splitlines()
@@ -83,6 +96,8 @@ class KeyboardManager:
                         else: name = p
                         options.append({"name": name, "path": p})
 
+            logger.info(f"Found {len(options)} keyboards.")
+
         except Exception as e:
             logger.error(f"Failed to list keyboards: {e}")
 
@@ -90,6 +105,7 @@ class KeyboardManager:
 
     def set_keyboard(self, path):
         """Returns the command to set the keyboard."""
+        logger.info(f"Setting keyboard to {path}")
         return f"update-alternatives --set phosh-osk {path}"
 
     def install_finnish_layout(self):
@@ -112,14 +128,19 @@ class KeyboardManager:
 
     def is_finnish_layout_installed(self):
         """Checks if Finnish layout is installed."""
-        check_path = os.path.join(self.SQUEEKBOARD_DIR, "keyboards", "fi.yaml")
-        return os.path.exists(check_path)
+        try:
+            check_path = os.path.join(self.SQUEEKBOARD_DIR, "keyboards", "fi.yaml")
+            return os.path.exists(check_path)
+        except Exception as e:
+            logger.error(f"Failed to check Finnish layout: {e}")
+            return False
 
     def remove_finnish_layout(self):
         """Removes the custom layout folder."""
         try:
             if os.path.exists(self.SQUEEKBOARD_DIR):
                 shutil.rmtree(self.SQUEEKBOARD_DIR)
+                logger.info("Removed Finnish layout")
             return True
         except Exception as e:
              logger.error(f"Failed to remove Finnish layout: {e}")

@@ -57,11 +57,11 @@ class ActionsPage(Adw.PreferencesPage):
         content = Adw.ToolbarView()
         win.set_content(content)
         header = Adw.HeaderBar()
+        header.set_show_end_title_buttons(False)
+        header.set_show_start_title_buttons(False)
         content.add_top_bar(header)
 
-        # Add close button to header
-        close_btn = Gtk.Button(icon_name="window-close-symbolic")
-        close_btn.add_css_class("flat")
+        close_btn = Gtk.Button(label=_("Close"))
         close_btn.connect("clicked", lambda b: GLib.idle_add(lambda: win.close() or False))
         header.pack_end(close_btn)
 
@@ -75,11 +75,11 @@ class ActionsPage(Adw.PreferencesPage):
         content = Adw.ToolbarView()
         win.set_content(content)
         header = Adw.HeaderBar()
+        header.set_show_end_title_buttons(False)
+        header.set_show_start_title_buttons(False)
         content.add_top_bar(header)
 
-        # Add close button to header
-        close_btn = Gtk.Button(icon_name="window-close-symbolic")
-        close_btn.add_css_class("flat")
+        close_btn = Gtk.Button(label=_("Close"))
         close_btn.connect("clicked", lambda b: GLib.idle_add(lambda: win.close() or False))
         header.pack_end(close_btn)
 

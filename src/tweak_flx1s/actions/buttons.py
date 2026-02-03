@@ -23,7 +23,6 @@ from tweak_flx1s.actions.executor import is_locked, is_wofi_running, execute_com
 CONFIG_FILE = os.path.join(CONFIG_DIR, "buttons.json")
 ASSISTANT_BUTTON_DIR = os.path.join(HOME_DIR, ".config", "assistant-button")
 
-# Dummy wrapper for gettext extraction
 try:
     _
 except NameError:
@@ -41,7 +40,6 @@ PREDEFINED_ACTIONS = {
     _("Flashlight"): "tweak-flx1s --action flashlight"
 }
 
-# Clean up dummy wrapper if we defined it
 if _.__name__ == "_":
     del _
 
@@ -89,8 +87,11 @@ class ButtonManager:
         if new_config:
             self.config = new_config
         os.makedirs(os.path.dirname(CONFIG_FILE), exist_ok=True)
-        with open(CONFIG_FILE, 'w') as f:
-            json.dump(self.config, f, indent=4)
+        try:
+            with open(CONFIG_FILE, 'w') as f:
+                json.dump(self.config, f, indent=4)
+        except Exception as e:
+            logger.error(f"Failed to save button config: {e}")
 
         self.update_assistant_files()
 
