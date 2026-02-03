@@ -28,6 +28,51 @@ try:
 except NameError:
     from gettext import gettext as _
 
+class TemplateSelectionDialog(Adw.Window):
+    """Dialog to select a gesture template."""
+    def __init__(self, parent, on_select):
+        super().__init__(transient_for=parent, modal=True, title=_("Select Template"))
+        self.set_default_size(350, 500)
+        self.on_select = on_select
+
+        content = Adw.ToolbarView()
+        self.set_content(content)
+
+        header = Adw.HeaderBar()
+        header.set_show_end_title_buttons(False)
+        header.set_show_start_title_buttons(False)
+        content.add_top_bar(header)
+
+        close_btn = Gtk.Button(label=_("Close"))
+        close_btn.connect("clicked", lambda x: GLib.idle_add(lambda: self.close() or False))
+        header.pack_end(close_btn)
+
+        list_box = Gtk.ListBox()
+        list_box.add_css_class("boxed-list")
+        list_box.set_selection_mode(Gtk.SelectionMode.NONE)
+
+        scroll = Gtk.ScrolledWindow()
+        scroll.set_child(list_box)
+
+        clamp = Adw.Clamp()
+        clamp.set_child(scroll)
+        content.set_content(clamp)
+
+        sorted_specs = sorted(GESTURE_TEMPLATES.keys())
+        for key in sorted_specs:
+            row = Adw.ActionRow(title=key)
+            row.set_subtitle(GESTURE_TEMPLATES[key])
+            row.set_title_lines(0)
+            row.set_subtitle_lines(0)
+            row.set_activatable(True)
+            row.connect("activated", self._on_row_activated, key)
+            list_box.append(row)
+
+    def _on_row_activated(self, row, key):
+        if self.on_select:
+             self.on_select(key, GESTURE_TEMPLATES[key])
+        GLib.idle_add(lambda: self.close() or False)
+
 class GestureEditor(Adw.Window):
     """Editor for individual gestures."""
     def __init__(self, parent, gesture_data, on_save):
@@ -71,15 +116,13 @@ class GestureEditor(Adw.Window):
         gen_group.add(spec_row)
         self.entries["spec"] = spec_row
 
-        spec_combo = Adw.ComboRow(title=_("Templates"))
-        spec_model = Gtk.StringList()
-        spec_model.append(_("Select Template..."))
-        sorted_specs = sorted(GESTURE_TEMPLATES.keys())
-        for k in sorted_specs:
-            spec_model.append(k)
-        spec_combo.set_model(spec_model)
-        spec_combo.connect("notify::selected", self._on_template_selected, sorted_specs, spec_row)
-        gen_group.add(spec_combo)
+        tmpl_row = Adw.ActionRow(title=_("Template"))
+        tmpl_row.set_subtitle(_("Select from predefined templates"))
+
+        tmpl_btn = Gtk.Button(label=_("Select"), valign=Gtk.Align.CENTER)
+        tmpl_btn.connect("clicked", self._on_select_template, spec_row)
+        tmpl_row.add_suffix(tmpl_btn)
+        gen_group.add(tmpl_row)
 
         act_group = Adw.PreferencesGroup(title=_("Actions"))
         page.add(act_group)
@@ -100,12 +143,12 @@ class GestureEditor(Adw.Window):
         act_group.add(unlocked_row)
         self.rows["unlocked"] = unlocked_row
 
-    def _on_template_selected(self, row, param, keys, entry):
-        idx = row.get_selected()
-        if idx > 0:
-            key = keys[idx-1]
-            val = GESTURE_TEMPLATES[key]
-            entry.set_text(val)
+    def _on_select_template(self, btn, entry):
+        def on_select(key, val):
+             entry.set_text(val)
+
+        dlg = TemplateSelectionDialog(self, on_select)
+        dlg.present()
 
     def _update_subtitle(self, row, state_key):
         conf = self.gesture.get(state_key, {})
@@ -158,20 +201,23 @@ class GesturesPage(Adw.PreferencesPage):
         enable_row.connect("notify::active", self._on_enable_toggled)
         svc_group.add(enable_row)
 
-        group = Adw.PreferencesGroup(title=_("Configured Gestures"))
-        self.add(group)
+        action_group = Adw.PreferencesGroup(title=_("Actions"))
+        self.add(action_group)
 
         add_row = Adw.ActionRow(title=_("Add New Gesture"))
         add_btn = Gtk.Button(icon_name="list-add-symbolic")
         add_btn.set_valign(Gtk.Align.CENTER)
         add_btn.connect("clicked", self._on_add)
         add_row.add_suffix(add_btn)
-        group.add(add_row)
+        action_group.add(add_row)
+
+        list_group = Adw.PreferencesGroup(title=_("Configured Gestures"))
+        self.add(list_group)
 
         self.list_box = Gtk.ListBox()
         self.list_box.add_css_class("boxed-list")
         self.list_box.set_selection_mode(Gtk.SelectionMode.NONE)
-        group.add(self.list_box)
+        list_group.add(self.list_box)
 
         self._refresh_list()
 

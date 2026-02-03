@@ -59,10 +59,10 @@ class WeatherDialog(Adw.Window):
         box.append(self.search_entry)
 
         # Search Button
-        search_btn = Gtk.Button(label=_("Search"))
-        search_btn.add_css_class("suggested-action")
-        search_btn.connect("clicked", self._on_search)
-        box.append(search_btn)
+        self.search_btn = Gtk.Button(label=_("Search"))
+        self.search_btn.add_css_class("suggested-action")
+        self.search_btn.connect("clicked", self._on_search)
+        box.append(self.search_btn)
 
         # Result display
         self.result_frame = Gtk.Frame(label=_("Result"))
@@ -91,7 +91,7 @@ class WeatherDialog(Adw.Window):
 
         # Disable interactions while searching
         self.search_entry.set_sensitive(False)
-        btn.set_sensitive(False)
+        self.search_btn.set_sensitive(False)
         self.result_label.set_label(_("Searching..."))
 
         t = threading.Thread(target=self._perform_search, args=(query,))
@@ -103,6 +103,7 @@ class WeatherDialog(Adw.Window):
 
     def _on_search_complete(self, data):
         self.search_entry.set_sensitive(True)
+        self.search_btn.set_sensitive(True)
 
         if data:
             self.current_data = data

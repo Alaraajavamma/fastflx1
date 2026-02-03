@@ -88,6 +88,7 @@ class ShortcutsManager:
 
     def kill_active_window(self):
         """Simulates Alt+F4 to close the active window."""
+        logger.info("Killing active window (Alt+F4 simulation)")
         run_command("wtype -M alt -P F4 -m alt -p F4")
 
     def kill_ram_eaters(self):
@@ -113,6 +114,7 @@ class ShortcutsManager:
 
     def set_scale(self, scale):
         """Sets the display scale using wlr-randr."""
+        logger.info(f"Setting display scale to {scale}")
         run_command(f"wlr-randr --output 'HWCOMPOSER-1' --scale {scale}")
 
     def take_picture(self):

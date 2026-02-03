@@ -24,9 +24,10 @@ class PhofonoManager:
     def check_installed(self):
         """Checks if phofono is installed."""
         try:
+             logger.debug("Checking if phofono is installed...")
              run_command("dpkg -s phofono", check=True)
              return True
-        except:
+        except Exception:
              return False
 
     def prepare_install(self):

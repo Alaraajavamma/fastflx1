@@ -43,6 +43,7 @@ class SystemPage(Adw.PreferencesPage):
         self.kbd_mgr = KeyboardManager()
         self.phofono_mgr = PhofonoManager()
         self.wofi_mgr = WofiManager()
+        self.pam_mgr = PamManager()
 
         def run_pkg_cmd(title, cmd):
             try:
@@ -130,10 +131,11 @@ class SystemPage(Adw.PreferencesPage):
         bat_row.set_subtitle_lines(0)
         app_group.add(bat_row)
 
-        bat_btn = Gtk.Button(label=_("Install"))
-        bat_btn.set_valign(Gtk.Align.CENTER)
-        bat_btn.connect("clicked", lambda b: GLib.idle_add(lambda: self._install_bat_mon(b) or False))
-        bat_row.add_suffix(bat_btn)
+        self.bat_btn = Gtk.Button(label=_("Install"))
+        self.bat_btn.set_valign(Gtk.Align.CENTER)
+        self.bat_btn.connect("clicked", lambda b: GLib.idle_add(lambda: self._on_bat_mon_clicked(b) or False))
+        bat_row.add_suffix(self.bat_btn)
+        self._refresh_bat_mon()
 
         self.phofono_row = Adw.ActionRow(title=_("Phofono"), subtitle=_("Alternative Phone and Messages App"))
         self.phofono_row.set_title_lines(0)
@@ -165,7 +167,7 @@ class SystemPage(Adw.PreferencesPage):
 
         pass_spin = Gtk.SpinButton.new_with_range(1, 100, 1)
         try:
-             current_len = PamManager().get_min_password_length()
+             current_len = self.pam_mgr.get_min_password_length()
              pass_spin.set_value(current_len if current_len > 0 else 1)
         except Exception as e:
              logger.error(f"Failed to fetch password length: {e}")
@@ -189,24 +191,16 @@ class SystemPage(Adw.PreferencesPage):
         pass_row.add_suffix(pass_btn)
 
         if get_device_model() == "FuriPhoneFLX1":
-            fp_row = Adw.ActionRow(title=_("Fingerprint Authentication"), subtitle=_("Configure PAM for fingerprint support"))
-            fp_row.set_title_lines(0)
-            fp_row.set_subtitle_lines(0)
-            sec_group.add(fp_row)
+            self.fp_row = Adw.ActionRow(title=_("Fingerprint Authentication"), subtitle=_("Configure PAM for fingerprint support"))
+            self.fp_row.set_title_lines(0)
+            self.fp_row.set_subtitle_lines(0)
+            sec_group.add(self.fp_row)
 
-            def config_fp():
-                try:
-                    cmd = "python3 -c \"from tweak_flx1s.system.pam import PamManager; print(PamManager().configure_fingerprint())\""
-                    logger.info("Configuring fingerprint auth")
-                    dlg = ExecutionDialog(self.window, _("Configuring Fingerprint"), cmd, as_root=True)
-                    dlg.present()
-                except Exception as e:
-                    logger.error(f"Failed to configure fingerprint: {e}")
-
-            fp_btn = Gtk.Button(label=_("Enable"))
-            fp_btn.set_valign(Gtk.Align.CENTER)
-            fp_btn.connect("clicked", lambda x: GLib.idle_add(lambda: config_fp() or False))
-            fp_row.add_suffix(fp_btn)
+            self.fp_btn = Gtk.Button(label=_("Enable"))
+            self.fp_btn.set_valign(Gtk.Align.CENTER)
+            self.fp_btn.connect("clicked", lambda x: GLib.idle_add(lambda: self._on_fp_clicked() or False))
+            self.fp_row.add_suffix(self.fp_btn)
+            self._refresh_fp_ui()
 
     def _update_kbd_subtitle(self):
         try:
@@ -269,19 +263,74 @@ class SystemPage(Adw.PreferencesPage):
         except Exception as e:
             logger.error(f"Failed to toggle Wofi config: {e}")
 
-    def _install_bat_mon(self, btn):
+    def _refresh_bat_mon(self):
         try:
-            logger.info("Installing FLX1s-Bat-Mon")
-            cmd = (
-                "rm -rf /tmp/flx1s-bat-mon && "
-                "git clone https://gitlab.com/Alaraajavamma/flx1s-bat-mon /tmp/flx1s-bat-mon && "
-                "cd /tmp/flx1s-bat-mon && "
-                "apt install -y ./flx1s-bat-mon*.deb"
-            )
-            dlg = ExecutionDialog(self.window, _("Installing FLX1s-Bat-Mon"), cmd, as_root=True)
+            installed = self.pkg_mgr.check_package_installed("flx1s-bat-mon")
+            if installed:
+                self.bat_btn.set_label(_("Remove"))
+                self.bat_btn.add_css_class("destructive-action")
+                self.bat_btn.remove_css_class("suggested-action")
+            else:
+                self.bat_btn.set_label(_("Install"))
+                self.bat_btn.add_css_class("suggested-action")
+                self.bat_btn.remove_css_class("destructive-action")
+        except Exception as e:
+            logger.error(f"Failed to refresh Bat Mon status: {e}")
+
+    def _on_bat_mon_clicked(self, btn):
+        try:
+            installed = self.pkg_mgr.check_package_installed("flx1s-bat-mon")
+            if installed:
+                logger.info("Removing FLX1s-Bat-Mon")
+                cmd = "apt remove -y flx1s-bat-mon"
+                dlg = ExecutionDialog(self.window, _("Removing FLX1s-Bat-Mon"), cmd, as_root=True, on_finish=lambda s: self._refresh_bat_mon())
+                dlg.present()
+            else:
+                logger.info("Installing FLX1s-Bat-Mon")
+                cmd = (
+                    "rm -rf /tmp/flx1s-bat-mon && "
+                    "git clone https://gitlab.com/Alaraajavamma/flx1s-bat-mon /tmp/flx1s-bat-mon && "
+                    "cd /tmp/flx1s-bat-mon && "
+                    "apt install -y ./flx1s-bat-mon*.deb"
+                )
+                dlg = ExecutionDialog(self.window, _("Installing FLX1s-Bat-Mon"), cmd, as_root=True, on_finish=lambda s: self._refresh_bat_mon())
+                dlg.present()
+        except Exception as e:
+            logger.error(f"Failed to handle bat mon click: {e}")
+
+    def _refresh_fp_ui(self):
+        try:
+            enabled = self.pam_mgr.check_fingerprint_status()
+            if enabled:
+                self.fp_btn.set_label(_("Remove"))
+                self.fp_btn.add_css_class("destructive-action")
+                self.fp_btn.remove_css_class("suggested-action")
+                self.fp_row.set_subtitle(_("Fingerprint is enabled"))
+            else:
+                self.fp_btn.set_label(_("Enable"))
+                self.fp_btn.add_css_class("suggested-action")
+                self.fp_btn.remove_css_class("destructive-action")
+                self.fp_row.set_subtitle(_("Configure PAM for fingerprint support"))
+        except Exception as e:
+            logger.error(f"Failed to refresh FP UI: {e}")
+
+    def _on_fp_clicked(self):
+        try:
+            enabled = self.pam_mgr.check_fingerprint_status()
+            if enabled:
+                 cmd = "python3 -c \"from tweak_flx1s.system.pam import PamManager; print(PamManager().remove_fingerprint_configuration())\""
+                 title = _("Removing Fingerprint")
+            else:
+                 cmd = "python3 -c \"from tweak_flx1s.system.pam import PamManager; print(PamManager().configure_fingerprint())\""
+                 title = _("Configuring Fingerprint")
+
+            def on_finish(success):
+                if success: self._refresh_fp_ui()
+
+            dlg = ExecutionDialog(self.window, title, cmd, as_root=True, on_finish=on_finish)
             dlg.present()
         except Exception as e:
-            logger.error(f"Failed to install bat mon: {e}")
+            logger.error(f"Failed to handle FP click: {e}")
 
     def _refresh_phofono(self):
         try:

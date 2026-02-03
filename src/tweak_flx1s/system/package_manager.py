@@ -49,6 +49,14 @@ class PackageManager:
         cmd = "sudo apt install furios-app-branchy -y"
         return self._run_in_terminal(cmd)
 
+    def check_package_installed(self, package_name):
+        """Checks if a package is installed."""
+        try:
+            run_command(f"dpkg -s {package_name}", check=True)
+            return True
+        except Exception:
+            return False
+
     def _run_in_terminal(self, command):
         """Helper to format command for execution."""
         return command.replace("sudo ", "")

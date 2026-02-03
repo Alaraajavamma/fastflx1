@@ -91,8 +91,48 @@ account required        pam_permit.so
 
         return "Fingerprint authentication configured successfully."
 
+    def check_fingerprint_status(self):
+        """Checks if fingerprint is configured in PAM."""
+        try:
+            with open("/etc/pam.d/sudo", "r") as f:
+                content = f.read()
+                return "pam_parallel.so" in content
+        except Exception:
+            return False
+
+    def remove_fingerprint_configuration(self):
+        """Restores PAM configuration to defaults (removes fingerprint)."""
+        logger.info("Removing Fingerprint Authentication...")
+        for name, path in self.PAM_FILES.items():
+            backup = f"{path}.bak"
+            if os.path.exists(backup):
+                try:
+                    shutil.copy2(backup, path)
+                    logger.info(f"Restored {path} from backup")
+                except Exception as e:
+                    logger.error(f"Failed to restore {path}: {e}")
+                    return f"Failed to restore {path}: {e}"
+            else:
+                logger.warning(f"No backup found for {path}, cannot safely restore.")
+
+        return "Fingerprint configuration removed (restored backups)."
+
     def get_min_password_length(self):
-        """Reads current minimum password length from /etc/pam.d/common-password."""
+        """Reads current minimum password length."""
+        # Try pwquality.conf first
+        pwquality_conf = "/etc/security/pwquality.conf"
+        if os.path.exists(pwquality_conf):
+            try:
+                with open(pwquality_conf, "r") as f:
+                    for line in f:
+                        if line.strip().startswith("minlen"):
+                             parts = line.split("=")
+                             if len(parts) > 1:
+                                 return int(parts[1].strip())
+            except Exception as e:
+                logger.error(f"Failed to read pwquality.conf: {e}")
+
+        # Fallback to common-password
         file_path = "/etc/pam.d/common-password"
         if not os.path.exists(file_path):
              return 0
@@ -113,10 +153,47 @@ account required        pam_permit.so
 
     def set_min_password_length(self, length):
         """
-        Updates /etc/pam.d/common-password to set minimum password length.
+        Updates configuration to set minimum password length.
         """
         logger.info(f"Setting minimum password length to {length}...")
 
+        pwquality_conf = "/etc/security/pwquality.conf"
+        if os.path.exists(pwquality_conf):
+            return self._update_pwquality_conf(pwquality_conf, length)
+        else:
+            return self._update_pam_unix(length)
+
+    def _update_pwquality_conf(self, path, length):
+        try:
+            backup = f"{path}.bak"
+            shutil.copy2(path, backup)
+            logger.info(f"Backed up {path}")
+
+            with open(path, "r") as f:
+                lines = f.readlines()
+
+            new_lines = []
+            found = False
+            for line in lines:
+                if line.strip().startswith("minlen"):
+                    new_lines.append(f"minlen = {length}\n")
+                    found = True
+                else:
+                    new_lines.append(line)
+
+            if not found:
+                new_lines.append(f"minlen = {length}\n")
+
+            with open(path, "w") as f:
+                f.writelines(new_lines)
+
+            logger.info("Updated pwquality.conf")
+            return "Password configuration updated successfully (pwquality)."
+        except Exception as e:
+            logger.error(f"Failed to update pwquality.conf: {e}")
+            return f"Error: {e}"
+
+    def _update_pam_unix(self, length):
         file_path = "/etc/pam.d/common-password"
         backup_path = "/etc/pam.d/common-password.bak"
 
@@ -153,8 +230,8 @@ account required        pam_permit.so
             with open(file_path, "w") as f:
                 f.write("\n".join(new_lines) + "\n")
 
-            logger.info("Password configuration updated.")
-            return "Password configuration updated successfully."
+            logger.info("Password configuration updated (pam_unix).")
+            return "Password configuration updated successfully (pam_unix)."
 
         except Exception as e:
             logger.error(f"Failed to update password configuration: {e}")

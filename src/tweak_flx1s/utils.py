@@ -17,9 +17,6 @@ import sys
 import shutil
 import subprocess
 import gi
-
-gi.require_version('Gio', '2.0')
-from gi.repository import Gio
 from loguru import logger
 from tweak_flx1s.const import APP_ID
 
@@ -80,6 +77,9 @@ def send_notification(title, body="", icon_name="dialog-information", id=None):
     Sends a notification using Gio.Application.
     """
     try:
+        gi.require_version('Gio', '2.0')
+        from gi.repository import Gio
+
         app = Gio.Application(application_id=APP_ID, flags=Gio.ApplicationFlags.NON_UNIQUE)
         app.register(None)
 
