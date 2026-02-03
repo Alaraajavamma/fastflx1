@@ -31,7 +31,7 @@ except NameError:
 class GestureEditor(Adw.Window):
     """Editor for individual gestures."""
     def __init__(self, parent, gesture_data, on_save):
-        super().__init__(transient_for=parent, modal=True, title="Edit Gesture")
+        super().__init__(transient_for=parent, modal=True, title=_("Edit Gesture"))
         self.set_default_size(400, 600)
         self.gesture = gesture_data.copy()
         self.on_save = on_save
@@ -44,7 +44,7 @@ class GestureEditor(Adw.Window):
         header = Adw.HeaderBar()
         content.add_top_bar(header)
 
-        save_btn = Gtk.Button(label="Save")
+        save_btn = Gtk.Button(label=_("Save"))
         save_btn.add_css_class("suggested-action")
         save_btn.connect("clicked", self._on_save_clicked)
         header.pack_start(save_btn)
@@ -52,22 +52,22 @@ class GestureEditor(Adw.Window):
         page = Adw.PreferencesPage()
         content.set_content(page)
 
-        gen_group = Adw.PreferencesGroup(title="General")
+        gen_group = Adw.PreferencesGroup(title=_("General"))
         page.add(gen_group)
 
-        name_row = Adw.EntryRow(title="Name")
+        name_row = Adw.EntryRow(title=_("Name"))
         name_row.set_text(self.gesture.get("name", ""))
         gen_group.add(name_row)
         self.entries["name"] = name_row
 
-        spec_row = Adw.EntryRow(title="Spec (lisgd)")
+        spec_row = Adw.EntryRow(title=_("Spec (lisgd)"))
         spec_row.set_text(self.gesture.get("spec", ""))
         gen_group.add(spec_row)
         self.entries["spec"] = spec_row
 
-        spec_combo = Adw.ComboRow(title="Templates")
+        spec_combo = Adw.ComboRow(title=_("Templates"))
         spec_model = Gtk.StringList()
-        spec_model.append("Select Template...")
+        spec_model.append(_("Select Template..."))
         sorted_specs = sorted(GESTURE_TEMPLATES.keys())
         for k in sorted_specs:
             spec_model.append(k)
@@ -75,20 +75,20 @@ class GestureEditor(Adw.Window):
         spec_combo.connect("notify::selected", self._on_template_selected, sorted_specs, spec_row)
         gen_group.add(spec_combo)
 
-        act_group = Adw.PreferencesGroup(title="Actions")
+        act_group = Adw.PreferencesGroup(title=_("Actions"))
         page.add(act_group)
 
-        locked_row = Adw.ActionRow(title="Locked State")
+        locked_row = Adw.ActionRow(title=_("Locked State"))
         self._update_subtitle(locked_row, "locked")
-        l_btn = Gtk.Button(label="Edit", valign=Gtk.Align.CENTER)
+        l_btn = Gtk.Button(label=_("Edit"), valign=Gtk.Align.CENTER)
         l_btn.connect("clicked", self._on_edit_action, "locked")
         locked_row.add_suffix(l_btn)
         act_group.add(locked_row)
         self.rows["locked"] = locked_row
 
-        unlocked_row = Adw.ActionRow(title="Unlocked State")
+        unlocked_row = Adw.ActionRow(title=_("Unlocked State"))
         self._update_subtitle(unlocked_row, "unlocked")
-        u_btn = Gtk.Button(label="Edit", valign=Gtk.Align.CENTER)
+        u_btn = Gtk.Button(label=_("Edit"), valign=Gtk.Align.CENTER)
         u_btn.connect("clicked", self._on_edit_action, "unlocked")
         unlocked_row.add_suffix(u_btn)
         act_group.add(unlocked_row)
@@ -107,16 +107,16 @@ class GestureEditor(Adw.Window):
         val = conf.get("value", "")
 
         if atype == "wofi":
-            row.set_subtitle("Wofi Menu")
+            row.set_subtitle(_("Wofi Menu"))
         else:
             found = False
             for pname, pcmd in PREDEFINED_ACTIONS.items():
                 if pcmd == val:
-                    row.set_subtitle(pname)
+                    row.set_subtitle(_(pname))
                     found = True
                     break
             if not found:
-                row.set_subtitle(val if val else "No Action")
+                row.set_subtitle(val if val else _("No Action"))
 
     def _on_edit_action(self, btn, state_key):
         if state_key not in self.gesture: self.gesture[state_key] = {}
@@ -135,27 +135,27 @@ class GestureEditor(Adw.Window):
 
         if self.on_save:
             self.on_save(self.gesture)
-        self.close()
+        GLib.idle_add(lambda: self.close() or False)
 
 class GesturesPage(Adw.PreferencesPage):
     """Page for configuring gestures."""
     def __init__(self, **kwargs):
-        super().__init__(title="Gestures", icon_name="input-touchpad-symbolic", **kwargs)
+        super().__init__(title=_("Gestures"), icon_name="input-touchpad-symbolic", **kwargs)
         self.manager = GesturesManager()
         self.config = self.manager.config
 
-        svc_group = Adw.PreferencesGroup(title="Service")
+        svc_group = Adw.PreferencesGroup(title=_("Service"))
         self.add(svc_group)
 
-        enable_row = Adw.SwitchRow(title="Enable Touch Gestures")
+        enable_row = Adw.SwitchRow(title=_("Enable Touch Gestures"))
         enable_row.set_active(self.config.get("enabled", False))
         enable_row.connect("notify::active", self._on_enable_toggled)
         svc_group.add(enable_row)
 
-        group = Adw.PreferencesGroup(title="Configured Gestures")
+        group = Adw.PreferencesGroup(title=_("Configured Gestures"))
         self.add(group)
 
-        add_row = Adw.ActionRow(title="Add New Gesture")
+        add_row = Adw.ActionRow(title=_("Add New Gesture"))
         add_btn = Gtk.Button(icon_name="list-add-symbolic")
         add_btn.set_valign(Gtk.Align.CENTER)
         add_btn.connect("clicked", self._on_add)
@@ -182,7 +182,7 @@ class GesturesPage(Adw.PreferencesPage):
 
         gestures = self.config.get("gestures", [])
         for idx, gesture in enumerate(gestures):
-            name = gesture.get("name", "Unnamed Gesture")
+            name = gesture.get("name", _("Unnamed Gesture"))
             spec = gesture.get("spec", "")
 
             row = Adw.ActionRow(title=name, subtitle=spec)

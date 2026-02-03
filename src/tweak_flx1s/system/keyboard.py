@@ -46,6 +46,7 @@ class KeyboardManager:
                     if "squeekboard" in path: return "squeekboard"
                     if "stub" in path: return "phosh-osk-stub"
                     if "stevia" in path: return "phosh-osk-stevia"
+                    return path
             return "unknown"
         except Exception:
             return "unknown"
@@ -56,18 +57,35 @@ class KeyboardManager:
         """
         options = []
         try:
-            out = run_command("update-alternatives --list phosh-osk", check=False)
+            # Try query first as it might give more info
+            out = run_command("update-alternatives --query phosh-osk", check=False)
             if out:
-                paths = out.splitlines()
-                for p in paths:
-                    name = "Unknown"
-                    if "squeekboard" in p: name = "Squeekboard"
-                    elif "stub" in p: name = "Phosh OSK (Stub)"
-                    elif "stevia" in p: name = "Phosh OSK (Stevia)"
-                    else: name = p
-                    options.append({"name": name, "path": p})
+                for line in out.splitlines():
+                    if line.startswith("Alternative:"):
+                        p = line.split(":", 1)[1].strip()
+                        name = "Unknown"
+                        if "squeekboard" in p: name = "Squeekboard"
+                        elif "stub" in p: name = "Phosh OSK (Stub)"
+                        elif "stevia" in p: name = "Phosh OSK (Stevia)"
+                        else: name = p
+                        options.append({"name": name, "path": p})
+
+            # If query failed or empty, try list
+            if not options:
+                 out = run_command("update-alternatives --list phosh-osk", check=False)
+                 if out:
+                    paths = out.splitlines()
+                    for p in paths:
+                        name = "Unknown"
+                        if "squeekboard" in p: name = "Squeekboard"
+                        elif "stub" in p: name = "Phosh OSK (Stub)"
+                        elif "stevia" in p: name = "Phosh OSK (Stevia)"
+                        else: name = p
+                        options.append({"name": name, "path": p})
+
         except Exception as e:
             logger.error(f"Failed to list keyboards: {e}")
+
         return options
 
     def set_keyboard(self, path):

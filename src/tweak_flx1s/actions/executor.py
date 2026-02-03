@@ -15,6 +15,7 @@
 
 import os
 import subprocess
+import pwd
 from tweak_flx1s.utils import logger, run_command
 
 def is_locked():
@@ -22,20 +23,54 @@ def is_locked():
     try:
         user = os.environ.get('USER')
         if not user:
-            return False
+            user = pwd.getpwuid(os.getuid()).pw_name
 
         out = run_command(f"loginctl list-sessions --no-legend", check=False)
-        session_id = None
+        if not out:
+             return False
+
+        sessions = []
         for line in out.splitlines():
             parts = line.split()
-            if len(parts) >= 3 and parts[2] == user:
-                session_id = parts[0]
-                break
+            if len(parts) >= 3:
+                sid = parts[0]
+                suser = parts[2]
+                if suser == user:
+                    sessions.append(sid)
 
-        if not session_id:
+        if not sessions:
             return False
 
-        out = run_command(f"loginctl show-session {session_id} -p LockedHint", check=False)
+        target_session = None
+
+        # First pass: look for active graphical session
+        for sid in sessions:
+            props = run_command(f"loginctl show-session {sid} -p Type -p State", check=False)
+            prop_map = {}
+            if props:
+                for pline in props.splitlines():
+                    if "=" in pline:
+                        k, v = pline.split("=", 1)
+                        prop_map[k] = v.strip()
+
+            if prop_map.get("State") == "active" and prop_map.get("Type") in ["wayland", "x11"]:
+                target_session = sid
+                break
+
+        # Second pass: look for any active session
+        if not target_session:
+             for sid in sessions:
+                props = run_command(f"loginctl show-session {sid} -p State", check=False)
+                if "State=active" in props:
+                    target_session = sid
+                    break
+
+        # Fallback: use first session found
+        if not target_session:
+            target_session = sessions[0]
+
+        logger.debug(f"Checking lock state for session: {target_session}")
+        out = run_command(f"loginctl show-session {target_session} -p LockedHint", check=False)
         return "LockedHint=yes" in out
     except Exception as e:
         logger.error(f"Error checking lock state: {e}")

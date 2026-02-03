@@ -16,7 +16,7 @@
 import gi
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
-from gi.repository import Gtk, Adw
+from gi.repository import Gtk, Adw, GLib
 from loguru import logger
 from tweak_flx1s.const import APP_NAME
 from tweak_flx1s.gui.pages.info_page import InfoPage
@@ -80,4 +80,4 @@ class MainWindow(Adw.Window):
         main_vbox.append(self.switcher)
 
     def _on_close_clicked(self, btn):
-        self.close()
+        GLib.idle_add(lambda: self.close() or False)
