@@ -117,99 +117,65 @@ account required        pam_permit.so
 
         return "Fingerprint configuration removed (restored backups)."
 
-    def get_min_password_length(self):
-        """Reads current minimum password length."""
-        # Try pwquality.conf first
-        pwquality_conf = "/etc/security/pwquality.conf"
-        if os.path.exists(pwquality_conf):
-            try:
-                with open(pwquality_conf, "r") as f:
-                    for line in f:
-                        if line.strip().startswith("minlen"):
-                             parts = line.split("=")
-                             if len(parts) > 1:
-                                 return int(parts[1].strip())
-            except Exception as e:
-                logger.error(f"Failed to read pwquality.conf: {e}")
+    # --- Password Policy (libpam-pwquality) ---
 
-        # Fallback to common-password
+    def check_pwquality_installed(self):
+        """Checks if libpam-pwquality is installed."""
+        try:
+            run_command("dpkg -s libpam-pwquality", check=True)
+            return True
+        except Exception:
+            return False
+
+    def get_install_pwquality_cmd(self):
+        """Returns command to install libpam-pwquality."""
+        return "apt install -y libpam-pwquality"
+
+    def get_remove_pwquality_cmd(self):
+        """Returns command to remove libpam-pwquality."""
+        return "apt remove -y libpam-pwquality"
+
+    def get_password_limits(self):
+        """
+        Reads current password limits.
+        Returns tuple (min_len, max_len).
+        """
+        min_len = 0
+        max_len = 0
         file_path = "/etc/pam.d/common-password"
+
         if not os.path.exists(file_path):
-             return 0
+             return 0, 0
 
         try:
             with open(file_path, "r") as f:
                 content = f.read()
 
+            # First priority: pam_pwquality
+            for line in content.splitlines():
+                if "pam_pwquality.so" in line and not line.strip().startswith("#"):
+                     min_match = re.search(r"minlen=(\d+)", line)
+                     max_match = re.search(r"maxlen=(\d+)", line)
+                     if min_match: min_len = int(min_match.group(1))
+                     if max_match: max_len = int(max_match.group(1))
+                     return min_len, max_len
+
+            # Fallback: pam_unix
             for line in content.splitlines():
                  if "pam_unix.so" in line and not line.strip().startswith("#"):
-                      match = re.search(r"minlen=(\d+)", line)
-                      if match:
-                          return int(match.group(1))
-            return 0
+                      min_match = re.search(r"minlen=(\d+)", line)
+                      if min_match: min_len = int(min_match.group(1))
+
+            return min_len, max_len
         except Exception as e:
-            logger.error(f"Failed to read password length: {e}")
-            return 0
+            logger.error(f"Failed to read password limits: {e}")
+            return 0, 0
 
-    def set_min_password_length(self, length):
+    def set_password_policy(self, min_len, max_len):
         """
-        Updates configuration to set minimum password length.
+        Updates common-password to use pam_pwquality with specified limits.
+        Removes minlen from pam_unix.
         """
-        logger.info(f"Setting minimum password length to {length}...")
-
-        pwquality_conf = "/etc/security/pwquality.conf"
-        if os.path.exists(pwquality_conf):
-            return self._update_pwquality_conf(pwquality_conf, length)
-        else:
-            return self._update_pam_unix(length)
-
-    def _update_pwquality_conf(self, path, length):
-        try:
-            backup = f"{path}.bak"
-            shutil.copy2(path, backup)
-            logger.info(f"Backed up {path}")
-
-            with open(path, "r") as f:
-                lines = f.readlines()
-
-            settings = {
-                "minlen": str(length),
-                "minclass": "1",
-                "dictcheck": "0",
-                "usercheck": "0",
-                "maxrepeat": "0",
-                "maxsequence": "0"
-            }
-
-            new_lines = []
-            seen_keys = set()
-
-            for line in lines:
-                key_match = re.match(r"^(\w+)\s*=", line.strip())
-                if key_match:
-                    key = key_match.group(1)
-                    if key in settings:
-                        new_lines.append(f"{key} = {settings[key]}\n")
-                        seen_keys.add(key)
-                    else:
-                        new_lines.append(line)
-                else:
-                    new_lines.append(line)
-
-            for key, val in settings.items():
-                if key not in seen_keys:
-                    new_lines.append(f"{key} = {val}\n")
-
-            with open(path, "w") as f:
-                f.writelines(new_lines)
-
-            logger.info("Updated pwquality.conf")
-            return "Password configuration updated successfully (pwquality)."
-        except Exception as e:
-            logger.error(f"Failed to update pwquality.conf: {e}")
-            return f"Error: {e}"
-
-    def _update_pam_unix(self, length):
         file_path = "/etc/pam.d/common-password"
         backup_path = "/etc/pam.d/common-password.bak"
 
@@ -221,37 +187,80 @@ account required        pam_permit.so
             logger.info(f"Backed up {file_path}")
 
             with open(file_path, "r") as f:
-                content = f.read()
+                lines = f.readlines()
 
-            lines = content.splitlines()
             new_lines = []
-            replaced = False
+            pwquality_line = f"password requisite pam_pwquality.so retry=3 minlen={min_len} maxlen={max_len}\n"
+            pwquality_exists = False
+            unix_found = False
 
+            # First pass: check for pwquality and remove/update it
             for line in lines:
-                if "pam_unix.so" in line and not line.strip().startswith("#"):
-                    if "minlen=" in line:
-                        new_line = re.sub(r"minlen=\d+", f"minlen={length}", line)
-                    else:
-                        new_line = f"{line} minlen={length}"
-
-                    new_lines.append(new_line)
-                    replaced = True
+                if "pam_pwquality.so" in line and not line.strip().startswith("#"):
+                    new_lines.append(pwquality_line)
+                    pwquality_exists = True
+                elif "pam_unix.so" in line and not line.strip().startswith("#"):
+                    # Scrub minlen from pam_unix
+                    new_unix_line = re.sub(r"\s*minlen=\d+", "", line).rstrip()
+                    # If pwquality didn't exist, insert it before pam_unix
+                    if not pwquality_exists:
+                        new_lines.append(pwquality_line)
+                        pwquality_exists = True
+                    new_lines.append(new_unix_line + "\n")
+                    unix_found = True
                 else:
                     new_lines.append(line)
 
-            if not replaced:
-                logger.warning("pam_unix.so not found in common-password")
-                return "pam_unix.so not found in configuration file."
+            if not unix_found:
+                # This is unusual, but if no pam_unix, we just append or warn?
+                # For safety, if we didn't insert pwquality yet (no unix line found), we probably shouldn't break the file blindly.
+                logger.warning("pam_unix.so not found, appending pwquality at end?")
+                if not pwquality_exists:
+                     new_lines.append(pwquality_line)
 
             with open(file_path, "w") as f:
-                f.write("\n".join(new_lines) + "\n")
+                f.writelines(new_lines)
 
-            logger.info("Password configuration updated (pam_unix).")
-            return "Password configuration updated successfully (pam_unix)."
+            logger.info("Password policy updated.")
+            return "Password policy updated successfully."
 
         except Exception as e:
-            logger.error(f"Failed to update password configuration: {e}")
+            logger.error(f"Failed to update password policy: {e}")
             if os.path.exists(backup_path):
-                logger.info("Restoring backup...")
+                shutil.copy2(backup_path, file_path)
+            return f"Error: {e}"
+
+    def remove_configuration(self):
+        """
+        Removes pam_pwquality configuration from common-password.
+        """
+        file_path = "/etc/pam.d/common-password"
+        backup_path = "/etc/pam.d/common-password.bak"
+
+        if not os.path.exists(file_path):
+            return "File not found."
+
+        try:
+            shutil.copy2(file_path, backup_path)
+            logger.info(f"Backed up {file_path}")
+
+            with open(file_path, "r") as f:
+                lines = f.readlines()
+
+            new_lines = []
+            for line in lines:
+                if "pam_pwquality.so" in line and not line.strip().startswith("#"):
+                    continue # Remove this line
+                new_lines.append(line)
+
+            with open(file_path, "w") as f:
+                f.writelines(new_lines)
+
+            logger.info("Removed pwquality configuration.")
+            return "Configuration removed successfully."
+
+        except Exception as e:
+            logger.error(f"Failed to remove configuration: {e}")
+            if os.path.exists(backup_path):
                 shutil.copy2(backup_path, file_path)
             return f"Error: {e}"

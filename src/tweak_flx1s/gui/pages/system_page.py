@@ -25,6 +25,7 @@ from tweak_flx1s.system.keyboard import KeyboardManager
 from tweak_flx1s.system.phofono import PhofonoManager
 from tweak_flx1s.system.wofi import WofiManager
 from tweak_flx1s.system.pam import PamManager
+from tweak_flx1s.system.debui import DebUiManager
 
 try:
     _
@@ -44,6 +45,7 @@ class SystemPage(Adw.PreferencesPage):
         self.phofono_mgr = PhofonoManager()
         self.wofi_mgr = WofiManager()
         self.pam_mgr = PamManager()
+        self.debui_mgr = DebUiManager()
 
         def run_pkg_cmd(title, cmd):
             try:
@@ -53,16 +55,11 @@ class SystemPage(Adw.PreferencesPage):
             except Exception as e:
                 logger.error(f"Failed to start execution dialog for {title}: {e}")
 
+        # --- Keyboard Group ---
         kbd_group = Adw.PreferencesGroup(title=_("Keyboard"))
         self.add(kbd_group)
 
-        if not self.kbd_mgr.check_squeekboard_installed():
-            install_row = Adw.ActionRow(title=_("Squeekboard Missing"))
-            install_btn = Gtk.Button(label=_("Install"))
-            install_btn.set_valign(Gtk.Align.CENTER)
-            install_btn.connect("clicked", lambda x: GLib.idle_add(lambda: run_pkg_cmd(_("Installing Squeekboard"), self.kbd_mgr.install_squeekboard()) or False))
-            install_row.add_suffix(install_btn)
-            kbd_group.add(install_row)
+        # Note: "Squeekboard Missing" logic removed; handled by Applications group & sensitivity.
 
         self.kbd_row = Adw.ActionRow(title=_("Active Keyboard"))
         self.kbd_row.set_title_lines(0)
@@ -75,13 +72,14 @@ class SystemPage(Adw.PreferencesPage):
         self.kbd_row.add_suffix(change_kbd_btn)
         kbd_group.add(self.kbd_row)
 
-        fi_row = Adw.SwitchRow(title=_("Finnish Layout"), subtitle=_("Install custom Squeekboard layout"))
-        fi_row.set_title_lines(0)
-        fi_row.set_subtitle_lines(0)
-        fi_row.set_active(self.kbd_mgr.is_finnish_layout_installed())
-        fi_row.connect("notify::active", self._on_fi_toggled)
-        kbd_group.add(fi_row)
+        self.fi_row = Adw.SwitchRow(title=_("Finnish Layout"), subtitle=_("Install custom Squeekboard layout"))
+        self.fi_row.set_title_lines(0)
+        self.fi_row.set_subtitle_lines(0)
+        self.fi_row.set_active(self.kbd_mgr.is_finnish_layout_installed())
+        self.fi_row.connect("notify::active", self._on_fi_toggled)
+        kbd_group.add(self.fi_row)
 
+        # --- Configuration Group ---
         wofi_group = Adw.PreferencesGroup(title=_("Configuration"))
         self.add(wofi_group)
 
@@ -92,6 +90,7 @@ class SystemPage(Adw.PreferencesPage):
         wofi_row.connect("notify::active", self._on_wofi_toggled)
         wofi_group.add(wofi_row)
 
+        # --- Environment Group ---
         env_group = Adw.PreferencesGroup(title=_("Environment"))
         self.add(env_group)
 
@@ -106,6 +105,7 @@ class SystemPage(Adw.PreferencesPage):
         self.env_row.add_suffix(self.env_btn)
         self._refresh_env_ui()
 
+        # --- Updates Group ---
         upg_group = Adw.PreferencesGroup(title=_("Updates"))
         self.add(upg_group)
         upg_row = Adw.ActionRow(title=_("System Upgrade"))
@@ -119,9 +119,23 @@ class SystemPage(Adw.PreferencesPage):
         upg_btn.connect("clicked", lambda x: GLib.idle_add(lambda: run_pkg_cmd(_("Upgrading System"), self.pkg_mgr.upgrade_system()) or False))
         upg_row.add_suffix(upg_btn)
 
+        # --- Applications Group ---
         app_group = Adw.PreferencesGroup(title=_("Applications"))
         self.add(app_group)
 
+        # 1. Squeekboard
+        sq_row = Adw.ActionRow(title=_("Squeekboard"), subtitle=_("On-screen keyboard"))
+        sq_row.set_title_lines(0)
+        sq_row.set_subtitle_lines(0)
+        app_group.add(sq_row)
+
+        self.sq_btn = Gtk.Button()
+        self.sq_btn.set_valign(Gtk.Align.CENTER)
+        self.sq_btn.connect("clicked", lambda b: GLib.idle_add(lambda: self._on_sq_clicked(b) or False))
+        sq_row.add_suffix(self.sq_btn)
+        self._refresh_squeekboard_ui() # Also updates keyboard group sensitivity
+
+        # 2. FLX1s-Bat-Mon
         bat_row = Adw.ActionRow(title=_("FLX1s-Bat-Mon"), subtitle=_("Install custom battery monitor"))
         bat_row.set_title_lines(0)
         bat_row.set_subtitle_lines(0)
@@ -133,6 +147,7 @@ class SystemPage(Adw.PreferencesPage):
         bat_row.add_suffix(self.bat_btn)
         self._refresh_bat_mon()
 
+        # 3. Phofono
         self.phofono_row = Adw.ActionRow(title=_("Phofono"), subtitle=_("Alternative Phone and Messages App"))
         self.phofono_row.set_title_lines(0)
         self.phofono_row.set_subtitle_lines(0)
@@ -143,6 +158,7 @@ class SystemPage(Adw.PreferencesPage):
         self.phofono_row.add_suffix(self.phofono_btn)
         self._refresh_phofono()
 
+        # 4. Branchy
         branchy_row = Adw.ActionRow(title=_("Branchy App Store"))
         branchy_row.set_title_lines(0)
         branchy_row.set_subtitle_lines(0)
@@ -154,38 +170,64 @@ class SystemPage(Adw.PreferencesPage):
         branchy_row.add_suffix(self.branchy_btn)
         self._refresh_branchy()
 
+        # 5. Password Quality Library (libpam-pwquality)
+        pw_row = Adw.ActionRow(title=_("Password Quality Library"), subtitle=_("Enables strict password policies"))
+        pw_row.set_title_lines(0)
+        pw_row.set_subtitle_lines(0)
+        app_group.add(pw_row)
+
+        self.pw_btn = Gtk.Button()
+        self.pw_btn.set_valign(Gtk.Align.CENTER)
+        self.pw_btn.connect("clicked", lambda b: GLib.idle_add(lambda: self._on_pw_clicked(b) or False))
+        pw_row.add_suffix(self.pw_btn)
+        # Note: Sensitivity of Security group handled in _refresh_pwquality_ui
+
+        # 6. DebUI
+        deb_row = Adw.ActionRow(title=_("DebUI"), subtitle=_("Debian Package Installer UI"))
+        deb_row.set_title_lines(0)
+        deb_row.set_subtitle_lines(0)
+        app_group.add(deb_row)
+
+        self.deb_btn = Gtk.Button()
+        self.deb_btn.set_valign(Gtk.Align.CENTER)
+        self.deb_btn.connect("clicked", lambda b: GLib.idle_add(lambda: self._on_debui_clicked(b) or False))
+        deb_row.add_suffix(self.deb_btn)
+        self._refresh_debui()
+
+        # --- Security Group ---
         sec_group = Adw.PreferencesGroup(title=_("Security"))
         self.add(sec_group)
 
-        pass_row = Adw.ActionRow(title=_("Minimum Password Length"))
-        pass_row.set_title_lines(0)
-        pass_row.set_subtitle_lines(0)
-        sec_group.add(pass_row)
+        self.min_pass_row = Adw.ActionRow(title=_("Minimum Password Length"))
+        self.min_pass_row.set_title_lines(0)
+        self.min_pass_row.set_subtitle_lines(0)
+        sec_group.add(self.min_pass_row)
 
-        pass_spin = Gtk.SpinButton.new_with_range(1, 100, 1)
-        try:
-             current_len = self.pam_mgr.get_min_password_length()
-             pass_spin.set_value(current_len if current_len > 0 else 1)
-        except Exception as e:
-             logger.error(f"Failed to fetch password length: {e}")
-             pass_spin.set_value(1)
-        pass_spin.set_valign(Gtk.Align.CENTER)
-        pass_row.add_suffix(pass_spin)
+        self.pass_spin_min = Gtk.SpinButton.new_with_range(1, 100, 1)
+        self.pass_spin_min.set_valign(Gtk.Align.CENTER)
+        self.min_pass_row.add_suffix(self.pass_spin_min)
 
-        def set_pass_len():
-            try:
-                length = int(pass_spin.get_value())
-                cmd = f"python3 -c \"from tweak_flx1s.system.pam import PamManager; print(PamManager().set_min_password_length({length}))\""
-                logger.info(f"Setting password length to {length}")
-                dlg = ExecutionDialog(self.window, _("Setting Password Policy"), cmd, as_root=True)
-                dlg.present()
-            except Exception as e:
-                logger.error(f"Failed to set password length: {e}")
+        self.min_pass_btn = Gtk.Button(label=_("Apply"))
+        self.min_pass_btn.set_valign(Gtk.Align.CENTER)
+        self.min_pass_btn.connect("clicked", lambda x: GLib.idle_add(lambda: self._on_apply_password_policy() or False))
+        self.min_pass_row.add_suffix(self.min_pass_btn)
 
-        pass_btn = Gtk.Button(label=_("Apply"))
-        pass_btn.set_valign(Gtk.Align.CENTER)
-        pass_btn.connect("clicked", lambda x: GLib.idle_add(lambda: set_pass_len() or False))
-        pass_row.add_suffix(pass_btn)
+        self.max_pass_row = Adw.ActionRow(title=_("Maximum Password Length"))
+        self.max_pass_row.set_title_lines(0)
+        self.max_pass_row.set_subtitle_lines(0)
+        sec_group.add(self.max_pass_row)
+
+        self.pass_spin_max = Gtk.SpinButton.new_with_range(1, 256, 1)
+        self.pass_spin_max.set_valign(Gtk.Align.CENTER)
+        self.max_pass_row.add_suffix(self.pass_spin_max)
+
+        self.max_pass_btn = Gtk.Button(label=_("Apply"))
+        self.max_pass_btn.set_valign(Gtk.Align.CENTER)
+        self.max_pass_btn.connect("clicked", lambda x: GLib.idle_add(lambda: self._on_apply_password_policy() or False))
+        self.max_pass_row.add_suffix(self.max_pass_btn)
+
+        self._load_password_policy()
+        self._refresh_pwquality_ui() # Sets sensitivity
 
         if get_device_model() == "FuriPhoneFLX1":
             self.fp_row = Adw.ActionRow(title=_("Fingerprint Authentication"), subtitle=_("Configure PAM for fingerprint support"))
@@ -260,6 +302,139 @@ class SystemPage(Adw.PreferencesPage):
         except Exception as e:
             logger.error(f"Failed to toggle Wofi config: {e}")
 
+    # --- Squeekboard Handlers ---
+
+    def _refresh_squeekboard_ui(self):
+        try:
+            installed = self.kbd_mgr.check_squeekboard_installed()
+            if installed:
+                self.sq_btn.set_label(_("Remove"))
+                self.sq_btn.add_css_class("destructive-action")
+                self.sq_btn.remove_css_class("suggested-action")
+                # Enable keyboard settings
+                self.kbd_row.set_sensitive(True)
+                self.fi_row.set_sensitive(True)
+            else:
+                self.sq_btn.set_label(_("Install"))
+                self.sq_btn.add_css_class("suggested-action")
+                self.sq_btn.remove_css_class("destructive-action")
+                # Disable keyboard settings
+                self.kbd_row.set_sensitive(False)
+                self.fi_row.set_sensitive(False)
+        except Exception as e:
+             logger.error(f"Failed to refresh squeekboard ui: {e}")
+
+    def _on_sq_clicked(self, btn):
+        try:
+            installed = self.kbd_mgr.check_squeekboard_installed()
+            if installed:
+                logger.info("Removing Squeekboard")
+                cmd = self.kbd_mgr.get_remove_cmd()
+                dlg = ExecutionDialog(self.window, _("Removing Squeekboard"), cmd, as_root=True, on_finish=lambda s: self._refresh_squeekboard_ui())
+                dlg.present()
+            else:
+                logger.info("Installing Squeekboard")
+                cmd = self.kbd_mgr.get_install_cmd()
+                dlg = ExecutionDialog(self.window, _("Installing Squeekboard"), cmd, as_root=True, on_finish=lambda s: self._refresh_squeekboard_ui())
+                dlg.present()
+        except Exception as e:
+             logger.error(f"Failed to handle Squeekboard click: {e}")
+
+    # --- Password Quality Handlers ---
+
+    def _load_password_policy(self):
+        try:
+            min_v, max_v = self.pam_mgr.get_password_limits()
+            self.pass_spin_min.set_value(min_v if min_v > 0 else 1)
+            self.pass_spin_max.set_value(max_v if max_v > 0 else 128)
+        except Exception as e:
+            logger.error(f"Failed to load password policy: {e}")
+            self.pass_spin_min.set_value(1)
+            self.pass_spin_max.set_value(128)
+
+    def _refresh_pwquality_ui(self):
+        try:
+            installed = self.pam_mgr.check_pwquality_installed()
+            if installed:
+                self.pw_btn.set_label(_("Remove"))
+                self.pw_btn.add_css_class("destructive-action")
+                self.pw_btn.remove_css_class("suggested-action")
+                # Enable policy settings
+                self.min_pass_row.set_sensitive(True)
+                self.max_pass_row.set_sensitive(True)
+            else:
+                self.pw_btn.set_label(_("Install"))
+                self.pw_btn.add_css_class("suggested-action")
+                self.pw_btn.remove_css_class("destructive-action")
+                # Disable policy settings
+                self.min_pass_row.set_sensitive(False)
+                self.max_pass_row.set_sensitive(False)
+        except Exception as e:
+            logger.error(f"Failed to refresh pwquality ui: {e}")
+
+    def _on_pw_clicked(self, btn):
+        try:
+            installed = self.pam_mgr.check_pwquality_installed()
+            if installed:
+                logger.info("Removing libpam-pwquality")
+                cmd = f"{self.pam_mgr.get_remove_pwquality_cmd()} && python3 -c \"from tweak_flx1s.system.pam import PamManager; print(PamManager().remove_configuration())\""
+                # We chain remove package and restore config
+                dlg = ExecutionDialog(self.window, _("Removing Password Quality Lib"), cmd, as_root=True, on_finish=lambda s: self._refresh_pwquality_ui())
+                dlg.present()
+            else:
+                logger.info("Installing libpam-pwquality")
+                cmd = self.pam_mgr.get_install_pwquality_cmd()
+                dlg = ExecutionDialog(self.window, _("Installing Password Quality Lib"), cmd, as_root=True, on_finish=lambda s: self._refresh_pwquality_ui())
+                dlg.present()
+        except Exception as e:
+             logger.error(f"Failed to handle pwquality click: {e}")
+
+    def _on_apply_password_policy(self):
+        try:
+            min_v = int(self.pass_spin_min.get_value())
+            max_v = int(self.pass_spin_max.get_value())
+
+            cmd = f"python3 -c \"from tweak_flx1s.system.pam import PamManager; print(PamManager().set_password_policy({min_v}, {max_v}))\""
+            logger.info(f"Applying password policy: min={min_v}, max={max_v}")
+            dlg = ExecutionDialog(self.window, _("Applying Password Policy"), cmd, as_root=True)
+            dlg.present()
+        except Exception as e:
+            logger.error(f"Failed to apply password policy: {e}")
+
+    # --- DebUI Handlers ---
+
+    def _refresh_debui(self):
+        try:
+            installed = self.debui_mgr.check_installed()
+            if installed:
+                self.deb_btn.set_label(_("Remove"))
+                self.deb_btn.add_css_class("destructive-action")
+                self.deb_btn.remove_css_class("suggested-action")
+            else:
+                self.deb_btn.set_label(_("Install"))
+                self.deb_btn.add_css_class("suggested-action")
+                self.deb_btn.remove_css_class("destructive-action")
+        except Exception as e:
+            logger.error(f"Failed to refresh DebUI: {e}")
+
+    def _on_debui_clicked(self, btn):
+        try:
+            installed = self.debui_mgr.check_installed()
+            if installed:
+                logger.info("Removing DebUI")
+                cmd = self.debui_mgr.get_remove_cmd()
+                dlg = ExecutionDialog(self.window, _("Removing DebUI"), cmd, as_root=True, on_finish=lambda s: self._refresh_debui())
+                dlg.present()
+            else:
+                logger.info("Installing DebUI")
+                cmd = self.debui_mgr.get_install_cmd()
+                dlg = ExecutionDialog(self.window, _("Installing DebUI"), cmd, as_root=True, on_finish=lambda s: self._refresh_debui())
+                dlg.present()
+        except Exception as e:
+             logger.error(f"Failed to handle DebUI click: {e}")
+
+    # --- BatMon Handlers ---
+
     def _refresh_bat_mon(self):
         try:
             installed = self.pkg_mgr.check_package_installed("flx1s-bat-mon")
@@ -295,6 +470,8 @@ class SystemPage(Adw.PreferencesPage):
         except Exception as e:
             logger.error(f"Failed to handle bat mon click: {e}")
 
+    # --- Fingerprint Handlers ---
+
     def _refresh_fp_ui(self):
         try:
             enabled = self.pam_mgr.check_fingerprint_status()
@@ -328,6 +505,8 @@ class SystemPage(Adw.PreferencesPage):
             dlg.present()
         except Exception as e:
             logger.error(f"Failed to handle FP click: {e}")
+
+    # --- Phofono Handlers ---
 
     def _refresh_phofono(self):
         try:
@@ -379,6 +558,8 @@ class SystemPage(Adw.PreferencesPage):
         except Exception as e:
             logger.error(f"Failed to handle Phofono click: {e}")
 
+    # --- Branchy Handlers ---
+
     def _refresh_branchy(self):
         try:
             installed = self.pkg_mgr.check_package_installed("furios-app-branchy")
@@ -408,6 +589,8 @@ class SystemPage(Adw.PreferencesPage):
                 dlg.present()
         except Exception as e:
             logger.error(f"Failed to handle Branchy click: {e}")
+
+    # --- Environment Handlers ---
 
     def _refresh_env_ui(self):
         try:

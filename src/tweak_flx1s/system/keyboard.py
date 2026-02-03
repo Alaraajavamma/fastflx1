@@ -47,6 +47,15 @@ class KeyboardManager:
             logger.error(f"Failed to check squeekboard installation: {e}")
             return False
 
+    def get_install_cmd(self):
+        """Returns command to install squeekboard."""
+        return "apt install -y squeekboard"
+
+    def get_remove_cmd(self):
+        """Returns command to remove squeekboard and reset alternative."""
+        # We run update-alternatives --auto to ensure we don't get stuck on a broken manual link
+        return "apt remove -y squeekboard; update-alternatives --auto Phosh-OSK"
+
     def get_current_keyboard(self):
         """Returns the currently selected keyboard alternative."""
         try:
