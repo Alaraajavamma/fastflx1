@@ -29,6 +29,7 @@ class ExecutionDialog(Adw.MessageDialog):
         self.set_default_size(300, 400)
         self.add_response("close", "Close")
         self.set_response_enabled("close", False)
+        self.connect("response", self._on_response)
         self.on_finish_callback = on_finish
 
         if as_root:
@@ -100,6 +101,10 @@ class ExecutionDialog(Adw.MessageDialog):
             self.on_finish_callback(rc == 0)
 
         return False
+
+    def _on_response(self, dialog, response_id):
+        if response_id == "close":
+             GLib.idle_add(lambda: self.close() or False)
 
 class WofiMenuEditor(Adw.Window):
     """Editor window for Wofi menus."""

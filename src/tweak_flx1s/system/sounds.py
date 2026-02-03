@@ -25,7 +25,8 @@ class SoundManager:
     def __init__(self):
         self.SOUND_DIR = os.path.join(HOME_DIR, ".local/share/sounds/__custom")
         self.APP_SHARE_DIR = "/usr/share/tweak-flx1s"
-        if not os.path.exists(self.APP_SHARE_DIR):
+        if not os.path.exists(os.path.join(self.APP_SHARE_DIR, "sounds")):
+             # Fallback to local checkout path if system path is missing sounds
              self.APP_SHARE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../share"))
 
     def is_custom_sounds_installed(self):
