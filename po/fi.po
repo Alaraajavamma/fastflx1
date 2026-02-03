@@ -442,9 +442,3 @@ msgstr "Pitkä painallus"
 
 msgid "Add New Gesture"
 msgstr "Lisää uusi ele"
-
-msgid "Removing Branchy"
-msgstr "Poistetaan Branchy"
-
-msgid "Enable Touch Gestures"
-msgstr "Ota kosketuseleet käyttöön"

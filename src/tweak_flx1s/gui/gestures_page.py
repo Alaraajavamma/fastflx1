@@ -224,9 +224,7 @@ class GesturesPage(Adw.PreferencesPage):
     def _on_enable_toggled(self, row, param):
         self.config["enabled"] = row.get_active()
         self.manager.save_config(self.config)
-        action = "enable --now" if row.get_active() else "disable --now"
-        logger.info(f"{action} {SERVICE_GESTURES}")
-        run_command(f"systemctl --user daemon-reload && systemctl --user {action} {SERVICE_GESTURES}", check=False)
+        self._restart_service()
 
     def _refresh_list(self):
         child = self.list_box.get_first_child()
@@ -285,4 +283,4 @@ class GesturesPage(Adw.PreferencesPage):
         win.present()
 
     def _restart_service(self):
-        run_command(f"systemctl --user daemon-reload && systemctl --user restart {SERVICE_GESTURES}", check=False)
+        run_command(f"systemctl --user restart {SERVICE_GESTURES}", check=False)
