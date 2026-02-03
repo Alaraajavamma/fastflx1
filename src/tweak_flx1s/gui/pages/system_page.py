@@ -19,7 +19,7 @@ gi.require_version('Adw', '1')
 from gi.repository import Gtk, Adw, GLib
 from loguru import logger
 from tweak_flx1s.utils import run_command, get_device_model
-from tweak_flx1s.gui.dialogs import ExecutionDialog
+from tweak_flx1s.gui.dialogs import ExecutionDialog, KeyboardSelectionDialog
 from tweak_flx1s.system.package_manager import PackageManager
 from tweak_flx1s.system.keyboard import KeyboardManager
 from tweak_flx1s.system.phofono import PhofonoManager
@@ -61,37 +61,20 @@ class SystemPage(Adw.PreferencesPage):
             install_row.add_suffix(install_btn)
             kbd_group.add(install_row)
 
-        kbd_select_row = Adw.ComboRow(title=_("Active Keyboard"))
-        kbd_options = self.kbd_mgr.get_available_keyboards()
-        kbd_model = Gtk.StringList()
-        for opt in kbd_options:
-            kbd_model.append(opt["name"])
+        self.kbd_row = Adw.ActionRow(title=_("Active Keyboard"))
+        self.kbd_row.set_title_lines(0)
+        self.kbd_row.set_subtitle_lines(0)
+        self._update_kbd_subtitle()
 
-        kbd_select_row.set_model(kbd_model)
-
-        current = self.kbd_mgr.get_current_keyboard()
-        found_idx = -1
-        for idx, opt in enumerate(kbd_options):
-             if current == opt["path"]:
-                 found_idx = idx
-                 break
-             if current == "squeekboard" and "Squeekboard" in opt["name"]:
-                 found_idx = idx
-                 break
-             elif current == "phosh-osk-stub" and "Stub" in opt["name"]:
-                 found_idx = idx
-                 break
-             elif current == "phosh-osk-stevia" and "Stevia" in opt["name"]:
-                 found_idx = idx
-                 break
-
-        if found_idx >= 0:
-            kbd_select_row.set_selected(found_idx)
-
-        kbd_select_row.connect("notify::selected", self._on_kbd_changed, kbd_options)
-        kbd_group.add(kbd_select_row)
+        change_kbd_btn = Gtk.Button(label=_("Change Keyboard"))
+        change_kbd_btn.set_valign(Gtk.Align.CENTER)
+        change_kbd_btn.connect("clicked", self._on_change_keyboard_clicked)
+        self.kbd_row.add_suffix(change_kbd_btn)
+        kbd_group.add(self.kbd_row)
 
         fi_row = Adw.SwitchRow(title=_("Finnish Layout"), subtitle=_("Install custom Squeekboard layout"))
+        fi_row.set_title_lines(0)
+        fi_row.set_subtitle_lines(0)
         fi_row.set_active(self.kbd_mgr.is_finnish_layout_installed())
         fi_row.connect("notify::active", self._on_fi_toggled)
         kbd_group.add(fi_row)
@@ -99,7 +82,9 @@ class SystemPage(Adw.PreferencesPage):
         wofi_group = Adw.PreferencesGroup(title=_("Configuration"))
         self.add(wofi_group)
 
-        wofi_row = Adw.SwitchRow(title=_("Enforce App Wofi Config"), subtitle=_("Use Tweak-FLX1s Wofi style & config"))
+        wofi_row = Adw.SwitchRow(title=_("Enforce App Wofi Config"), subtitle=_("Use Tweak-FLX1s Wofi style and config"))
+        wofi_row.set_title_lines(0)
+        wofi_row.set_subtitle_lines(0)
         wofi_row.set_active(self.wofi_mgr.check_config_match())
         wofi_row.connect("notify::active", self._on_wofi_toggled)
         wofi_group.add(wofi_row)
@@ -108,6 +93,8 @@ class SystemPage(Adw.PreferencesPage):
         self.add(env_group)
 
         env_row = Adw.ActionRow(title=_("Switch Environment"))
+        env_row.set_title_lines(0)
+        env_row.set_subtitle_lines(0)
         env_group.add(env_row)
 
         staging_btn = Gtk.Button(label=_("Staging"))
@@ -123,6 +110,8 @@ class SystemPage(Adw.PreferencesPage):
         upg_group = Adw.PreferencesGroup(title=_("Updates"))
         self.add(upg_group)
         upg_row = Adw.ActionRow(title=_("System Upgrade"))
+        upg_row.set_title_lines(0)
+        upg_row.set_subtitle_lines(0)
         upg_group.add(upg_row)
 
         upg_btn = Gtk.Button(label=_("Upgrade FuriOS"))
@@ -135,6 +124,8 @@ class SystemPage(Adw.PreferencesPage):
         self.add(app_group)
 
         bat_row = Adw.ActionRow(title=_("FLX1s-Bat-Mon"), subtitle=_("Install custom battery monitor"))
+        bat_row.set_title_lines(0)
+        bat_row.set_subtitle_lines(0)
         app_group.add(bat_row)
 
         bat_btn = Gtk.Button(label=_("Install"))
@@ -142,7 +133,9 @@ class SystemPage(Adw.PreferencesPage):
         bat_btn.connect("clicked", lambda b: GLib.idle_add(lambda: self._install_bat_mon(b) or False))
         bat_row.add_suffix(bat_btn)
 
-        self.phofono_row = Adw.ActionRow(title=_("Phofono"), subtitle=_("Alternative Phone & Messages App"))
+        self.phofono_row = Adw.ActionRow(title=_("Phofono"), subtitle=_("Alternative Phone and Messages App"))
+        self.phofono_row.set_title_lines(0)
+        self.phofono_row.set_subtitle_lines(0)
         app_group.add(self.phofono_row)
 
         self.phofono_btn = Gtk.Button(valign=Gtk.Align.CENTER)
@@ -151,6 +144,8 @@ class SystemPage(Adw.PreferencesPage):
         self._refresh_phofono()
 
         branchy_row = Adw.ActionRow(title=_("Branchy App Store"))
+        branchy_row.set_title_lines(0)
+        branchy_row.set_subtitle_lines(0)
         app_group.add(branchy_row)
 
         branchy_btn = Gtk.Button(label=_("Install"))
@@ -162,6 +157,8 @@ class SystemPage(Adw.PreferencesPage):
         self.add(sec_group)
 
         pass_row = Adw.ActionRow(title=_("Minimum Password Length"))
+        pass_row.set_title_lines(0)
+        pass_row.set_subtitle_lines(0)
         sec_group.add(pass_row)
 
         pass_spin = Gtk.SpinButton.new_with_range(1, 100, 1)
@@ -185,6 +182,8 @@ class SystemPage(Adw.PreferencesPage):
 
         if get_device_model() == "FuriPhoneFLX1":
             fp_row = Adw.ActionRow(title=_("Fingerprint Authentication"), subtitle=_("Configure PAM for fingerprint support"))
+            fp_row.set_title_lines(0)
+            fp_row.set_subtitle_lines(0)
             sec_group.add(fp_row)
 
             def config_fp():
@@ -200,17 +199,38 @@ class SystemPage(Adw.PreferencesPage):
             fp_btn.connect("clicked", lambda x: GLib.idle_add(lambda: config_fp() or False))
             fp_row.add_suffix(fp_btn)
 
-    def _on_kbd_changed(self, row, param, options):
-        try:
-            selected_idx = row.get_selected()
-            if selected_idx < len(options):
-                 target = options[selected_idx]["path"]
-                 cmd = self.kbd_mgr.set_keyboard(target)
-                 if cmd:
-                     dlg = ExecutionDialog(self.window, _("Changing Keyboard"), cmd, as_root=True)
-                     dlg.present()
-        except Exception as e:
-            logger.error(f"Failed to change keyboard: {e}")
+    def _update_kbd_subtitle(self):
+        current = self.kbd_mgr.get_current_keyboard()
+        name = current
+        for opt in self.kbd_mgr.get_available_keyboards():
+             # Basic fuzzy matching or exact path match
+             if opt["path"] == current:
+                 name = opt["name"]
+                 break
+        self.kbd_row.set_subtitle(name)
+
+    def _on_change_keyboard_clicked(self, btn):
+        options = self.kbd_mgr.get_available_keyboards()
+
+        def on_select(path):
+            cmd = self.kbd_mgr.set_keyboard(path)
+
+            def on_finish(success):
+                if success:
+                    self._update_kbd_subtitle()
+                    restart_cmd = "systemctl --user daemon-reload && systemctl --user restart mobi.Phosh.OSK.service"
+                    try:
+                        dlg = ExecutionDialog(self.window, _("Restarting Keyboard Service"), restart_cmd, as_root=False)
+                        dlg.present()
+                    except Exception as e:
+                         logger.error(f"Failed to start restart dialog: {e}")
+
+            if cmd:
+                dlg = ExecutionDialog(self.window, _("Changing Keyboard"), cmd, as_root=True, on_finish=on_finish)
+                dlg.present()
+
+        dlg = KeyboardSelectionDialog(self.window, options, on_select)
+        dlg.present()
 
     def _on_fi_toggled(self, row, param):
         if row.get_active():
@@ -244,7 +264,7 @@ class SystemPage(Adw.PreferencesPage):
             self.phofono_btn.set_label(_("Install"))
             self.phofono_btn.add_css_class("suggested-action")
             self.phofono_btn.remove_css_class("destructive-action")
-            self.phofono_row.set_subtitle(_("Alternative Phone & Messages App"))
+            self.phofono_row.set_subtitle(_("Alternative Phone and Messages App"))
 
     def _on_phofono_clicked(self, btn):
         installed = self.phofono_mgr.check_installed()

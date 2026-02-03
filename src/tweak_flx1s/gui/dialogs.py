@@ -32,7 +32,7 @@ class ExecutionDialog(Adw.MessageDialog):
     def __init__(self, parent, title, command, as_root=False, on_finish=None):
         super().__init__(heading=title, transient_for=parent)
         self.set_default_size(300, 400)
-        self.add_response("close", "Close")
+        self.add_response("close", _("Close"))
         self.set_response_enabled("close", False)
         self.connect("response", self._on_response)
         self.on_finish_callback = on_finish
@@ -111,10 +111,71 @@ class ExecutionDialog(Adw.MessageDialog):
         if response_id == "close":
              GLib.idle_add(lambda: self.close() or False)
 
+class KeyboardSelectionDialog(Adw.Window):
+    """Dialog to select a keyboard from available options."""
+    def __init__(self, parent, keyboards, on_select):
+        super().__init__(transient_for=parent, modal=True, title=_("Select Keyboard"))
+        self.set_default_size(350, 400)
+        self.keyboards = keyboards
+        self.on_select = on_select
+        self.selected_path = None
+
+        content = Adw.ToolbarView()
+        self.set_content(content)
+
+        header = Adw.HeaderBar()
+        content.add_top_bar(header)
+
+        select_btn = Gtk.Button(label=_("Select"))
+        select_btn.add_css_class("suggested-action")
+        select_btn.connect("clicked", self._on_select_clicked)
+        header.pack_start(select_btn)
+
+        cancel_btn = Gtk.Button(label=_("Cancel"))
+        cancel_btn.connect("clicked", lambda x: GLib.idle_add(lambda: self.close() or False))
+        header.pack_end(cancel_btn)
+
+        list_box = Gtk.ListBox()
+        list_box.add_css_class("boxed-list")
+        list_box.set_selection_mode(Gtk.SelectionMode.NONE)
+
+        scroll = Gtk.ScrolledWindow()
+        scroll.set_child(list_box)
+
+        clamp = Adw.Clamp()
+        clamp.set_child(scroll)
+        content.set_content(clamp)
+
+        group = None
+        for kbd in self.keyboards:
+            row = Adw.ActionRow(title=kbd["name"])
+            row.set_subtitle(kbd["path"])
+            row.set_title_lines(0)
+            row.set_subtitle_lines(0)
+
+            chk = Gtk.CheckButton(valign=Gtk.Align.CENTER)
+            if group:
+                chk.set_group(group)
+            else:
+                group = chk
+
+            chk.connect("toggled", self._on_toggled, kbd["path"])
+            row.add_prefix(chk)
+            list_box.append(row)
+
+    def _on_toggled(self, btn, path):
+        if btn.get_active():
+            self.selected_path = path
+
+    def _on_select_clicked(self, btn):
+        if self.selected_path and self.on_select:
+            self.on_select(self.selected_path)
+        GLib.idle_add(lambda: self.close() or False)
+
 class WofiMenuEditor(Adw.Window):
     """Editor window for Wofi menus."""
     def __init__(self, parent, items, on_save):
-        super().__init__(transient_for=parent, modal=True, title="Edit Menu")
+        super().__init__(transient_for=parent, modal=True, title=_("Edit Menu"))
         self.set_default_size(350, 500)
         self.items = items.copy()
         self.on_save = on_save
@@ -129,7 +190,7 @@ class WofiMenuEditor(Adw.Window):
         add_btn.connect("clicked", self._on_add)
         header.pack_end(add_btn)
 
-        save_btn = Gtk.Button(label="Save")
+        save_btn = Gtk.Button(label=_("Save"))
         save_btn.add_css_class("suggested-action")
         save_btn.connect("clicked", self._on_save_clicked)
         header.pack_start(save_btn)
@@ -155,8 +216,10 @@ class WofiMenuEditor(Adw.Window):
             child = self.list_box.get_first_child()
 
         for idx, item in enumerate(self.items):
-            row = Adw.ActionRow(title=item.get("label", "New Item"))
+            row = Adw.ActionRow(title=item.get("label", _("New Item")))
             row.set_subtitle(item.get("cmd", ""))
+            row.set_title_lines(0)
+            row.set_subtitle_lines(0)
 
             edit_btn = Gtk.Button(icon_name="document-edit-symbolic")
             edit_btn.add_css_class("flat")
@@ -190,43 +253,65 @@ class WofiMenuEditor(Adw.Window):
 
         dlg = Adw.MessageDialog(
              transient_for=self,
-             heading="Edit Item" if not is_new else "Add Item"
+             heading=_("Edit Item") if not is_new else _("Add Item")
         )
-        dlg.add_response("cancel", "Cancel")
-        dlg.add_response("save", "Save")
+        dlg.add_response("cancel", _("Cancel"))
+        dlg.add_response("save", _("Save"))
         dlg.set_response_appearance("save", Adw.ResponseAppearance.SUGGESTED)
 
         box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
 
-        label_entry = Adw.EntryRow(title="Label")
+        label_entry = Adw.EntryRow(title=_("Label"))
         label_entry.set_text(item.get("label", ""))
         box.append(label_entry)
 
-        cmd_entry = Adw.EntryRow(title="Command")
+        cmd_entry = Adw.EntryRow(title=_("Command"))
         cmd_entry.set_text(item.get("cmd", ""))
         box.append(cmd_entry)
 
-        predefined_grp = Adw.PreferencesGroup(title="Predefined")
+        predefined_grp = Adw.PreferencesGroup(title=_("Predefined"))
         box.append(predefined_grp)
 
-        predefined_row = Adw.ComboRow(title="Select Action")
-        predefined_model = Gtk.StringList()
-        predefined_model.append("Select...")
+        scrolled = Gtk.ScrolledWindow()
+        scrolled.set_min_content_height(150)
+        scrolled.set_vexpand(True)
+        scrolled.set_propagate_natural_height(True)
+
+        radio_list = Gtk.ListBox()
+        radio_list.add_css_class("boxed-list")
+        scrolled.set_child(radio_list)
+
+        predefined_grp.add(scrolled)
+
+        group = None
+
+        # None option
+        none_row = Adw.ActionRow(title=_("None - write it yourself below"))
+        none_row.set_title_lines(0)
+        none_chk = Gtk.CheckButton(valign=Gtk.Align.CENTER)
+        none_chk.set_active(True)
+        group = none_chk
+        none_row.add_prefix(none_chk)
+        radio_list.append(none_row)
+
         sorted_keys = sorted(PREDEFINED_ACTIONS.keys())
-        for k in sorted_keys:
-            predefined_model.append(_(k))
-        predefined_row.set_model(predefined_model)
+        for key in sorted_keys:
+            row = Adw.ActionRow(title=_(key))
+            row.set_title_lines(0)
+            chk = Gtk.CheckButton(valign=Gtk.Align.CENTER)
+            chk.set_group(group)
 
-        def on_predefined_selected(row, param):
-            idx = row.get_selected()
-            if idx > 0:
-                key = sorted_keys[idx-1]
-                cmd = PREDEFINED_ACTIONS[key]
-                cmd_entry.set_text(cmd)
-                label_entry.set_text(_(key))
+            if item.get("cmd") == PREDEFINED_ACTIONS[key]:
+                 chk.set_active(True)
 
-        predefined_row.connect("notify::selected", on_predefined_selected)
-        predefined_grp.add(predefined_row)
+            def on_toggled(btn, k=key):
+                 if btn.get_active():
+                      cmd_entry.set_text(PREDEFINED_ACTIONS[k])
+                      label_entry.set_text(_(k))
+
+            chk.connect("toggled", on_toggled)
+            row.add_prefix(chk)
+            radio_list.append(row)
 
         dlg.set_extra_child(box)
 
@@ -253,7 +338,7 @@ class WofiMenuEditor(Adw.Window):
 class ActionSelectionDialog(Adw.Window):
     """Dialog to select an action type and configure it."""
     def __init__(self, parent, current_config, on_save):
-        super().__init__(transient_for=parent, modal=True, title="Select Action")
+        super().__init__(transient_for=parent, modal=True, title=_("Select Action"))
         self.set_default_size(360, 600)
         self.config = current_config.copy()
         self.on_save = on_save
@@ -264,7 +349,7 @@ class ActionSelectionDialog(Adw.Window):
         header = Adw.HeaderBar()
         content.add_top_bar(header)
 
-        save_btn = Gtk.Button(label="Save")
+        save_btn = Gtk.Button(label=_("Save"))
         save_btn.add_css_class("suggested-action")
         save_btn.connect("clicked", self._on_save)
         header.pack_start(save_btn)
@@ -272,11 +357,13 @@ class ActionSelectionDialog(Adw.Window):
         page = Adw.PreferencesPage()
         content.set_content(page)
 
-        type_group = Adw.PreferencesGroup(title="Action Type")
+        type_group = Adw.PreferencesGroup(title=_("Action Type"))
         page.add(type_group)
 
-        cmd_row = Adw.ActionRow(title="Custom Command")
-        cmd_row.set_subtitle("Execute a shell command")
+        cmd_row = Adw.ActionRow(title=_("Custom Command"))
+        cmd_row.set_subtitle(_("Execute a shell command"))
+        cmd_row.set_title_lines(0)
+        cmd_row.set_subtitle_lines(0)
         cmd_chk = Gtk.CheckButton(valign=Gtk.Align.CENTER)
         cmd_chk.set_active(self.config.get("type") == "command" and self.config.get("value") not in PREDEFINED_ACTIONS.values())
         cmd_chk.connect("toggled", self._on_type_toggled, "command")
@@ -284,13 +371,15 @@ class ActionSelectionDialog(Adw.Window):
         type_group.add(cmd_row)
         self.cmd_chk = cmd_chk
 
-        self.cmd_entry = Adw.EntryRow(title="Command")
+        self.cmd_entry = Adw.EntryRow(title=_("Command"))
         self.cmd_entry.set_text(self.config.get("value", "") if self.config.get("type") == "command" else "")
         self.cmd_entry.set_visible(cmd_chk.get_active())
         type_group.add(self.cmd_entry)
 
-        wofi_row = Adw.ActionRow(title="Wofi Menu")
-        wofi_row.set_subtitle("Show a menu of actions")
+        wofi_row = Adw.ActionRow(title=_("Wofi Menu"))
+        wofi_row.set_subtitle(_("Show a menu of actions"))
+        wofi_row.set_title_lines(0)
+        wofi_row.set_subtitle_lines(0)
         wofi_chk = Gtk.CheckButton(valign=Gtk.Align.CENTER)
         wofi_chk.set_group(cmd_chk)
         wofi_chk.set_active(self.config.get("type") == "wofi")
@@ -299,12 +388,12 @@ class ActionSelectionDialog(Adw.Window):
         type_group.add(wofi_row)
         self.wofi_chk = wofi_chk
 
-        self.edit_menu_btn = Gtk.Button(label="Edit Menu", valign=Gtk.Align.CENTER)
+        self.edit_menu_btn = Gtk.Button(label=_("Edit Menu"), valign=Gtk.Align.CENTER)
         self.edit_menu_btn.connect("clicked", self._on_edit_menu)
         self.edit_menu_btn.set_visible(wofi_chk.get_active())
         wofi_row.add_suffix(self.edit_menu_btn)
 
-        predef_group = Adw.PreferencesGroup(title="Predefined Actions")
+        predef_group = Adw.PreferencesGroup(title=_("Predefined Actions"))
         page.add(predef_group)
 
         self.predef_chks = {}
@@ -314,6 +403,7 @@ class ActionSelectionDialog(Adw.Window):
         for key in sorted_keys:
             val = PREDEFINED_ACTIONS[key]
             row = Adw.ActionRow(title=_(key))
+            row.set_title_lines(0)
             chk = Gtk.CheckButton(valign=Gtk.Align.CENTER)
             chk.set_group(cmd_chk)
             chk.set_active(self.config.get("type") == "command" and current_val == val)
