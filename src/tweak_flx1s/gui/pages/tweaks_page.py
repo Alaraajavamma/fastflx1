@@ -13,6 +13,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import os
+import shutil
 import gi
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
@@ -21,7 +23,6 @@ from tweak_flx1s.const import SERVICE_ALARM, SERVICE_GUARD, SERVICE_GESTURES, AP
 from tweak_flx1s.utils import run_command, logger
 from tweak_flx1s.system.andromeda import AndromedaManager
 from tweak_flx1s.system.sounds import SoundManager
-from tweak_flx1s.gui.phofono_page import PhofonoPage
 from tweak_flx1s.gui.pages.info_page import InfoPage
 
 try:
@@ -32,8 +33,8 @@ except NameError:
 class TweaksPage(Adw.PreferencesPage):
     """
     Page for general tweaks.
-    Includes: Phofono Settings, Alarm Volume, Andromeda Guard (OSK),
-    Android Shared Folders, Custom Sounds.
+    Includes: Alarm Volume, Andromeda Guard (OSK),
+    Android Shared Folders, Custom Sounds, Appearance.
     """
     def __init__(self, window, **kwargs):
         super().__init__(title="Tweaks", icon_name="preferences-system-symbolic", **kwargs)
@@ -41,26 +42,20 @@ class TweaksPage(Adw.PreferencesPage):
         self.andromeda = AndromedaManager()
         self.sounds = SoundManager()
 
-        # Phofono Section
-        phofono_grp = Adw.PreferencesGroup(title="Phofono")
-        self.add(phofono_grp)
+        appearance_grp = Adw.PreferencesGroup(title="Appearance")
+        self.add(appearance_grp)
 
-        phofono_btn = Gtk.Button(label="Phofono Settings")
-        phofono_btn.set_valign(Gtk.Align.CENTER)
-        phofono_btn.connect("clicked", self._open_phofono_settings)
-        phofono_row = Adw.ActionRow(title="Configure Phofono")
-        phofono_row.add_suffix(phofono_btn)
-        phofono_grp.add(phofono_row)
+        css_row = Adw.SwitchRow(title="GTK3 CSS Tweak", subtitle="Apply custom UI scaling tweaks for GTK3 apps")
+        css_row.set_active(self._is_gtk_tweak_active())
+        css_row.connect("notify::active", self._on_css_toggled)
+        appearance_grp.add(css_row)
 
-        # Background Services
         svc_group = Adw.PreferencesGroup(title="Background Services")
         self.add(svc_group)
 
         self._add_service_row(svc_group, "Alarm Volume Fix", "Ensure alarm plays at full volume", SERVICE_ALARM)
-        # Note: Andromeda Guard Service is now our python implementation
         self._add_service_row(svc_group, "Andromeda Guard", "Prevent OSK issues", SERVICE_GUARD)
 
-        # Android Shared Folders
         shared_group = Adw.PreferencesGroup(title="Andromeda Integration")
         self.add(shared_group)
 
@@ -69,7 +64,6 @@ class TweaksPage(Adw.PreferencesPage):
         shared_row.connect("notify::active", self._on_shared_toggled)
         shared_group.add(shared_row)
 
-        # Custom Sounds
         sound_group = Adw.PreferencesGroup(title="Audio")
         self.add(sound_group)
 
@@ -78,29 +72,39 @@ class TweaksPage(Adw.PreferencesPage):
         sound_row.connect("notify::active", self._on_sound_toggled)
         sound_group.add(sound_row)
 
-    def _open_phofono_settings(self, btn):
-        # We can open the PhofonoPage as a dialog or just a transient window
-        # Since it was a page in the stack, let's reuse it or instantiate it.
-        # But PhofonoPage is complex.
-        # Ideally, we should just show it.
-        # Let's create a dialog window for it.
+    def _get_css_paths(self):
+        """Returns (source_path, target_path) for GTK3 CSS."""
+        base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+        source = os.path.join(base_dir, "data", "gtk.css")
+        target = os.path.expanduser("~/.config/gtk-3.0/gtk.css")
+        return source, target
 
-        win = Adw.Window(title="Phofono Settings", transient_for=self.window, modal=True)
-        win.set_default_size(360, 600)
+    def _is_gtk_tweak_active(self):
+        """Checks if the custom GTK CSS is applied."""
+        source, target = self._get_css_paths()
+        if not os.path.exists(target):
+            return False
+        return True
 
-        # We need a toolbar view
-        content = Adw.ToolbarView()
-        win.set_content(content)
+    def _on_css_toggled(self, row, param):
+        source, target = self._get_css_paths()
+        active = row.get_active()
 
-        header = Adw.HeaderBar()
-        content.add_top_bar(header)
-
-        # Reuse PhofonoPage logic, but maybe wrap it?
-        # PhofonoPage inherits from Adw.PreferencesPage.
-        page = PhofonoPage(self.window)
-        content.set_content(page)
-
-        win.present()
+        if active:
+            try:
+                target_dir = os.path.dirname(target)
+                os.makedirs(target_dir, exist_ok=True)
+                shutil.copy2(source, target)
+                logger.info(f"Applied GTK3 CSS tweak to {target}")
+            except Exception as e:
+                logger.error(f"Failed to apply GTK3 CSS tweak: {e}")
+        else:
+            try:
+                if os.path.exists(target):
+                    os.remove(target)
+                    logger.info(f"Removed GTK3 CSS tweak from {target}")
+            except Exception as e:
+                logger.error(f"Failed to remove GTK3 CSS tweak: {e}")
 
     def _add_service_row(self, group, title, subtitle, service_name):
         row = Adw.SwitchRow(title=title, subtitle=subtitle)
@@ -125,8 +129,6 @@ class TweaksPage(Adw.PreferencesPage):
         is_active = row.get_active()
         if is_active:
             if not self.andromeda.mount():
-                # Revert if failed (though strictly we can't easily revert the switch programmatically inside the handler without recursion loops if we aren't careful, but Adw usually handles it)
-                # We should show error.
                 pass
         else:
             self.andromeda.unmount()
