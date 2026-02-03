@@ -1,0 +1,190 @@
+# Copyright (C) 2026 alaraajavamma aki@urheiluaki.fi
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+import gi
+import os
+import pty
+import select
+import subprocess
+import threading
+import time
+gi.require_version('Gtk', '4.0')
+gi.require_version('Adw', '1')
+from gi.repository import Gtk, Adw, GLib
+from loguru import logger
+
+try:
+    _
+except NameError:
+    from gettext import gettext as _
+
+class PasswordChangeDialog(Adw.Window):
+    """Dialog to change the user's password."""
+    def __init__(self, parent):
+        super().__init__(transient_for=parent, modal=True, title=_("Change Password"))
+        self.set_default_size(350, 450)
+
+        content = Adw.ToolbarView()
+        self.set_content(content)
+
+        header = Adw.HeaderBar()
+        header.set_show_end_title_buttons(False)
+        header.set_show_start_title_buttons(False)
+        content.add_top_bar(header)
+
+        self.change_btn = Gtk.Button(label=_("Change"))
+        self.change_btn.add_css_class("suggested-action")
+        self.change_btn.connect("clicked", self._on_change_clicked)
+        header.pack_start(self.change_btn)
+
+        close_btn = Gtk.Button(label=_("Close"))
+        close_btn.connect("clicked", lambda x: GLib.idle_add(lambda: self.close() or False))
+        header.pack_end(close_btn)
+
+        page = Adw.PreferencesPage()
+        content.set_content(page)
+
+        group = Adw.PreferencesGroup(title=_("Password Details"))
+        page.add(group)
+
+        self.current_entry = Adw.PasswordEntryRow(title=_("Current Password"))
+        group.add(self.current_entry)
+
+        self.new_entry = Adw.PasswordEntryRow(title=_("New Password"))
+        group.add(self.new_entry)
+
+        self.confirm_entry = Adw.PasswordEntryRow(title=_("Confirm New Password"))
+        group.add(self.confirm_entry)
+
+        self.status_label = Gtk.Label(label="")
+        self.status_label.set_wrap(True)
+        self.status_label.set_margin_top(20)
+        self.status_label.set_margin_bottom(20)
+        self.status_label.set_margin_start(20)
+        self.status_label.set_margin_end(20)
+        page.add(self.status_label)
+
+    def _on_change_clicked(self, btn):
+        current = self.current_entry.get_text()
+        new_pass = self.new_entry.get_text()
+        confirm = self.confirm_entry.get_text()
+
+        if not current:
+            self.status_label.set_text(_("Please enter current password."))
+            return
+        if not new_pass:
+            self.status_label.set_text(_("Please enter new password."))
+            return
+        if new_pass != confirm:
+            self.status_label.set_text(_("New passwords do not match."))
+            return
+
+        self.status_label.set_text(_("Changing password..."))
+        self.change_btn.set_sensitive(False)
+        self.current_entry.set_sensitive(False)
+        self.new_entry.set_sensitive(False)
+        self.confirm_entry.set_sensitive(False)
+
+        threading.Thread(target=self._run_passwd, args=(current, new_pass)).start()
+
+    def _run_passwd(self, current, new_pass):
+        master_fd, slave_fd = pty.openpty()
+
+        try:
+            env = os.environ.copy()
+            env["LANG"] = "C"
+            env["LC_ALL"] = "C"
+
+            p = subprocess.Popen(
+                ["passwd"],
+                stdin=slave_fd,
+                stdout=slave_fd,
+                stderr=slave_fd,
+                close_fds=True,
+                text=True,
+                env=env
+            )
+            os.close(slave_fd)
+
+            output_log = ""
+            stage = 0
+
+            while p.poll() is None:
+                r, w, x = select.select([master_fd], [], [], 1.0)
+                if master_fd in r:
+                    try:
+                        data = os.read(master_fd, 1024).decode('utf-8', errors='ignore')
+                        output_log += data
+                        logger.debug(f"passwd output: {data}")
+
+                        if stage == 0 and ("current" in data.lower() or "password:" in data.lower()):
+                            logger.debug("Sending current password")
+                            os.write(master_fd, (current + "\n").encode())
+                            stage = 1
+                            time.sleep(0.5)
+                        elif stage == 1 and ("new" in data.lower() or "password:" in data.lower()):
+                            logger.debug("Sending new password")
+                            os.write(master_fd, (new_pass + "\n").encode())
+                            stage = 2
+                            time.sleep(0.5)
+                        elif stage == 2 and ("retype" in data.lower() or "password:" in data.lower()):
+                            logger.debug("Sending confirmation")
+                            os.write(master_fd, (new_pass + "\n").encode())
+                            stage = 3
+                    except OSError:
+                        break
+
+            try:
+                while True:
+                    r, _, _ = select.select([master_fd], [], [], 0.1)
+                    if not r: break
+                    data = os.read(master_fd, 1024).decode('utf-8', errors='ignore')
+                    output_log += data
+            except OSError:
+                pass
+
+            os.close(master_fd)
+            p.wait()
+            rc = p.returncode
+
+            GLib.idle_add(self._on_finished, rc, output_log)
+
+        except Exception as e:
+            logger.error(f"passwd failed: {e}")
+            GLib.idle_add(self._on_finished, -1, str(e))
+
+    def _on_finished(self, rc, output):
+        self.change_btn.set_sensitive(True)
+        self.current_entry.set_sensitive(True)
+        self.new_entry.set_sensitive(True)
+        self.confirm_entry.set_sensitive(True)
+
+        if rc == 0:
+            self.status_label.set_text(_("Password changed successfully!"))
+            self.current_entry.set_text("")
+            self.new_entry.set_text("")
+            self.confirm_entry.set_text("")
+        else:
+            msg = _("Failed to change password.")
+            if "authentication token manipulation error" in output.lower():
+                msg += " " + _("Authentication error. Check current password.")
+            elif "bad password" in output.lower():
+                msg += " " + _("Bad password.")
+                lines = output.splitlines()
+                for line in lines:
+                    if "BAD PASSWORD" in line:
+                         msg = line
+
+            self.status_label.set_text(msg)

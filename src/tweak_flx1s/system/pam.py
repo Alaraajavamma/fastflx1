@@ -15,7 +15,6 @@
 
 import os
 import shutil
-import re
 from loguru import logger
 from tweak_flx1s.utils import run_command, get_device_model
 
@@ -50,6 +49,41 @@ session         required    pam_env.so readenv=1 envfile=/etc/default/locale use
 
     BIOMD_CONTENT = """auth    requisite       pam_biomd.so debug
 account required        pam_permit.so
+"""
+
+    COMMON_PASSWORD_BLOCK = """# /etc/pam.d/common-password - password-related modules common to all services
+#
+# This file is included from other service-specific PAM config files,
+# and should contain a list of modules that define the services to be
+# used to change user passwords.  The default is pam_unix.
+
+# Explanation of pam_unix options:
+# The "yescrypt" option enables
+#hashed passwords using the yescrypt algorithm, introduced in Debian
+#11.  Without this option, the default is Unix crypt.  Prior releases
+#used the option "sha512"; if a shadow password hash will be shared
+#between Debian 11 and older releases replace "yescrypt" with "sha512"
+#for compatibility .  The "obscure" option replaces the old
+#`OBSCURE_CHECKS_ENAB' option in login.defs.  See the pam_unix manpage
+#for other options.
+
+# As of pam 1.0.1-6, this file is managed by pam-auth-update by default.
+# To take advantage of this, it is recommended that you configure any
+# local modules either before or after the default block, and use
+# pam-auth-update to manage selection of other modules.  See
+# pam-auth-update(8) for details.
+
+# here are the per-package modules (the "Primary" block)
+password  [success=1 default=ignore]  pam_unix.so obscure yescrypt minlen=1
+# here's the fallback if no module succeeds
+password  requisite      pam_deny.so
+# prime the stack with a positive return value if there isn't one already;
+# this avoids us returning an error just because nothing sets a success code
+# since the modules above will each just jump around
+password  required      pam_permit.so
+# and here are more per-package modules (the "Additional" block)
+password  optional  pam_gnome_keyring.so
+# end of pam-auth-update config
 """
 
     def configure_fingerprint(self):
@@ -117,150 +151,64 @@ account required        pam_permit.so
 
         return "Fingerprint configuration removed (restored backups)."
 
-    # --- Password Policy (libpam-pwquality) ---
+    # --- Short Password Logic ---
 
-    def check_pwquality_installed(self):
-        """Checks if libpam-pwquality is installed."""
-        try:
-            run_command("dpkg -s libpam-pwquality", check=True)
-            return True
-        except Exception:
-            return False
-
-    def get_install_pwquality_cmd(self):
-        """Returns command to install libpam-pwquality."""
-        return "apt install -y libpam-pwquality"
-
-    def get_remove_pwquality_cmd(self):
-        """Returns command to remove libpam-pwquality."""
-        return "apt remove -y libpam-pwquality"
-
-    def get_password_limits(self):
+    def enable_short_passwords(self):
         """
-        Reads current password limits.
-        Returns tuple (min_len, max_len).
+        Enables short passwords by rewriting /etc/pam.d/common-password
+        with a custom configuration containing 'minlen=1'.
         """
-        min_len = 0
-        max_len = 0
         file_path = "/etc/pam.d/common-password"
-
-        if not os.path.exists(file_path):
-             return 0, 0
+        backup_path = "/etc/pam.d/common-password.bak"
 
         try:
+            if not os.path.exists(backup_path) and os.path.exists(file_path):
+                shutil.copy2(file_path, backup_path)
+                logger.info(f"Created backup of {file_path}")
+
+            with open(file_path, "w") as f:
+                f.write(self.COMMON_PASSWORD_BLOCK)
+
+            logger.info("Short passwords enabled.")
+            return "Short passwords enabled."
+        except Exception as e:
+            logger.error(f"Failed to enable short passwords: {e}")
+            return f"Error: {e}"
+
+    def disable_short_passwords(self):
+        """
+        Disables short passwords.
+        Tries to restore from backup. If no backup, rewrites the block
+        removing 'minlen=1' to be safe.
+        """
+        file_path = "/etc/pam.d/common-password"
+        backup_path = "/etc/pam.d/common-password.bak"
+
+        try:
+            if os.path.exists(backup_path):
+                shutil.copy2(backup_path, file_path)
+                logger.info(f"Restored {file_path} from backup")
+                return "Short passwords disabled (restored backup)."
+            else:
+                logger.warning("No backup found, rewriting block without minlen=1")
+                """Remove minlen=1 from the block"""
+                safe_block = self.COMMON_PASSWORD_BLOCK.replace(" minlen=1", "")
+                with open(file_path, "w") as f:
+                    f.write(safe_block)
+                return "Short passwords disabled (safe fallback)."
+        except Exception as e:
+            logger.error(f"Failed to disable short passwords: {e}")
+            return f"Error: {e}"
+
+    def check_short_passwords_enabled(self):
+        """Checks if minlen=1 is present in common-password."""
+        file_path = "/etc/pam.d/common-password"
+        try:
+            if not os.path.exists(file_path):
+                return False
             with open(file_path, "r") as f:
                 content = f.read()
-
-            # First priority: pam_pwquality
-            for line in content.splitlines():
-                if "pam_pwquality.so" in line and not line.strip().startswith("#"):
-                     min_match = re.search(r"minlen=(\d+)", line)
-                     max_match = re.search(r"maxlen=(\d+)", line)
-                     if min_match: min_len = int(min_match.group(1))
-                     if max_match: max_len = int(max_match.group(1))
-                     return min_len, max_len
-
-            # Fallback: pam_unix
-            for line in content.splitlines():
-                 if "pam_unix.so" in line and not line.strip().startswith("#"):
-                      min_match = re.search(r"minlen=(\d+)", line)
-                      if min_match: min_len = int(min_match.group(1))
-
-            return min_len, max_len
+            return "minlen=1" in content
         except Exception as e:
-            logger.error(f"Failed to read password limits: {e}")
-            return 0, 0
-
-    def set_password_policy(self, min_len, max_len):
-        """
-        Updates common-password to use pam_pwquality with specified limits.
-        Removes minlen from pam_unix.
-        """
-        file_path = "/etc/pam.d/common-password"
-        backup_path = "/etc/pam.d/common-password.bak"
-
-        if not os.path.exists(file_path):
-            return f"File {file_path} not found."
-
-        try:
-            shutil.copy2(file_path, backup_path)
-            logger.info(f"Backed up {file_path}")
-
-            with open(file_path, "r") as f:
-                lines = f.readlines()
-
-            new_lines = []
-            pwquality_line = f"password requisite pam_pwquality.so retry=3 minlen={min_len} maxlen={max_len}\n"
-            pwquality_exists = False
-            unix_found = False
-
-            # First pass: check for pwquality and remove/update it
-            for line in lines:
-                if "pam_pwquality.so" in line and not line.strip().startswith("#"):
-                    new_lines.append(pwquality_line)
-                    pwquality_exists = True
-                elif "pam_unix.so" in line and not line.strip().startswith("#"):
-                    # Scrub minlen from pam_unix
-                    new_unix_line = re.sub(r"\s*minlen=\d+", "", line).rstrip()
-                    # If pwquality didn't exist, insert it before pam_unix
-                    if not pwquality_exists:
-                        new_lines.append(pwquality_line)
-                        pwquality_exists = True
-                    new_lines.append(new_unix_line + "\n")
-                    unix_found = True
-                else:
-                    new_lines.append(line)
-
-            if not unix_found:
-                # This is unusual, but if no pam_unix, we just append or warn?
-                # For safety, if we didn't insert pwquality yet (no unix line found), we probably shouldn't break the file blindly.
-                logger.warning("pam_unix.so not found, appending pwquality at end?")
-                if not pwquality_exists:
-                     new_lines.append(pwquality_line)
-
-            with open(file_path, "w") as f:
-                f.writelines(new_lines)
-
-            logger.info("Password policy updated.")
-            return "Password policy updated successfully."
-
-        except Exception as e:
-            logger.error(f"Failed to update password policy: {e}")
-            if os.path.exists(backup_path):
-                shutil.copy2(backup_path, file_path)
-            return f"Error: {e}"
-
-    def remove_configuration(self):
-        """
-        Removes pam_pwquality configuration from common-password.
-        """
-        file_path = "/etc/pam.d/common-password"
-        backup_path = "/etc/pam.d/common-password.bak"
-
-        if not os.path.exists(file_path):
-            return "File not found."
-
-        try:
-            shutil.copy2(file_path, backup_path)
-            logger.info(f"Backed up {file_path}")
-
-            with open(file_path, "r") as f:
-                lines = f.readlines()
-
-            new_lines = []
-            for line in lines:
-                if "pam_pwquality.so" in line and not line.strip().startswith("#"):
-                    continue # Remove this line
-                new_lines.append(line)
-
-            with open(file_path, "w") as f:
-                f.writelines(new_lines)
-
-            logger.info("Removed pwquality configuration.")
-            return "Configuration removed successfully."
-
-        except Exception as e:
-            logger.error(f"Failed to remove configuration: {e}")
-            if os.path.exists(backup_path):
-                shutil.copy2(backup_path, file_path)
-            return f"Error: {e}"
+            logger.error(f"Failed to check password status: {e}")
+            return False
