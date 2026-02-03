@@ -19,21 +19,26 @@ from loguru import logger
 from tweak_flx1s.const import CONFIG_DIR
 from tweak_flx1s.actions.executor import is_locked, execute_command, show_wofi_menu
 
+try:
+    _
+except NameError:
+    from gettext import gettext as _
+
 CONFIG_FILE = os.path.join(CONFIG_DIR, "gestures.json")
 
 GESTURE_TEMPLATES = {
-    "Swipe Left (RL)": "1,RL,*,*,R",
-    "Swipe Right (LR)": "1,LR,*,*,R",
-    "Swipe Up (BT)": "1,BT,*,*,R",
-    "Swipe Down (TB)": "1,TB,*,*,R",
-    "Left Edge Swipe Right": "1,LR,L,*,R",
-    "Right Edge Swipe Left": "1,RL,R,*,R",
-    "Top Edge Swipe Down": "1,TB,T,*,R",
-    "Bottom Edge Swipe Up": "1,BT,B,*,R",
-    "Bottom Left Corner Swipe Up": "1,BT,B,L,R",
-    "Bottom Right Corner Swipe Up": "1,BT,B,R,R",
-    "Top Left Corner Swipe Down": "1,TB,T,L,R",
-    "Top Right Corner Swipe Down": "1,TB,T,R,R"
+    _("Swipe Left (RL)"): "1,RL,*,*,R",
+    _("Swipe Right (LR)"): "1,LR,*,*,R",
+    _("Swipe Up (BT)"): "1,BT,*,*,R",
+    _("Swipe Down (TB)"): "1,TB,*,*,R",
+    _("Left Edge Swipe Right"): "1,LR,L,*,R",
+    _("Right Edge Swipe Left"): "1,RL,R,*,R",
+    _("Top Edge Swipe Down"): "1,TB,T,*,R",
+    _("Bottom Edge Swipe Up"): "1,BT,B,*,R",
+    _("Bottom Left Corner Swipe Up"): "1,BT,B,L,R",
+    _("Bottom Right Corner Swipe Up"): "1,BT,B,R,R",
+    _("Top Left Corner Swipe Down"): "1,TB,T,L,R",
+    _("Top Right Corner Swipe Down"): "1,TB,T,R,R"
 }
 
 DEFAULT_CONFIG = {

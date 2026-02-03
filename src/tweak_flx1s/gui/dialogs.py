@@ -118,7 +118,6 @@ class KeyboardSelectionDialog(Adw.Window):
         self.set_default_size(350, 400)
         self.keyboards = keyboards
         self.on_select = on_select
-        self.selected_path = None
 
         content = Adw.ToolbarView()
         self.set_content(content)
@@ -127,11 +126,6 @@ class KeyboardSelectionDialog(Adw.Window):
         header.set_show_end_title_buttons(False)
         header.set_show_start_title_buttons(False)
         content.add_top_bar(header)
-
-        select_btn = Gtk.Button(label=_("Select"))
-        select_btn.add_css_class("suggested-action")
-        select_btn.connect("clicked", self._on_select_clicked)
-        header.pack_start(select_btn)
 
         close_btn = Gtk.Button(label=_("Close"))
         close_btn.connect("clicked", lambda x: GLib.idle_add(lambda: self.close() or False))
@@ -148,30 +142,18 @@ class KeyboardSelectionDialog(Adw.Window):
         clamp.set_child(scroll)
         content.set_content(clamp)
 
-        group = None
         for kbd in self.keyboards:
             row = Adw.ActionRow(title=kbd["name"])
             row.set_subtitle(kbd["path"])
             row.set_title_lines(0)
             row.set_subtitle_lines(0)
-
-            chk = Gtk.CheckButton(valign=Gtk.Align.CENTER)
-            if group:
-                chk.set_group(group)
-            else:
-                group = chk
-
-            chk.connect("toggled", self._on_toggled, kbd["path"])
-            row.add_prefix(chk)
+            row.set_activatable(True)
+            row.connect("activated", self._on_row_activated, kbd["path"])
             list_box.append(row)
 
-    def _on_toggled(self, btn, path):
-        if btn.get_active():
-            self.selected_path = path
-
-    def _on_select_clicked(self, btn):
-        if self.selected_path and self.on_select:
-            self.on_select(self.selected_path)
+    def _on_row_activated(self, row, path):
+        if self.on_select:
+             self.on_select(path)
         GLib.idle_add(lambda: self.close() or False)
 
 class WofiItemEditor(Adw.Window):

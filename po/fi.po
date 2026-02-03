@@ -253,3 +253,192 @@ msgstr "Taskulamppu"
 
 msgid "Select..."
 msgstr "Valitse..."
+
+msgid "Fingerprint is enabled"
+msgstr "Sormenjälkitunnistus on käytössä"
+
+msgid "Removing Fingerprint"
+msgstr "Poistetaan sormenjälkitunnistusta"
+
+msgid "Removing FLX1s-Bat-Mon"
+msgstr "Poistetaan FLX1s-Bat-Mon"
+
+msgid "Template"
+msgstr "Malli"
+
+msgid "Select from predefined templates"
+msgstr "Valitse esimääritellyistä malleista"
+
+msgid "Select Template"
+msgstr "Valitse malli"
+
+msgid "Actions"
+msgstr "Toiminnot"
+
+msgid "Configured Gestures"
+msgstr "Määritetyt eleet"
+
+msgid "Swipe Left (RL)"
+msgstr "Pyyhkäisy vasemmalle (RL)"
+
+msgid "Swipe Right (LR)"
+msgstr "Pyyhkäisy oikealle (LR)"
+
+msgid "Swipe Up (BT)"
+msgstr "Pyyhkäisy ylös (BT)"
+
+msgid "Swipe Down (TB)"
+msgstr "Pyyhkäisy alas (TB)"
+
+msgid "Left Edge Swipe Right"
+msgstr "Vasen reuna pyyhkäisy oikealle"
+
+msgid "Right Edge Swipe Left"
+msgstr "Oikea reuna pyyhkäisy vasemmalle"
+
+msgid "Top Edge Swipe Down"
+msgstr "Yläreuna pyyhkäisy alas"
+
+msgid "Bottom Edge Swipe Up"
+msgstr "Alareuna pyyhkäisy ylös"
+
+msgid "Bottom Left Corner Swipe Up"
+msgstr "Vasen alakulma pyyhkäisy ylös"
+
+msgid "Bottom Right Corner Swipe Up"
+msgstr "Oikea alakulma pyyhkäisy ylös"
+
+msgid "Top Left Corner Swipe Down"
+msgstr "Vasen yläkulma pyyhkäisy alas"
+
+msgid "Top Right Corner Swipe Down"
+msgstr "Oikea yläkulma pyyhkäisy alas"
+
+msgid "Use Custom Assistant File"
+msgstr "Käytä mukautettua avustajatiedostoa"
+
+msgid "Write ~/.config/assistant-button/..."
+msgstr "Kirjoita ~/.config/assistant-button/..."
+
+msgid "Locked Action"
+msgstr "Lukittu toiminto"
+
+msgid "Unlocked Action"
+msgstr "Lukitsematon toiminto"
+
+msgid "Locked State"
+msgstr "Lukittu tila"
+
+msgid "Unlocked State"
+msgstr "Lukitsematon tila"
+
+msgid "Appearance"
+msgstr "Ulkoasu"
+
+msgid "GTK3 CSS Tweak"
+msgstr "GTK3 CSS -säätö"
+
+msgid "Apply custom UI scaling tweaks for GTK3 apps"
+msgstr "Käytä mukautettuja käyttöliittymän skaalaussäätöjä GTK3-sovelluksille"
+
+msgid "Background Services"
+msgstr "Taustapalvelut"
+
+msgid "Alarm Volume Fix"
+msgstr "Hälytysäänenvoimakkuuden korjaus"
+
+msgid "Ensure alarm plays at full volume"
+msgstr "Varmista, että hälytys soi täydellä voimakkuudella"
+
+msgid "Andromeda Guard"
+msgstr "Andromeda Guard"
+
+msgid "Prevent OSK issues"
+msgstr "Estä OSK-ongelmat"
+
+msgid "Andromeda Integration"
+msgstr "Andromeda-integraatio"
+
+msgid "Shared Folders"
+msgstr "Jaetut kansiot"
+
+msgid "Mount ~/.local/share/andromeda to ~/Android-Share"
+msgstr "Liitä ~/.local/share/andromeda kansioon ~/Android-Share"
+
+msgid "Audio"
+msgstr "Audio"
+
+msgid "Custom Sound Theme"
+msgstr "Mukautettu ääniteema"
+
+msgid "Use fastflx1 custom sounds"
+msgstr "Käytä fastflx1 mukautettuja ääniä"
+
+msgid "Mounting Shared Folders"
+msgstr "Liitetään jaetut kansiot"
+
+msgid "Unmounting Shared Folders"
+msgstr "Irrotetaan jaetut kansiot"
+
+msgid "Input Configuration"
+msgstr "Syöteasetukset"
+
+msgid "Hardware Buttons"
+msgstr "Laitteistopainikkeet"
+
+msgid "Configure short, double, and long press actions"
+msgstr "Määritä lyhyen, kaksois- ja pitkän painalluksen toiminnot"
+
+msgid "Touch Gestures"
+msgstr "Kosketuseleet"
+
+msgid "Configure edge swipes and shortcuts"
+msgstr "Määritä reunapyyhkäisyt ja pikakomennot"
+
+msgid "Add Location"
+msgstr "Lisää sijainti"
+
+msgid "Enter city name"
+msgstr "Kirjoita kaupungin nimi"
+
+msgid "Search"
+msgstr "Hae"
+
+msgid "Result"
+msgstr "Tulos"
+
+msgid "No location found yet."
+msgstr "Sijaintia ei vielä löytynyt."
+
+msgid "Searching..."
+msgstr "Etsitään..."
+
+msgid "Found"
+msgstr "Löytyi"
+
+msgid "No location found."
+msgstr "Sijaintia ei löytynyt."
+
+msgid "Error adding location."
+msgstr "Virhe sijainnin lisäämisessä."
+
+msgid "General"
+msgstr "Yleiset"
+
+msgid "Name"
+msgstr "Nimi"
+
+msgid "Spec (lisgd)"
+msgstr "Määritys (lisgd)"
+
+msgid "Short Press"
+msgstr "Lyhyt painallus"
+
+msgid "Double Press"
+msgstr "Kaksoispainallus"
+
+msgid "Long Press"
+msgstr "Pitkä painallus"
+
+msgid "Add New Gesture"
+msgstr "Lisää uusi ele"
