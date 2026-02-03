@@ -68,13 +68,16 @@ class PasswordChangeDialog(Adw.Window):
         self.confirm_entry = Adw.PasswordEntryRow(title=_("Confirm New Password"))
         group.add(self.confirm_entry)
 
+        status_group = Adw.PreferencesGroup()
+        page.add(status_group)
+
         self.status_label = Gtk.Label(label="")
         self.status_label.set_wrap(True)
         self.status_label.set_margin_top(20)
         self.status_label.set_margin_bottom(20)
         self.status_label.set_margin_start(20)
         self.status_label.set_margin_end(20)
-        page.add(self.status_label)
+        status_group.add(self.status_label)
 
     def _on_change_clicked(self, btn):
         current = self.current_entry.get_text()
@@ -97,7 +100,7 @@ class PasswordChangeDialog(Adw.Window):
         self.new_entry.set_sensitive(False)
         self.confirm_entry.set_sensitive(False)
 
-        threading.Thread(target=self._run_passwd, args=(current, new_pass)).start()
+        threading.Thread(target=self._run_passwd, args=(current, new_pass), daemon=True).start()
 
     def _run_passwd(self, current, new_pass):
         master_fd, slave_fd = pty.openpty()
@@ -127,7 +130,6 @@ class PasswordChangeDialog(Adw.Window):
                     try:
                         data = os.read(master_fd, 1024).decode('utf-8', errors='ignore')
                         output_log += data
-                        logger.debug(f"passwd output: {data}")
 
                         if stage == 0 and ("current" in data.lower() or "password:" in data.lower()):
                             logger.debug("Sending current password")
