@@ -24,6 +24,7 @@ from tweak_flx1s.system.package_manager import PackageManager
 from tweak_flx1s.system.keyboard import KeyboardManager
 from tweak_flx1s.system.phofono import PhofonoManager
 from tweak_flx1s.system.wofi import WofiManager
+from tweak_flx1s.system.pam import PamManager
 
 try:
     _
@@ -45,6 +46,7 @@ class SystemPage(Adw.PreferencesPage):
 
         def run_pkg_cmd(title, cmd):
             try:
+                logger.info(f"Starting execution dialog: {title}")
                 dlg = ExecutionDialog(self.window, title, cmd, as_root=True)
                 dlg.present()
             except Exception as e:
@@ -162,7 +164,12 @@ class SystemPage(Adw.PreferencesPage):
         sec_group.add(pass_row)
 
         pass_spin = Gtk.SpinButton.new_with_range(1, 100, 1)
-        pass_spin.set_value(1)
+        try:
+             current_len = PamManager().get_min_password_length()
+             pass_spin.set_value(current_len if current_len > 0 else 1)
+        except Exception as e:
+             logger.error(f"Failed to fetch password length: {e}")
+             pass_spin.set_value(1)
         pass_spin.set_valign(Gtk.Align.CENTER)
         pass_row.add_suffix(pass_spin)
 
@@ -170,6 +177,7 @@ class SystemPage(Adw.PreferencesPage):
             try:
                 length = int(pass_spin.get_value())
                 cmd = f"python3 -c \"from tweak_flx1s.system.pam import PamManager; print(PamManager().set_min_password_length({length}))\""
+                logger.info(f"Setting password length to {length}")
                 dlg = ExecutionDialog(self.window, _("Setting Password Policy"), cmd, as_root=True)
                 dlg.present()
             except Exception as e:
@@ -189,6 +197,7 @@ class SystemPage(Adw.PreferencesPage):
             def config_fp():
                 try:
                     cmd = "python3 -c \"from tweak_flx1s.system.pam import PamManager; print(PamManager().configure_fingerprint())\""
+                    logger.info("Configuring fingerprint auth")
                     dlg = ExecutionDialog(self.window, _("Configuring Fingerprint"), cmd, as_root=True)
                     dlg.present()
                 except Exception as e:
@@ -200,97 +209,126 @@ class SystemPage(Adw.PreferencesPage):
             fp_row.add_suffix(fp_btn)
 
     def _update_kbd_subtitle(self):
-        current = self.kbd_mgr.get_current_keyboard()
-        name = current
-        for opt in self.kbd_mgr.get_available_keyboards():
-             # Basic fuzzy matching or exact path match
-             if opt["path"] == current:
-                 name = opt["name"]
-                 break
-        self.kbd_row.set_subtitle(name)
+        try:
+            current = self.kbd_mgr.get_current_keyboard()
+            name = current
+            for opt in self.kbd_mgr.get_available_keyboards():
+                 if opt["path"] == current:
+                     name = opt["name"]
+                     break
+            self.kbd_row.set_subtitle(name)
+        except Exception as e:
+            logger.error(f"Failed to update keyboard subtitle: {e}")
 
     def _on_change_keyboard_clicked(self, btn):
-        options = self.kbd_mgr.get_available_keyboards()
+        try:
+            logger.info("Opening keyboard selection dialog")
+            options = self.kbd_mgr.get_available_keyboards()
 
-        def on_select(path):
-            cmd = self.kbd_mgr.set_keyboard(path)
+            def on_select(path):
+                cmd = self.kbd_mgr.set_keyboard(path)
 
-            def on_finish(success):
-                if success:
-                    self._update_kbd_subtitle()
-                    restart_cmd = "systemctl --user daemon-reload && systemctl --user restart mobi.Phosh.OSK.service"
-                    try:
-                        dlg = ExecutionDialog(self.window, _("Restarting Keyboard Service"), restart_cmd, as_root=False)
-                        dlg.present()
-                    except Exception as e:
-                         logger.error(f"Failed to start restart dialog: {e}")
+                def on_finish(success):
+                    if success:
+                        self._update_kbd_subtitle()
+                        restart_cmd = "systemctl --user daemon-reload && systemctl --user restart mobi.Phosh.OSK.service"
+                        try:
+                            logger.info("Restarting keyboard service")
+                            dlg = ExecutionDialog(self.window, _("Restarting Keyboard Service"), restart_cmd, as_root=False)
+                            dlg.present()
+                        except Exception as e:
+                             logger.error(f"Failed to start restart dialog: {e}")
 
-            if cmd:
-                dlg = ExecutionDialog(self.window, _("Changing Keyboard"), cmd, as_root=True, on_finish=on_finish)
-                dlg.present()
+                if cmd:
+                    dlg = ExecutionDialog(self.window, _("Changing Keyboard"), cmd, as_root=True, on_finish=on_finish)
+                    dlg.present()
 
-        dlg = KeyboardSelectionDialog(self.window, options, on_select)
-        dlg.present()
+            dlg = KeyboardSelectionDialog(self.window, options, on_select)
+            dlg.present()
+        except Exception as e:
+            logger.error(f"Failed to handle keyboard change click: {e}")
 
     def _on_fi_toggled(self, row, param):
-        if row.get_active():
-            if not self.kbd_mgr.install_finnish_layout():
-                 row.set_active(False)
-        else:
-            self.kbd_mgr.remove_finnish_layout()
+        try:
+            active = row.get_active()
+            logger.info(f"Toggling Finnish layout: {active}")
+            if active:
+                if not self.kbd_mgr.install_finnish_layout():
+                     row.set_active(False)
+            else:
+                self.kbd_mgr.remove_finnish_layout()
+        except Exception as e:
+             logger.error(f"Failed to toggle Finnish layout: {e}")
 
     def _on_wofi_toggled(self, row, param):
-        if row.get_active():
-            self.wofi_mgr.force_install_config()
+        try:
+            active = row.get_active()
+            logger.info(f"Toggling Wofi config enforcement: {active}")
+            if active:
+                self.wofi_mgr.force_install_config()
+        except Exception as e:
+            logger.error(f"Failed to toggle Wofi config: {e}")
 
     def _install_bat_mon(self, btn):
-        cmd = (
-            "rm -rf /tmp/flx1s-bat-mon && "
-            "git clone https://gitlab.com/Alaraajavamma/flx1s-bat-mon /tmp/flx1s-bat-mon && "
-            "cd /tmp/flx1s-bat-mon && "
-            "apt install -y ./flx1s-bat-mon*.deb"
-        )
-        dlg = ExecutionDialog(self.window, _("Installing FLX1s-Bat-Mon"), cmd, as_root=True)
-        dlg.present()
+        try:
+            logger.info("Installing FLX1s-Bat-Mon")
+            cmd = (
+                "rm -rf /tmp/flx1s-bat-mon && "
+                "git clone https://gitlab.com/Alaraajavamma/flx1s-bat-mon /tmp/flx1s-bat-mon && "
+                "cd /tmp/flx1s-bat-mon && "
+                "apt install -y ./flx1s-bat-mon*.deb"
+            )
+            dlg = ExecutionDialog(self.window, _("Installing FLX1s-Bat-Mon"), cmd, as_root=True)
+            dlg.present()
+        except Exception as e:
+            logger.error(f"Failed to install bat mon: {e}")
 
     def _refresh_phofono(self):
-        installed = self.phofono_mgr.check_installed()
-        if installed:
-            self.phofono_btn.set_label(_("Remove"))
-            self.phofono_btn.add_css_class("destructive-action")
-            self.phofono_btn.remove_css_class("suggested-action")
-            self.phofono_row.set_subtitle(_("Installed"))
-        else:
-            self.phofono_btn.set_label(_("Install"))
-            self.phofono_btn.add_css_class("suggested-action")
-            self.phofono_btn.remove_css_class("destructive-action")
-            self.phofono_row.set_subtitle(_("Alternative Phone and Messages App"))
+        try:
+            installed = self.phofono_mgr.check_installed()
+            if installed:
+                self.phofono_btn.set_label(_("Remove"))
+                self.phofono_btn.add_css_class("destructive-action")
+                self.phofono_btn.remove_css_class("suggested-action")
+                self.phofono_row.set_subtitle(_("Installed"))
+            else:
+                self.phofono_btn.set_label(_("Install"))
+                self.phofono_btn.add_css_class("suggested-action")
+                self.phofono_btn.remove_css_class("destructive-action")
+                self.phofono_row.set_subtitle(_("Alternative Phone and Messages App"))
+        except Exception as e:
+            logger.error(f"Failed to refresh Phofono status: {e}")
 
     def _on_phofono_clicked(self, btn):
-        installed = self.phofono_mgr.check_installed()
-        if installed:
-            cmd = self.phofono_mgr.get_uninstall_root_cmd()
-            def on_finish(success):
-                if success:
-                    try:
-                        self.phofono_mgr.finish_uninstall()
-                    except Exception as e:
-                        logger.error(f"Finish uninstall failed: {e}")
-                    self._refresh_phofono()
-            dlg = ExecutionDialog(self.window, _("Removing Phofono"), cmd, as_root=True, on_finish=on_finish)
-            dlg.present()
-        else:
-            try:
-                repo_dir = self.phofono_mgr.prepare_install()
-                cmd = self.phofono_mgr.get_install_root_cmd(repo_dir)
+        try:
+            installed = self.phofono_mgr.check_installed()
+            if installed:
+                logger.info("Removing Phofono")
+                cmd = self.phofono_mgr.get_uninstall_root_cmd()
                 def on_finish(success):
                     if success:
                         try:
-                            self.phofono_mgr.finish_install()
+                            self.phofono_mgr.finish_uninstall()
                         except Exception as e:
-                            logger.error(f"Finish install failed: {e}")
+                            logger.error(f"Finish uninstall failed: {e}")
                         self._refresh_phofono()
-                dlg = ExecutionDialog(self.window, _("Installing Phofono"), cmd, as_root=True, on_finish=on_finish)
+                dlg = ExecutionDialog(self.window, _("Removing Phofono"), cmd, as_root=True, on_finish=on_finish)
                 dlg.present()
-            except Exception as e:
-                logger.error(f"Install setup failed: {e}")
+            else:
+                logger.info("Installing Phofono")
+                try:
+                    repo_dir = self.phofono_mgr.prepare_install()
+                    cmd = self.phofono_mgr.get_install_root_cmd(repo_dir)
+                    def on_finish(success):
+                        if success:
+                            try:
+                                self.phofono_mgr.finish_install()
+                            except Exception as e:
+                                logger.error(f"Finish install failed: {e}")
+                            self._refresh_phofono()
+                    dlg = ExecutionDialog(self.window, _("Installing Phofono"), cmd, as_root=True, on_finish=on_finish)
+                    dlg.present()
+                except Exception as e:
+                    logger.error(f"Install setup failed: {e}")
+        except Exception as e:
+            logger.error(f"Failed to handle Phofono click: {e}")

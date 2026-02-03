@@ -32,6 +32,7 @@ class FastFLX1App(Adw.Application):
 
     def do_startup(self):
         Adw.Application.do_startup(self)
+        Gtk.Window.set_default_icon_name(APP_ID)
         self._setup_css()
 
     def _setup_css(self):

@@ -91,6 +91,26 @@ account required        pam_permit.so
 
         return "Fingerprint authentication configured successfully."
 
+    def get_min_password_length(self):
+        """Reads current minimum password length from /etc/pam.d/common-password."""
+        file_path = "/etc/pam.d/common-password"
+        if not os.path.exists(file_path):
+             return 0
+
+        try:
+            with open(file_path, "r") as f:
+                content = f.read()
+
+            for line in content.splitlines():
+                 if "pam_unix.so" in line and not line.strip().startswith("#"):
+                      match = re.search(r"minlen=(\d+)", line)
+                      if match:
+                          return int(match.group(1))
+            return 0
+        except Exception as e:
+            logger.error(f"Failed to read password length: {e}")
+            return 0
+
     def set_min_password_length(self, length):
         """
         Updates /etc/pam.d/common-password to set minimum password length.

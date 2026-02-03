@@ -55,9 +55,7 @@ class MainWindow(Adw.Window):
         info_btn.connect("clicked", lambda b: InfoPage.show(self))
         header.pack_start(info_btn)
 
-        close_btn = Gtk.Button(icon_name="window-close-symbolic")
-        close_btn.add_css_class("flat")
-        close_btn.add_css_class("circular")
+        close_btn = Gtk.Button(label=_("Close"))
         close_btn.connect("clicked", self._on_close_clicked)
         header.pack_end(close_btn)
 

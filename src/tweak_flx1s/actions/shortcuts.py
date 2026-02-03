@@ -129,8 +129,8 @@ class ShortcutsManager:
          try:
             run_command(cmd)
             send_notification("Picture Taken", f"Saved to {filename}")
-         except:
-            pass
+         except Exception as e:
+            logger.error(f"Failed to take picture: {e}")
 
     def paste_clipboard(self):
         """Pastes content from clipboard or notifies if empty."""

@@ -42,12 +42,18 @@ class GestureEditor(Adw.Window):
         self.set_content(content)
 
         header = Adw.HeaderBar()
+        header.set_show_end_title_buttons(False)
+        header.set_show_start_title_buttons(False)
         content.add_top_bar(header)
 
         save_btn = Gtk.Button(label=_("Save"))
         save_btn.add_css_class("suggested-action")
         save_btn.connect("clicked", self._on_save_clicked)
         header.pack_start(save_btn)
+
+        close_btn = Gtk.Button(label=_("Close"))
+        close_btn.connect("clicked", lambda b: GLib.idle_add(lambda: self.close() or False))
+        header.pack_end(close_btn)
 
         page = Adw.PreferencesPage()
         content.set_content(page)
