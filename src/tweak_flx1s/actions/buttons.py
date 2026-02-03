@@ -33,7 +33,7 @@ PREDEFINED_ACTIONS = {
     _("Copy (Ctrl+C)"): "wtype -M ctrl c -m ctrl",
     _("Paste (Ctrl+V)"): "wtype -M ctrl v -m ctrl",
     _("Cut (Ctrl+X)"): "wtype -M ctrl x -m ctrl",
-    _("Select All & Copy"): "wtype -M ctrl a -m ctrl && wtype -M ctrl c -m ctrl",
+    _("Select All and Copy"): "wtype -M ctrl a -m ctrl && wtype -M ctrl c -m ctrl",
     _("Paste from Clipboard"): "tweak-flx1s --action paste",
     _("Kill Active Window"): "wtype -M alt -P F4 -m alt -p F4",
     _("Switch Window"): "wtype -M alt -P tab -m alt -p tab",

@@ -40,3 +40,216 @@ msgstr "Ongelmanseuranta"
 
 msgid "Report bugs or request features"
 msgstr "Ilmoita virheistä tai ehdota ominaisuuksia"
+
+msgid "System"
+msgstr "Järjestelmä"
+
+msgid "Keyboard"
+msgstr "Näppäimistö"
+
+msgid "Change Keyboard"
+msgstr "Vaihda näppäimistö"
+
+msgid "Select Keyboard"
+msgstr "Valitse näppäimistö"
+
+msgid "Restarting Keyboard Service"
+msgstr "Käynnistetään näppäimistöpalvelu uudelleen"
+
+msgid "Changing Keyboard"
+msgstr "Vaihdetaan näppäimistö"
+
+msgid "None - write it yourself below"
+msgstr "Ei mitään - kirjoita itse alle"
+
+msgid "Use Tweak-FLX1s Wofi style and config"
+msgstr "Käytä Tweak-FLX1s Wofi tyyliä ja asetuksia"
+
+msgid "Alternative Phone and Messages App"
+msgstr "Vaihtoehtoinen Puhelin ja Viestit -sovellus"
+
+msgid "Select All and Copy"
+msgstr "Valitse kaikki ja kopioi"
+
+msgid "Action Type"
+msgstr "Toiminnon tyyppi"
+
+msgid "Custom Command"
+msgstr "Mukautettu komento"
+
+msgid "Execute a shell command"
+msgstr "Suorita komentorivikomento"
+
+msgid "Wofi Menu"
+msgstr "Wofi-valikko"
+
+msgid "Show a menu of actions"
+msgstr "Näytä toimintovalikko"
+
+msgid "Edit Menu"
+msgstr "Muokkaa valikkoa"
+
+msgid "Predefined Actions"
+msgstr "Esitellyt toiminnot"
+
+msgid "Edit Item"
+msgstr "Muokkaa kohdetta"
+
+msgid "Add Item"
+msgstr "Lisää kohde"
+
+msgid "Label"
+msgstr "Nimi"
+
+msgid "Command"
+msgstr "Komento"
+
+msgid "Predefined"
+msgstr "Esitellyt"
+
+msgid "Cancel"
+msgstr "Peruuta"
+
+msgid "Save"
+msgstr "Tallenna"
+
+msgid "Select"
+msgstr "Valitse"
+
+msgid "New Item"
+msgstr "Uusi kohde"
+
+msgid "Installing Squeekboard"
+msgstr "Asennetaan Squeekboard"
+
+msgid "Switching to Staging"
+msgstr "Vaihdetaan Staging-ympäristöön"
+
+msgid "Switching to Production"
+msgstr "Vaihdetaan tuotantoympäristöön"
+
+msgid "Upgrading System"
+msgstr "Päivitetään järjestelmä"
+
+msgid "Installing Branchy"
+msgstr "Asennetaan Branchy"
+
+msgid "Setting Password Policy"
+msgstr "Asetetaan salasanakäytäntö"
+
+msgid "Configuring Fingerprint"
+msgstr "Määritetään sormenjälki"
+
+msgid "Installing FLX1s-Bat-Mon"
+msgstr "Asennetaan FLX1s-Bat-Mon"
+
+msgid "Removing Phofono"
+msgstr "Poistetaan Phofono"
+
+msgid "Installing Phofono"
+msgstr "Asennetaan Phofono"
+
+msgid "Squeekboard Missing"
+msgstr "Squeekboard puuttuu"
+
+msgid "Install"
+msgstr "Asenna"
+
+msgid "Active Keyboard"
+msgstr "Aktiivinen näppäimistö"
+
+msgid "Finnish Layout"
+msgstr "Suomalainen asettelu"
+
+msgid "Install custom Squeekboard layout"
+msgstr "Asenna mukautettu Squeekboard-asettelu"
+
+msgid "Enforce App Wofi Config"
+msgstr "Pakota sovelluksen Wofi-asetukset"
+
+msgid "Environment"
+msgstr "Ympäristö"
+
+msgid "Switch Environment"
+msgstr "Vaihda ympäristö"
+
+msgid "Staging"
+msgstr "Staging"
+
+msgid "Production"
+msgstr "Tuotanto"
+
+msgid "Updates"
+msgstr "Päivitykset"
+
+msgid "System Upgrade"
+msgstr "Järjestelmäpäivitys"
+
+msgid "Upgrade FuriOS"
+msgstr "Päivitä FuriOS"
+
+msgid "Applications"
+msgstr "Sovellukset"
+
+msgid "FLX1s-Bat-Mon"
+msgstr "FLX1s-Bat-Mon"
+
+msgid "Install custom battery monitor"
+msgstr "Asenna mukautettu akun seuranta"
+
+msgid "Phofono"
+msgstr "Phofono"
+
+msgid "Branchy App Store"
+msgstr "Branchy-sovelluskauppa"
+
+msgid "Security"
+msgstr "Tietoturva"
+
+msgid "Minimum Password Length"
+msgstr "Salasanan vähimmäispituus"
+
+msgid "Apply"
+msgstr "Käytä"
+
+msgid "Fingerprint Authentication"
+msgstr "Sormenjälkitunnistus"
+
+msgid "Configure PAM for fingerprint support"
+msgstr "Määritä PAM sormenjälkituelle"
+
+msgid "Enable"
+msgstr "Ota käyttöön"
+
+msgid "Installed"
+msgstr "Asennettu"
+
+msgid "Remove"
+msgstr "Poista"
+
+msgid "Copy (Ctrl+C)"
+msgstr "Kopioi (Ctrl+C)"
+
+msgid "Paste (Ctrl+V)"
+msgstr "Liitä (Ctrl+V)"
+
+msgid "Cut (Ctrl+X)"
+msgstr "Leikkaa (Ctrl+X)"
+
+msgid "Paste from Clipboard"
+msgstr "Liitä leikepöydältä"
+
+msgid "Kill Active Window"
+msgstr "Tapa aktiivinen ikkuna"
+
+msgid "Switch Window"
+msgstr "Vaihda ikkunaa"
+
+msgid "Screenshot"
+msgstr "Kuvakaappaus"
+
+msgid "Flashlight"
+msgstr "Taskulamppu"
+
+msgid "Select..."
+msgstr "Valitse..."
