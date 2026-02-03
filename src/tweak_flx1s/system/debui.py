@@ -20,14 +20,12 @@ class DebUiManager:
 
     def check_installed(self):
         """Checks if deb-ui is installed."""
-        # Try checking 'deb-ui' first (standard naming)
         try:
              run_command("dpkg -s deb-ui", check=True)
              return True
         except Exception:
              pass
 
-        # Try 'debui'
         try:
              run_command("dpkg -s debui", check=True)
              return True
@@ -36,8 +34,6 @@ class DebUiManager:
 
     def get_install_cmd(self):
         """Returns command to install DebUI."""
-        # Clone to /tmp and install.
-        # We assume git is available (installed dependency).
         return (
             "rm -rf /tmp/debui && "
             "git clone https://gitlab.com/Alaraajavamma/debui /tmp/debui && "
@@ -47,6 +43,4 @@ class DebUiManager:
 
     def get_remove_cmd(self):
         """Returns command to remove DebUI."""
-        # We try to remove both potential package names to be safe,
-        # ignoring errors if one doesn't exist.
         return "apt remove -y deb-ui debui"

@@ -60,7 +60,6 @@ class SystemPage(Adw.PreferencesPage):
             except Exception as e:
                 logger.error(f"Failed to start execution dialog for {title}: {e}")
 
-        # --- Keyboard Group ---
         kbd_group = Adw.PreferencesGroup(title=_("Keyboard"))
         self.add(kbd_group)
 
@@ -71,7 +70,7 @@ class SystemPage(Adw.PreferencesPage):
 
         change_kbd_btn = Gtk.Button(label=_("Change Keyboard"))
         change_kbd_btn.set_valign(Gtk.Align.CENTER)
-        change_kbd_btn.connect("clicked", self._on_change_keyboard_clicked)
+        change_kbd_btn.connect("clicked", lambda b: GLib.idle_add(lambda: self._on_change_keyboard_clicked(b) or False))
         self.kbd_row.add_suffix(change_kbd_btn)
         kbd_group.add(self.kbd_row)
 
@@ -82,7 +81,6 @@ class SystemPage(Adw.PreferencesPage):
         self.fi_row.connect("notify::active", self._on_fi_toggled)
         kbd_group.add(self.fi_row)
 
-        # --- Configuration Group ---
         wofi_group = Adw.PreferencesGroup(title=_("Configuration"))
         self.add(wofi_group)
 
@@ -93,7 +91,6 @@ class SystemPage(Adw.PreferencesPage):
         wofi_row.connect("notify::active", self._on_wofi_toggled)
         wofi_group.add(wofi_row)
 
-        # --- Environment Group ---
         env_group = Adw.PreferencesGroup(title=_("Environment"))
         self.add(env_group)
 
@@ -108,7 +105,6 @@ class SystemPage(Adw.PreferencesPage):
         self.env_row.add_suffix(self.env_btn)
         self._refresh_env_ui()
 
-        # --- Updates Group ---
         upg_group = Adw.PreferencesGroup(title=_("Updates"))
         self.add(upg_group)
         upg_row = Adw.ActionRow(title=_("System Upgrade"))
@@ -122,11 +118,9 @@ class SystemPage(Adw.PreferencesPage):
         upg_btn.connect("clicked", lambda x: GLib.idle_add(lambda: run_pkg_cmd(_("Upgrading System"), self.pkg_mgr.upgrade_system()) or False))
         upg_row.add_suffix(upg_btn)
 
-        # --- Applications Group ---
         app_group = Adw.PreferencesGroup(title=_("Applications"))
         self.add(app_group)
 
-        # 1. Squeekboard
         sq_row = Adw.ActionRow(title=_("Squeekboard"), subtitle=_("On-screen keyboard"))
         sq_row.set_title_lines(0)
         sq_row.set_subtitle_lines(0)
@@ -136,9 +130,8 @@ class SystemPage(Adw.PreferencesPage):
         self.sq_btn.set_valign(Gtk.Align.CENTER)
         self.sq_btn.connect("clicked", lambda b: GLib.idle_add(lambda: self._on_sq_clicked(b) or False))
         sq_row.add_suffix(self.sq_btn)
-        self._refresh_squeekboard_ui() # Also updates keyboard group sensitivity
+        self._refresh_squeekboard_ui()
 
-        # 2. FLX1s-Bat-Mon
         bat_row = Adw.ActionRow(title=_("FLX1s-Bat-Mon"), subtitle=_("Install custom battery monitor"))
         bat_row.set_title_lines(0)
         bat_row.set_subtitle_lines(0)
@@ -150,7 +143,6 @@ class SystemPage(Adw.PreferencesPage):
         bat_row.add_suffix(self.bat_btn)
         self._refresh_bat_mon()
 
-        # 3. Phofono
         self.phofono_row = Adw.ActionRow(title=_("Phofono"), subtitle=_("Alternative Phone and Messages App"))
         self.phofono_row.set_title_lines(0)
         self.phofono_row.set_subtitle_lines(0)
@@ -161,7 +153,6 @@ class SystemPage(Adw.PreferencesPage):
         self.phofono_row.add_suffix(self.phofono_btn)
         self._refresh_phofono()
 
-        # 4. Branchy
         branchy_row = Adw.ActionRow(title=_("Branchy App Store"))
         branchy_row.set_title_lines(0)
         branchy_row.set_subtitle_lines(0)
@@ -173,7 +164,6 @@ class SystemPage(Adw.PreferencesPage):
         branchy_row.add_suffix(self.branchy_btn)
         self._refresh_branchy()
 
-        # 5. DebUI
         deb_row = Adw.ActionRow(title=_("DebUI"), subtitle=_("Debian Package Installer UI"))
         deb_row.set_title_lines(0)
         deb_row.set_subtitle_lines(0)
@@ -185,11 +175,9 @@ class SystemPage(Adw.PreferencesPage):
         deb_row.add_suffix(self.deb_btn)
         self._refresh_debui()
 
-        # --- Security Group ---
         sec_group = Adw.PreferencesGroup(title=_("Security"))
         self.add(sec_group)
 
-        # Enable Shorter Passwords
         self.short_pass_row = Adw.SwitchRow(title=_("Enable Shorter Passcodes"), subtitle=_("Allow 1-character passwords"))
         self.short_pass_row.set_title_lines(0)
         self.short_pass_row.set_subtitle_lines(0)
@@ -197,7 +185,6 @@ class SystemPage(Adw.PreferencesPage):
         self.short_pass_row.connect("notify::active", self._on_short_pass_toggled)
         sec_group.add(self.short_pass_row)
 
-        # Change Password
         self.change_pass_row = Adw.ActionRow(title=_("Change Password"), subtitle=_("Change current user password"))
         self.change_pass_row.set_title_lines(0)
         self.change_pass_row.set_subtitle_lines(0)
@@ -283,8 +270,6 @@ class SystemPage(Adw.PreferencesPage):
         except Exception as e:
             logger.error(f"Failed to toggle Wofi config: {e}")
 
-    # --- Squeekboard Handlers ---
-
     def _refresh_squeekboard_ui(self):
         try:
             installed = self.kbd_mgr.check_squeekboard_installed()
@@ -292,14 +277,12 @@ class SystemPage(Adw.PreferencesPage):
                 self.sq_btn.set_label(_("Remove"))
                 self.sq_btn.add_css_class("destructive-action")
                 self.sq_btn.remove_css_class("suggested-action")
-                # Enable keyboard settings
                 self.kbd_row.set_sensitive(True)
                 self.fi_row.set_sensitive(True)
             else:
                 self.sq_btn.set_label(_("Install"))
                 self.sq_btn.add_css_class("suggested-action")
                 self.sq_btn.remove_css_class("destructive-action")
-                # Disable keyboard settings
                 self.kbd_row.set_sensitive(False)
                 self.fi_row.set_sensitive(False)
         except Exception as e:
@@ -321,19 +304,15 @@ class SystemPage(Adw.PreferencesPage):
         except Exception as e:
              logger.error(f"Failed to handle Squeekboard click: {e}")
 
-    # --- Short Password Handlers ---
-
     def _on_short_pass_toggled(self, row, param):
         active = row.get_active()
         self.change_pass_row.set_sensitive(active)
 
         if active:
-            # Enable
             cmd = f"python3 -c \"from tweak_flx1s.system.pam import PamManager; print(PamManager().enable_short_passwords())\""
             dlg = ExecutionDialog(self.window, _("Enabling Shorter Passwords"), cmd, as_root=True)
             dlg.present()
         else:
-            # Disable
             cmd = f"python3 -c \"from tweak_flx1s.system.pam import PamManager; print(PamManager().disable_short_passwords())\""
             dlg = ExecutionDialog(self.window, _("Disabling Shorter Passwords"), cmd, as_root=True)
             dlg.present()
@@ -344,8 +323,6 @@ class SystemPage(Adw.PreferencesPage):
             dlg.present()
         else:
             logger.error("PasswordChangeDialog not available (ImportError?)")
-
-    # --- DebUI Handlers ---
 
     def _refresh_debui(self):
         try:
@@ -376,8 +353,6 @@ class SystemPage(Adw.PreferencesPage):
                 dlg.present()
         except Exception as e:
              logger.error(f"Failed to handle DebUI click: {e}")
-
-    # --- BatMon Handlers ---
 
     def _refresh_bat_mon(self):
         try:
@@ -414,8 +389,6 @@ class SystemPage(Adw.PreferencesPage):
         except Exception as e:
             logger.error(f"Failed to handle bat mon click: {e}")
 
-    # --- Fingerprint Handlers ---
-
     def _refresh_fp_ui(self):
         try:
             enabled = self.pam_mgr.check_fingerprint_status()
@@ -449,8 +422,6 @@ class SystemPage(Adw.PreferencesPage):
             dlg.present()
         except Exception as e:
             logger.error(f"Failed to handle FP click: {e}")
-
-    # --- Phofono Handlers ---
 
     def _refresh_phofono(self):
         try:
@@ -502,8 +473,6 @@ class SystemPage(Adw.PreferencesPage):
         except Exception as e:
             logger.error(f"Failed to handle Phofono click: {e}")
 
-    # --- Branchy Handlers ---
-
     def _refresh_branchy(self):
         try:
             installed = self.pkg_mgr.check_package_installed("furios-app-branchy")
@@ -533,8 +502,6 @@ class SystemPage(Adw.PreferencesPage):
                 dlg.present()
         except Exception as e:
             logger.error(f"Failed to handle Branchy click: {e}")
-
-    # --- Environment Handlers ---
 
     def _refresh_env_ui(self):
         try:

@@ -198,11 +198,10 @@ class WofiItemEditor(Adw.Window):
         predef_group = Adw.PreferencesGroup(title=_("Predefined Actions"))
         page.add(predef_group)
 
-        # None option
         none_row = Adw.ActionRow(title=_("None"))
         none_row.set_subtitle=_("Clear fields to write manually")
         none_row.set_activatable(True)
-        none_row.connect("activated", self._on_none_activated)
+        none_row.connect("activated", lambda row: GLib.idle_add(lambda: self._on_none_activated(row) or False))
         predef_group.add(none_row)
 
         sorted_keys = sorted(PREDEFINED_ACTIONS.keys())
@@ -210,7 +209,7 @@ class WofiItemEditor(Adw.Window):
             row = Adw.ActionRow(title=_(key))
             row.set_title_lines(0)
             row.set_activatable(True)
-            row.connect("activated", self._on_predef_activated, key)
+            row.connect("activated", lambda row: GLib.idle_add(lambda: self._on_predef_activated(row, key) or False))
             predef_group.add(row)
 
     def _on_none_activated(self, row):
@@ -247,7 +246,7 @@ class WofiMenuEditor(Adw.Window):
         content.add_top_bar(header)
 
         add_btn = Gtk.Button(icon_name="list-add-symbolic")
-        add_btn.connect("clicked", self._on_add)
+        add_btn.connect("clicked", lambda b: GLib.idle_add(lambda: self._on_add(b) or False))
         header.pack_end(add_btn)
 
         save_btn = Gtk.Button(label=_("Save"))
@@ -287,13 +286,13 @@ class WofiMenuEditor(Adw.Window):
 
             edit_btn = Gtk.Button(icon_name="document-edit-symbolic")
             edit_btn.add_css_class("flat")
-            edit_btn.connect("clicked", self._on_edit, idx)
+            edit_btn.connect("clicked", lambda b: GLib.idle_add(lambda: self._on_edit(b, idx) or False))
             row.add_suffix(edit_btn)
 
             del_btn = Gtk.Button(icon_name="user-trash-symbolic")
             del_btn.add_css_class("flat")
             del_btn.add_css_class("error")
-            del_btn.connect("clicked", self._on_delete, idx)
+            del_btn.connect("clicked", lambda b: GLib.idle_add(lambda: self._on_delete(b, idx) or False))
             row.add_suffix(del_btn)
 
             self.list_box.append(row)
@@ -348,7 +347,7 @@ class ActionSelectionDialog(Adw.Window):
 
         save_btn = Gtk.Button(label=_("Save"))
         save_btn.add_css_class("suggested-action")
-        save_btn.connect("clicked", self._on_save)
+        save_btn.connect("clicked", lambda b: GLib.idle_add(lambda: self._on_save(b) or False))
         header.pack_start(save_btn)
 
         close_btn = Gtk.Button(label=_("Close"))
@@ -390,7 +389,7 @@ class ActionSelectionDialog(Adw.Window):
         self.wofi_chk = wofi_chk
 
         self.edit_menu_btn = Gtk.Button(label=_("Edit Menu"), valign=Gtk.Align.CENTER)
-        self.edit_menu_btn.connect("clicked", self._on_edit_menu)
+        self.edit_menu_btn.connect("clicked", lambda b: GLib.idle_add(lambda: self._on_edit_menu(b) or False))
         self.edit_menu_btn.set_visible(wofi_chk.get_active())
         wofi_row.add_suffix(self.edit_menu_btn)
 
@@ -410,7 +409,7 @@ class ActionSelectionDialog(Adw.Window):
             if self.config.get("type") == "command" and current_val == val:
                  row.add_suffix(Gtk.Image.new_from_icon_name("object-select-symbolic"))
 
-            row.connect("activated", self._on_predef_activated, val)
+            row.connect("activated", lambda row: GLib.idle_add(lambda: self._on_predef_activated(row, val) or False))
             predef_group.add(row)
 
     def _on_type_toggled(self, chk, type_name):
@@ -430,14 +429,7 @@ class ActionSelectionDialog(Adw.Window):
         self.config["type"] = "command"
         self.config["value"] = cmd_val
         self.cmd_entry.set_text(cmd_val)
-        self.cmd_entry.set_visible(False) # Or true? Predefined usually hides custom entry in old logic, but user might want to see it? Old logic hid it.
-        # But wait, if I select predefined, it effectively sets the command.
-        # I should probably update the "Custom Command" entry to reflect this, but maybe not hide it?
-        # The user wants "just select row and save".
-        # I'll just leave it as is: setting value and ensuring Custom Command type is active.
-        # I'll also visually select the row (maybe re-render list or just rely on save).
-        # Re-rendering to show checkmark is hard without rebuilding group.
-        # I'll just set the value. The user can click Save.
+        self.cmd_entry.set_visible(False)
 
     def _on_edit_menu(self, btn):
         items = self.config.get("items", [])

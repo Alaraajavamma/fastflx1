@@ -46,7 +46,7 @@ class PasswordChangeDialog(Adw.Window):
 
         self.change_btn = Gtk.Button(label=_("Change"))
         self.change_btn.add_css_class("suggested-action")
-        self.change_btn.connect("clicked", self._on_change_clicked)
+        self.change_btn.connect("clicked", lambda b: GLib.idle_add(lambda: self._on_change_clicked(b) or False))
         header.pack_start(self.change_btn)
 
         close_btn = Gtk.Button(label=_("Close"))
@@ -178,6 +178,7 @@ class PasswordChangeDialog(Adw.Window):
             self.current_entry.set_text("")
             self.new_entry.set_text("")
             self.confirm_entry.set_text("")
+            GLib.timeout_add(1500, lambda: self.close() or False)
         else:
             msg = _("Failed to change password.")
             if "authentication token manipulation error" in output.lower():
@@ -187,6 +188,22 @@ class PasswordChangeDialog(Adw.Window):
                 lines = output.splitlines()
                 for line in lines:
                     if "BAD PASSWORD" in line:
-                         msg = line
+                        reason = line.split("BAD PASSWORD: ")[-1].strip()
+                        if "too short" in reason:
+                            reason = _("it is too short")
+                        elif "same as the old one" in reason:
+                            reason = _("is the same as the old one")
+                        elif "palindrome" in reason:
+                            reason = _("is a palindrome")
+                        elif "case changes only" in reason:
+                            reason = _("case changes only")
+                        elif "too similar" in reason:
+                            reason = _("is too similar to the old one")
+                        elif "does not contain enough DIFFERENT characters" in reason:
+                            reason = _("it does not contain enough DIFFERENT characters")
+                        elif "dictionary word" in reason:
+                            reason = _("it is based on a dictionary word")
+
+                        msg = _("Bad password: ") + reason
 
             self.status_label.set_text(msg)

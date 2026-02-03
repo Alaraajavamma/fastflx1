@@ -514,3 +514,36 @@ msgstr "Huono salasana."
 
 msgid "(In Use)"
 msgstr "(Käytössä)"
+
+msgid "Change"
+msgstr "Vaihda"
+
+msgid "Bad password: "
+msgstr "Huono salasana: "
+
+msgid "it is too short"
+msgstr "se on liian lyhyt"
+
+msgid "is the same as the old one"
+msgstr "se on sama kuin vanha"
+
+msgid "is a palindrome"
+msgstr "se on palindromi"
+
+msgid "case changes only"
+msgstr "vain kirjainkoko muuttui"
+
+msgid "is too similar to the old one"
+msgstr "se on liian samankaltainen kuin vanha"
+
+msgid "it does not contain enough DIFFERENT characters"
+msgstr "siinä ei ole tarpeeksi ERILAISIA merkkejä"
+
+msgid "it is based on a dictionary word"
+msgstr "se perustuu sanakirjasanaan"
+
+msgid "Removing DebUI"
+msgstr "Poistetaan DebUI"
+
+msgid "Installing DebUI"
+msgstr "Asennetaan DebUI"

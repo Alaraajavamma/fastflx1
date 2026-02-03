@@ -32,12 +32,10 @@ class KeyboardManager:
         """Checks if squeekboard package is installed."""
         try:
             logger.info("Checking if squeekboard is installed...")
-            # Check dpkg first
             res = run_command("dpkg -l squeekboard", check=False)
             if res and "ii  squeekboard" in res:
                  logger.info("Squeekboard found via dpkg.")
                  return True
-            # Fallback to binary check
             if shutil.which("squeekboard"):
                  logger.info("Squeekboard found via binary path.")
                  return True
@@ -53,7 +51,6 @@ class KeyboardManager:
 
     def get_remove_cmd(self):
         """Returns command to remove squeekboard and reset alternative."""
-        # We run update-alternatives --auto to ensure we don't get stuck on a broken manual link
         return "apt remove -y squeekboard; update-alternatives --auto Phosh-OSK"
 
     def get_current_keyboard(self):
@@ -88,10 +85,8 @@ class KeyboardManager:
             out = run_command("update-alternatives --query Phosh-OSK", check=False)
 
             if out:
-                # Parse blocks separated by blank lines
                 blocks = out.strip().split("\n\n")
                 for block in blocks:
-                    # We are looking for blocks starting with 'Alternative:'
                     lines = block.splitlines()
                     path = None
                     priority = None
@@ -148,7 +143,6 @@ class KeyboardManager:
         try:
             check_path = os.path.join(self.SQUEEKBOARD_DIR, "keyboards", "fi.yaml")
             exists = os.path.exists(check_path)
-            # logger.info(f"Finnish layout check: {exists}")
             return exists
         except Exception as e:
             logger.error(f"Failed to check Finnish layout: {e}")

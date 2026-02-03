@@ -52,11 +52,11 @@ class MainWindow(Adw.Window):
         info_btn = Gtk.Button(icon_name="dialog-information-symbolic")
         info_btn.add_css_class("flat")
         info_btn.add_css_class("circular")
-        info_btn.connect("clicked", lambda b: InfoPage.show(self))
+        info_btn.connect("clicked", lambda b: GLib.idle_add(lambda: InfoPage.show(self) or False))
         header.pack_start(info_btn)
 
         close_btn = Gtk.Button(label=_("Close"))
-        close_btn.connect("clicked", self._on_close_clicked)
+        close_btn.connect("clicked", lambda b: GLib.idle_add(lambda: self.close() or False))
         header.pack_end(close_btn)
 
         main_vbox.append(header)
@@ -77,5 +77,3 @@ class MainWindow(Adw.Window):
         self.switcher = Adw.ViewSwitcherBar(stack=self.stack, reveal=True)
         main_vbox.append(self.switcher)
 
-    def _on_close_clicked(self, btn):
-        GLib.idle_add(lambda: self.close() or False)
