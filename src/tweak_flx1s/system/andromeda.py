@@ -31,8 +31,11 @@ class AndromedaManager:
     FSTAB_MARKER_BEGIN = "# BEGIN ANDROMEDA MOUNTS"
     FSTAB_MARKER_END = "# END ANDROMEDA MOUNTS"
 
-    def __init__(self):
-        self.HOST_USER = os.environ.get("SUDO_USER") or os.environ.get("PKEXEC_USER") or os.environ.get("USER")
+    def __init__(self, user=None):
+        if user:
+            self.HOST_USER = user
+        else:
+            self.HOST_USER = os.environ.get("SUDO_USER") or os.environ.get("PKEXEC_USER") or os.environ.get("USER")
         self._reinit_paths()
 
     def _reinit_paths(self):

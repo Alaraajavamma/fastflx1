@@ -16,6 +16,7 @@
 import gi
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
+import shlex
 from gi.repository import Gtk, Adw, GLib
 from tweak_flx1s.const import SERVICE_ALARM, SERVICE_GUARD, SERVICE_GESTURES
 from tweak_flx1s.utils import run_command, logger
@@ -127,7 +128,8 @@ class ActionsPage(Adw.PreferencesPage):
 
         def mount_cb():
             try:
-                cmd = "python3 -c \"from tweak_flx1s.system.andromeda import AndromedaManager; AndromedaManager().mount()\""
+                user = GLib.get_user_name()
+                cmd = f"python3 -c \"import sys; from tweak_flx1s.system.andromeda import AndromedaManager; AndromedaManager(user=sys.argv[1]).mount()\" {shlex.quote(user)}"
                 dlg = ExecutionDialog(self.window, "Mounting Shared Folders", cmd, as_root=True)
                 dlg.present()
             except Exception as e:
@@ -135,7 +137,8 @@ class ActionsPage(Adw.PreferencesPage):
 
         def unmount_cb():
             try:
-                cmd = "python3 -c \"from tweak_flx1s.system.andromeda import AndromedaManager; AndromedaManager().unmount()\""
+                user = GLib.get_user_name()
+                cmd = f"python3 -c \"import sys; from tweak_flx1s.system.andromeda import AndromedaManager; AndromedaManager(user=sys.argv[1]).unmount()\" {shlex.quote(user)}"
                 dlg = ExecutionDialog(self.window, "Unmounting Shared Folders", cmd, as_root=True)
                 dlg.present()
             except Exception as e:

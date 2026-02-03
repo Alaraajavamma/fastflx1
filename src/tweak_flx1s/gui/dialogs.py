@@ -104,7 +104,7 @@ class ExecutionDialog(Adw.MessageDialog):
 
     def _on_response(self, dialog, response_id):
         if response_id == "close":
-             GLib.idle_add(lambda: self.close() or False)
+             GLib.timeout_add(50, lambda: self.close() or False)
 
 class WofiMenuEditor(Adw.Window):
     """Editor window for Wofi menus."""

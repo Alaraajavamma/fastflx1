@@ -2,3 +2,12 @@
 
 %:
 	dh $@ --with python3 --buildsystem=pybuild
+
+override_dh_auto_build:
+	dh_auto_build
+	mkdir -p locales/fi/LC_MESSAGES
+	msgfmt po/fi.po -o locales/fi/LC_MESSAGES/tweak-flx1s.mo
+
+override_dh_clean:
+	dh_clean
+	rm -rf locales
