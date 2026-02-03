@@ -457,3 +457,60 @@ msgstr "Vaihda tuotantoon"
 
 msgid "Switch to Staging"
 msgstr "Vaihda stagingiin"
+
+msgid "Enable Shorter Passcodes"
+msgstr "Ota käyttöön lyhyemmät salasanat"
+
+msgid "Allow 1-character passwords"
+msgstr "Salli 1 merkin salasanat"
+
+msgid "Change Password"
+msgstr "Vaihda salasana"
+
+msgid "Change current user password"
+msgstr "Vaihda nykyisen käyttäjän salasana"
+
+msgid "Enabling Shorter Passwords"
+msgstr "Otetaan käyttöön lyhyemmät salasanat"
+
+msgid "Disabling Shorter Passwords"
+msgstr "Poistetaan käytöstä lyhyemmät salasanat"
+
+msgid "Password Details"
+msgstr "Salasanan tiedot"
+
+msgid "Current Password"
+msgstr "Nykyinen salasana"
+
+msgid "New Password"
+msgstr "Uusi salasana"
+
+msgid "Confirm New Password"
+msgstr "Vahvista uusi salasana"
+
+msgid "Please enter current password."
+msgstr "Anna nykyinen salasana."
+
+msgid "Please enter new password."
+msgstr "Anna uusi salasana."
+
+msgid "New passwords do not match."
+msgstr "Uudet salasanat eivät täsmää."
+
+msgid "Changing password..."
+msgstr "Vaihdetaan salasanaa..."
+
+msgid "Password changed successfully!"
+msgstr "Salasana vaihdettu onnistuneesti!"
+
+msgid "Failed to change password."
+msgstr "Salasanan vaihto epäonnistui."
+
+msgid "Authentication error. Check current password."
+msgstr "Tunnistautumisvirhe. Tarkista nykyinen salasana."
+
+msgid "Bad password."
+msgstr "Huono salasana."
+
+msgid "(In Use)"
+msgstr "(Käytössä)"

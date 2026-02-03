@@ -20,6 +20,11 @@ from gi.repository import Gtk, Adw, GLib
 from loguru import logger
 from tweak_flx1s.utils import run_command, get_device_model
 from tweak_flx1s.gui.dialogs import ExecutionDialog, KeyboardSelectionDialog
+try:
+    from tweak_flx1s.gui.password_dialog import PasswordChangeDialog
+except ImportError:
+    PasswordChangeDialog = None
+
 from tweak_flx1s.system.package_manager import PackageManager
 from tweak_flx1s.system.keyboard import KeyboardManager
 from tweak_flx1s.system.phofono import PhofonoManager
@@ -58,8 +63,6 @@ class SystemPage(Adw.PreferencesPage):
         # --- Keyboard Group ---
         kbd_group = Adw.PreferencesGroup(title=_("Keyboard"))
         self.add(kbd_group)
-
-        # Note: "Squeekboard Missing" logic removed; handled by Applications group & sensitivity.
 
         self.kbd_row = Adw.ActionRow(title=_("Active Keyboard"))
         self.kbd_row.set_title_lines(0)
@@ -170,19 +173,7 @@ class SystemPage(Adw.PreferencesPage):
         branchy_row.add_suffix(self.branchy_btn)
         self._refresh_branchy()
 
-        # 5. Password Quality Library (libpam-pwquality)
-        pw_row = Adw.ActionRow(title=_("Password Quality Library"), subtitle=_("Enables strict password policies"))
-        pw_row.set_title_lines(0)
-        pw_row.set_subtitle_lines(0)
-        app_group.add(pw_row)
-
-        self.pw_btn = Gtk.Button()
-        self.pw_btn.set_valign(Gtk.Align.CENTER)
-        self.pw_btn.connect("clicked", lambda b: GLib.idle_add(lambda: self._on_pw_clicked(b) or False))
-        pw_row.add_suffix(self.pw_btn)
-        # Note: Sensitivity of Security group handled in _refresh_pwquality_ui
-
-        # 6. DebUI
+        # 5. DebUI
         deb_row = Adw.ActionRow(title=_("DebUI"), subtitle=_("Debian Package Installer UI"))
         deb_row.set_title_lines(0)
         deb_row.set_subtitle_lines(0)
@@ -198,36 +189,26 @@ class SystemPage(Adw.PreferencesPage):
         sec_group = Adw.PreferencesGroup(title=_("Security"))
         self.add(sec_group)
 
-        self.min_pass_row = Adw.ActionRow(title=_("Minimum Password Length"))
-        self.min_pass_row.set_title_lines(0)
-        self.min_pass_row.set_subtitle_lines(0)
-        sec_group.add(self.min_pass_row)
+        # Enable Shorter Passwords
+        self.short_pass_row = Adw.SwitchRow(title=_("Enable Shorter Passcodes"), subtitle=_("Allow 1-character passwords"))
+        self.short_pass_row.set_title_lines(0)
+        self.short_pass_row.set_subtitle_lines(0)
+        self.short_pass_row.set_active(self.pam_mgr.check_short_passwords_enabled())
+        self.short_pass_row.connect("notify::active", self._on_short_pass_toggled)
+        sec_group.add(self.short_pass_row)
 
-        self.pass_spin_min = Gtk.SpinButton.new_with_range(1, 100, 1)
-        self.pass_spin_min.set_valign(Gtk.Align.CENTER)
-        self.min_pass_row.add_suffix(self.pass_spin_min)
+        # Change Password
+        self.change_pass_row = Adw.ActionRow(title=_("Change Password"), subtitle=_("Change current user password"))
+        self.change_pass_row.set_title_lines(0)
+        self.change_pass_row.set_subtitle_lines(0)
 
-        self.min_pass_btn = Gtk.Button(label=_("Apply"))
-        self.min_pass_btn.set_valign(Gtk.Align.CENTER)
-        self.min_pass_btn.connect("clicked", lambda x: GLib.idle_add(lambda: self._on_apply_password_policy() or False))
-        self.min_pass_row.add_suffix(self.min_pass_btn)
+        self.change_pass_row.set_sensitive(self.short_pass_row.get_active())
 
-        self.max_pass_row = Adw.ActionRow(title=_("Maximum Password Length"))
-        self.max_pass_row.set_title_lines(0)
-        self.max_pass_row.set_subtitle_lines(0)
-        sec_group.add(self.max_pass_row)
-
-        self.pass_spin_max = Gtk.SpinButton.new_with_range(1, 256, 1)
-        self.pass_spin_max.set_valign(Gtk.Align.CENTER)
-        self.max_pass_row.add_suffix(self.pass_spin_max)
-
-        self.max_pass_btn = Gtk.Button(label=_("Apply"))
-        self.max_pass_btn.set_valign(Gtk.Align.CENTER)
-        self.max_pass_btn.connect("clicked", lambda x: GLib.idle_add(lambda: self._on_apply_password_policy() or False))
-        self.max_pass_row.add_suffix(self.max_pass_btn)
-
-        self._load_password_policy()
-        self._refresh_pwquality_ui() # Sets sensitivity
+        change_pass_btn = Gtk.Button(label=_("Change"))
+        change_pass_btn.set_valign(Gtk.Align.CENTER)
+        change_pass_btn.connect("clicked", lambda x: GLib.idle_add(lambda: self._on_change_password_clicked() or False))
+        self.change_pass_row.add_suffix(change_pass_btn)
+        sec_group.add(self.change_pass_row)
 
         if get_device_model() == "FuriPhoneFLX1":
             self.fp_row = Adw.ActionRow(title=_("Fingerprint Authentication"), subtitle=_("Configure PAM for fingerprint support"))
@@ -340,66 +321,29 @@ class SystemPage(Adw.PreferencesPage):
         except Exception as e:
              logger.error(f"Failed to handle Squeekboard click: {e}")
 
-    # --- Password Quality Handlers ---
+    # --- Short Password Handlers ---
 
-    def _load_password_policy(self):
-        try:
-            min_v, max_v = self.pam_mgr.get_password_limits()
-            self.pass_spin_min.set_value(min_v if min_v > 0 else 1)
-            self.pass_spin_max.set_value(max_v if max_v > 0 else 128)
-        except Exception as e:
-            logger.error(f"Failed to load password policy: {e}")
-            self.pass_spin_min.set_value(1)
-            self.pass_spin_max.set_value(128)
+    def _on_short_pass_toggled(self, row, param):
+        active = row.get_active()
+        self.change_pass_row.set_sensitive(active)
 
-    def _refresh_pwquality_ui(self):
-        try:
-            installed = self.pam_mgr.check_pwquality_installed()
-            if installed:
-                self.pw_btn.set_label(_("Remove"))
-                self.pw_btn.add_css_class("destructive-action")
-                self.pw_btn.remove_css_class("suggested-action")
-                # Enable policy settings
-                self.min_pass_row.set_sensitive(True)
-                self.max_pass_row.set_sensitive(True)
-            else:
-                self.pw_btn.set_label(_("Install"))
-                self.pw_btn.add_css_class("suggested-action")
-                self.pw_btn.remove_css_class("destructive-action")
-                # Disable policy settings
-                self.min_pass_row.set_sensitive(False)
-                self.max_pass_row.set_sensitive(False)
-        except Exception as e:
-            logger.error(f"Failed to refresh pwquality ui: {e}")
-
-    def _on_pw_clicked(self, btn):
-        try:
-            installed = self.pam_mgr.check_pwquality_installed()
-            if installed:
-                logger.info("Removing libpam-pwquality")
-                cmd = f"{self.pam_mgr.get_remove_pwquality_cmd()} && python3 -c \"from tweak_flx1s.system.pam import PamManager; print(PamManager().remove_configuration())\""
-                # We chain remove package and restore config
-                dlg = ExecutionDialog(self.window, _("Removing Password Quality Lib"), cmd, as_root=True, on_finish=lambda s: self._refresh_pwquality_ui())
-                dlg.present()
-            else:
-                logger.info("Installing libpam-pwquality")
-                cmd = self.pam_mgr.get_install_pwquality_cmd()
-                dlg = ExecutionDialog(self.window, _("Installing Password Quality Lib"), cmd, as_root=True, on_finish=lambda s: self._refresh_pwquality_ui())
-                dlg.present()
-        except Exception as e:
-             logger.error(f"Failed to handle pwquality click: {e}")
-
-    def _on_apply_password_policy(self):
-        try:
-            min_v = int(self.pass_spin_min.get_value())
-            max_v = int(self.pass_spin_max.get_value())
-
-            cmd = f"python3 -c \"from tweak_flx1s.system.pam import PamManager; print(PamManager().set_password_policy({min_v}, {max_v}))\""
-            logger.info(f"Applying password policy: min={min_v}, max={max_v}")
-            dlg = ExecutionDialog(self.window, _("Applying Password Policy"), cmd, as_root=True)
+        if active:
+            # Enable
+            cmd = f"python3 -c \"from tweak_flx1s.system.pam import PamManager; print(PamManager().enable_short_passwords())\""
+            dlg = ExecutionDialog(self.window, _("Enabling Shorter Passwords"), cmd, as_root=True)
             dlg.present()
-        except Exception as e:
-            logger.error(f"Failed to apply password policy: {e}")
+        else:
+            # Disable
+            cmd = f"python3 -c \"from tweak_flx1s.system.pam import PamManager; print(PamManager().disable_short_passwords())\""
+            dlg = ExecutionDialog(self.window, _("Disabling Shorter Passwords"), cmd, as_root=True)
+            dlg.present()
+
+    def _on_change_password_clicked(self):
+        if PasswordChangeDialog:
+            dlg = PasswordChangeDialog(self.window)
+            dlg.present()
+        else:
+            logger.error("PasswordChangeDialog not available (ImportError?)")
 
     # --- DebUI Handlers ---
 

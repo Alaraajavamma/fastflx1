@@ -30,10 +30,11 @@ except NameError:
 
 class TemplateSelectionDialog(Adw.Window):
     """Dialog to select a gesture template."""
-    def __init__(self, parent, on_select):
+    def __init__(self, parent, on_select, used_specs=None):
         super().__init__(transient_for=parent, modal=True, title=_("Select Template"))
         self.set_default_size(350, 500)
         self.on_select = on_select
+        self.used_specs = used_specs or []
 
         content = Adw.ToolbarView()
         self.set_content(content)
@@ -60,12 +61,22 @@ class TemplateSelectionDialog(Adw.Window):
 
         sorted_specs = sorted(GESTURE_TEMPLATES.keys())
         for key in sorted_specs:
+            spec_val = GESTURE_TEMPLATES[key]
+            is_used = spec_val in self.used_specs
+
             row = Adw.ActionRow(title=key)
-            row.set_subtitle(GESTURE_TEMPLATES[key])
+            row.set_subtitle(spec_val)
             row.set_title_lines(0)
             row.set_subtitle_lines(0)
-            row.set_activatable(True)
-            row.connect("activated", self._on_row_activated, key)
+
+            if is_used:
+                row.set_activatable(False)
+                row.set_sensitive(False)
+                row.add_suffix(Gtk.Label(label=_("(In Use)")))
+            else:
+                row.set_activatable(True)
+                row.connect("activated", self._on_row_activated, key)
+
             list_box.append(row)
 
     def _on_row_activated(self, row, key):
@@ -75,11 +86,12 @@ class TemplateSelectionDialog(Adw.Window):
 
 class GestureEditor(Adw.Window):
     """Editor for individual gestures."""
-    def __init__(self, parent, gesture_data, on_save):
+    def __init__(self, parent, gesture_data, on_save, used_specs=None):
         super().__init__(transient_for=parent, modal=True, title=_("Edit Gesture"))
         self.set_default_size(400, 600)
         self.gesture = gesture_data.copy()
         self.on_save = on_save
+        self.used_specs = used_specs or []
         self.entries = {}
         self.rows = {}
 
@@ -147,7 +159,7 @@ class GestureEditor(Adw.Window):
         def on_select(key, val):
              entry.set_text(val)
 
-        dlg = TemplateSelectionDialog(self, on_select)
+        dlg = TemplateSelectionDialog(self, on_select, used_specs=self.used_specs)
         dlg.present()
 
     def _update_subtitle(self, row, state_key):
@@ -272,6 +284,13 @@ class GesturesPage(Adw.PreferencesPage):
         is_new = idx is None
         gesture_data = gestures[idx] if not is_new else {}
 
+        """Collect used specs, excluding the current one if editing"""
+        used_specs = []
+        for i, g in enumerate(gestures):
+             if is_new or i != idx:
+                  spec = g.get("spec")
+                  if spec: used_specs.append(spec)
+
         def on_save(new_data):
             if is_new:
                 gestures.append(new_data)
@@ -281,7 +300,7 @@ class GesturesPage(Adw.PreferencesPage):
             self._refresh_list()
             self._restart_service()
 
-        win = GestureEditor(self.get_root(), gesture_data, on_save)
+        win = GestureEditor(self.get_root(), gesture_data, on_save, used_specs=used_specs)
         win.present()
 
     def _restart_service(self):
