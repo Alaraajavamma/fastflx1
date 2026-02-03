@@ -14,17 +14,35 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import subprocess
-from tweak_flx1s.utils import logger, run_command
+from tweak_flx1s.utils import logger, run_command, get_device_model
 
 class PackageManager:
     """Helper class for package management commands."""
 
+    def check_is_staging(self):
+        """Checks if the system is on staging environment."""
+        base_pkgs = ["furios-apt-config-staging", "furios-apt-config-debian-staging"]
+        for pkg in base_pkgs:
+            if not self.check_package_installed(pkg):
+                return False
+
+        has_krypton = self.check_package_installed("furios-apt-config-krypton-staging")
+        has_radon = self.check_package_installed("furios-apt-config-radon-staging")
+
+        return has_krypton or has_radon
+
     def switch_to_staging(self):
         """Returns command to switch to staging repositories."""
+        model = get_device_model()
+        extra_pkg = "furios-apt-config-krypton-staging"
+
+        if model == "FuriPhoneFLX1s":
+             extra_pkg = "furios-apt-config-radon-staging"
+
         cmd = (
             "sudo apt install furios-apt-config-staging furios-apt-config-debian-staging -y && "
             "sudo apt update && "
-            "sudo apt install furios-apt-config-krypton-staging -y && "
+            f"sudo apt install {extra_pkg} -y && "
             "sudo apt update && "
             "sudo apt upgrade -y --allow-downgrades"
         )
@@ -33,7 +51,8 @@ class PackageManager:
     def switch_to_production(self):
         """Returns command to switch to production repositories."""
         cmd = (
-            "sudo apt remove furios-apt-config-staging furios-apt-config-debian-staging furios-apt-config-krypton-staging -y && "
+            "sudo apt remove furios-apt-config-staging furios-apt-config-debian-staging "
+            "furios-apt-config-krypton-staging furios-apt-config-radon-staging -y && "
             "sudo apt update && "
             "sudo apt upgrade -y --allow-downgrades"
         )

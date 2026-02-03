@@ -448,3 +448,12 @@ msgstr "Poistetaan Branchy"
 
 msgid "Enable Touch Gestures"
 msgstr "Ota kosketuseleet käyttöön"
+
+msgid "Current Environment"
+msgstr "Nykyinen ympäristö"
+
+msgid "Switch to Production"
+msgstr "Vaihda tuotantoon"
+
+msgid "Switch to Staging"
+msgstr "Vaihda stagingiin"
