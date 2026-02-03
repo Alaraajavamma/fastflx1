@@ -16,7 +16,8 @@
 import os
 import shutil
 import re
-from tweak_flx1s.utils import logger, run_command, get_device_model
+from loguru import logger
+from tweak_flx1s.utils import run_command, get_device_model
 
 class PamManager:
     """
@@ -115,7 +116,11 @@ account required        pam_permit.so
 
             for line in lines:
                 if "pam_unix.so" in line and not line.strip().startswith("#"):
-                    new_line = re.sub(r"pam_unix\.so.*", f"pam_unix.so yescrypt minlen={length}", line)
+                    if "minlen=" in line:
+                        new_line = re.sub(r"minlen=\d+", f"minlen={length}", line)
+                    else:
+                        new_line = f"{line} minlen={length}"
+
                     new_lines.append(new_line)
                     replaced = True
                 else:

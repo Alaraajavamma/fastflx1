@@ -1,0 +1,12 @@
+[Unit]
+Description=Tweak-FLX1s Andromeda File System Monitor for %i
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/tweak-flx1s --monitor andromeda-fs --user %i
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

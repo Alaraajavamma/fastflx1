@@ -15,7 +15,8 @@
 
 import os
 import json
-from tweak_flx1s.utils import logger, run_command
+from loguru import logger
+from tweak_flx1s.utils import run_command
 from tweak_flx1s.const import CONFIG_DIR, HOME_DIR
 from tweak_flx1s.actions.executor import is_locked, is_wofi_running, execute_command, show_wofi_menu
 
@@ -35,8 +36,8 @@ PREDEFINED_ACTIONS = {
 }
 
 DEFAULT_CONFIG = {
-    "custom_assistant_files": False,
     "short_press": {
+        "use_custom_file": False,
         "locked": {"type": "command", "value": "tweak-flx1s --action flashlight"},
         "unlocked": {"type": "wofi", "items": [
             {"label": "Flashlight", "cmd": "tweak-flx1s --action flashlight"},
@@ -45,10 +46,12 @@ DEFAULT_CONFIG = {
         ]}
     },
     "double_press": {
+        "use_custom_file": False,
         "locked": {"type": "command", "value": ""},
         "unlocked": {"type": "command", "value": ""}
     },
     "long_press": {
+        "use_custom_file": False,
         "locked": {"type": "command", "value": ""},
         "unlocked": {"type": "command", "value": ""}
     }
@@ -66,9 +69,6 @@ class ButtonManager:
         try:
             with open(CONFIG_FILE, 'r') as f:
                 conf = json.load(f)
-                # ensure root key
-                if "custom_assistant_files" not in conf:
-                    conf["custom_assistant_files"] = False
                 return conf
         except Exception as e:
             logger.error(f"Failed to load button config: {e}")
@@ -82,25 +82,24 @@ class ButtonManager:
         with open(CONFIG_FILE, 'w') as f:
             json.dump(self.config, f, indent=4)
 
-        # If enabled, update the files
-        if self.config.get("custom_assistant_files"):
-            self.update_assistant_files()
+        self.update_assistant_files()
 
     def update_assistant_files(self):
-        """Generates the ~/.config/assistant-button/* files."""
+        """Generates the ~/.config/assistant-button/* files if enabled."""
         os.makedirs(ASSISTANT_BUTTON_DIR, exist_ok=True)
 
         press_types = ["short_press", "double_press", "long_press"]
         for ptype in press_types:
-            path = os.path.join(ASSISTANT_BUTTON_DIR, ptype)
-            # The command to put inside the file is one that triggers THIS app with the right flag
-            cmd = f"tweak-flx1s --{ptype.replace('_', '-')}"
-            try:
-                with open(path, "w") as f:
-                    f.write(cmd)
-                logger.info(f"Updated {path} with command: {cmd}")
-            except Exception as e:
-                logger.error(f"Failed to write {path}: {e}")
+            conf = self.config.get(ptype, {})
+            if conf.get("use_custom_file", False):
+                path = os.path.join(ASSISTANT_BUTTON_DIR, ptype)
+                cmd = f"tweak-flx1s --{ptype.replace('_', '-')}"
+                try:
+                    with open(path, "w") as f:
+                        f.write(cmd)
+                    logger.info(f"Updated {path} with command: {cmd}")
+                except Exception as e:
+                    logger.error(f"Failed to write {path}: {e}")
 
     def handle_press(self, press_type):
         """

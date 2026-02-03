@@ -15,7 +15,8 @@
 
 import os
 import shutil
-from tweak_flx1s.utils import logger, run_command
+from loguru import logger
+from tweak_flx1s.utils import run_command
 from tweak_flx1s.const import HOME_DIR
 
 class SoundManager:
@@ -23,7 +24,6 @@ class SoundManager:
 
     def __init__(self):
         self.SOUND_DIR = os.path.join(HOME_DIR, ".local/share/sounds/__custom")
-        # Trying to locate share/sounds
         self.APP_SHARE_DIR = "/usr/share/tweak-flx1s"
         if not os.path.exists(self.APP_SHARE_DIR):
              self.APP_SHARE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../share"))
@@ -51,12 +51,6 @@ class SoundManager:
             if os.path.exists(self.SOUND_DIR):
                 shutil.rmtree(self.SOUND_DIR)
 
-            # The structure in repo is share/sounds/__custom
-            # We copy that whole directory to .local/share/sounds/__custom
-
-            # Wait, shutil.copytree(src, dst) creates dst.
-            # So if src ends with __custom, and we want dst to be .../__custom
-
             shutil.copytree(src, self.SOUND_DIR)
             logger.info(f"Installed custom sounds to {self.SOUND_DIR}")
             return True
@@ -75,9 +69,5 @@ class SoundManager:
 
     def disable_custom_theme(self):
         """Reverts to default sound theme."""
-        run_command("gsettings set org.gnome.desktop.sound theme-name 'freedesktop'", check=False)
-        # Usually 'freedesktop' or 'default'? fastflx1 uses 'default' in uninstall, but let's check.
-        # fastflx1 uninstall says: gsettings set org.gnome.desktop.sound theme-name 'default'
-        # So we use 'default'.
         run_command("gsettings set org.gnome.desktop.sound theme-name 'default'", check=False)
         return True

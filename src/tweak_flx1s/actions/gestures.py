@@ -15,13 +15,12 @@
 
 import os
 import json
+from loguru import logger
 from tweak_flx1s.const import CONFIG_DIR
-from tweak_flx1s.utils import logger
 from tweak_flx1s.actions.executor import is_locked, execute_command, show_wofi_menu
 
 CONFIG_FILE = os.path.join(CONFIG_DIR, "gestures.json")
 
-# lisgd templates
 GESTURE_TEMPLATES = {
     "Swipe Left (RL)": "1,RL,*,*,R",
     "Swipe Right (LR)": "1,LR,*,*,R",
@@ -38,6 +37,7 @@ GESTURE_TEMPLATES = {
 }
 
 DEFAULT_CONFIG = {
+    "enabled": False,
     "gestures": [
         {
             "name": "Switch App Next",

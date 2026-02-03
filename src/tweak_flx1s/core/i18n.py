@@ -14,7 +14,6 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import gettext
-import os
 import locale
 import builtins
 from loguru import logger
@@ -26,52 +25,19 @@ def install_i18n():
     """Install i18n support."""
     try:
         try:
-            # On some systems, LC_ALL might not be set, try LC_MESSAGES
             locale.setlocale(locale.LC_ALL, '')
-        except locale.Error:
-             try:
-                 locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
-             except locale.Error:
-                 pass
+            logger.info(f"Locale set to: {locale.getlocale()}")
+        except locale.Error as e:
+            logger.warning(f"Failed to set locale: {e}")
 
         localedir = LOCALEDIR
 
-        # If running from source, try to find a local 'po' or 'locale' dir
-        # But 'gettext' really wants compiled .mo files in locale/LANG/LC_MESSAGES/
-        # Check if we are in dev mode
-        dev_localedir = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../locale"))
-        if os.path.exists(dev_localedir):
-            localedir = dev_localedir
+        logger.info(f"Binding text domain '{DOMAIN}' to '{localedir}'")
+        gettext.bindtextdomain(DOMAIN, localedir)
+        gettext.textdomain(DOMAIN)
 
-        logger.debug(f"Binding text domain '{DOMAIN}' to '{localedir}'")
-
-        # In Python's gettext, install() adds _() to builtins
-        # but bindtextdomain is C-level for Gtk.
-        # We need BOTH.
-
-        # 1. Python Gettext
-        try:
-            t = gettext.translation(DOMAIN, localedir, fallback=False)
-            t.install()
-        except OSError:
-             # Fallback
-             gettext.install(DOMAIN, localedir)
-
-        # 2. GLib/Gtk Gettext
-        # Note: In Python GObject Introspection, you generally don't call bindtextdomain directly
-        # unless you use 'locale' module, but Gtk usually picks it up if the ENV vars are set
-        # and the .desktop file has the right domain.
-        # But explicit bindtextdomain is good practice.
-
-        try:
-            import gi
-            from gi.repository import GLib, Gtk
-            # These might not be exposed directly in all bindings versions,
-            # but locale.bindtextdomain exists in Python standard lib
-            locale.bindtextdomain(DOMAIN, localedir)
-            locale.textdomain(DOMAIN)
-        except Exception as e:
-            logger.warning(f"Could not bind text domain via locale module: {e}")
+        logger.info("Installing gettext")
+        gettext.install(DOMAIN, localedir)
 
     except Exception as e:
         logger.error(f"Failed to install i18n: {e}")

@@ -16,7 +16,7 @@
 import gi
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
-from gi.repository import Gtk, Adw, Gio, GLib
+from gi.repository import Gtk, Adw
 from loguru import logger
 from tweak_flx1s.const import APP_NAME
 from tweak_flx1s.gui.pages.info_page import InfoPage
@@ -36,30 +36,25 @@ class MainWindow(Adw.Window):
         self.set_title(APP_NAME)
         self.set_default_size(360, 600)
 
-        # Main Layout
         self.overlay = Gtk.Overlay()
         self.set_content(self.overlay)
 
         main_vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
         self.overlay.set_child(main_vbox)
 
-        # Header
         header = Adw.HeaderBar()
-        # Remove default window controls
         header.set_show_end_title_buttons(False)
         header.set_show_start_title_buttons(False)
 
         title_lbl = Gtk.Label(label=APP_NAME, css_classes=["title"])
         header.set_title_widget(title_lbl)
 
-        # Info Button (Left)
         info_btn = Gtk.Button(icon_name="dialog-information-symbolic")
         info_btn.add_css_class("flat")
         info_btn.add_css_class("circular")
         info_btn.connect("clicked", lambda b: InfoPage.show(self))
         header.pack_start(info_btn)
 
-        # Close Button (Right) - Custom
         close_btn = Gtk.Button(icon_name="window-close-symbolic")
         close_btn.add_css_class("flat")
         close_btn.add_css_class("circular")
@@ -68,12 +63,10 @@ class MainWindow(Adw.Window):
 
         main_vbox.append(header)
 
-        # Stack
         self.stack = Adw.ViewStack()
         self.stack.set_vexpand(True)
         main_vbox.append(self.stack)
 
-        # Pages (Tweaks, System, Actions)
         self.tweaks_page = TweaksPage(self)
         self.stack.add_titled(self.tweaks_page, "tweaks", _("Tweaks")).set_icon_name("preferences-system-symbolic")
 
@@ -83,7 +76,6 @@ class MainWindow(Adw.Window):
         self.actions_page = ActionsPage(self)
         self.stack.add_titled(self.actions_page, "actions", _("Actions")).set_icon_name("input-gaming-symbolic")
 
-        # Switcher
         self.switcher = Adw.ViewSwitcherBar(stack=self.stack, reveal=True)
         main_vbox.append(self.switcher)
 
