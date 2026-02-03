@@ -17,7 +17,9 @@ import time
 import subprocess
 import threading
 from gi.repository import Gio, GLib
-from tweak_flx1s.utils import logger, run_command
+from loguru import logger
+from tweak_flx1s.utils import run_command
+from tweak_flx1s.const import APP_ID
 
 class AndromedaGuardService:
     """
@@ -27,7 +29,7 @@ class AndromedaGuardService:
     """
 
     def __init__(self):
-        self.app = Gio.Application(application_id="io.FuriOS.Andromeda.Guard", flags=Gio.ApplicationFlags.FLAGS_NONE)
+        self.app = Gio.Application(application_id=APP_ID, flags=Gio.ApplicationFlags.NON_UNIQUE)
         self.app.register(None)
         self.notification_id = "andromeda-guard-notification"
         self._running = True
@@ -36,14 +38,11 @@ class AndromedaGuardService:
         """Starts the guard service loop."""
         logger.info("Starting Andromeda Guard Service...")
 
-        # Initial Reset
         self._perform_reset()
 
-        # Start DBus Monitor in a thread
         t = threading.Thread(target=self._monitor_dbus, daemon=True)
         t.start()
 
-        # Keep main thread alive
         loop = GLib.MainLoop()
         try:
             loop.run()
@@ -85,35 +84,17 @@ class AndromedaGuardService:
 
     def _send_notification(self, body, expire_timeout=None):
         """Sends a notification using Gio."""
-        # Note: Gio.Notification doesn't expose expire-time directly in Python bindings easily
-        # without GVariant magic or using the backend directly.
-        # However, we can use the 'transient' hint via set_priority or low-level API.
-        # But to match 'notify-send --expire-time', we might need to withdraw it manually or rely on daemon.
-
-        # Since the user specifically mentioned fading away correctly,
-        # and Gio.Notification is persistent by default in Gnome Shell unless configured otherwise,
-        # we will simulate the behavior by using GNotification but relying on the shell's expiration if possible,
-        # OR we fallback to `notify-send` if strict timing control is needed and Gio is limited.
-
-        # GApplication/GNotification is preferred by the user ("Notifications must be implemented using native...").
-        # Standard GNotification doesn't have explicit timeout API exposed easily.
-        # However, we can withdraw it after a timeout.
-
         notification = Gio.Notification.new("Andromeda display guard")
         notification.set_body(body)
         notification.set_icon(Gio.ThemedIcon.new("input-keyboard"))
-        # High priority to ensure it shows up? Or Low/Normal?
-        # Transient notifications usually are normal.
 
         self.app.send_notification(self.notification_id, notification)
 
         if expire_timeout:
-             # Schedule withdrawal
              GLib.timeout_add(expire_timeout, lambda: self.app.withdraw_notification(self.notification_id))
 
     def _monitor_dbus(self):
         """Monitors DBus for the custom signal."""
-        # Using subprocess for dbus-monitor as in the original script is robust enough
         cmd = ["dbus-monitor", "--session", "type='signal',interface='org.freedesktop.DBus',member='NameAcquired'"]
         process = subprocess.Popen(cmd, stdout=subprocess.PIPE, text=True)
 

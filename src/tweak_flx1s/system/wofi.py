@@ -15,7 +15,8 @@
 
 import os
 import shutil
-from tweak_flx1s.utils import logger
+import filecmp
+from loguru import logger
 from tweak_flx1s.const import HOME_DIR
 
 class WofiManager:
@@ -44,3 +45,39 @@ class WofiManager:
                         logger.error(f"Failed to copy Wofi {f}: {e}")
                 else:
                     logger.warning(f"Source Wofi config not found: {src}")
+
+    def check_config_match(self):
+        """Checks if current Wofi config matches the app default."""
+        for f in ["config", "style.css"]:
+            target = os.path.join(self.WOFI_CONFIG_DIR, f)
+            src = os.path.join(self.APP_CONFIG_DIR, f)
+
+            if not os.path.exists(target):
+                return False
+            if not os.path.exists(src):
+                return False # Can't match if source missing
+
+            try:
+                if not filecmp.cmp(src, target, shallow=False):
+                    return False
+            except Exception:
+                return False
+        return True
+
+    def force_install_config(self):
+        """Overwrites Wofi config with app defaults."""
+        if not os.path.exists(self.WOFI_CONFIG_DIR):
+            os.makedirs(self.WOFI_CONFIG_DIR)
+
+        for f in ["config", "style.css"]:
+            src = os.path.join(self.APP_CONFIG_DIR, f)
+            target = os.path.join(self.WOFI_CONFIG_DIR, f)
+
+            if os.path.exists(src):
+                try:
+                    shutil.copy(src, target)
+                    logger.info(f"Forced install of Wofi {f}")
+                except Exception as e:
+                    logger.error(f"Failed to force copy Wofi {f}: {e}")
+            else:
+                logger.warning(f"Source Wofi config not found: {src}")

@@ -14,11 +14,9 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import os
-import sys
 import subprocess
-import shutil
-import time
-from tweak_flx1s.utils import logger, run_command
+from loguru import logger
+from tweak_flx1s.utils import run_command
 from tweak_flx1s.const import HOME_DIR
 
 class AndromedaManager:
@@ -43,7 +41,6 @@ class AndromedaManager:
         self.ANDROID_STORAGE_SOURCE = os.path.join(self.HOST_HOME, ".local/share/andromeda/data/media/0")
         self.LINUX_MOUNT_BASE = os.path.join(self.ANDROID_STORAGE_SOURCE, "Linux-Share")
         self.ANDROID_MOUNT_BASE = os.path.join(self.HOST_HOME, "Android-Share")
-        self.PID_FILE = f"/run/user/{os.getuid()}/andromeda_permission_guardian.pid"
 
     @staticmethod
     def _is_excluded(name, exclude_list):
@@ -90,8 +87,6 @@ class AndromedaManager:
 
             try:
                 run_command(["mount", "--bind", source, target])
-                # setfacl
-                run_command(["setfacl", "-m", f"m:rwx,u:{self.HOST_USER}:rwx,u:{self.ANDROID_UID}:rwx", target], check=False)
                 fstab_entries.append(f"{source} {target} none bind 0 0")
             except Exception as e:
                 logger.error(f"Failed to mount {item}: {e}")
@@ -115,7 +110,6 @@ class AndromedaManager:
 
                 try:
                     run_command(["mount", "--bind", source, target])
-                    run_command(["setfacl", "-m", f"m:rwx,u:{self.HOST_USER}:rwx,u:{self.ANDROID_UID}:rwx", target], check=False)
                     fstab_entries.append(f"{source} {target} none bind 0 0")
                 except Exception as e:
                     logger.error(f"Failed to mount {item}: {e}")
@@ -124,7 +118,7 @@ class AndromedaManager:
 
         self._update_fstab(fstab_entries)
 
-        service = f"fastflx1-andromeda-fs@{self.HOST_USER}.service"
+        service = f"tweak-flx1s-andromeda-fs@{self.HOST_USER}.service"
         logger.info(f"Starting service {service}...")
         try:
             run_command(["systemctl", "enable", "--now", service])
@@ -139,7 +133,7 @@ class AndromedaManager:
             logger.error("Unmount operation requires root privileges.")
             return False
 
-        service = f"fastflx1-andromeda-fs@{self.HOST_USER}.service"
+        service = f"tweak-flx1s-andromeda-fs@{self.HOST_USER}.service"
         logger.info(f"Stopping service {service}...")
         try:
             run_command(["systemctl", "disable", "--now", service])
@@ -198,11 +192,10 @@ class AndromedaManager:
             if os.path.isdir(path):
                 watch_dirs.append(path)
 
-        if os.path.isdir(self.ANDROID_MOUNT_BASE):
+        if os.path.exists(self.ANDROID_MOUNT_BASE):
             watch_dirs.append(self.ANDROID_MOUNT_BASE)
 
         for d in watch_dirs:
-            # -m m:rwx ensures the mask allows rwx
             cmd = ["setfacl", "-R",
                    "-m", f"m:rwx,u:{self.HOST_USER}:rwx,d:u:{self.HOST_USER}:rwx,u:{self.ANDROID_UID}:rwx,d:u:{self.ANDROID_UID}:rwx",
                    d]
@@ -220,7 +213,6 @@ class AndromedaManager:
                 new_file = line.strip()
                 logger.info(f"New file detected: {new_file}")
 
-                # Strict mask enforcement
                 cmd_update = ["setfacl", "-m", f"m:rwx,u:{self.HOST_USER}:rwx,u:{self.ANDROID_UID}:rwx", new_file]
                 run_command(cmd_update, check=False)
         except KeyboardInterrupt:
@@ -275,7 +267,6 @@ class AndromedaManager:
             for line in lines:
                 if self.FSTAB_MARKER_BEGIN in line:
                     skip = True
-                    found = True
                 if not skip:
                     new_lines.append(line)
                 if self.FSTAB_MARKER_END in line:

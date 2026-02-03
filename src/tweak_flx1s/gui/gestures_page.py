@@ -19,7 +19,7 @@ gi.require_version('Adw', '1')
 from gi.repository import Gtk, Adw, GLib, Gio
 from tweak_flx1s.actions.gestures import GesturesManager, GESTURE_TEMPLATES
 from tweak_flx1s.actions.buttons import PREDEFINED_ACTIONS
-from tweak_flx1s.gui.buttons_page import WofiMenuEditor
+from tweak_flx1s.gui.dialogs import ActionSelectionDialog
 from tweak_flx1s.utils import logger, run_command
 from tweak_flx1s.const import SERVICE_GESTURES
 
@@ -36,6 +36,7 @@ class GestureEditor(Adw.Window):
         self.gesture = gesture_data.copy()
         self.on_save = on_save
         self.entries = {}
+        self.rows = {}
 
         content = Adw.ToolbarView()
         self.set_content(content)
@@ -51,7 +52,6 @@ class GestureEditor(Adw.Window):
         page = Adw.PreferencesPage()
         content.set_content(page)
 
-        # General Settings
         gen_group = Adw.PreferencesGroup(title="General")
         page.add(gen_group)
 
@@ -65,7 +65,6 @@ class GestureEditor(Adw.Window):
         gen_group.add(spec_row)
         self.entries["spec"] = spec_row
 
-        # Spec helper
         spec_combo = Adw.ComboRow(title="Templates")
         spec_model = Gtk.StringList()
         spec_model.append("Select Template...")
@@ -76,11 +75,24 @@ class GestureEditor(Adw.Window):
         spec_combo.connect("notify::selected", self._on_template_selected, sorted_specs, spec_row)
         gen_group.add(spec_combo)
 
-        # Locked State
-        self._build_action_section(page, "locked", "Locked State")
+        act_group = Adw.PreferencesGroup(title="Actions")
+        page.add(act_group)
 
-        # Unlocked State
-        self._build_action_section(page, "unlocked", "Unlocked State")
+        locked_row = Adw.ActionRow(title="Locked State")
+        self._update_subtitle(locked_row, "locked")
+        l_btn = Gtk.Button(label="Edit", valign=Gtk.Align.CENTER)
+        l_btn.connect("clicked", self._on_edit_action, "locked")
+        locked_row.add_suffix(l_btn)
+        act_group.add(locked_row)
+        self.rows["locked"] = locked_row
+
+        unlocked_row = Adw.ActionRow(title="Unlocked State")
+        self._update_subtitle(unlocked_row, "unlocked")
+        u_btn = Gtk.Button(label="Edit", valign=Gtk.Align.CENTER)
+        u_btn.connect("clicked", self._on_edit_action, "unlocked")
+        unlocked_row.add_suffix(u_btn)
+        act_group.add(unlocked_row)
+        self.rows["unlocked"] = unlocked_row
 
     def _on_template_selected(self, row, param, keys, entry):
         idx = row.get_selected()
@@ -89,83 +101,37 @@ class GestureEditor(Adw.Window):
             val = GESTURE_TEMPLATES[key]
             entry.set_text(val)
 
-    def _build_action_section(self, page, state_key, title):
-        group = Adw.PreferencesGroup(title=title)
-        page.add(group)
-
+    def _update_subtitle(self, row, state_key):
         conf = self.gesture.get(state_key, {})
+        atype = conf.get("type", "command")
+        val = conf.get("value", "")
 
-        type_model = Gtk.StringList()
-        type_model.append("Single Command")
-        if state_key == "unlocked":
-            type_model.append("Wofi Menu")
+        if atype == "wofi":
+            row.set_subtitle("Wofi Menu")
+        else:
+            found = False
+            for pname, pcmd in PREDEFINED_ACTIONS.items():
+                if pcmd == val:
+                    row.set_subtitle(pname)
+                    found = True
+                    break
+            if not found:
+                row.set_subtitle(val if val else "No Action")
 
-        type_row = Adw.ComboRow(title="Action Type", model=type_model)
-        is_wofi = conf.get("type") == "wofi" and state_key == "unlocked"
-        type_row.set_selected(1 if is_wofi else 0)
-        group.add(type_row)
-        self.entries[f"{state_key}_type"] = type_row
+    def _on_edit_action(self, btn, state_key):
+        if state_key not in self.gesture: self.gesture[state_key] = {}
+        conf = self.gesture[state_key]
 
-        cmd_row = Adw.EntryRow(title="Command")
-        cmd_row.set_text(conf.get("value", ""))
-        group.add(cmd_row)
-        self.entries[f"{state_key}_value"] = cmd_row
+        def on_save(new_conf):
+            self.gesture[state_key] = new_conf
+            self._update_subtitle(self.rows[state_key], state_key)
 
-        predefined_row = Adw.ComboRow(title="Predefined Action")
-        p_model = Gtk.StringList()
-        p_model.append("Select...")
-        sorted_actions = sorted(PREDEFINED_ACTIONS.keys())
-        for k in sorted_actions:
-            p_model.append(k)
-        predefined_row.set_model(p_model)
-
-        def on_predef(row, param):
-            idx = row.get_selected()
-            if idx > 0:
-                k = sorted_actions[idx-1]
-                v = PREDEFINED_ACTIONS[k]
-                cmd_row.set_text(v)
-
-        predefined_row.connect("notify::selected", on_predef)
-        group.add(predefined_row)
-
-        menu_row = Adw.ActionRow(title="Menu Items")
-        edit_btn = Gtk.Button(label="Edit", valign=Gtk.Align.CENTER)
-        menu_row.add_suffix(edit_btn)
-        group.add(menu_row)
-
-        def on_edit_menu(btn):
-            items = self.gesture.get(state_key, {}).get("items", [])
-            def save_items(new_items):
-                if state_key not in self.gesture: self.gesture[state_key] = {}
-                self.gesture[state_key]["items"] = new_items
-            win = WofiMenuEditor(self, items, save_items)
-            win.present()
-
-        edit_btn.connect("clicked", on_edit_menu)
-
-        def update_visibility():
-            is_wofi_local = (type_row.get_selected() == 1)
-            cmd_row.set_visible(not is_wofi_local)
-            predefined_row.set_visible(not is_wofi_local)
-            menu_row.set_visible(is_wofi_local)
-
-        type_row.connect("notify::selected", lambda *args: update_visibility())
-        update_visibility()
+        dlg = ActionSelectionDialog(self, conf, on_save)
+        dlg.present()
 
     def _on_save_clicked(self, btn):
         self.gesture["name"] = self.entries["name"].get_text()
         self.gesture["spec"] = self.entries["spec"].get_text()
-
-        for state_key in ["locked", "unlocked"]:
-            if state_key not in self.gesture: self.gesture[state_key] = {}
-
-            type_row = self.entries[f"{state_key}_type"]
-            is_wofi = (type_row.get_selected() == 1)
-            self.gesture[state_key]["type"] = "wofi" if is_wofi else "command"
-
-            cmd_row = self.entries[f"{state_key}_value"]
-            self.gesture[state_key]["value"] = cmd_row.get_text()
 
         if self.on_save:
             self.on_save(self.gesture)
@@ -178,10 +144,17 @@ class GesturesPage(Adw.PreferencesPage):
         self.manager = GesturesManager()
         self.config = self.manager.config
 
+        svc_group = Adw.PreferencesGroup(title="Service")
+        self.add(svc_group)
+
+        enable_row = Adw.SwitchRow(title="Enable Touch Gestures")
+        enable_row.set_active(self.config.get("enabled", False))
+        enable_row.connect("notify::active", self._on_enable_toggled)
+        svc_group.add(enable_row)
+
         group = Adw.PreferencesGroup(title="Configured Gestures")
         self.add(group)
 
-        # Add Button
         add_row = Adw.ActionRow(title="Add New Gesture")
         add_btn = Gtk.Button(icon_name="list-add-symbolic")
         add_btn.set_valign(Gtk.Align.CENTER)
@@ -195,6 +168,11 @@ class GesturesPage(Adw.PreferencesPage):
         group.add(self.list_box)
 
         self._refresh_list()
+
+    def _on_enable_toggled(self, row, param):
+        self.config["enabled"] = row.get_active()
+        self.manager.save_config(self.config)
+        self._restart_service()
 
     def _refresh_list(self):
         child = self.list_box.get_first_child()

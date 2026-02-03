@@ -15,7 +15,9 @@
 
 import os
 import subprocess
-from tweak_flx1s.utils import logger, get_device_model
+import shutil
+from loguru import logger
+from tweak_flx1s.utils import get_device_model
 from tweak_flx1s.actions.gestures import GesturesManager
 
 class GestureMonitor:
@@ -34,18 +36,24 @@ class GestureMonitor:
 
     def start(self):
         """Starts the lisgd process with configured gestures."""
+        if not self.manager.config.get("enabled", False):
+            logger.info("Gestures are disabled in config.")
+            return
+
         logger.info(f"Starting lisgd on {self.device}")
 
         cmd = ["lisgd", "-d", self.device]
 
         gestures = self.manager.config.get("gestures", [])
+        executable = shutil.which("tweak-flx1s") or "tweak-flx1s"
+
         for idx, gesture in enumerate(gestures):
             spec = gesture.get("spec")
             if not spec:
                 logger.warning(f"Skipping gesture {idx} without spec")
                 continue
 
-            action_cmd = f"tweak-flx1s --trigger-gesture {idx}"
+            action_cmd = f"{executable} --trigger-gesture {idx}"
             full_arg = f"{spec},{action_cmd}"
             cmd.extend(["-g", full_arg])
 
