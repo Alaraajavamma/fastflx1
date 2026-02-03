@@ -99,7 +99,7 @@ class SystemPage(Adw.PreferencesPage):
         wofi_group = Adw.PreferencesGroup(title="Configuration")
         self.add(wofi_group)
 
-        wofi_row = Adw.SwitchRow(title="Enforce App Wofi Config", subtitle="Use Tweak-FLX1s Wofi style & config")
+        wofi_row = Adw.SwitchRow(title="Enforce App Wofi Config", subtitle="Use Tweak-FLX1s Wofi style &amp; config")
         wofi_row.set_active(self.wofi_mgr.check_config_match())
         wofi_row.connect("notify::active", self._on_wofi_toggled)
         wofi_group.add(wofi_row)
@@ -142,7 +142,7 @@ class SystemPage(Adw.PreferencesPage):
         bat_btn.connect("clicked", self._install_bat_mon)
         bat_row.add_suffix(bat_btn)
 
-        self.phofono_row = Adw.ActionRow(title="Phofono", subtitle="Alternative Phone & Messages App")
+        self.phofono_row = Adw.ActionRow(title="Phofono", subtitle="Alternative Phone &amp; Messages App")
         app_group.add(self.phofono_row)
 
         self.phofono_btn = Gtk.Button(valign=Gtk.Align.CENTER)
@@ -244,7 +244,7 @@ class SystemPage(Adw.PreferencesPage):
             self.phofono_btn.set_label("Install")
             self.phofono_btn.add_css_class("suggested-action")
             self.phofono_btn.remove_css_class("destructive-action")
-            self.phofono_row.set_subtitle("Alternative Phone & Messages App")
+            self.phofono_row.set_subtitle("Alternative Phone &amp; Messages App")
 
     def _on_phofono_clicked(self, btn):
         installed = self.phofono_mgr.check_installed()

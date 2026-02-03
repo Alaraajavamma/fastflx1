@@ -23,6 +23,7 @@ from tweak_flx1s.const import SERVICE_ALARM, SERVICE_GUARD, SERVICE_GESTURES, AP
 from tweak_flx1s.utils import run_command, logger
 from tweak_flx1s.system.andromeda import AndromedaManager
 from tweak_flx1s.system.sounds import SoundManager
+from tweak_flx1s.gui.dialogs import ExecutionDialog
 from tweak_flx1s.gui.pages.info_page import InfoPage
 
 try:
@@ -128,10 +129,15 @@ class TweaksPage(Adw.PreferencesPage):
     def _on_shared_toggled(self, row, param):
         is_active = row.get_active()
         if is_active:
-            if not self.andromeda.mount():
-                pass
+            if not self.andromeda.is_mounted():
+                cmd = "python3 -c \"from tweak_flx1s.system.andromeda import AndromedaManager; AndromedaManager().mount()\""
+                dlg = ExecutionDialog(self.window, "Mounting Shared Folders", cmd, as_root=True)
+                dlg.present()
         else:
-            self.andromeda.unmount()
+            if self.andromeda.is_mounted():
+                cmd = "python3 -c \"from tweak_flx1s.system.andromeda import AndromedaManager; AndromedaManager().unmount()\""
+                dlg = ExecutionDialog(self.window, "Unmounting Shared Folders", cmd, as_root=True)
+                dlg.present()
 
     def _on_sound_toggled(self, row, param):
         if row.get_active():
