@@ -15,6 +15,7 @@
 
 import os
 import shutil
+import shlex
 import gi
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
@@ -128,14 +129,15 @@ class TweaksPage(Adw.PreferencesPage):
 
     def _on_shared_toggled(self, row, param):
         is_active = row.get_active()
+        user = GLib.get_user_name()
         if is_active:
             if not self.andromeda.is_mounted():
-                cmd = "python3 -c \"from tweak_flx1s.system.andromeda import AndromedaManager; AndromedaManager().mount()\""
+                cmd = f"python3 -c \"import sys; from tweak_flx1s.system.andromeda import AndromedaManager; AndromedaManager(user=sys.argv[1]).mount()\" {shlex.quote(user)}"
                 dlg = ExecutionDialog(self.window, "Mounting Shared Folders", cmd, as_root=True)
                 dlg.present()
         else:
             if self.andromeda.is_mounted():
-                cmd = "python3 -c \"from tweak_flx1s.system.andromeda import AndromedaManager; AndromedaManager().unmount()\""
+                cmd = f"python3 -c \"import sys; from tweak_flx1s.system.andromeda import AndromedaManager; AndromedaManager(user=sys.argv[1]).unmount()\" {shlex.quote(user)}"
                 dlg = ExecutionDialog(self.window, "Unmounting Shared Folders", cmd, as_root=True)
                 dlg.present()
 
