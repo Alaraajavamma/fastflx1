@@ -61,7 +61,7 @@ class WeatherDialog(Adw.Window):
         # Search Button
         self.search_btn = Gtk.Button(label=_("Search"))
         self.search_btn.add_css_class("suggested-action")
-        self.search_btn.connect("clicked", self._on_search)
+        self.search_btn.connect("clicked", lambda b: GLib.idle_add(lambda: self._on_search(b) or False))
         box.append(self.search_btn)
 
         # Result display
@@ -74,7 +74,7 @@ class WeatherDialog(Adw.Window):
         # Add Button (Initially disabled)
         self.add_btn = Gtk.Button(label=_("Add Location"))
         self.add_btn.set_sensitive(False)
-        self.add_btn.connect("clicked", self._on_add)
+        self.add_btn.connect("clicked", lambda b: GLib.idle_add(lambda: self._on_add(b) or False))
         box.append(self.add_btn)
 
         content.set_content(box)

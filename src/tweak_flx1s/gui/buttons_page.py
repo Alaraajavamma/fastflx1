@@ -53,7 +53,7 @@ class ButtonsPage(Adw.PreferencesPage):
         self._update_subtitle(locked_row, key, "locked")
 
         locked_btn = Gtk.Button(label=_("Edit"), valign=Gtk.Align.CENTER)
-        locked_btn.connect("clicked", self._on_edit, key, "locked")
+        locked_btn.connect("clicked", lambda b: GLib.idle_add(lambda: self._on_edit(b, key, "locked") or False))
         locked_row.add_suffix(locked_btn)
         group.add(locked_row)
         self.rows[(key, "locked")] = locked_row
@@ -62,7 +62,7 @@ class ButtonsPage(Adw.PreferencesPage):
         self._update_subtitle(unlocked_row, key, "unlocked")
 
         unlocked_btn = Gtk.Button(label=_("Edit"), valign=Gtk.Align.CENTER)
-        unlocked_btn.connect("clicked", self._on_edit, key, "unlocked")
+        unlocked_btn.connect("clicked", lambda b: GLib.idle_add(lambda: self._on_edit(b, key, "unlocked") or False))
         unlocked_row.add_suffix(unlocked_btn)
         group.add(unlocked_row)
         self.rows[(key, "unlocked")] = unlocked_row

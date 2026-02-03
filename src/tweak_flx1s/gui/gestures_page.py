@@ -75,7 +75,7 @@ class TemplateSelectionDialog(Adw.Window):
                 row.add_suffix(Gtk.Label(label=_("(In Use)")))
             else:
                 row.set_activatable(True)
-                row.connect("activated", self._on_row_activated, key)
+                row.connect("activated", lambda row: GLib.idle_add(lambda: self._on_row_activated(row, key) or False))
 
             list_box.append(row)
 
@@ -132,7 +132,7 @@ class GestureEditor(Adw.Window):
         tmpl_row.set_subtitle(_("Select from predefined templates"))
 
         tmpl_btn = Gtk.Button(label=_("Select"), valign=Gtk.Align.CENTER)
-        tmpl_btn.connect("clicked", self._on_select_template, spec_row)
+        tmpl_btn.connect("clicked", lambda b: GLib.idle_add(lambda: self._on_select_template(b, spec_row) or False))
         tmpl_row.add_suffix(tmpl_btn)
         gen_group.add(tmpl_row)
 
@@ -142,7 +142,7 @@ class GestureEditor(Adw.Window):
         locked_row = Adw.ActionRow(title=_("Locked State"))
         self._update_subtitle(locked_row, "locked")
         l_btn = Gtk.Button(label=_("Edit"), valign=Gtk.Align.CENTER)
-        l_btn.connect("clicked", self._on_edit_action, "locked")
+        l_btn.connect("clicked", lambda b: GLib.idle_add(lambda: self._on_edit_action(b, "locked") or False))
         locked_row.add_suffix(l_btn)
         act_group.add(locked_row)
         self.rows["locked"] = locked_row
@@ -150,7 +150,7 @@ class GestureEditor(Adw.Window):
         unlocked_row = Adw.ActionRow(title=_("Unlocked State"))
         self._update_subtitle(unlocked_row, "unlocked")
         u_btn = Gtk.Button(label=_("Edit"), valign=Gtk.Align.CENTER)
-        u_btn.connect("clicked", self._on_edit_action, "unlocked")
+        u_btn.connect("clicked", lambda b: GLib.idle_add(lambda: self._on_edit_action(b, "unlocked") or False))
         unlocked_row.add_suffix(u_btn)
         act_group.add(unlocked_row)
         self.rows["unlocked"] = unlocked_row
@@ -219,7 +219,7 @@ class GesturesPage(Adw.PreferencesPage):
         add_row = Adw.ActionRow(title=_("Add New Gesture"))
         add_btn = Gtk.Button(icon_name="list-add-symbolic")
         add_btn.set_valign(Gtk.Align.CENTER)
-        add_btn.connect("clicked", self._on_add)
+        add_btn.connect("clicked", lambda b: GLib.idle_add(lambda: self._on_add(b) or False))
         add_row.add_suffix(add_btn)
         action_group.add(add_row)
 
@@ -255,13 +255,13 @@ class GesturesPage(Adw.PreferencesPage):
 
             edit_btn = Gtk.Button(icon_name="document-edit-symbolic")
             edit_btn.add_css_class("flat")
-            edit_btn.connect("clicked", self._on_edit, idx)
+            edit_btn.connect("clicked", lambda b: GLib.idle_add(lambda: self._on_edit(b, idx) or False))
             row.add_suffix(edit_btn)
 
             del_btn = Gtk.Button(icon_name="user-trash-symbolic")
             del_btn.add_css_class("flat")
             del_btn.add_css_class("error")
-            del_btn.connect("clicked", self._on_delete, idx)
+            del_btn.connect("clicked", lambda b: GLib.idle_add(lambda: self._on_delete(b, idx) or False))
             row.add_suffix(del_btn)
 
             self.list_box.append(row)

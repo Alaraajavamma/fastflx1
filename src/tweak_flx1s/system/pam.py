@@ -151,8 +151,6 @@ password  optional  pam_gnome_keyring.so
 
         return "Fingerprint configuration removed (restored backups)."
 
-    # --- Short Password Logic ---
-
     def enable_short_passwords(self):
         """
         Enables short passwords by rewriting /etc/pam.d/common-password
