@@ -95,20 +95,16 @@ class SystemPage(Adw.PreferencesPage):
         env_group = Adw.PreferencesGroup(title=_("Environment"))
         self.add(env_group)
 
-        env_row = Adw.ActionRow(title=_("Switch Environment"))
-        env_row.set_title_lines(0)
-        env_row.set_subtitle_lines(0)
-        env_group.add(env_row)
+        self.env_row = Adw.ActionRow(title=_("Current Environment"))
+        self.env_row.set_title_lines(0)
+        self.env_row.set_subtitle_lines(0)
+        env_group.add(self.env_row)
 
-        staging_btn = Gtk.Button(label=_("Staging"))
-        staging_btn.set_valign(Gtk.Align.CENTER)
-        staging_btn.connect("clicked", lambda x: GLib.idle_add(lambda: run_pkg_cmd(_("Switching to Staging"), self.pkg_mgr.switch_to_staging()) or False))
-        env_row.add_suffix(staging_btn)
-
-        prod_btn = Gtk.Button(label=_("Production"))
-        prod_btn.set_valign(Gtk.Align.CENTER)
-        prod_btn.connect("clicked", lambda x: GLib.idle_add(lambda: run_pkg_cmd(_("Switching to Production"), self.pkg_mgr.switch_to_production()) or False))
-        env_row.add_suffix(prod_btn)
+        self.env_btn = Gtk.Button()
+        self.env_btn.set_valign(Gtk.Align.CENTER)
+        self.env_btn.connect("clicked", lambda b: GLib.idle_add(lambda: self._on_env_clicked(b) or False))
+        self.env_row.add_suffix(self.env_btn)
+        self._refresh_env_ui()
 
         upg_group = Adw.PreferencesGroup(title=_("Updates"))
         self.add(upg_group)
@@ -412,3 +408,36 @@ class SystemPage(Adw.PreferencesPage):
                 dlg.present()
         except Exception as e:
             logger.error(f"Failed to handle Branchy click: {e}")
+
+    def _refresh_env_ui(self):
+        try:
+            is_staging = self.pkg_mgr.check_is_staging()
+            if is_staging:
+                self.env_row.set_subtitle(_("Staging"))
+                self.env_btn.set_label(_("Switch to Production"))
+                self.env_btn.add_css_class("suggested-action")
+                self.env_btn.remove_css_class("destructive-action")
+            else:
+                self.env_row.set_subtitle(_("Production"))
+                self.env_btn.set_label(_("Switch to Staging"))
+                self.env_btn.add_css_class("destructive-action")
+                self.env_btn.remove_css_class("suggested-action")
+        except Exception as e:
+             logger.error(f"Failed to refresh environment UI: {e}")
+
+    def _on_env_clicked(self, btn):
+        try:
+            is_staging = self.pkg_mgr.check_is_staging()
+            if is_staging:
+                logger.info("Switching to Production")
+                cmd = self.pkg_mgr.switch_to_production()
+                title = _("Switching to Production")
+            else:
+                logger.info("Switching to Staging")
+                cmd = self.pkg_mgr.switch_to_staging()
+                title = _("Switching to Staging")
+
+            dlg = ExecutionDialog(self.window, title, cmd, as_root=True, on_finish=lambda s: self._refresh_env_ui())
+            dlg.present()
+        except Exception as e:
+            logger.error(f"Failed to handle environment switch: {e}")

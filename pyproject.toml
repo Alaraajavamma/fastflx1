@@ -9,7 +9,7 @@ description = "Tweak tool for FuriPhone FLX1s"
 authors = [
     {name = "Alaraajavamma", email = "aki@urheiluaki.fi"},
 ]
-license = {text = "GPL-3.0-or-later"}
+license = "GPL-3.0-or-later"
 dependencies = [
     "pygobject",
     "loguru",

@@ -27,7 +27,7 @@ Manage file sharing between the Linux host and the Android container.
 *   **Permission Guardian:** Automatically watches and fixes permission issues (ACLs) for shared files to ensure both systems can read/write.
 
 ### 5. System Tweaks
-*   **Environment Switching:** Switch between Staging and Production repositories for FuriOS.
+*   **Environment Switching:** Toggle between Staging and Production repositories for FuriOS with a single click (installs/removes necessary configuration packages).
 *   **System Upgrade:** Run a full system upgrade with a single click.
 *   **Branchy:** Install the experimental "Branchy" app store.
 *   **Keyboard Management:** Switch between Squeekboard and Phosh-OSK (Stub).
@@ -37,12 +37,20 @@ Manage file sharing between the Linux host and the Android container.
 *   **Password Policy:** Set the minimum password length (modifies PAM configuration).
 *   **Fingerprint Authentication:** Enable fingerprint support on FuriPhoneFLX1 (configures `libpam-biomd` and `libpam-parallel`).
 
-## Installation
+## Build
 
-Tweak-FLX1s is packaged as a Debian package.
+To build the package from source:
 
 ```bash
-sudo apt install tweak-flx1s
+dpkg-buildpackage -us -uc
+```
+
+## Installation
+
+Install the generated package:
+
+```bash
+sudo apt install ./tweak-flx1s*.deb
 ```
 
 ## Usage
