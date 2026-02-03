@@ -152,10 +152,11 @@ class SystemPage(Adw.PreferencesPage):
         branchy_row.set_subtitle_lines(0)
         app_group.add(branchy_row)
 
-        branchy_btn = Gtk.Button(label=_("Install"))
-        branchy_btn.set_valign(Gtk.Align.CENTER)
-        branchy_btn.connect("clicked", lambda x: GLib.idle_add(lambda: run_pkg_cmd(_("Installing Branchy"), self.pkg_mgr.install_branchy()) or False))
-        branchy_row.add_suffix(branchy_btn)
+        self.branchy_btn = Gtk.Button(label=_("Install"))
+        self.branchy_btn.set_valign(Gtk.Align.CENTER)
+        self.branchy_btn.connect("clicked", lambda b: GLib.idle_add(lambda: self._on_branchy_clicked(b) or False))
+        branchy_row.add_suffix(self.branchy_btn)
+        self._refresh_branchy()
 
         sec_group = Adw.PreferencesGroup(title=_("Security"))
         self.add(sec_group)
@@ -225,7 +226,7 @@ class SystemPage(Adw.PreferencesPage):
                 def on_finish(success):
                     if success:
                         self._update_kbd_subtitle()
-                        restart_cmd = "systemctl --user daemon-reload && systemctl --user restart mobi.Phosh.OSK.service"
+                        restart_cmd = "systemctl --user daemon-reload && systemctl --user restart mobi.phosh.OSK"
                         try:
                             logger.info("Restarting keyboard service")
                             dlg = ExecutionDialog(self.window, _("Restarting Keyboard Service"), restart_cmd, as_root=False)
@@ -381,3 +382,33 @@ class SystemPage(Adw.PreferencesPage):
                     logger.error(f"Install setup failed: {e}")
         except Exception as e:
             logger.error(f"Failed to handle Phofono click: {e}")
+
+    def _refresh_branchy(self):
+        try:
+            installed = self.pkg_mgr.check_package_installed("furios-app-branchy")
+            if installed:
+                self.branchy_btn.set_label(_("Remove"))
+                self.branchy_btn.add_css_class("destructive-action")
+                self.branchy_btn.remove_css_class("suggested-action")
+            else:
+                self.branchy_btn.set_label(_("Install"))
+                self.branchy_btn.add_css_class("suggested-action")
+                self.branchy_btn.remove_css_class("destructive-action")
+        except Exception as e:
+            logger.error(f"Failed to refresh Branchy status: {e}")
+
+    def _on_branchy_clicked(self, btn):
+        try:
+            installed = self.pkg_mgr.check_package_installed("furios-app-branchy")
+            if installed:
+                logger.info("Removing Branchy")
+                cmd = "apt remove -y furios-app-branchy"
+                dlg = ExecutionDialog(self.window, _("Removing Branchy"), cmd, as_root=True, on_finish=lambda s: self._refresh_branchy())
+                dlg.present()
+            else:
+                logger.info("Installing Branchy")
+                cmd = self.pkg_mgr.install_branchy()
+                dlg = ExecutionDialog(self.window, _("Installing Branchy"), cmd, as_root=True, on_finish=lambda s: self._refresh_branchy())
+                dlg.present()
+        except Exception as e:
+            logger.error(f"Failed to handle Branchy click: {e}")

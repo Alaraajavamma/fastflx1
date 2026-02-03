@@ -125,7 +125,7 @@ class TweaksPage(Adw.PreferencesPage):
     def _on_switch_toggled(self, row, param, service):
         action = "enable --now" if row.get_active() else "disable --now"
         logger.info(f"{action} {service}")
-        run_command(f"systemctl --user {action} {service}", check=False)
+        run_command(f"systemctl --user daemon-reload && systemctl --user {action} {service}", check=False)
 
     def _on_shared_toggled(self, row, param):
         is_active = row.get_active()

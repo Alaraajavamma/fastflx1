@@ -172,17 +172,33 @@ account required        pam_permit.so
             with open(path, "r") as f:
                 lines = f.readlines()
 
+            settings = {
+                "minlen": str(length),
+                "minclass": "1",
+                "dictcheck": "0",
+                "usercheck": "0",
+                "maxrepeat": "0",
+                "maxsequence": "0"
+            }
+
             new_lines = []
-            found = False
+            seen_keys = set()
+
             for line in lines:
-                if line.strip().startswith("minlen"):
-                    new_lines.append(f"minlen = {length}\n")
-                    found = True
+                key_match = re.match(r"^(\w+)\s*=", line.strip())
+                if key_match:
+                    key = key_match.group(1)
+                    if key in settings:
+                        new_lines.append(f"{key} = {settings[key]}\n")
+                        seen_keys.add(key)
+                    else:
+                        new_lines.append(line)
                 else:
                     new_lines.append(line)
 
-            if not found:
-                new_lines.append(f"minlen = {length}\n")
+            for key, val in settings.items():
+                if key not in seen_keys:
+                    new_lines.append(f"{key} = {val}\n")
 
             with open(path, "w") as f:
                 f.writelines(new_lines)
