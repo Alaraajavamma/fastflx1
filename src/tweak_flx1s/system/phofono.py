@@ -16,7 +16,6 @@
 import os
 import shutil
 from tweak_flx1s.utils import logger, run_command
-from tweak_flx1s.const import CACHE_DIR
 
 class PhofonoManager:
     """Manages Phofono package installation and removal."""
@@ -36,16 +35,15 @@ class PhofonoManager:
         run_command("systemctl --user stop calls-daemon", check=False)
         run_command("systemctl --user mask calls-daemon", check=False)
 
-        work_dir = os.path.join(CACHE_DIR, "phofono_install")
+        work_dir = "/tmp/phofono"
         if os.path.exists(work_dir):
             shutil.rmtree(work_dir)
-        os.makedirs(work_dir, exist_ok=True)
 
         logger.info("Cloning phofono repo...")
-        cmd = f"git clone https://gitlab.com/Alaraajavamma/phofono {work_dir}/phofono"
+        cmd = f"git clone https://gitlab.com/Alaraajavamma/phofono {work_dir}"
         run_command(cmd)
 
-        return os.path.join(work_dir, "phofono")
+        return work_dir
 
     def get_install_root_cmd(self, repo_dir):
         """Returns root script for installation."""
@@ -78,7 +76,7 @@ echo "Root tasks complete."
         run_command("systemctl --user mask ofono-toned", check=False)
         run_command("pkill -f ofono-toned", check=False)
 
-        work_dir = os.path.join(CACHE_DIR, "phofono_install")
+        work_dir = "/tmp/phofono"
         if os.path.exists(work_dir):
             shutil.rmtree(work_dir)
 

@@ -28,6 +28,7 @@ except ImportError:
 from tweak_flx1s.system.package_manager import PackageManager
 from tweak_flx1s.system.keyboard import KeyboardManager
 from tweak_flx1s.system.phofono import PhofonoManager
+from tweak_flx1s.system.bat_mon import BatMonManager
 from tweak_flx1s.system.wofi import WofiManager
 from tweak_flx1s.system.pam import PamManager
 from tweak_flx1s.system.debui import DebUiManager
@@ -48,6 +49,7 @@ class SystemPage(Adw.PreferencesPage):
         self.pkg_mgr = PackageManager()
         self.kbd_mgr = KeyboardManager()
         self.phofono_mgr = PhofonoManager()
+        self.bat_mgr = BatMonManager()
         self.wofi_mgr = WofiManager()
         self.pam_mgr = PamManager()
         self.debui_mgr = DebUiManager()
@@ -356,7 +358,7 @@ class SystemPage(Adw.PreferencesPage):
 
     def _refresh_bat_mon(self):
         try:
-            installed = self.pkg_mgr.check_package_installed("flx1s-bat-mon")
+            installed = self.bat_mgr.check_installed()
             if installed:
                 self.bat_btn.set_label(_("Remove"))
                 self.bat_btn.add_css_class("destructive-action")
@@ -370,20 +372,15 @@ class SystemPage(Adw.PreferencesPage):
 
     def _on_bat_mon_clicked(self, btn):
         try:
-            installed = self.pkg_mgr.check_package_installed("flx1s-bat-mon")
+            installed = self.bat_mgr.check_installed()
             if installed:
                 logger.info("Removing FLX1s-Bat-Mon")
-                cmd = "apt remove -y flx1s-bat-mon"
+                cmd = self.bat_mgr.get_remove_cmd()
                 dlg = ExecutionDialog(self.window, _("Removing FLX1s-Bat-Mon"), cmd, as_root=True, on_finish=lambda s: self._refresh_bat_mon())
                 dlg.present()
             else:
                 logger.info("Installing FLX1s-Bat-Mon")
-                cmd = (
-                    "rm -rf /tmp/flx1s-bat-mon && "
-                    "git clone https://gitlab.com/Alaraajavamma/flx1s-bat-mon /tmp/flx1s-bat-mon && "
-                    "cd /tmp/flx1s-bat-mon && "
-                    "apt install -y ./flx1s-bat-mon*.deb"
-                )
+                cmd = self.bat_mgr.get_install_cmd()
                 dlg = ExecutionDialog(self.window, _("Installing FLX1s-Bat-Mon"), cmd, as_root=True, on_finish=lambda s: self._refresh_bat_mon())
                 dlg.present()
         except Exception as e:
