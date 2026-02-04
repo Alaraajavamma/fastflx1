@@ -37,6 +37,17 @@ Manage file sharing between the Linux host and the Android container.
 *   **Password Policy:** Set the minimum password length (modifies PAM configuration).
 *   **Fingerprint Authentication:** Enable fingerprint support on FuriPhoneFLX1 (configures `libpam-biomd` and `libpam-parallel`).
 
+## Build Dependencies
+
+Before building, ensure you have the necessary dependencies installed:
+
+```bash
+sudo apt update
+sudo apt install build-essential debhelper dh-python python3-setuptools \
+                 python3-gi python3-loguru python3-requests python3-psutil \
+                 libadwaita-1-dev
+```
+
 ## Build
 
 To build the package from source:
@@ -47,7 +58,7 @@ dpkg-buildpackage -us -uc
 
 ## Installation
 
-Install the generated package:
+Install the generated package. This will automatically pull in all runtime dependencies (lisgd, wtype, etc.):
 
 ```bash
 sudo apt install ./tweak-flx1s*.deb

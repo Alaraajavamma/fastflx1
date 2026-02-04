@@ -43,7 +43,7 @@ def is_locked():
 
         target_session = None
 
-        # First pass: look for active graphical session
+        logger.debug("Looking for active graphical session...")
         for sid in sessions:
             props = run_command(f"loginctl show-session {sid} -p Type -p State", check=False)
             prop_map = {}
@@ -57,16 +57,16 @@ def is_locked():
                 target_session = sid
                 break
 
-        # Second pass: look for any active session
         if not target_session:
+             logger.debug("No graphical session found, looking for any active session...")
              for sid in sessions:
                 props = run_command(f"loginctl show-session {sid} -p State", check=False)
                 if "State=active" in props:
                     target_session = sid
                     break
 
-        # Fallback: use first session found
         if not target_session:
+            logger.debug("No active session found, falling back to first session.")
             target_session = sessions[0]
 
         logger.debug(f"Checking lock state for session: {target_session}")

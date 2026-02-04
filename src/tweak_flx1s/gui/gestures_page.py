@@ -192,7 +192,18 @@ class GestureEditor(Adw.Window):
 
     def _on_save_clicked(self, btn):
         self.gesture["name"] = self.entries["name"].get_text()
-        self.gesture["spec"] = self.entries["spec"].get_text()
+        spec = self.entries["spec"].get_text()
+        self.gesture["spec"] = spec
+
+        if spec in self.used_specs:
+             dlg = Adw.MessageDialog(
+                  transient_for=self,
+                  heading=_("Duplicate Gesture"),
+                  body=_("This gesture configuration is already in use by another gesture."),
+             )
+             dlg.add_response("ok", _("OK"))
+             dlg.present()
+             return
 
         if self.on_save:
             self.on_save(self.gesture)

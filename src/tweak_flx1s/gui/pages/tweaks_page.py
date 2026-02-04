@@ -25,8 +25,6 @@ from tweak_flx1s.utils import run_command, logger
 from tweak_flx1s.system.andromeda import AndromedaManager
 from tweak_flx1s.system.sounds import SoundManager
 from tweak_flx1s.gui.dialogs import ExecutionDialog
-from tweak_flx1s.gui.pages.info_page import InfoPage
-
 try:
     _
 except NameError:
@@ -110,7 +108,13 @@ class TweaksPage(Adw.PreferencesPage):
 
     def _add_service_row(self, group, title, subtitle, service_name):
         row = Adw.SwitchRow(title=title, subtitle=subtitle)
-        row.set_active(self._is_active(service_name))
+
+        # Determine initial state
+        initial_state = self._is_active(service_name)
+
+        # Set state WITHOUT triggering handler (since we connect after)
+        row.set_active(initial_state)
+
         row.connect("notify::active", self._on_switch_toggled, service_name)
         group.add(row)
 
@@ -123,8 +127,15 @@ class TweaksPage(Adw.PreferencesPage):
             return False
 
     def _on_switch_toggled(self, row, param, service):
-        action = "enable --now" if row.get_active() else "disable --now"
-        logger.info(f"{action} {service}")
+        is_active = row.get_active()
+        current_status = self._is_active(service)
+
+        if is_active == current_status:
+             logger.debug(f"Service {service} state match ({is_active}), skipping toggle command.")
+             return
+
+        action = "enable --now" if is_active else "disable --now"
+        logger.info(f"Toggling {service}: {action}")
         run_command(f"systemctl --user daemon-reload && systemctl --user {action} {service}", check=False)
 
     def _on_shared_toggled(self, row, param):
