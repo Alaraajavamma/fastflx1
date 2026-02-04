@@ -1,2 +1,0 @@
-[console_scripts]
-tweak-flx1s = tweak_flx1s.main:main

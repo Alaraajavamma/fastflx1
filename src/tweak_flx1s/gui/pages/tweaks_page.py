@@ -109,10 +109,10 @@ class TweaksPage(Adw.PreferencesPage):
     def _add_service_row(self, group, title, subtitle, service_name):
         row = Adw.SwitchRow(title=title, subtitle=subtitle)
 
-        # Determine initial state
+
         initial_state = self._is_active(service_name)
 
-        # Set state WITHOUT triggering handler (since we connect after)
+
         row.set_active(initial_state)
 
         row.connect("notify::active", self._on_switch_toggled, service_name)

@@ -55,7 +55,7 @@ class WofiManager:
             if not os.path.exists(target):
                 return False
             if not os.path.exists(src):
-                return False # Can't match if source missing
+                return False
 
             try:
                 if not filecmp.cmp(src, target, shallow=False):
