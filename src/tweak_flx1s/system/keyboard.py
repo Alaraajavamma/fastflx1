@@ -26,7 +26,7 @@ class KeyboardManager:
         self.SQUEEKBOARD_DIR = os.path.join(HOME_DIR, ".local/share/squeekboard")
         self.APP_SHARE_DIR = "/usr/share/tweak-flx1s"
         if not os.path.exists(self.APP_SHARE_DIR):
-             self.APP_SHARE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../share"))
+             self.APP_SHARE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../data/share"))
 
     def check_squeekboard_installed(self):
         """Checks if squeekboard package is installed."""
