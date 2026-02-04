@@ -64,7 +64,7 @@ class TweaksPage(Adw.PreferencesPage):
         is_mounted = self.andromeda.is_mounted()
         user = GLib.get_user_name()
         service_name = f"tweak-flx1s-andromeda-fs@{user}.service"
-        is_running = self._is_service_running(service_name)
+        is_running = self._is_service_running(service_name, user_bus=False)
 
         shared_row.set_active(is_mounted and is_running)
         shared_row.connect("notify::active", self._on_shared_toggled)
@@ -121,10 +121,13 @@ class TweaksPage(Adw.PreferencesPage):
         row.connect("notify::active", self._on_switch_toggled, service_name)
         group.add(row)
 
-    def _is_service_running(self, service):
+    def _is_service_running(self, service, user_bus=True):
         """Checks if a service is active (running)."""
         try:
-            cmd = ["systemctl", "--user", "is-active", "--quiet", service]
+            cmd = ["systemctl"]
+            if user_bus:
+                cmd.append("--user")
+            cmd.extend(["is-active", "--quiet", service])
             return subprocess.call(cmd) == 0
         except Exception as e:
             logger.warning(f"Failed to check active status for {service}: {e}")
@@ -172,12 +175,10 @@ class TweaksPage(Adw.PreferencesPage):
         user = GLib.get_user_name()
 
         if is_active:
-            if not self.andromeda.is_mounted():
-                cmd = f"python3 -c \"import sys; from tweak_flx1s.system.andromeda import AndromedaManager; AndromedaManager(user=sys.argv[1]).mount()\" {shlex.quote(user)}"
-                dlg = ExecutionDialog(self.window, _("Mounting Shared Folders"), cmd, as_root=True)
-                dlg.present()
+            cmd = f"python3 -c \"import sys; from tweak_flx1s.system.andromeda import AndromedaManager; AndromedaManager(user=sys.argv[1]).mount()\" {shlex.quote(user)}"
+            dlg = ExecutionDialog(self.window, _("Mounting Shared Folders"), cmd, as_root=True)
+            dlg.present()
         else:
-            if self.andromeda.is_mounted():
-                cmd = f"python3 -c \"import sys; from tweak_flx1s.system.andromeda import AndromedaManager; AndromedaManager(user=sys.argv[1]).unmount()\" {shlex.quote(user)}"
-                dlg = ExecutionDialog(self.window, _("Unmounting Shared Folders"), cmd, as_root=True)
-                dlg.present()
+            cmd = f"python3 -c \"import sys; from tweak_flx1s.system.andromeda import AndromedaManager; AndromedaManager(user=sys.argv[1]).unmount()\" {shlex.quote(user)}"
+            dlg = ExecutionDialog(self.window, _("Unmounting Shared Folders"), cmd, as_root=True)
+            dlg.present()

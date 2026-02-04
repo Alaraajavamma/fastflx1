@@ -124,7 +124,9 @@ class AndromedaManager:
         service = f"tweak-flx1s-andromeda-fs@{self.HOST_USER}.service"
         logger.info(f"Starting service {service}...")
         try:
-            run_command(["systemctl", "enable", "--now", service])
+            run_command(["systemctl", "enable", service])
+            run_command(["systemctl", "daemon-reload"])
+            run_command(["systemctl", "start", service])
         except Exception as e:
             logger.error(f"Failed to start service {service}: {e}")
 
@@ -139,7 +141,9 @@ class AndromedaManager:
         service = f"tweak-flx1s-andromeda-fs@{self.HOST_USER}.service"
         logger.info(f"Stopping service {service}...")
         try:
-            run_command(["systemctl", "disable", "--now", service])
+            run_command(["systemctl", "stop", service])
+            run_command(["systemctl", "disable", service])
+            run_command(["systemctl", "daemon-reload"])
         except Exception as e:
             logger.error(f"Failed to stop service {service}: {e}")
 
