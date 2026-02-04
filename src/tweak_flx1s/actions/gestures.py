@@ -27,21 +27,6 @@ except NameError:
 
 CONFIG_FILE = os.path.join(CONFIG_DIR, "gestures.json")
 
-GESTURE_TEMPLATES = {
-    _("Swipe Left (RL)"): "1,RL,*,*,R",
-    _("Swipe Right (LR)"): "1,LR,*,*,R",
-    _("Swipe Up (BT)"): "1,BT,*,*,R",
-    _("Swipe Down (TB)"): "1,TB,*,*,R",
-    _("Left Edge Swipe Right"): "1,LR,L,*,R",
-    _("Right Edge Swipe Left"): "1,RL,R,*,R",
-    _("Top Edge Swipe Down"): "1,TB,T,*,R",
-    _("Bottom Edge Swipe Up"): "1,BT,B,*,R",
-    _("Bottom Left Corner Swipe Up"): "1,BT,B,L,R",
-    _("Bottom Right Corner Swipe Up"): "1,BT,B,R,R",
-    _("Top Left Corner Swipe Down"): "1,TB,T,L,R",
-    _("Top Right Corner Swipe Down"): "1,TB,T,R,R"
-}
-
 DEFAULT_CONFIG = {
     "enabled": False,
     "gestures": [
@@ -93,23 +78,27 @@ class GesturesManager:
             return copy.deepcopy(DEFAULT_CONFIG)
 
     def _remove_duplicates(self):
-        """Removes duplicate gesture specs, keeping the first occurrence."""
+        """
+        Removes duplicate gesture specs, keeping the LAST occurrence.
+        """
         gestures = self.config.get("gestures", [])
-        seen_specs = set()
+        if not gestures:
+            return
+
+        seen = set()
         unique_gestures = []
-        modified = False
 
-        for g in gestures:
+        for g in reversed(gestures):
             spec = g.get("spec")
-            if spec and spec in seen_specs:
-                logger.warning(f"Removing duplicate gesture spec: {spec}")
-                modified = True
-                continue
-            if spec:
-                seen_specs.add(spec)
-            unique_gestures.append(g)
+            if spec and spec not in seen:
+                seen.add(spec)
+                unique_gestures.append(g)
+            elif spec:
+                logger.warning(f"Removing older duplicate gesture spec: {spec}")
 
-        if modified:
+        unique_gestures.reverse()
+
+        if len(unique_gestures) != len(gestures):
             self.config["gestures"] = unique_gestures
             self.save_config()
 
