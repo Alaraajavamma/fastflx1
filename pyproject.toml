@@ -3,7 +3,7 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "tweak-flx1s"
+name = "io-furios-tweak-flx1s"
 version = "0.1.0"
 description = "Tweak tool for FuriPhone FLX1s"
 authors = [

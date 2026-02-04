@@ -26,7 +26,7 @@ class WofiManager:
         self.WOFI_CONFIG_DIR = os.path.join(HOME_DIR, ".config/wofi")
         self.APP_CONFIG_DIR = "/usr/share/tweak-flx1s/configs/wofi"
         if not os.path.exists(self.APP_CONFIG_DIR):
-             self.APP_CONFIG_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../configs/wofi"))
+             self.APP_CONFIG_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../../data/configs/wofi"))
 
     def ensure_config_exists(self):
         """Ensures that Wofi config files exist."""
