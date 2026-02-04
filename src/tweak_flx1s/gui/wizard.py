@@ -39,6 +39,8 @@ class GestureWizard(Adw.Window):
         self.selected_distance = "*"
         self.selected_mode = "R"
 
+        self.mode_group = None
+
         content = Adw.ToolbarView()
         self.set_content(content)
 
@@ -47,11 +49,18 @@ class GestureWizard(Adw.Window):
         header.set_show_start_title_buttons(False)
         content.add_top_bar(header)
 
+        # Start Buttons (Left)
         self.cancel_btn = Gtk.Button(label=_("Cancel"))
         self.cancel_btn.connect("clicked", lambda b: GLib.idle_add(lambda: self.close() or False))
         header.pack_start(self.cancel_btn)
 
-        self.next_btn = Gtk.Button(label=_("Next"))
+        self.back_btn = Gtk.Button(label=_("Go Back"))
+        self.back_btn.connect("clicked", lambda b: GLib.idle_add(lambda: self._on_back() or False))
+        self.back_btn.set_visible(False)
+        header.pack_start(self.back_btn)
+
+        # End Buttons (Right)
+        self.next_btn = Gtk.Button(label=_("Proceed"))
         self.next_btn.add_css_class("suggested-action")
         self.next_btn.connect("clicked", lambda b: GLib.idle_add(lambda: self._on_next() or False))
         header.pack_end(self.next_btn)
@@ -61,6 +70,12 @@ class GestureWizard(Adw.Window):
         self.carousel.set_allow_scroll_wheel(False)
         self.carousel.set_allow_mouse_drag(False)
         self.carousel.set_allow_long_swipes(False)
+
+        # Ensure carousel fills the available space
+        self.carousel.set_vexpand(True)
+        self.carousel.set_hexpand(True)
+
+        self.carousel.connect("page-changed", self._on_page_changed)
         content.set_content(self.carousel)
 
         self.step_fingers = self._create_step_fingers()
@@ -77,6 +92,9 @@ class GestureWizard(Adw.Window):
 
         self.step_mode = self._create_step_mode()
         self.carousel.append(self.step_mode)
+
+        # Initial button state update
+        self._on_page_changed(self.carousel, 0)
 
     def _create_page(self, title, subtitle):
         page = Adw.PreferencesPage()
@@ -189,30 +207,22 @@ class GestureWizard(Adw.Window):
         return page
 
     def _create_step_mode(self):
-        page, group = self._create_page(_("Step 5: Mode"), _("Trigger on press or release?"))
-
-        self.mode_group = Adw.PreferencesGroup() # Container for dynamic rows
-        group.add(self.mode_group)
-
+        # We return an empty page, to be populated dynamically
+        page = Adw.PreferencesPage()
+        self.mode_group = None
         return page
 
     def _refresh_mode_step(self):
         """Rebuilds the mode step to check for duplicates."""
-        child = self.step_mode.get_first_child()
-        # The first child is the wrapper group
-        # The wrapper group has a child which is the PreferencesGroup we added
-        # Actually, self.step_mode is PreferencesPage.
+        # Clean up existing group if present
+        if self.mode_group:
+            self.step_mode.remove(self.mode_group)
+            self.mode_group = None
 
-        # Clear existing rows in our mode_group container logic
-        # Adw.PreferencesGroup doesn't have remove_all easily, so we remove children
-        # But we don't have a direct reference to children easily in Gtk4 without iterating.
-
-        self.step_mode.remove(self.step_mode.get_first_child())
-
-        group = Adw.PreferencesGroup()
-        group.set_title(_("Step 5: Mode"))
-        group.set_description(_("Trigger on press or release?"))
-        self.step_mode.add(group)
+        self.mode_group = Adw.PreferencesGroup()
+        self.mode_group.set_title(_("Step 5: Mode"))
+        self.mode_group.set_description(_("Trigger on press or release?"))
+        self.step_mode.add(self.mode_group)
 
         options = [
             ("R", _("On Release (Recommended)")),
@@ -251,13 +261,13 @@ class GestureWizard(Adw.Window):
 
             row.add_prefix(chk)
             row.set_activatable_widget(chk)
-            group.add(row)
+            self.mode_group.add(row)
 
         if not valid_selection_exists:
              self.next_btn.set_sensitive(False)
              lbl = Gtk.Label(label=_("Error: Both Release and Press modes are already configured for this gesture combination."))
              lbl.add_css_class("error")
-             group.add(lbl)
+             self.mode_group.add(lbl)
         else:
              self.next_btn.set_sensitive(True)
 
@@ -268,20 +278,48 @@ class GestureWizard(Adw.Window):
                 logger.debug(f"Wizard {attr_name} set to {value}")
         return _callback
 
+    def _on_page_changed(self, carousel, index):
+        count = carousel.get_n_pages()
+
+        # Step 0: Cancel, Proceed
+        if index == 0:
+            self.cancel_btn.set_visible(True)
+            self.back_btn.set_visible(False)
+            self.next_btn.set_label(_("Proceed"))
+            self.next_btn.remove_css_class("destructive-action") # Just in case
+            self.next_btn.add_css_class("suggested-action")
+
+        # Intermediate Steps: Back, Proceed
+        elif index < count - 1:
+            self.cancel_btn.set_visible(False)
+            self.back_btn.set_visible(True)
+            self.next_btn.set_label(_("Proceed"))
+            self.next_btn.add_css_class("suggested-action")
+
+        # Last Step (Mode): Back, Save
+        else:
+            self.cancel_btn.set_visible(False)
+            self.back_btn.set_visible(True)
+            self.next_btn.set_label(_("Save"))
+            self.next_btn.add_css_class("suggested-action")
+
+            # Refresh mode step content when entering the last page
+            self._refresh_mode_step()
+
     def _on_next(self):
         idx = self.carousel.get_position()
         count = self.carousel.get_n_pages()
 
         if idx < count - 1:
             next_idx = idx + 1
-            if next_idx == 4: # Going to Mode step
-                self._refresh_mode_step()
-                self.next_btn.set_label(_("Finish"))
-                self.next_btn.add_css_class("suggested-action")
-
             self.carousel.scroll_to(self.carousel.get_nth_page(next_idx), True)
         else:
             self._on_finish()
+
+    def _on_back(self):
+        idx = self.carousel.get_position()
+        if idx > 0:
+            self.carousel.scroll_to(self.carousel.get_nth_page(idx - 1), True)
 
     def _on_finish(self):
         spec = f"{self.selected_fingers},{self.selected_direction},{self.selected_edge},{self.selected_distance},{self.selected_mode}"
