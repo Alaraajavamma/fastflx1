@@ -1,0 +1,675 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: tweak-flx1s 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-01-01 00:00+0000\n"
+"Last-Translator: ai\n"
+"Language-Team: ai\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Add Location"
+msgstr "Добавить местоположение"
+
+msgid "Close"
+msgstr "Закрыть"
+
+msgid "Enter city name"
+msgstr "Введите название города"
+
+msgid "Search"
+msgstr "Поиск"
+
+msgid "Result"
+msgstr "Результат"
+
+msgid "No location found yet."
+msgstr "Местоположение пока не найдено."
+
+msgid "Searching..."
+msgstr "Поиск..."
+
+msgid "No location found."
+msgstr "Местоположение не найдено."
+
+msgid "Error adding location."
+msgstr "Ошибка при добавлении местоположения."
+
+msgid "Tweaks"
+msgstr "Твики"
+
+msgid "System"
+msgstr "Система"
+
+msgid "Actions"
+msgstr "Действия"
+
+msgid "New Gesture Wizard"
+msgstr "Мастер новых жестов"
+
+msgid "Cancel"
+msgstr "Отмена"
+
+msgid "Go Back"
+msgstr "Назад"
+
+msgid "Proceed"
+msgstr "Продолжить"
+
+msgid "Step 1: Fingers"
+msgstr "Шаг 1: Пальцы"
+
+msgid "How many fingers used for the gesture?"
+msgstr "Сколько пальцев используется для жеста?"
+
+msgid "Step 2: Direction"
+msgstr "Шаг 2: Направление"
+
+msgid "Which direction is the swipe?"
+msgstr "В каком направлении свайп?"
+
+msgid "From Left to Right"
+msgstr "Слева направо"
+
+msgid "From Right to Left"
+msgstr "Справа налево"
+
+msgid "From Top to Bottom"
+msgstr "Сверху вниз"
+
+msgid "From Bottom to Top"
+msgstr "Снизу вверх"
+
+msgid "From Bottom-Left to Top-Right"
+msgstr ""
+
+msgid "From Top-Right to Bottom-Left"
+msgstr ""
+
+msgid "From Top-Left to Bottom-Right"
+msgstr ""
+
+msgid "From Bottom-Right to Top-Left"
+msgstr ""
+
+msgid "Step 3: Edge"
+msgstr "Шаг 3: Край"
+
+msgid "Where should the gesture start?"
+msgstr "Где должен начинаться жест?"
+
+msgid "Anywhere"
+msgstr "В любом месте"
+
+msgid "Left Edge"
+msgstr "Левый край"
+
+msgid "Right Edge"
+msgstr "Правый край"
+
+msgid "Top Edge"
+msgstr "Верхний край"
+
+msgid "Bottom Edge"
+msgstr "Нижний край"
+
+msgid "Top-Left Corner"
+msgstr ""
+
+msgid "Top-Right Corner"
+msgstr ""
+
+msgid "Bottom-Left Corner"
+msgstr ""
+
+msgid "Bottom-Right Corner"
+msgstr ""
+
+msgid "None (Middle of screen only)"
+msgstr ""
+
+msgid "Step 4: Distance"
+msgstr "Шаг 4: Расстояние"
+
+msgid "How long should the swipe be?"
+msgstr "Какова должна быть длина свайпа?"
+
+msgid "Any Distance"
+msgstr "Любое расстояние"
+
+msgid "Short"
+msgstr "Короткий"
+
+msgid "Medium"
+msgstr "Средний"
+
+msgid "Large"
+msgstr "Длинный"
+
+msgid "Step 5: Mode"
+msgstr "Шаг 5: Режим"
+
+msgid "Trigger on press or release?"
+msgstr "Срабатывать при нажатии или отпускании?"
+
+msgid "On Release (Recommended)"
+msgstr "При отпускании (рекомендуется)"
+
+msgid "On Press"
+msgstr "При нажатии"
+
+msgid "Already configured"
+msgstr ""
+
+msgid "Error: Both Release and Press modes are already configured for this gesture combination."
+msgstr ""
+
+msgid "Save"
+msgstr "Сохранить"
+
+msgid "Select Keyboard"
+msgstr ""
+
+msgid "Edit Item"
+msgstr "Изменить элемент"
+
+msgid "Item Details"
+msgstr "Детали элемента"
+
+msgid "Action Name"
+msgstr "Название действия"
+
+msgid "Action Type"
+msgstr "Тип действия"
+
+msgid "Predefined Action"
+msgstr "Предварительно определенное действие"
+
+msgid "Select from common actions"
+msgstr ""
+
+msgid "Custom Command"
+msgstr "Пользовательская команда"
+
+msgid "Execute a shell command"
+msgstr ""
+
+msgid "Command"
+msgstr "Команда"
+
+msgid "Predefined Actions"
+msgstr ""
+
+msgid "Edit Menu"
+msgstr "Изменить меню"
+
+msgid "New Item"
+msgstr "Новый элемент"
+
+msgid "Select Action"
+msgstr "Выбрать действие"
+
+msgid "Wofi Menu"
+msgstr "Меню Wofi"
+
+msgid "Show a menu of actions"
+msgstr ""
+
+msgid "Edit Gesture"
+msgstr "Изменить жест"
+
+msgid "General"
+msgstr "Общее"
+
+msgid "Name"
+msgstr "Имя"
+
+msgid "Trigger Spec"
+msgstr "Спецификация триггера"
+
+msgid "Not Configured"
+msgstr "Не настроено"
+
+msgid "Change"
+msgstr "Изменить"
+
+msgid "Locked State"
+msgstr "Заблокированное состояние"
+
+msgid "Edit"
+msgstr "Изменить"
+
+msgid "Unlocked State"
+msgstr "Разблокированное состояние"
+
+msgid "No Action"
+msgstr "Нет действия"
+
+msgid "Missing Trigger"
+msgstr "Отсутствует триггер"
+
+msgid "Please configure a gesture trigger before saving."
+msgstr ""
+
+msgid "OK"
+msgstr "ОК"
+
+msgid "Gestures"
+msgstr ""
+
+msgid "Service"
+msgstr "Служба"
+
+msgid "Enable Touch Gestures"
+msgstr "Включить сенсорные жесты"
+
+msgid "Add New Gesture"
+msgstr "Добавить новый жест"
+
+msgid "Configured Gestures"
+msgstr "Настроенные жесты"
+
+msgid "Unnamed Gesture"
+msgstr "Безымянный жест"
+
+msgid "New Gesture"
+msgstr "Новый жест"
+
+msgid "Change Password"
+msgstr "Изменить пароль"
+
+msgid "Password Details"
+msgstr "Детали пароля"
+
+msgid "Current Password"
+msgstr "Текущий пароль"
+
+msgid "New Password"
+msgstr "Новый пароль"
+
+msgid "Confirm New Password"
+msgstr "Подтвердите новый пароль"
+
+msgid "Please enter current password."
+msgstr ""
+
+msgid "Please enter new password."
+msgstr ""
+
+msgid "New passwords do not match."
+msgstr ""
+
+msgid "Changing password..."
+msgstr ""
+
+msgid "Password changed successfully!"
+msgstr "Пароль успешно изменен!"
+
+msgid "Failed to change password."
+msgstr "Не удалось изменить пароль."
+
+msgid "Authentication error. Check current password."
+msgstr ""
+
+msgid "Bad password."
+msgstr ""
+
+msgid "it is too short"
+msgstr ""
+
+msgid "is the same as the old one"
+msgstr ""
+
+msgid "is a palindrome"
+msgstr ""
+
+msgid "case changes only"
+msgstr ""
+
+msgid "is too similar to the old one"
+msgstr ""
+
+msgid "it does not contain enough DIFFERENT characters"
+msgstr ""
+
+msgid "it is based on a dictionary word"
+msgstr ""
+
+msgid "Bad password: "
+msgstr ""
+
+msgid "Input Configuration"
+msgstr "Конфигурация ввода"
+
+msgid "Hardware Buttons"
+msgstr "Аппаратные кнопки"
+
+msgid "Configure short, double, and long press actions"
+msgstr ""
+
+msgid "Touch Gestures"
+msgstr "Сенсорные жесты"
+
+msgid "Configure edge swipes and shortcuts"
+msgstr ""
+
+msgid "Buttons"
+msgstr "Кнопки"
+
+msgid "Keyboard"
+msgstr "Клавиатура"
+
+msgid "Active Keyboard"
+msgstr "Активная клавиатура"
+
+msgid "Change Keyboard"
+msgstr "Изменить клавиатуру"
+
+msgid "Finnish Layout"
+msgstr ""
+
+msgid "Install custom Squeekboard layout"
+msgstr ""
+
+msgid "Configuration"
+msgstr "Конфигурация"
+
+msgid "Enforce App Wofi Config"
+msgstr ""
+
+msgid "Use Tweak-FLX1s Wofi style and config"
+msgstr ""
+
+msgid "Environment"
+msgstr "Окружение"
+
+msgid "Current Environment"
+msgstr ""
+
+msgid "Updates"
+msgstr "Обновления"
+
+msgid "System Upgrade"
+msgstr "Обновление системы"
+
+msgid "Upgrade FuriOS"
+msgstr ""
+
+msgid "Upgrading System"
+msgstr ""
+
+msgid "Applications"
+msgstr "Приложения"
+
+msgid "Squeekboard"
+msgstr "Squeekboard"
+
+msgid "On-screen keyboard"
+msgstr ""
+
+msgid "FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Install custom battery monitor"
+msgstr ""
+
+msgid "Install"
+msgstr "Установить"
+
+msgid "Phofono"
+msgstr ""
+
+msgid "Alternative Phone and Messages App"
+msgstr ""
+
+msgid "Branchy App Store"
+msgstr ""
+
+msgid "DebUI"
+msgstr ""
+
+msgid "Debian Package Installer UI"
+msgstr ""
+
+msgid "Security"
+msgstr "Безопасность"
+
+msgid "Enable Shorter Passcodes"
+msgstr ""
+
+msgid "Allow 1-character passwords"
+msgstr ""
+
+msgid "Change current user password"
+msgstr ""
+
+msgid "Fingerprint Authentication"
+msgstr "Аутентификация по отпечатку пальца"
+
+msgid "Configure PAM for fingerprint support"
+msgstr ""
+
+msgid "Enable"
+msgstr "Включить"
+
+msgid "Restarting Keyboard Service"
+msgstr ""
+
+msgid "Changing Keyboard"
+msgstr ""
+
+msgid "Remove"
+msgstr "Удалить"
+
+msgid "Removing Squeekboard"
+msgstr ""
+
+msgid "Installing Squeekboard"
+msgstr ""
+
+msgid "Enabling Shorter Passwords"
+msgstr ""
+
+msgid "Disabling Shorter Passwords"
+msgstr ""
+
+msgid "Removing DebUI"
+msgstr ""
+
+msgid "Installing DebUI"
+msgstr ""
+
+msgid "Removing FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Installing FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Fingerprint is enabled"
+msgstr ""
+
+msgid "Removing Fingerprint"
+msgstr ""
+
+msgid "Configuring Fingerprint"
+msgstr ""
+
+msgid "Installed"
+msgstr "Установлено"
+
+msgid "Removing Phofono"
+msgstr ""
+
+msgid "Installing Phofono"
+msgstr ""
+
+msgid "Removing Branchy"
+msgstr ""
+
+msgid "Installing Branchy"
+msgstr ""
+
+msgid "Staging"
+msgstr ""
+
+msgid "Switch to Production"
+msgstr ""
+
+msgid "Production"
+msgstr ""
+
+msgid "Switch to Staging"
+msgstr ""
+
+msgid "Switching to Production"
+msgstr ""
+
+msgid "Switching to Staging"
+msgstr ""
+
+msgid "About Tweak-FLX1s"
+msgstr "О Tweak-FLX1s"
+
+msgid "System tweaks and utilities for FuriPhoneFLX1s."
+msgstr ""
+
+msgid "Version"
+msgstr "Версия"
+
+msgid "Developer"
+msgstr "Разработчик"
+
+msgid "License"
+msgstr "Лицензия"
+
+msgid "Links"
+msgstr "Ссылки"
+
+msgid "Website"
+msgstr "Веб-сайт"
+
+msgid "Issue Tracker"
+msgstr "Трекер проблем"
+
+msgid "Report bugs or request features"
+msgstr ""
+
+msgid "Appearance"
+msgstr "Внешний вид"
+
+msgid "GTK3 CSS Tweak"
+msgstr ""
+
+msgid "Apply custom UI scaling tweaks for GTK3 apps"
+msgstr ""
+
+msgid "Background Services"
+msgstr "Фоновые службы"
+
+msgid "Alarm Volume Fix"
+msgstr ""
+
+msgid "Ensure alarm plays at full volume"
+msgstr ""
+
+msgid "Andromeda Guard"
+msgstr ""
+
+msgid "Prevent OSK issues"
+msgstr ""
+
+msgid "Andromeda Integration"
+msgstr ""
+
+msgid "Shared Folders"
+msgstr ""
+
+msgid "Mount ~/.local/share/andromeda to ~/Android-Share"
+msgstr ""
+
+msgid "Audio"
+msgstr "Аудио"
+
+msgid "Custom Sound Theme"
+msgstr ""
+
+msgid "Use fastflx1 custom sounds"
+msgstr ""
+
+msgid "Mounting Shared Folders"
+msgstr ""
+
+msgid "Unmounting Shared Folders"
+msgstr ""
+
+msgid "Short Press"
+msgstr "Короткое нажатие"
+
+msgid "Double Press"
+msgstr "Двойное нажатие"
+
+msgid "Long Press"
+msgstr "Длинное нажатие"
+
+msgid "Use Custom Assistant File"
+msgstr ""
+
+msgid "Write ~/.config/assistant-button/..."
+msgstr ""
+
+msgid "Locked Action"
+msgstr ""
+
+msgid "Unlocked Action"
+msgstr ""
+
+msgid "Copy (Ctrl+C)"
+msgstr "Копировать (Ctrl+C)"
+
+msgid "Paste (Ctrl+V)"
+msgstr "Вставить (Ctrl+V)"
+
+msgid "Cut (Ctrl+X)"
+msgstr ""
+
+msgid "Select All and Copy"
+msgstr ""
+
+msgid "Paste from Clipboard"
+msgstr ""
+
+msgid "Kill Active Window"
+msgstr ""
+
+msgid "Switch Window on the left"
+msgstr ""
+
+msgid "Switch Window on the right"
+msgstr ""
+
+msgid "Screenshot"
+msgstr "Скриншот"
+
+msgid "Flashlight"
+msgstr "Фонарик"
+
+msgid "Play/Pause"
+msgstr ""
+
+msgid "Next Track"
+msgstr ""
+
+msgid "Previous Track"
+msgstr ""
+
+msgid "Volume Up"
+msgstr ""
+
+msgid "Volume Down"
+msgstr ""
+
+msgid "Mute"
+msgstr "Без звука"

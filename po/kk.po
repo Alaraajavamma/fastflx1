@@ -1,0 +1,675 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: tweak-flx1s 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-01-01 00:00+0000\n"
+"Last-Translator: ai\n"
+"Language-Team: ai\n"
+"Language: kk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Add Location"
+msgstr "Орын қосу"
+
+msgid "Close"
+msgstr "Жабу"
+
+msgid "Enter city name"
+msgstr "Қала атауын енгізіңіз"
+
+msgid "Search"
+msgstr "Іздеу"
+
+msgid "Result"
+msgstr "Нәтиже"
+
+msgid "No location found yet."
+msgstr "Әзірше орын табылмады."
+
+msgid "Searching..."
+msgstr "Ізделуде..."
+
+msgid "No location found."
+msgstr "Орын табылмады."
+
+msgid "Error adding location."
+msgstr "Орын қосу қатесі."
+
+msgid "Tweaks"
+msgstr "Түзетулер"
+
+msgid "System"
+msgstr "Жүйе"
+
+msgid "Actions"
+msgstr "Әрекеттер"
+
+msgid "New Gesture Wizard"
+msgstr "Жаңа қимыл шебері"
+
+msgid "Cancel"
+msgstr "Болдырмау"
+
+msgid "Go Back"
+msgstr "Артқа"
+
+msgid "Proceed"
+msgstr "Жалғастыру"
+
+msgid "Step 1: Fingers"
+msgstr "1-қадам: Саусақтар"
+
+msgid "How many fingers used for the gesture?"
+msgstr "Қимыл үшін қанша саусақ қолданылады?"
+
+msgid "Step 2: Direction"
+msgstr "2-қадам: Бағыт"
+
+msgid "Which direction is the swipe?"
+msgstr "Сырғыту қай бағытта?"
+
+msgid "From Left to Right"
+msgstr "Солдан оңға"
+
+msgid "From Right to Left"
+msgstr "Оңнан солға"
+
+msgid "From Top to Bottom"
+msgstr "Жоғарыдан төменге"
+
+msgid "From Bottom to Top"
+msgstr "Төменнен жоғарыға"
+
+msgid "From Bottom-Left to Top-Right"
+msgstr ""
+
+msgid "From Top-Right to Bottom-Left"
+msgstr ""
+
+msgid "From Top-Left to Bottom-Right"
+msgstr ""
+
+msgid "From Bottom-Right to Top-Left"
+msgstr ""
+
+msgid "Step 3: Edge"
+msgstr "3-қадам: Жиек"
+
+msgid "Where should the gesture start?"
+msgstr "Қимыл қай жерден басталуы керек?"
+
+msgid "Anywhere"
+msgstr "Кез келген жерде"
+
+msgid "Left Edge"
+msgstr "Сол жақ жиек"
+
+msgid "Right Edge"
+msgstr "Оң жақ жиек"
+
+msgid "Top Edge"
+msgstr "Жоғарғы жиек"
+
+msgid "Bottom Edge"
+msgstr "Төменгі жиек"
+
+msgid "Top-Left Corner"
+msgstr ""
+
+msgid "Top-Right Corner"
+msgstr ""
+
+msgid "Bottom-Left Corner"
+msgstr ""
+
+msgid "Bottom-Right Corner"
+msgstr ""
+
+msgid "None (Middle of screen only)"
+msgstr ""
+
+msgid "Step 4: Distance"
+msgstr "4-қадам: Қашықтық"
+
+msgid "How long should the swipe be?"
+msgstr "Сырғыту қаншалықты ұзақ болуы керек?"
+
+msgid "Any Distance"
+msgstr "Кез келген қашықтық"
+
+msgid "Short"
+msgstr "Қысқа"
+
+msgid "Medium"
+msgstr "Орташа"
+
+msgid "Large"
+msgstr "Ұзын"
+
+msgid "Step 5: Mode"
+msgstr "5-қадам: Режим"
+
+msgid "Trigger on press or release?"
+msgstr "Басқанда немесе босатқанда іске қосу керек пе?"
+
+msgid "On Release (Recommended)"
+msgstr "Босатқанда (Ұсынылады)"
+
+msgid "On Press"
+msgstr "Басқанда"
+
+msgid "Already configured"
+msgstr ""
+
+msgid "Error: Both Release and Press modes are already configured for this gesture combination."
+msgstr ""
+
+msgid "Save"
+msgstr "Сақтау"
+
+msgid "Select Keyboard"
+msgstr ""
+
+msgid "Edit Item"
+msgstr "Элементті өңдеу"
+
+msgid "Item Details"
+msgstr "Элемент мәліметтері"
+
+msgid "Action Name"
+msgstr "Әрекет атауы"
+
+msgid "Action Type"
+msgstr "Әрекет түрі"
+
+msgid "Predefined Action"
+msgstr "Алдын ала анықталған әрекет"
+
+msgid "Select from common actions"
+msgstr ""
+
+msgid "Custom Command"
+msgstr "Таңдамалы команда"
+
+msgid "Execute a shell command"
+msgstr ""
+
+msgid "Command"
+msgstr "Команда"
+
+msgid "Predefined Actions"
+msgstr ""
+
+msgid "Edit Menu"
+msgstr "Мәзірді өңдеу"
+
+msgid "New Item"
+msgstr "Жаңа элемент"
+
+msgid "Select Action"
+msgstr "Әрекетті таңдау"
+
+msgid "Wofi Menu"
+msgstr "Wofi мәзірі"
+
+msgid "Show a menu of actions"
+msgstr ""
+
+msgid "Edit Gesture"
+msgstr "Қимылды өңдеу"
+
+msgid "General"
+msgstr "Жалпы"
+
+msgid "Name"
+msgstr "Аты"
+
+msgid "Trigger Spec"
+msgstr "Триггер сипаттамасы"
+
+msgid "Not Configured"
+msgstr "Конфигурацияланбаған"
+
+msgid "Change"
+msgstr "Өзгерту"
+
+msgid "Locked State"
+msgstr "Құлыпталған күй"
+
+msgid "Edit"
+msgstr "Өңдеу"
+
+msgid "Unlocked State"
+msgstr "Құлыпталмаған күй"
+
+msgid "No Action"
+msgstr "Әрекет жоқ"
+
+msgid "Missing Trigger"
+msgstr "Триггер жоқ"
+
+msgid "Please configure a gesture trigger before saving."
+msgstr ""
+
+msgid "OK"
+msgstr "ОК"
+
+msgid "Gestures"
+msgstr ""
+
+msgid "Service"
+msgstr "Қызмет"
+
+msgid "Enable Touch Gestures"
+msgstr "Сенсорлық қимылдарды қосу"
+
+msgid "Add New Gesture"
+msgstr "Жаңа қимыл қосу"
+
+msgid "Configured Gestures"
+msgstr "Конфигурацияланған қимылдар"
+
+msgid "Unnamed Gesture"
+msgstr "Атаусыз қимыл"
+
+msgid "New Gesture"
+msgstr "Жаңа қимыл"
+
+msgid "Change Password"
+msgstr "Құпия сөзді өзгерту"
+
+msgid "Password Details"
+msgstr "Құпия сөз мәліметтері"
+
+msgid "Current Password"
+msgstr "Ағымдағы құпия сөз"
+
+msgid "New Password"
+msgstr "Жаңа құпия сөз"
+
+msgid "Confirm New Password"
+msgstr "Жаңа құпия сөзді растау"
+
+msgid "Please enter current password."
+msgstr ""
+
+msgid "Please enter new password."
+msgstr ""
+
+msgid "New passwords do not match."
+msgstr ""
+
+msgid "Changing password..."
+msgstr ""
+
+msgid "Password changed successfully!"
+msgstr "Құпия сөз сәтті өзгертілді!"
+
+msgid "Failed to change password."
+msgstr "Құпия сөзді өзгерту сәтсіз аяқталды."
+
+msgid "Authentication error. Check current password."
+msgstr ""
+
+msgid "Bad password."
+msgstr ""
+
+msgid "it is too short"
+msgstr ""
+
+msgid "is the same as the old one"
+msgstr ""
+
+msgid "is a palindrome"
+msgstr ""
+
+msgid "case changes only"
+msgstr ""
+
+msgid "is too similar to the old one"
+msgstr ""
+
+msgid "it does not contain enough DIFFERENT characters"
+msgstr ""
+
+msgid "it is based on a dictionary word"
+msgstr ""
+
+msgid "Bad password: "
+msgstr ""
+
+msgid "Input Configuration"
+msgstr "Енгізу конфигурациясы"
+
+msgid "Hardware Buttons"
+msgstr "Аппараттық түймелер"
+
+msgid "Configure short, double, and long press actions"
+msgstr ""
+
+msgid "Touch Gestures"
+msgstr "Сенсорлық қимылдар"
+
+msgid "Configure edge swipes and shortcuts"
+msgstr ""
+
+msgid "Buttons"
+msgstr "Түймелер"
+
+msgid "Keyboard"
+msgstr "Пернетақта"
+
+msgid "Active Keyboard"
+msgstr "Белсенді пернетақта"
+
+msgid "Change Keyboard"
+msgstr "Пернетақтаны өзгерту"
+
+msgid "Finnish Layout"
+msgstr ""
+
+msgid "Install custom Squeekboard layout"
+msgstr ""
+
+msgid "Configuration"
+msgstr "Конфигурация"
+
+msgid "Enforce App Wofi Config"
+msgstr ""
+
+msgid "Use Tweak-FLX1s Wofi style and config"
+msgstr ""
+
+msgid "Environment"
+msgstr "Орта"
+
+msgid "Current Environment"
+msgstr ""
+
+msgid "Updates"
+msgstr "Жаңартулар"
+
+msgid "System Upgrade"
+msgstr "Жүйені жаңарту"
+
+msgid "Upgrade FuriOS"
+msgstr ""
+
+msgid "Upgrading System"
+msgstr ""
+
+msgid "Applications"
+msgstr "Қолданбалар"
+
+msgid "Squeekboard"
+msgstr "Squeekboard"
+
+msgid "On-screen keyboard"
+msgstr ""
+
+msgid "FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Install custom battery monitor"
+msgstr ""
+
+msgid "Install"
+msgstr "Орнату"
+
+msgid "Phofono"
+msgstr ""
+
+msgid "Alternative Phone and Messages App"
+msgstr ""
+
+msgid "Branchy App Store"
+msgstr ""
+
+msgid "DebUI"
+msgstr ""
+
+msgid "Debian Package Installer UI"
+msgstr ""
+
+msgid "Security"
+msgstr "Қауіпсіздік"
+
+msgid "Enable Shorter Passcodes"
+msgstr ""
+
+msgid "Allow 1-character passwords"
+msgstr ""
+
+msgid "Change current user password"
+msgstr ""
+
+msgid "Fingerprint Authentication"
+msgstr "Саусақ ізімен аутентификация"
+
+msgid "Configure PAM for fingerprint support"
+msgstr ""
+
+msgid "Enable"
+msgstr "Қосу"
+
+msgid "Restarting Keyboard Service"
+msgstr ""
+
+msgid "Changing Keyboard"
+msgstr ""
+
+msgid "Remove"
+msgstr "Жою"
+
+msgid "Removing Squeekboard"
+msgstr ""
+
+msgid "Installing Squeekboard"
+msgstr ""
+
+msgid "Enabling Shorter Passwords"
+msgstr ""
+
+msgid "Disabling Shorter Passwords"
+msgstr ""
+
+msgid "Removing DebUI"
+msgstr ""
+
+msgid "Installing DebUI"
+msgstr ""
+
+msgid "Removing FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Installing FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Fingerprint is enabled"
+msgstr ""
+
+msgid "Removing Fingerprint"
+msgstr ""
+
+msgid "Configuring Fingerprint"
+msgstr ""
+
+msgid "Installed"
+msgstr "Орнатылды"
+
+msgid "Removing Phofono"
+msgstr ""
+
+msgid "Installing Phofono"
+msgstr ""
+
+msgid "Removing Branchy"
+msgstr ""
+
+msgid "Installing Branchy"
+msgstr ""
+
+msgid "Staging"
+msgstr ""
+
+msgid "Switch to Production"
+msgstr ""
+
+msgid "Production"
+msgstr ""
+
+msgid "Switch to Staging"
+msgstr ""
+
+msgid "Switching to Production"
+msgstr ""
+
+msgid "Switching to Staging"
+msgstr ""
+
+msgid "About Tweak-FLX1s"
+msgstr "Tweak-FLX1s туралы"
+
+msgid "System tweaks and utilities for FuriPhoneFLX1s."
+msgstr ""
+
+msgid "Version"
+msgstr "Нұсқа"
+
+msgid "Developer"
+msgstr "Әзірлеуші"
+
+msgid "License"
+msgstr "Лицензия"
+
+msgid "Links"
+msgstr "Сілтемелер"
+
+msgid "Website"
+msgstr "Веб-сайт"
+
+msgid "Issue Tracker"
+msgstr "Мәселелерді қадағалау"
+
+msgid "Report bugs or request features"
+msgstr ""
+
+msgid "Appearance"
+msgstr "Сыртқы түрі"
+
+msgid "GTK3 CSS Tweak"
+msgstr ""
+
+msgid "Apply custom UI scaling tweaks for GTK3 apps"
+msgstr ""
+
+msgid "Background Services"
+msgstr "Фондық қызметтер"
+
+msgid "Alarm Volume Fix"
+msgstr ""
+
+msgid "Ensure alarm plays at full volume"
+msgstr ""
+
+msgid "Andromeda Guard"
+msgstr ""
+
+msgid "Prevent OSK issues"
+msgstr ""
+
+msgid "Andromeda Integration"
+msgstr ""
+
+msgid "Shared Folders"
+msgstr ""
+
+msgid "Mount ~/.local/share/andromeda to ~/Android-Share"
+msgstr ""
+
+msgid "Audio"
+msgstr "Аудио"
+
+msgid "Custom Sound Theme"
+msgstr ""
+
+msgid "Use fastflx1 custom sounds"
+msgstr ""
+
+msgid "Mounting Shared Folders"
+msgstr ""
+
+msgid "Unmounting Shared Folders"
+msgstr ""
+
+msgid "Short Press"
+msgstr "Қысқа басу"
+
+msgid "Double Press"
+msgstr "Екі рет басу"
+
+msgid "Long Press"
+msgstr "Ұзақ басу"
+
+msgid "Use Custom Assistant File"
+msgstr ""
+
+msgid "Write ~/.config/assistant-button/..."
+msgstr ""
+
+msgid "Locked Action"
+msgstr ""
+
+msgid "Unlocked Action"
+msgstr ""
+
+msgid "Copy (Ctrl+C)"
+msgstr "Көшіру (Ctrl+C)"
+
+msgid "Paste (Ctrl+V)"
+msgstr "Қою (Ctrl+V)"
+
+msgid "Cut (Ctrl+X)"
+msgstr ""
+
+msgid "Select All and Copy"
+msgstr ""
+
+msgid "Paste from Clipboard"
+msgstr ""
+
+msgid "Kill Active Window"
+msgstr ""
+
+msgid "Switch Window on the left"
+msgstr ""
+
+msgid "Switch Window on the right"
+msgstr ""
+
+msgid "Screenshot"
+msgstr "Скриншот"
+
+msgid "Flashlight"
+msgstr "Шам"
+
+msgid "Play/Pause"
+msgstr ""
+
+msgid "Next Track"
+msgstr ""
+
+msgid "Previous Track"
+msgstr ""
+
+msgid "Volume Up"
+msgstr ""
+
+msgid "Volume Down"
+msgstr ""
+
+msgid "Mute"
+msgstr "Дыбыссыз"

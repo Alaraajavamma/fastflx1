@@ -1,0 +1,675 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: tweak-flx1s 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-01-01 00:00+0000\n"
+"Last-Translator: ai\n"
+"Language-Team: ai\n"
+"Language: hu\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Add Location"
+msgstr "Hely hozzáadása"
+
+msgid "Close"
+msgstr "Bezárás"
+
+msgid "Enter city name"
+msgstr "Adja meg a város nevét"
+
+msgid "Search"
+msgstr "Keresés"
+
+msgid "Result"
+msgstr "Eredmény"
+
+msgid "No location found yet."
+msgstr "Még nincs találat."
+
+msgid "Searching..."
+msgstr "Keresés..."
+
+msgid "No location found."
+msgstr "Hely nem található."
+
+msgid "Error adding location."
+msgstr "Hiba a hely hozzáadásakor."
+
+msgid "Tweaks"
+msgstr "Finomhangolás"
+
+msgid "System"
+msgstr "Rendszer"
+
+msgid "Actions"
+msgstr "Műveletek"
+
+msgid "New Gesture Wizard"
+msgstr "Új gesztus varázsló"
+
+msgid "Cancel"
+msgstr "Mégse"
+
+msgid "Go Back"
+msgstr "Vissza"
+
+msgid "Proceed"
+msgstr "Tovább"
+
+msgid "Step 1: Fingers"
+msgstr "1. lépés: Ujjak"
+
+msgid "How many fingers used for the gesture?"
+msgstr "Hány ujjat használ a gesztushoz?"
+
+msgid "Step 2: Direction"
+msgstr "2. lépés: Irány"
+
+msgid "Which direction is the swipe?"
+msgstr "Milyen irányú a húzás?"
+
+msgid "From Left to Right"
+msgstr "Balról jobbra"
+
+msgid "From Right to Left"
+msgstr "Jobbról balra"
+
+msgid "From Top to Bottom"
+msgstr "Fentről lefelé"
+
+msgid "From Bottom to Top"
+msgstr "Lentről felfelé"
+
+msgid "From Bottom-Left to Top-Right"
+msgstr ""
+
+msgid "From Top-Right to Bottom-Left"
+msgstr ""
+
+msgid "From Top-Left to Bottom-Right"
+msgstr ""
+
+msgid "From Bottom-Right to Top-Left"
+msgstr ""
+
+msgid "Step 3: Edge"
+msgstr "3. lépés: Szél"
+
+msgid "Where should the gesture start?"
+msgstr "Hol kezdődjön a gesztus?"
+
+msgid "Anywhere"
+msgstr "Bárhol"
+
+msgid "Left Edge"
+msgstr "Bal szél"
+
+msgid "Right Edge"
+msgstr "Jobb szél"
+
+msgid "Top Edge"
+msgstr "Felső szél"
+
+msgid "Bottom Edge"
+msgstr "Alsó szél"
+
+msgid "Top-Left Corner"
+msgstr ""
+
+msgid "Top-Right Corner"
+msgstr ""
+
+msgid "Bottom-Left Corner"
+msgstr ""
+
+msgid "Bottom-Right Corner"
+msgstr ""
+
+msgid "None (Middle of screen only)"
+msgstr ""
+
+msgid "Step 4: Distance"
+msgstr "4. lépés: Távolság"
+
+msgid "How long should the swipe be?"
+msgstr "Milyen hosszú legyen a húzás?"
+
+msgid "Any Distance"
+msgstr "Bármilyen távolság"
+
+msgid "Short"
+msgstr "Rövid"
+
+msgid "Medium"
+msgstr "Közepes"
+
+msgid "Large"
+msgstr "Hosszú"
+
+msgid "Step 5: Mode"
+msgstr "5. lépés: Mód"
+
+msgid "Trigger on press or release?"
+msgstr "Lenyomásra vagy felengedésre aktiválódjon?"
+
+msgid "On Release (Recommended)"
+msgstr "Felengedéskor (Ajánlott)"
+
+msgid "On Press"
+msgstr "Lenyomáskor"
+
+msgid "Already configured"
+msgstr ""
+
+msgid "Error: Both Release and Press modes are already configured for this gesture combination."
+msgstr ""
+
+msgid "Save"
+msgstr "Mentés"
+
+msgid "Select Keyboard"
+msgstr ""
+
+msgid "Edit Item"
+msgstr "Elem szerkesztése"
+
+msgid "Item Details"
+msgstr "Elem részletei"
+
+msgid "Action Name"
+msgstr "Művelet neve"
+
+msgid "Action Type"
+msgstr "Művelet típusa"
+
+msgid "Predefined Action"
+msgstr "Előre definiált művelet"
+
+msgid "Select from common actions"
+msgstr ""
+
+msgid "Custom Command"
+msgstr "Egyéni parancs"
+
+msgid "Execute a shell command"
+msgstr ""
+
+msgid "Command"
+msgstr "Parancs"
+
+msgid "Predefined Actions"
+msgstr ""
+
+msgid "Edit Menu"
+msgstr "Menü szerkesztése"
+
+msgid "New Item"
+msgstr "Új elem"
+
+msgid "Select Action"
+msgstr "Művelet kiválasztása"
+
+msgid "Wofi Menu"
+msgstr "Wofi menü"
+
+msgid "Show a menu of actions"
+msgstr ""
+
+msgid "Edit Gesture"
+msgstr "Gesztus szerkesztése"
+
+msgid "General"
+msgstr "Általános"
+
+msgid "Name"
+msgstr "Név"
+
+msgid "Trigger Spec"
+msgstr "Aktiválási specifikáció"
+
+msgid "Not Configured"
+msgstr "Nincs konfigurálva"
+
+msgid "Change"
+msgstr "Módosítás"
+
+msgid "Locked State"
+msgstr "Zárolt állapot"
+
+msgid "Edit"
+msgstr "Szerkesztés"
+
+msgid "Unlocked State"
+msgstr "Feloldott állapot"
+
+msgid "No Action"
+msgstr "Nincs művelet"
+
+msgid "Missing Trigger"
+msgstr "Hiányzó aktiváló"
+
+msgid "Please configure a gesture trigger before saving."
+msgstr ""
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Gestures"
+msgstr ""
+
+msgid "Service"
+msgstr "Szolgáltatás"
+
+msgid "Enable Touch Gestures"
+msgstr "Érintőgesztusok engedélyezése"
+
+msgid "Add New Gesture"
+msgstr "Új gesztus hozzáadása"
+
+msgid "Configured Gestures"
+msgstr "Konfigurált gesztusok"
+
+msgid "Unnamed Gesture"
+msgstr "Névtelen gesztus"
+
+msgid "New Gesture"
+msgstr "Új gesztus"
+
+msgid "Change Password"
+msgstr "Jelszó módosítása"
+
+msgid "Password Details"
+msgstr "Jelszó részletei"
+
+msgid "Current Password"
+msgstr "Jelenlegi jelszó"
+
+msgid "New Password"
+msgstr "Új jelszó"
+
+msgid "Confirm New Password"
+msgstr "Új jelszó megerősítése"
+
+msgid "Please enter current password."
+msgstr ""
+
+msgid "Please enter new password."
+msgstr ""
+
+msgid "New passwords do not match."
+msgstr ""
+
+msgid "Changing password..."
+msgstr ""
+
+msgid "Password changed successfully!"
+msgstr "A jelszó sikeresen megváltozott!"
+
+msgid "Failed to change password."
+msgstr "A jelszó módosítása sikertelen."
+
+msgid "Authentication error. Check current password."
+msgstr ""
+
+msgid "Bad password."
+msgstr ""
+
+msgid "it is too short"
+msgstr ""
+
+msgid "is the same as the old one"
+msgstr ""
+
+msgid "is a palindrome"
+msgstr ""
+
+msgid "case changes only"
+msgstr ""
+
+msgid "is too similar to the old one"
+msgstr ""
+
+msgid "it does not contain enough DIFFERENT characters"
+msgstr ""
+
+msgid "it is based on a dictionary word"
+msgstr ""
+
+msgid "Bad password: "
+msgstr ""
+
+msgid "Input Configuration"
+msgstr "Bemeneti konfiguráció"
+
+msgid "Hardware Buttons"
+msgstr "Hardveres gombok"
+
+msgid "Configure short, double, and long press actions"
+msgstr ""
+
+msgid "Touch Gestures"
+msgstr "Érintőgesztusok"
+
+msgid "Configure edge swipes and shortcuts"
+msgstr ""
+
+msgid "Buttons"
+msgstr "Gombok"
+
+msgid "Keyboard"
+msgstr "Billentyűzet"
+
+msgid "Active Keyboard"
+msgstr "Aktív billentyűzet"
+
+msgid "Change Keyboard"
+msgstr "Billentyűzet váltása"
+
+msgid "Finnish Layout"
+msgstr ""
+
+msgid "Install custom Squeekboard layout"
+msgstr ""
+
+msgid "Configuration"
+msgstr "Konfiguráció"
+
+msgid "Enforce App Wofi Config"
+msgstr ""
+
+msgid "Use Tweak-FLX1s Wofi style and config"
+msgstr ""
+
+msgid "Environment"
+msgstr "Környezet"
+
+msgid "Current Environment"
+msgstr ""
+
+msgid "Updates"
+msgstr "Frissítések"
+
+msgid "System Upgrade"
+msgstr "Rendszerfrissítés"
+
+msgid "Upgrade FuriOS"
+msgstr ""
+
+msgid "Upgrading System"
+msgstr ""
+
+msgid "Applications"
+msgstr "Alkalmazások"
+
+msgid "Squeekboard"
+msgstr "Squeekboard"
+
+msgid "On-screen keyboard"
+msgstr ""
+
+msgid "FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Install custom battery monitor"
+msgstr ""
+
+msgid "Install"
+msgstr "Telepítés"
+
+msgid "Phofono"
+msgstr ""
+
+msgid "Alternative Phone and Messages App"
+msgstr ""
+
+msgid "Branchy App Store"
+msgstr ""
+
+msgid "DebUI"
+msgstr ""
+
+msgid "Debian Package Installer UI"
+msgstr ""
+
+msgid "Security"
+msgstr "Biztonság"
+
+msgid "Enable Shorter Passcodes"
+msgstr ""
+
+msgid "Allow 1-character passwords"
+msgstr ""
+
+msgid "Change current user password"
+msgstr ""
+
+msgid "Fingerprint Authentication"
+msgstr "Ujjlenyomat-hitelesítés"
+
+msgid "Configure PAM for fingerprint support"
+msgstr ""
+
+msgid "Enable"
+msgstr "Engedélyezés"
+
+msgid "Restarting Keyboard Service"
+msgstr ""
+
+msgid "Changing Keyboard"
+msgstr ""
+
+msgid "Remove"
+msgstr "Eltávolítás"
+
+msgid "Removing Squeekboard"
+msgstr ""
+
+msgid "Installing Squeekboard"
+msgstr ""
+
+msgid "Enabling Shorter Passwords"
+msgstr ""
+
+msgid "Disabling Shorter Passwords"
+msgstr ""
+
+msgid "Removing DebUI"
+msgstr ""
+
+msgid "Installing DebUI"
+msgstr ""
+
+msgid "Removing FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Installing FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Fingerprint is enabled"
+msgstr ""
+
+msgid "Removing Fingerprint"
+msgstr ""
+
+msgid "Configuring Fingerprint"
+msgstr ""
+
+msgid "Installed"
+msgstr "Telepítve"
+
+msgid "Removing Phofono"
+msgstr ""
+
+msgid "Installing Phofono"
+msgstr ""
+
+msgid "Removing Branchy"
+msgstr ""
+
+msgid "Installing Branchy"
+msgstr ""
+
+msgid "Staging"
+msgstr ""
+
+msgid "Switch to Production"
+msgstr ""
+
+msgid "Production"
+msgstr ""
+
+msgid "Switch to Staging"
+msgstr ""
+
+msgid "Switching to Production"
+msgstr ""
+
+msgid "Switching to Staging"
+msgstr ""
+
+msgid "About Tweak-FLX1s"
+msgstr "A Tweak-FLX1s névjegye"
+
+msgid "System tweaks and utilities for FuriPhoneFLX1s."
+msgstr ""
+
+msgid "Version"
+msgstr "Verzió"
+
+msgid "Developer"
+msgstr "Fejlesztő"
+
+msgid "License"
+msgstr "Licenc"
+
+msgid "Links"
+msgstr "Hivatkozások"
+
+msgid "Website"
+msgstr "Weboldal"
+
+msgid "Issue Tracker"
+msgstr "Hibakövető"
+
+msgid "Report bugs or request features"
+msgstr ""
+
+msgid "Appearance"
+msgstr "Megjelenés"
+
+msgid "GTK3 CSS Tweak"
+msgstr ""
+
+msgid "Apply custom UI scaling tweaks for GTK3 apps"
+msgstr ""
+
+msgid "Background Services"
+msgstr "Háttérszolgáltatások"
+
+msgid "Alarm Volume Fix"
+msgstr ""
+
+msgid "Ensure alarm plays at full volume"
+msgstr ""
+
+msgid "Andromeda Guard"
+msgstr ""
+
+msgid "Prevent OSK issues"
+msgstr ""
+
+msgid "Andromeda Integration"
+msgstr ""
+
+msgid "Shared Folders"
+msgstr ""
+
+msgid "Mount ~/.local/share/andromeda to ~/Android-Share"
+msgstr ""
+
+msgid "Audio"
+msgstr "Hang"
+
+msgid "Custom Sound Theme"
+msgstr ""
+
+msgid "Use fastflx1 custom sounds"
+msgstr ""
+
+msgid "Mounting Shared Folders"
+msgstr ""
+
+msgid "Unmounting Shared Folders"
+msgstr ""
+
+msgid "Short Press"
+msgstr "Rövid gombnyomás"
+
+msgid "Double Press"
+msgstr "Dupla gombnyomás"
+
+msgid "Long Press"
+msgstr "Hosszú gombnyomás"
+
+msgid "Use Custom Assistant File"
+msgstr ""
+
+msgid "Write ~/.config/assistant-button/..."
+msgstr ""
+
+msgid "Locked Action"
+msgstr ""
+
+msgid "Unlocked Action"
+msgstr ""
+
+msgid "Copy (Ctrl+C)"
+msgstr "Másolás (Ctrl+C)"
+
+msgid "Paste (Ctrl+V)"
+msgstr "Beillesztés (Ctrl+V)"
+
+msgid "Cut (Ctrl+X)"
+msgstr ""
+
+msgid "Select All and Copy"
+msgstr ""
+
+msgid "Paste from Clipboard"
+msgstr ""
+
+msgid "Kill Active Window"
+msgstr ""
+
+msgid "Switch Window on the left"
+msgstr ""
+
+msgid "Switch Window on the right"
+msgstr ""
+
+msgid "Screenshot"
+msgstr "Képernyőkép"
+
+msgid "Flashlight"
+msgstr "Zseblámpa"
+
+msgid "Play/Pause"
+msgstr ""
+
+msgid "Next Track"
+msgstr ""
+
+msgid "Previous Track"
+msgstr ""
+
+msgid "Volume Up"
+msgstr ""
+
+msgid "Volume Down"
+msgstr ""
+
+msgid "Mute"
+msgstr "Némítás"

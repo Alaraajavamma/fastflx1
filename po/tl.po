@@ -1,0 +1,675 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: tweak-flx1s 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-01-01 00:00+0000\n"
+"Last-Translator: ai\n"
+"Language-Team: ai\n"
+"Language: tl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Add Location"
+msgstr "Magdagdag ng Lokasyon"
+
+msgid "Close"
+msgstr "Isara"
+
+msgid "Enter city name"
+msgstr "Ilagay ang pangalan ng lungsod"
+
+msgid "Search"
+msgstr "Maghanap"
+
+msgid "Result"
+msgstr "Resulta"
+
+msgid "No location found yet."
+msgstr "Wala pang nahanap na lokasyon."
+
+msgid "Searching..."
+msgstr "Naghahanap..."
+
+msgid "No location found."
+msgstr "Hindi nahanap ang lokasyon."
+
+msgid "Error adding location."
+msgstr "Error sa pagdaragdag ng lokasyon."
+
+msgid "Tweaks"
+msgstr "Mga Pagbabago"
+
+msgid "System"
+msgstr "Sistema"
+
+msgid "Actions"
+msgstr "Mga Aksyon"
+
+msgid "New Gesture Wizard"
+msgstr "Bagong Gesture Wizard"
+
+msgid "Cancel"
+msgstr "Kanselahin"
+
+msgid "Go Back"
+msgstr "Bumalik"
+
+msgid "Proceed"
+msgstr "Magpatuloy"
+
+msgid "Step 1: Fingers"
+msgstr "Hakbang 1: Mga Daliri"
+
+msgid "How many fingers used for the gesture?"
+msgstr "Ilang daliri ang ginagamit para sa galaw?"
+
+msgid "Step 2: Direction"
+msgstr "Hakbang 2: Direksyon"
+
+msgid "Which direction is the swipe?"
+msgstr "Saang direksyon ang swipe?"
+
+msgid "From Left to Right"
+msgstr "Mula Kaliwa pakanan"
+
+msgid "From Right to Left"
+msgstr "Mula Kanan pakaliwa"
+
+msgid "From Top to Bottom"
+msgstr "Mula Taas pababa"
+
+msgid "From Bottom to Top"
+msgstr "Mula Baba pataas"
+
+msgid "From Bottom-Left to Top-Right"
+msgstr ""
+
+msgid "From Top-Right to Bottom-Left"
+msgstr ""
+
+msgid "From Top-Left to Bottom-Right"
+msgstr ""
+
+msgid "From Bottom-Right to Top-Left"
+msgstr ""
+
+msgid "Step 3: Edge"
+msgstr "Hakbang 3: Gilid"
+
+msgid "Where should the gesture start?"
+msgstr "Saan dapat magsimula ang galaw?"
+
+msgid "Anywhere"
+msgstr "Kahit saan"
+
+msgid "Left Edge"
+msgstr "Kaliwang Gilid"
+
+msgid "Right Edge"
+msgstr "Kanang Gilid"
+
+msgid "Top Edge"
+msgstr "Itaas na Gilid"
+
+msgid "Bottom Edge"
+msgstr "Ibabang Gilid"
+
+msgid "Top-Left Corner"
+msgstr ""
+
+msgid "Top-Right Corner"
+msgstr ""
+
+msgid "Bottom-Left Corner"
+msgstr ""
+
+msgid "Bottom-Right Corner"
+msgstr ""
+
+msgid "None (Middle of screen only)"
+msgstr ""
+
+msgid "Step 4: Distance"
+msgstr "Hakbang 4: Distansya"
+
+msgid "How long should the swipe be?"
+msgstr "Gaano dapat kahaba ang swipe?"
+
+msgid "Any Distance"
+msgstr "Kahit anong distansya"
+
+msgid "Short"
+msgstr "Maikli"
+
+msgid "Medium"
+msgstr "Katamtaman"
+
+msgid "Large"
+msgstr "Mahaba"
+
+msgid "Step 5: Mode"
+msgstr "Hakbang 5: Mode"
+
+msgid "Trigger on press or release?"
+msgstr "Gagana ba sa pagpindot o pagbitaw?"
+
+msgid "On Release (Recommended)"
+msgstr "Sa Pagbitaw (Inirerekomenda)"
+
+msgid "On Press"
+msgstr "Sa Pagpindot"
+
+msgid "Already configured"
+msgstr ""
+
+msgid "Error: Both Release and Press modes are already configured for this gesture combination."
+msgstr ""
+
+msgid "Save"
+msgstr "I-save"
+
+msgid "Select Keyboard"
+msgstr ""
+
+msgid "Edit Item"
+msgstr "I-edit ang Item"
+
+msgid "Item Details"
+msgstr "Detalye ng Item"
+
+msgid "Action Name"
+msgstr "Pangalan ng Aksyon"
+
+msgid "Action Type"
+msgstr "Uri ng Aksyon"
+
+msgid "Predefined Action"
+msgstr "Paunang natukoy na Aksyon"
+
+msgid "Select from common actions"
+msgstr ""
+
+msgid "Custom Command"
+msgstr "Pasadyang Utos"
+
+msgid "Execute a shell command"
+msgstr ""
+
+msgid "Command"
+msgstr "Utos"
+
+msgid "Predefined Actions"
+msgstr ""
+
+msgid "Edit Menu"
+msgstr "I-edit ang Menu"
+
+msgid "New Item"
+msgstr "Bagong Item"
+
+msgid "Select Action"
+msgstr "Pumili ng Aksyon"
+
+msgid "Wofi Menu"
+msgstr "Menu ng Wofi"
+
+msgid "Show a menu of actions"
+msgstr ""
+
+msgid "Edit Gesture"
+msgstr "I-edit ang Galaw"
+
+msgid "General"
+msgstr "Pangkalahatan"
+
+msgid "Name"
+msgstr "Pangalan"
+
+msgid "Trigger Spec"
+msgstr "Pagtutukoy ng Trigger"
+
+msgid "Not Configured"
+msgstr "Hindi Naka-configure"
+
+msgid "Change"
+msgstr "Baguhin"
+
+msgid "Locked State"
+msgstr "Naka-lock na Estado"
+
+msgid "Edit"
+msgstr "I-edit"
+
+msgid "Unlocked State"
+msgstr "Naka-unlock na Estado"
+
+msgid "No Action"
+msgstr "Walang Aksyon"
+
+msgid "Missing Trigger"
+msgstr "Nawawalang Trigger"
+
+msgid "Please configure a gesture trigger before saving."
+msgstr ""
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Gestures"
+msgstr ""
+
+msgid "Service"
+msgstr "Serbisyo"
+
+msgid "Enable Touch Gestures"
+msgstr "Paganahin ang Mga Galaw sa Paghawak"
+
+msgid "Add New Gesture"
+msgstr "Magdagdag ng Bagong Galaw"
+
+msgid "Configured Gestures"
+msgstr "Naka-configure na Mga Galaw"
+
+msgid "Unnamed Gesture"
+msgstr "Walang Pangalan na Galaw"
+
+msgid "New Gesture"
+msgstr "Bagong Galaw"
+
+msgid "Change Password"
+msgstr "Palitan ang Password"
+
+msgid "Password Details"
+msgstr "Detalye ng Password"
+
+msgid "Current Password"
+msgstr "Kasalukuyang Password"
+
+msgid "New Password"
+msgstr "Bagong Password"
+
+msgid "Confirm New Password"
+msgstr "Kumpirmahin ang Bagong Password"
+
+msgid "Please enter current password."
+msgstr ""
+
+msgid "Please enter new password."
+msgstr ""
+
+msgid "New passwords do not match."
+msgstr ""
+
+msgid "Changing password..."
+msgstr ""
+
+msgid "Password changed successfully!"
+msgstr "Matagumpay na napalitan ang password!"
+
+msgid "Failed to change password."
+msgstr "Nabigong palitan ang password."
+
+msgid "Authentication error. Check current password."
+msgstr ""
+
+msgid "Bad password."
+msgstr ""
+
+msgid "it is too short"
+msgstr ""
+
+msgid "is the same as the old one"
+msgstr ""
+
+msgid "is a palindrome"
+msgstr ""
+
+msgid "case changes only"
+msgstr ""
+
+msgid "is too similar to the old one"
+msgstr ""
+
+msgid "it does not contain enough DIFFERENT characters"
+msgstr ""
+
+msgid "it is based on a dictionary word"
+msgstr ""
+
+msgid "Bad password: "
+msgstr ""
+
+msgid "Input Configuration"
+msgstr "Configuration ng Input"
+
+msgid "Hardware Buttons"
+msgstr "Mga Pindutan ng Hardware"
+
+msgid "Configure short, double, and long press actions"
+msgstr ""
+
+msgid "Touch Gestures"
+msgstr "Mga Galaw sa Paghawak"
+
+msgid "Configure edge swipes and shortcuts"
+msgstr ""
+
+msgid "Buttons"
+msgstr "Mga Pindutan"
+
+msgid "Keyboard"
+msgstr "Keyboard"
+
+msgid "Active Keyboard"
+msgstr "Aktibong Keyboard"
+
+msgid "Change Keyboard"
+msgstr "Palitan ang Keyboard"
+
+msgid "Finnish Layout"
+msgstr ""
+
+msgid "Install custom Squeekboard layout"
+msgstr ""
+
+msgid "Configuration"
+msgstr "Configuration"
+
+msgid "Enforce App Wofi Config"
+msgstr ""
+
+msgid "Use Tweak-FLX1s Wofi style and config"
+msgstr ""
+
+msgid "Environment"
+msgstr "Kapaligiran"
+
+msgid "Current Environment"
+msgstr ""
+
+msgid "Updates"
+msgstr "Mga Update"
+
+msgid "System Upgrade"
+msgstr "Pag-upgrade ng Sistema"
+
+msgid "Upgrade FuriOS"
+msgstr ""
+
+msgid "Upgrading System"
+msgstr ""
+
+msgid "Applications"
+msgstr "Mga Aplikasyon"
+
+msgid "Squeekboard"
+msgstr "Squeekboard"
+
+msgid "On-screen keyboard"
+msgstr ""
+
+msgid "FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Install custom battery monitor"
+msgstr ""
+
+msgid "Install"
+msgstr "I-install"
+
+msgid "Phofono"
+msgstr ""
+
+msgid "Alternative Phone and Messages App"
+msgstr ""
+
+msgid "Branchy App Store"
+msgstr ""
+
+msgid "DebUI"
+msgstr ""
+
+msgid "Debian Package Installer UI"
+msgstr ""
+
+msgid "Security"
+msgstr "Seguridad"
+
+msgid "Enable Shorter Passcodes"
+msgstr ""
+
+msgid "Allow 1-character passwords"
+msgstr ""
+
+msgid "Change current user password"
+msgstr ""
+
+msgid "Fingerprint Authentication"
+msgstr "Pagpapatotoo ng Fingerprint"
+
+msgid "Configure PAM for fingerprint support"
+msgstr ""
+
+msgid "Enable"
+msgstr "Paganahin"
+
+msgid "Restarting Keyboard Service"
+msgstr ""
+
+msgid "Changing Keyboard"
+msgstr ""
+
+msgid "Remove"
+msgstr "Alisin"
+
+msgid "Removing Squeekboard"
+msgstr ""
+
+msgid "Installing Squeekboard"
+msgstr ""
+
+msgid "Enabling Shorter Passwords"
+msgstr ""
+
+msgid "Disabling Shorter Passwords"
+msgstr ""
+
+msgid "Removing DebUI"
+msgstr ""
+
+msgid "Installing DebUI"
+msgstr ""
+
+msgid "Removing FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Installing FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Fingerprint is enabled"
+msgstr ""
+
+msgid "Removing Fingerprint"
+msgstr ""
+
+msgid "Configuring Fingerprint"
+msgstr ""
+
+msgid "Installed"
+msgstr "Naka-install"
+
+msgid "Removing Phofono"
+msgstr ""
+
+msgid "Installing Phofono"
+msgstr ""
+
+msgid "Removing Branchy"
+msgstr ""
+
+msgid "Installing Branchy"
+msgstr ""
+
+msgid "Staging"
+msgstr ""
+
+msgid "Switch to Production"
+msgstr ""
+
+msgid "Production"
+msgstr ""
+
+msgid "Switch to Staging"
+msgstr ""
+
+msgid "Switching to Production"
+msgstr ""
+
+msgid "Switching to Staging"
+msgstr ""
+
+msgid "About Tweak-FLX1s"
+msgstr "Tungkol sa Tweak-FLX1s"
+
+msgid "System tweaks and utilities for FuriPhoneFLX1s."
+msgstr ""
+
+msgid "Version"
+msgstr "Bersyon"
+
+msgid "Developer"
+msgstr "Developer"
+
+msgid "License"
+msgstr "Lisensya"
+
+msgid "Links"
+msgstr "Mga Link"
+
+msgid "Website"
+msgstr "Website"
+
+msgid "Issue Tracker"
+msgstr "Tagasubaybay ng Isyu"
+
+msgid "Report bugs or request features"
+msgstr ""
+
+msgid "Appearance"
+msgstr "Hitsura"
+
+msgid "GTK3 CSS Tweak"
+msgstr ""
+
+msgid "Apply custom UI scaling tweaks for GTK3 apps"
+msgstr ""
+
+msgid "Background Services"
+msgstr "Mga Serbisyo sa Background"
+
+msgid "Alarm Volume Fix"
+msgstr ""
+
+msgid "Ensure alarm plays at full volume"
+msgstr ""
+
+msgid "Andromeda Guard"
+msgstr ""
+
+msgid "Prevent OSK issues"
+msgstr ""
+
+msgid "Andromeda Integration"
+msgstr ""
+
+msgid "Shared Folders"
+msgstr ""
+
+msgid "Mount ~/.local/share/andromeda to ~/Android-Share"
+msgstr ""
+
+msgid "Audio"
+msgstr "Audio"
+
+msgid "Custom Sound Theme"
+msgstr ""
+
+msgid "Use fastflx1 custom sounds"
+msgstr ""
+
+msgid "Mounting Shared Folders"
+msgstr ""
+
+msgid "Unmounting Shared Folders"
+msgstr ""
+
+msgid "Short Press"
+msgstr "Maikling Pindot"
+
+msgid "Double Press"
+msgstr "Dalawang Pindot"
+
+msgid "Long Press"
+msgstr "Mahabang Pindot"
+
+msgid "Use Custom Assistant File"
+msgstr ""
+
+msgid "Write ~/.config/assistant-button/..."
+msgstr ""
+
+msgid "Locked Action"
+msgstr ""
+
+msgid "Unlocked Action"
+msgstr ""
+
+msgid "Copy (Ctrl+C)"
+msgstr "Kopyahin (Ctrl+C)"
+
+msgid "Paste (Ctrl+V)"
+msgstr "I-paste (Ctrl+V)"
+
+msgid "Cut (Ctrl+X)"
+msgstr ""
+
+msgid "Select All and Copy"
+msgstr ""
+
+msgid "Paste from Clipboard"
+msgstr ""
+
+msgid "Kill Active Window"
+msgstr ""
+
+msgid "Switch Window on the left"
+msgstr ""
+
+msgid "Switch Window on the right"
+msgstr ""
+
+msgid "Screenshot"
+msgstr "Screenshot"
+
+msgid "Flashlight"
+msgstr "Flashlight"
+
+msgid "Play/Pause"
+msgstr ""
+
+msgid "Next Track"
+msgstr ""
+
+msgid "Previous Track"
+msgstr ""
+
+msgid "Volume Up"
+msgstr ""
+
+msgid "Volume Down"
+msgstr ""
+
+msgid "Mute"
+msgstr "I-mute"

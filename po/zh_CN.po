@@ -1,0 +1,675 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: tweak-flx1s 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-01-01 00:00+0000\n"
+"Last-Translator: ai\n"
+"Language-Team: ai\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Add Location"
+msgstr "添加位置"
+
+msgid "Close"
+msgstr "关闭"
+
+msgid "Enter city name"
+msgstr "输入城市名称"
+
+msgid "Search"
+msgstr "搜索"
+
+msgid "Result"
+msgstr "结果"
+
+msgid "No location found yet."
+msgstr "尚未找到位置。"
+
+msgid "Searching..."
+msgstr "搜索中..."
+
+msgid "No location found."
+msgstr "未找到位置。"
+
+msgid "Error adding location."
+msgstr "添加位置时出错。"
+
+msgid "Tweaks"
+msgstr "调整"
+
+msgid "System"
+msgstr "系统"
+
+msgid "Actions"
+msgstr "操作"
+
+msgid "New Gesture Wizard"
+msgstr "新动手势向导"
+
+msgid "Cancel"
+msgstr "取消"
+
+msgid "Go Back"
+msgstr "返回"
+
+msgid "Proceed"
+msgstr "继续"
+
+msgid "Step 1: Fingers"
+msgstr "步骤 1：手指"
+
+msgid "How many fingers used for the gesture?"
+msgstr "手势使用了多少个手指？"
+
+msgid "Step 2: Direction"
+msgstr "步骤 2：方向"
+
+msgid "Which direction is the swipe?"
+msgstr "滑动的方向是？"
+
+msgid "From Left to Right"
+msgstr "从左到右"
+
+msgid "From Right to Left"
+msgstr "从右到左"
+
+msgid "From Top to Bottom"
+msgstr "从上到下"
+
+msgid "From Bottom to Top"
+msgstr "从下到上"
+
+msgid "From Bottom-Left to Top-Right"
+msgstr ""
+
+msgid "From Top-Right to Bottom-Left"
+msgstr ""
+
+msgid "From Top-Left to Bottom-Right"
+msgstr ""
+
+msgid "From Bottom-Right to Top-Left"
+msgstr ""
+
+msgid "Step 3: Edge"
+msgstr "步骤 3：边缘"
+
+msgid "Where should the gesture start?"
+msgstr "手势应从哪里开始？"
+
+msgid "Anywhere"
+msgstr "任意位置"
+
+msgid "Left Edge"
+msgstr "左边缘"
+
+msgid "Right Edge"
+msgstr "右边缘"
+
+msgid "Top Edge"
+msgstr "上边缘"
+
+msgid "Bottom Edge"
+msgstr "下边缘"
+
+msgid "Top-Left Corner"
+msgstr ""
+
+msgid "Top-Right Corner"
+msgstr ""
+
+msgid "Bottom-Left Corner"
+msgstr ""
+
+msgid "Bottom-Right Corner"
+msgstr ""
+
+msgid "None (Middle of screen only)"
+msgstr ""
+
+msgid "Step 4: Distance"
+msgstr "步骤 4：距离"
+
+msgid "How long should the swipe be?"
+msgstr "滑动应该多长？"
+
+msgid "Any Distance"
+msgstr "任意距离"
+
+msgid "Short"
+msgstr "短"
+
+msgid "Medium"
+msgstr "中"
+
+msgid "Large"
+msgstr "长"
+
+msgid "Step 5: Mode"
+msgstr "步骤 5：模式"
+
+msgid "Trigger on press or release?"
+msgstr "按下还是释放时触发？"
+
+msgid "On Release (Recommended)"
+msgstr "释放时（推荐）"
+
+msgid "On Press"
+msgstr "按下时"
+
+msgid "Already configured"
+msgstr ""
+
+msgid "Error: Both Release and Press modes are already configured for this gesture combination."
+msgstr ""
+
+msgid "Save"
+msgstr "保存"
+
+msgid "Select Keyboard"
+msgstr ""
+
+msgid "Edit Item"
+msgstr "编辑项目"
+
+msgid "Item Details"
+msgstr "项目详情"
+
+msgid "Action Name"
+msgstr "操作名称"
+
+msgid "Action Type"
+msgstr "操作类型"
+
+msgid "Predefined Action"
+msgstr "预定义操作"
+
+msgid "Select from common actions"
+msgstr ""
+
+msgid "Custom Command"
+msgstr "自定义命令"
+
+msgid "Execute a shell command"
+msgstr ""
+
+msgid "Command"
+msgstr "命令"
+
+msgid "Predefined Actions"
+msgstr ""
+
+msgid "Edit Menu"
+msgstr "编辑菜单"
+
+msgid "New Item"
+msgstr "新项目"
+
+msgid "Select Action"
+msgstr "选择操作"
+
+msgid "Wofi Menu"
+msgstr "Wofi 菜单"
+
+msgid "Show a menu of actions"
+msgstr ""
+
+msgid "Edit Gesture"
+msgstr "编辑手势"
+
+msgid "General"
+msgstr "常规"
+
+msgid "Name"
+msgstr "名称"
+
+msgid "Trigger Spec"
+msgstr "触发规范"
+
+msgid "Not Configured"
+msgstr "未配置"
+
+msgid "Change"
+msgstr "更改"
+
+msgid "Locked State"
+msgstr "锁定状态"
+
+msgid "Edit"
+msgstr "编辑"
+
+msgid "Unlocked State"
+msgstr "解锁状态"
+
+msgid "No Action"
+msgstr "无操作"
+
+msgid "Missing Trigger"
+msgstr "缺少触发器"
+
+msgid "Please configure a gesture trigger before saving."
+msgstr ""
+
+msgid "OK"
+msgstr "确定"
+
+msgid "Gestures"
+msgstr ""
+
+msgid "Service"
+msgstr "服务"
+
+msgid "Enable Touch Gestures"
+msgstr "启用触摸手势"
+
+msgid "Add New Gesture"
+msgstr "添加新动手势"
+
+msgid "Configured Gestures"
+msgstr "已配置的手势"
+
+msgid "Unnamed Gesture"
+msgstr "未命名手势"
+
+msgid "New Gesture"
+msgstr "新动手势"
+
+msgid "Change Password"
+msgstr "更改密码"
+
+msgid "Password Details"
+msgstr "密码详情"
+
+msgid "Current Password"
+msgstr "当前密码"
+
+msgid "New Password"
+msgstr "新密码"
+
+msgid "Confirm New Password"
+msgstr "确认新密码"
+
+msgid "Please enter current password."
+msgstr ""
+
+msgid "Please enter new password."
+msgstr ""
+
+msgid "New passwords do not match."
+msgstr ""
+
+msgid "Changing password..."
+msgstr ""
+
+msgid "Password changed successfully!"
+msgstr "密码已成功更改！"
+
+msgid "Failed to change password."
+msgstr "更改密码失败。"
+
+msgid "Authentication error. Check current password."
+msgstr ""
+
+msgid "Bad password."
+msgstr ""
+
+msgid "it is too short"
+msgstr ""
+
+msgid "is the same as the old one"
+msgstr ""
+
+msgid "is a palindrome"
+msgstr ""
+
+msgid "case changes only"
+msgstr ""
+
+msgid "is too similar to the old one"
+msgstr ""
+
+msgid "it does not contain enough DIFFERENT characters"
+msgstr ""
+
+msgid "it is based on a dictionary word"
+msgstr ""
+
+msgid "Bad password: "
+msgstr ""
+
+msgid "Input Configuration"
+msgstr "输入配置"
+
+msgid "Hardware Buttons"
+msgstr "硬件按钮"
+
+msgid "Configure short, double, and long press actions"
+msgstr ""
+
+msgid "Touch Gestures"
+msgstr "触摸手势"
+
+msgid "Configure edge swipes and shortcuts"
+msgstr ""
+
+msgid "Buttons"
+msgstr "按钮"
+
+msgid "Keyboard"
+msgstr "键盘"
+
+msgid "Active Keyboard"
+msgstr "活动键盘"
+
+msgid "Change Keyboard"
+msgstr "更改键盘"
+
+msgid "Finnish Layout"
+msgstr ""
+
+msgid "Install custom Squeekboard layout"
+msgstr ""
+
+msgid "Configuration"
+msgstr "配置"
+
+msgid "Enforce App Wofi Config"
+msgstr ""
+
+msgid "Use Tweak-FLX1s Wofi style and config"
+msgstr ""
+
+msgid "Environment"
+msgstr "环境"
+
+msgid "Current Environment"
+msgstr ""
+
+msgid "Updates"
+msgstr "更新"
+
+msgid "System Upgrade"
+msgstr "系统升级"
+
+msgid "Upgrade FuriOS"
+msgstr ""
+
+msgid "Upgrading System"
+msgstr ""
+
+msgid "Applications"
+msgstr "应用程序"
+
+msgid "Squeekboard"
+msgstr "Squeekboard"
+
+msgid "On-screen keyboard"
+msgstr ""
+
+msgid "FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Install custom battery monitor"
+msgstr ""
+
+msgid "Install"
+msgstr "安装"
+
+msgid "Phofono"
+msgstr ""
+
+msgid "Alternative Phone and Messages App"
+msgstr ""
+
+msgid "Branchy App Store"
+msgstr ""
+
+msgid "DebUI"
+msgstr ""
+
+msgid "Debian Package Installer UI"
+msgstr ""
+
+msgid "Security"
+msgstr "安全"
+
+msgid "Enable Shorter Passcodes"
+msgstr ""
+
+msgid "Allow 1-character passwords"
+msgstr ""
+
+msgid "Change current user password"
+msgstr ""
+
+msgid "Fingerprint Authentication"
+msgstr "指纹认证"
+
+msgid "Configure PAM for fingerprint support"
+msgstr ""
+
+msgid "Enable"
+msgstr "启用"
+
+msgid "Restarting Keyboard Service"
+msgstr ""
+
+msgid "Changing Keyboard"
+msgstr ""
+
+msgid "Remove"
+msgstr "移除"
+
+msgid "Removing Squeekboard"
+msgstr ""
+
+msgid "Installing Squeekboard"
+msgstr ""
+
+msgid "Enabling Shorter Passwords"
+msgstr ""
+
+msgid "Disabling Shorter Passwords"
+msgstr ""
+
+msgid "Removing DebUI"
+msgstr ""
+
+msgid "Installing DebUI"
+msgstr ""
+
+msgid "Removing FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Installing FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Fingerprint is enabled"
+msgstr ""
+
+msgid "Removing Fingerprint"
+msgstr ""
+
+msgid "Configuring Fingerprint"
+msgstr ""
+
+msgid "Installed"
+msgstr "已安装"
+
+msgid "Removing Phofono"
+msgstr ""
+
+msgid "Installing Phofono"
+msgstr ""
+
+msgid "Removing Branchy"
+msgstr ""
+
+msgid "Installing Branchy"
+msgstr ""
+
+msgid "Staging"
+msgstr ""
+
+msgid "Switch to Production"
+msgstr ""
+
+msgid "Production"
+msgstr ""
+
+msgid "Switch to Staging"
+msgstr ""
+
+msgid "Switching to Production"
+msgstr ""
+
+msgid "Switching to Staging"
+msgstr ""
+
+msgid "About Tweak-FLX1s"
+msgstr "关于 Tweak-FLX1s"
+
+msgid "System tweaks and utilities for FuriPhoneFLX1s."
+msgstr ""
+
+msgid "Version"
+msgstr "版本"
+
+msgid "Developer"
+msgstr "开发者"
+
+msgid "License"
+msgstr "许可证"
+
+msgid "Links"
+msgstr "链接"
+
+msgid "Website"
+msgstr "网站"
+
+msgid "Issue Tracker"
+msgstr "问题追踪"
+
+msgid "Report bugs or request features"
+msgstr ""
+
+msgid "Appearance"
+msgstr "外观"
+
+msgid "GTK3 CSS Tweak"
+msgstr ""
+
+msgid "Apply custom UI scaling tweaks for GTK3 apps"
+msgstr ""
+
+msgid "Background Services"
+msgstr "后台服务"
+
+msgid "Alarm Volume Fix"
+msgstr ""
+
+msgid "Ensure alarm plays at full volume"
+msgstr ""
+
+msgid "Andromeda Guard"
+msgstr ""
+
+msgid "Prevent OSK issues"
+msgstr ""
+
+msgid "Andromeda Integration"
+msgstr ""
+
+msgid "Shared Folders"
+msgstr ""
+
+msgid "Mount ~/.local/share/andromeda to ~/Android-Share"
+msgstr ""
+
+msgid "Audio"
+msgstr "音频"
+
+msgid "Custom Sound Theme"
+msgstr ""
+
+msgid "Use fastflx1 custom sounds"
+msgstr ""
+
+msgid "Mounting Shared Folders"
+msgstr ""
+
+msgid "Unmounting Shared Folders"
+msgstr ""
+
+msgid "Short Press"
+msgstr "短按"
+
+msgid "Double Press"
+msgstr "双击"
+
+msgid "Long Press"
+msgstr "长按"
+
+msgid "Use Custom Assistant File"
+msgstr ""
+
+msgid "Write ~/.config/assistant-button/..."
+msgstr ""
+
+msgid "Locked Action"
+msgstr ""
+
+msgid "Unlocked Action"
+msgstr ""
+
+msgid "Copy (Ctrl+C)"
+msgstr "复制 (Ctrl+C)"
+
+msgid "Paste (Ctrl+V)"
+msgstr "粘贴 (Ctrl+V)"
+
+msgid "Cut (Ctrl+X)"
+msgstr ""
+
+msgid "Select All and Copy"
+msgstr ""
+
+msgid "Paste from Clipboard"
+msgstr ""
+
+msgid "Kill Active Window"
+msgstr ""
+
+msgid "Switch Window on the left"
+msgstr ""
+
+msgid "Switch Window on the right"
+msgstr ""
+
+msgid "Screenshot"
+msgstr "截图"
+
+msgid "Flashlight"
+msgstr "手电筒"
+
+msgid "Play/Pause"
+msgstr ""
+
+msgid "Next Track"
+msgstr ""
+
+msgid "Previous Track"
+msgstr ""
+
+msgid "Volume Up"
+msgstr ""
+
+msgid "Volume Down"
+msgstr ""
+
+msgid "Mute"
+msgstr "静音"

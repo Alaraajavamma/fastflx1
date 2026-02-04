@@ -1,0 +1,675 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: tweak-flx1s 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-01-01 00:00+0000\n"
+"Last-Translator: ai\n"
+"Language-Team: ai\n"
+"Language: sk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Add Location"
+msgstr "Pridať miesto"
+
+msgid "Close"
+msgstr "Zavrieť"
+
+msgid "Enter city name"
+msgstr "Zadajte názov mesta"
+
+msgid "Search"
+msgstr "Hľadať"
+
+msgid "Result"
+msgstr "Výsledok"
+
+msgid "No location found yet."
+msgstr "Zatiaľ sa nenašlo žiadne miesto."
+
+msgid "Searching..."
+msgstr "Hľadám..."
+
+msgid "No location found."
+msgstr "Miesto sa nenašlo."
+
+msgid "Error adding location."
+msgstr "Chyba pri pridávaní miesta."
+
+msgid "Tweaks"
+msgstr "Vylepšenia"
+
+msgid "System"
+msgstr "Systém"
+
+msgid "Actions"
+msgstr "Akcie"
+
+msgid "New Gesture Wizard"
+msgstr "Sprievodca novým gestom"
+
+msgid "Cancel"
+msgstr "Zrušiť"
+
+msgid "Go Back"
+msgstr "Späť"
+
+msgid "Proceed"
+msgstr "Pokračovať"
+
+msgid "Step 1: Fingers"
+msgstr "Krok 1: Prsty"
+
+msgid "How many fingers used for the gesture?"
+msgstr "Koľko prstov sa používa na gesto?"
+
+msgid "Step 2: Direction"
+msgstr "Krok 2: Smer"
+
+msgid "Which direction is the swipe?"
+msgstr "Akým smerom je potiahnutie?"
+
+msgid "From Left to Right"
+msgstr "Zľava doprava"
+
+msgid "From Right to Left"
+msgstr "Sprava doľava"
+
+msgid "From Top to Bottom"
+msgstr "Zhora nadol"
+
+msgid "From Bottom to Top"
+msgstr "Zdola nahor"
+
+msgid "From Bottom-Left to Top-Right"
+msgstr ""
+
+msgid "From Top-Right to Bottom-Left"
+msgstr ""
+
+msgid "From Top-Left to Bottom-Right"
+msgstr ""
+
+msgid "From Bottom-Right to Top-Left"
+msgstr ""
+
+msgid "Step 3: Edge"
+msgstr "Krok 3: Okraj"
+
+msgid "Where should the gesture start?"
+msgstr "Kde by sa malo gesto začať?"
+
+msgid "Anywhere"
+msgstr "Kdekoľvek"
+
+msgid "Left Edge"
+msgstr "Ľavý okraj"
+
+msgid "Right Edge"
+msgstr "Pravý okraj"
+
+msgid "Top Edge"
+msgstr "Horný okraj"
+
+msgid "Bottom Edge"
+msgstr "Dolný okraj"
+
+msgid "Top-Left Corner"
+msgstr ""
+
+msgid "Top-Right Corner"
+msgstr ""
+
+msgid "Bottom-Left Corner"
+msgstr ""
+
+msgid "Bottom-Right Corner"
+msgstr ""
+
+msgid "None (Middle of screen only)"
+msgstr ""
+
+msgid "Step 4: Distance"
+msgstr "Krok 4: Vzdialenosť"
+
+msgid "How long should the swipe be?"
+msgstr "Aké dlhé by malo byť potiahnutie?"
+
+msgid "Any Distance"
+msgstr "Akákoľvek vzdialenosť"
+
+msgid "Short"
+msgstr "Krátke"
+
+msgid "Medium"
+msgstr "Stredné"
+
+msgid "Large"
+msgstr "Dlhé"
+
+msgid "Step 5: Mode"
+msgstr "Krok 5: Režim"
+
+msgid "Trigger on press or release?"
+msgstr "Spustiť pri stlačení alebo uvoľnení?"
+
+msgid "On Release (Recommended)"
+msgstr "Pri uvoľnení (Odporúčané)"
+
+msgid "On Press"
+msgstr "Pri stlačení"
+
+msgid "Already configured"
+msgstr ""
+
+msgid "Error: Both Release and Press modes are already configured for this gesture combination."
+msgstr ""
+
+msgid "Save"
+msgstr "Uložiť"
+
+msgid "Select Keyboard"
+msgstr ""
+
+msgid "Edit Item"
+msgstr "Upraviť položku"
+
+msgid "Item Details"
+msgstr "Podrobnosti položky"
+
+msgid "Action Name"
+msgstr "Názov akcie"
+
+msgid "Action Type"
+msgstr "Typ akcie"
+
+msgid "Predefined Action"
+msgstr "Preddefinovaná akcia"
+
+msgid "Select from common actions"
+msgstr ""
+
+msgid "Custom Command"
+msgstr "Vlastný príkaz"
+
+msgid "Execute a shell command"
+msgstr ""
+
+msgid "Command"
+msgstr "Príkaz"
+
+msgid "Predefined Actions"
+msgstr ""
+
+msgid "Edit Menu"
+msgstr "Upraviť menu"
+
+msgid "New Item"
+msgstr "Nová položka"
+
+msgid "Select Action"
+msgstr "Vybrať akciu"
+
+msgid "Wofi Menu"
+msgstr "Menu Wofi"
+
+msgid "Show a menu of actions"
+msgstr ""
+
+msgid "Edit Gesture"
+msgstr "Upraviť gesto"
+
+msgid "General"
+msgstr "Všeobecné"
+
+msgid "Name"
+msgstr "Názov"
+
+msgid "Trigger Spec"
+msgstr "Špecifikácia spúšťača"
+
+msgid "Not Configured"
+msgstr "Nenakonfigurované"
+
+msgid "Change"
+msgstr "Zmeniť"
+
+msgid "Locked State"
+msgstr "Uzamknutý stav"
+
+msgid "Edit"
+msgstr "Upraviť"
+
+msgid "Unlocked State"
+msgstr "Odomknutý stav"
+
+msgid "No Action"
+msgstr "Žiadna akcia"
+
+msgid "Missing Trigger"
+msgstr "Chýbajúci spúšťač"
+
+msgid "Please configure a gesture trigger before saving."
+msgstr ""
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Gestures"
+msgstr ""
+
+msgid "Service"
+msgstr "Služba"
+
+msgid "Enable Touch Gestures"
+msgstr "Povoliť dotykové gestá"
+
+msgid "Add New Gesture"
+msgstr "Pridať nové gesto"
+
+msgid "Configured Gestures"
+msgstr "Nakonfigurované gestá"
+
+msgid "Unnamed Gesture"
+msgstr "Nepomenované gesto"
+
+msgid "New Gesture"
+msgstr "Nové gesto"
+
+msgid "Change Password"
+msgstr "Zmeniť heslo"
+
+msgid "Password Details"
+msgstr "Podrobnosti hesla"
+
+msgid "Current Password"
+msgstr "Aktuálne heslo"
+
+msgid "New Password"
+msgstr "Nové heslo"
+
+msgid "Confirm New Password"
+msgstr "Potvrdiť nové heslo"
+
+msgid "Please enter current password."
+msgstr ""
+
+msgid "Please enter new password."
+msgstr ""
+
+msgid "New passwords do not match."
+msgstr ""
+
+msgid "Changing password..."
+msgstr ""
+
+msgid "Password changed successfully!"
+msgstr "Heslo úspešne zmenené!"
+
+msgid "Failed to change password."
+msgstr "Nepodarilo sa zmeniť heslo."
+
+msgid "Authentication error. Check current password."
+msgstr ""
+
+msgid "Bad password."
+msgstr ""
+
+msgid "it is too short"
+msgstr ""
+
+msgid "is the same as the old one"
+msgstr ""
+
+msgid "is a palindrome"
+msgstr ""
+
+msgid "case changes only"
+msgstr ""
+
+msgid "is too similar to the old one"
+msgstr ""
+
+msgid "it does not contain enough DIFFERENT characters"
+msgstr ""
+
+msgid "it is based on a dictionary word"
+msgstr ""
+
+msgid "Bad password: "
+msgstr ""
+
+msgid "Input Configuration"
+msgstr "Konfigurácia vstupu"
+
+msgid "Hardware Buttons"
+msgstr "Hardvérové tlačidlá"
+
+msgid "Configure short, double, and long press actions"
+msgstr ""
+
+msgid "Touch Gestures"
+msgstr "Dotykové gestá"
+
+msgid "Configure edge swipes and shortcuts"
+msgstr ""
+
+msgid "Buttons"
+msgstr "Tlačidlá"
+
+msgid "Keyboard"
+msgstr "Klávesnica"
+
+msgid "Active Keyboard"
+msgstr "Aktívna klávesnica"
+
+msgid "Change Keyboard"
+msgstr "Zmeniť klávesnicu"
+
+msgid "Finnish Layout"
+msgstr ""
+
+msgid "Install custom Squeekboard layout"
+msgstr ""
+
+msgid "Configuration"
+msgstr "Konfigurácia"
+
+msgid "Enforce App Wofi Config"
+msgstr ""
+
+msgid "Use Tweak-FLX1s Wofi style and config"
+msgstr ""
+
+msgid "Environment"
+msgstr "Prostredie"
+
+msgid "Current Environment"
+msgstr ""
+
+msgid "Updates"
+msgstr "Aktualizácie"
+
+msgid "System Upgrade"
+msgstr "Upgrade systému"
+
+msgid "Upgrade FuriOS"
+msgstr ""
+
+msgid "Upgrading System"
+msgstr ""
+
+msgid "Applications"
+msgstr "Aplikácie"
+
+msgid "Squeekboard"
+msgstr "Squeekboard"
+
+msgid "On-screen keyboard"
+msgstr ""
+
+msgid "FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Install custom battery monitor"
+msgstr ""
+
+msgid "Install"
+msgstr "Inštalovať"
+
+msgid "Phofono"
+msgstr ""
+
+msgid "Alternative Phone and Messages App"
+msgstr ""
+
+msgid "Branchy App Store"
+msgstr ""
+
+msgid "DebUI"
+msgstr ""
+
+msgid "Debian Package Installer UI"
+msgstr ""
+
+msgid "Security"
+msgstr "Zabezpečenie"
+
+msgid "Enable Shorter Passcodes"
+msgstr ""
+
+msgid "Allow 1-character passwords"
+msgstr ""
+
+msgid "Change current user password"
+msgstr ""
+
+msgid "Fingerprint Authentication"
+msgstr "Overovanie odtlačkom prsta"
+
+msgid "Configure PAM for fingerprint support"
+msgstr ""
+
+msgid "Enable"
+msgstr "Povoliť"
+
+msgid "Restarting Keyboard Service"
+msgstr ""
+
+msgid "Changing Keyboard"
+msgstr ""
+
+msgid "Remove"
+msgstr "Odstrániť"
+
+msgid "Removing Squeekboard"
+msgstr ""
+
+msgid "Installing Squeekboard"
+msgstr ""
+
+msgid "Enabling Shorter Passwords"
+msgstr ""
+
+msgid "Disabling Shorter Passwords"
+msgstr ""
+
+msgid "Removing DebUI"
+msgstr ""
+
+msgid "Installing DebUI"
+msgstr ""
+
+msgid "Removing FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Installing FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Fingerprint is enabled"
+msgstr ""
+
+msgid "Removing Fingerprint"
+msgstr ""
+
+msgid "Configuring Fingerprint"
+msgstr ""
+
+msgid "Installed"
+msgstr "Nainštalované"
+
+msgid "Removing Phofono"
+msgstr ""
+
+msgid "Installing Phofono"
+msgstr ""
+
+msgid "Removing Branchy"
+msgstr ""
+
+msgid "Installing Branchy"
+msgstr ""
+
+msgid "Staging"
+msgstr ""
+
+msgid "Switch to Production"
+msgstr ""
+
+msgid "Production"
+msgstr ""
+
+msgid "Switch to Staging"
+msgstr ""
+
+msgid "Switching to Production"
+msgstr ""
+
+msgid "Switching to Staging"
+msgstr ""
+
+msgid "About Tweak-FLX1s"
+msgstr "O Tweak-FLX1s"
+
+msgid "System tweaks and utilities for FuriPhoneFLX1s."
+msgstr ""
+
+msgid "Version"
+msgstr "Verzia"
+
+msgid "Developer"
+msgstr "Vývojár"
+
+msgid "License"
+msgstr "Licencia"
+
+msgid "Links"
+msgstr "Odkazy"
+
+msgid "Website"
+msgstr "Webová stránka"
+
+msgid "Issue Tracker"
+msgstr "Sledovanie problémov"
+
+msgid "Report bugs or request features"
+msgstr ""
+
+msgid "Appearance"
+msgstr "Vzhľad"
+
+msgid "GTK3 CSS Tweak"
+msgstr ""
+
+msgid "Apply custom UI scaling tweaks for GTK3 apps"
+msgstr ""
+
+msgid "Background Services"
+msgstr "Služby na pozadí"
+
+msgid "Alarm Volume Fix"
+msgstr ""
+
+msgid "Ensure alarm plays at full volume"
+msgstr ""
+
+msgid "Andromeda Guard"
+msgstr ""
+
+msgid "Prevent OSK issues"
+msgstr ""
+
+msgid "Andromeda Integration"
+msgstr ""
+
+msgid "Shared Folders"
+msgstr ""
+
+msgid "Mount ~/.local/share/andromeda to ~/Android-Share"
+msgstr ""
+
+msgid "Audio"
+msgstr "Zvuk"
+
+msgid "Custom Sound Theme"
+msgstr ""
+
+msgid "Use fastflx1 custom sounds"
+msgstr ""
+
+msgid "Mounting Shared Folders"
+msgstr ""
+
+msgid "Unmounting Shared Folders"
+msgstr ""
+
+msgid "Short Press"
+msgstr "Krátke stlačenie"
+
+msgid "Double Press"
+msgstr "Dvojité stlačenie"
+
+msgid "Long Press"
+msgstr "Dlhé stlačenie"
+
+msgid "Use Custom Assistant File"
+msgstr ""
+
+msgid "Write ~/.config/assistant-button/..."
+msgstr ""
+
+msgid "Locked Action"
+msgstr ""
+
+msgid "Unlocked Action"
+msgstr ""
+
+msgid "Copy (Ctrl+C)"
+msgstr "Kopírovať (Ctrl+C)"
+
+msgid "Paste (Ctrl+V)"
+msgstr "Vložiť (Ctrl+V)"
+
+msgid "Cut (Ctrl+X)"
+msgstr ""
+
+msgid "Select All and Copy"
+msgstr ""
+
+msgid "Paste from Clipboard"
+msgstr ""
+
+msgid "Kill Active Window"
+msgstr ""
+
+msgid "Switch Window on the left"
+msgstr ""
+
+msgid "Switch Window on the right"
+msgstr ""
+
+msgid "Screenshot"
+msgstr "Snímka obrazovky"
+
+msgid "Flashlight"
+msgstr "Svietidlo"
+
+msgid "Play/Pause"
+msgstr ""
+
+msgid "Next Track"
+msgstr ""
+
+msgid "Previous Track"
+msgstr ""
+
+msgid "Volume Up"
+msgstr ""
+
+msgid "Volume Down"
+msgstr ""
+
+msgid "Mute"
+msgstr "Stlmiť"

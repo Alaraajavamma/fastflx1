@@ -1,0 +1,675 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: tweak-flx1s 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-01-01 00:00+0000\n"
+"Last-Translator: ai\n"
+"Language-Team: ai\n"
+"Language: el\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Add Location"
+msgstr "Προσθήκη τοποθεσίας"
+
+msgid "Close"
+msgstr "Κλείσιμο"
+
+msgid "Enter city name"
+msgstr "Εισάγετε όνομα πόλης"
+
+msgid "Search"
+msgstr "Αναζήτηση"
+
+msgid "Result"
+msgstr "Αποτέλεσμα"
+
+msgid "No location found yet."
+msgstr "Δεν βρέθηκε τοποθεσία ακόμα."
+
+msgid "Searching..."
+msgstr "Αναζήτηση..."
+
+msgid "No location found."
+msgstr "Η τοποθεσία δεν βρέθηκε."
+
+msgid "Error adding location."
+msgstr "Σφάλμα προσθήκης τοποθεσίας."
+
+msgid "Tweaks"
+msgstr "Τροποποιήσεις"
+
+msgid "System"
+msgstr "Σύστημα"
+
+msgid "Actions"
+msgstr "Ενέργειες"
+
+msgid "New Gesture Wizard"
+msgstr "Οδηγός νέας χειρονομίας"
+
+msgid "Cancel"
+msgstr "Ακύρωση"
+
+msgid "Go Back"
+msgstr "Πίσω"
+
+msgid "Proceed"
+msgstr "Συνέχεια"
+
+msgid "Step 1: Fingers"
+msgstr "Βήμα 1: Δάχτυλα"
+
+msgid "How many fingers used for the gesture?"
+msgstr "Πόσα δάχτυλα χρησιμοποιούνται για τη χειρονομία;"
+
+msgid "Step 2: Direction"
+msgstr "Βήμα 2: Κατεύθυνση"
+
+msgid "Which direction is the swipe?"
+msgstr "Ποια είναι η κατεύθυνση της σάρωσης;"
+
+msgid "From Left to Right"
+msgstr "Από αριστερά προς δεξιά"
+
+msgid "From Right to Left"
+msgstr "Από δεξιά προς αριστερά"
+
+msgid "From Top to Bottom"
+msgstr "Από πάνω προς τα κάτω"
+
+msgid "From Bottom to Top"
+msgstr "Από κάτω προς τα πάνω"
+
+msgid "From Bottom-Left to Top-Right"
+msgstr ""
+
+msgid "From Top-Right to Bottom-Left"
+msgstr ""
+
+msgid "From Top-Left to Bottom-Right"
+msgstr ""
+
+msgid "From Bottom-Right to Top-Left"
+msgstr ""
+
+msgid "Step 3: Edge"
+msgstr "Βήμα 3: Άκρη"
+
+msgid "Where should the gesture start?"
+msgstr "Πού πρέπει να ξεκινήσει η χειρονομία;"
+
+msgid "Anywhere"
+msgstr "Οπουδήποτε"
+
+msgid "Left Edge"
+msgstr "Αριστερή άκρη"
+
+msgid "Right Edge"
+msgstr "Δεξιά άκρη"
+
+msgid "Top Edge"
+msgstr "Πάνω άκρη"
+
+msgid "Bottom Edge"
+msgstr "Κάτω άκρη"
+
+msgid "Top-Left Corner"
+msgstr ""
+
+msgid "Top-Right Corner"
+msgstr ""
+
+msgid "Bottom-Left Corner"
+msgstr ""
+
+msgid "Bottom-Right Corner"
+msgstr ""
+
+msgid "None (Middle of screen only)"
+msgstr ""
+
+msgid "Step 4: Distance"
+msgstr "Βήμα 4: Απόσταση"
+
+msgid "How long should the swipe be?"
+msgstr "Πόσο μεγάλη πρέπει να είναι η σάρωση;"
+
+msgid "Any Distance"
+msgstr "Οποιαδήποτε απόσταση"
+
+msgid "Short"
+msgstr "Μικρή"
+
+msgid "Medium"
+msgstr "Μεσαία"
+
+msgid "Large"
+msgstr "Μεγάλη"
+
+msgid "Step 5: Mode"
+msgstr "Βήμα 5: Λειτουργία"
+
+msgid "Trigger on press or release?"
+msgstr "Ενεργοποίηση κατά το πάτημα ή την απελευθέρωση;"
+
+msgid "On Release (Recommended)"
+msgstr "Στην απελευθέρωση (Συνιστάται)"
+
+msgid "On Press"
+msgstr "Στο πάτημα"
+
+msgid "Already configured"
+msgstr ""
+
+msgid "Error: Both Release and Press modes are already configured for this gesture combination."
+msgstr ""
+
+msgid "Save"
+msgstr "Αποθήκευση"
+
+msgid "Select Keyboard"
+msgstr ""
+
+msgid "Edit Item"
+msgstr "Επεξεργασία στοιχείου"
+
+msgid "Item Details"
+msgstr "Λεπτομέρειες στοιχείου"
+
+msgid "Action Name"
+msgstr "Όνομα ενέργειας"
+
+msgid "Action Type"
+msgstr "Τύπος ενέργειας"
+
+msgid "Predefined Action"
+msgstr "Προκαθορισμένη ενέργεια"
+
+msgid "Select from common actions"
+msgstr ""
+
+msgid "Custom Command"
+msgstr "Προσαρμοσμένη εντολή"
+
+msgid "Execute a shell command"
+msgstr ""
+
+msgid "Command"
+msgstr "Εντολή"
+
+msgid "Predefined Actions"
+msgstr ""
+
+msgid "Edit Menu"
+msgstr "Επεξεργασία μενού"
+
+msgid "New Item"
+msgstr "Νέο στοιχείο"
+
+msgid "Select Action"
+msgstr "Επιλογή ενέργειας"
+
+msgid "Wofi Menu"
+msgstr "Μενού Wofi"
+
+msgid "Show a menu of actions"
+msgstr ""
+
+msgid "Edit Gesture"
+msgstr "Επεξεργασία χειρονομίας"
+
+msgid "General"
+msgstr "Γενικά"
+
+msgid "Name"
+msgstr "Όνομα"
+
+msgid "Trigger Spec"
+msgstr "Προδιαγραφή ενεργοποίησης"
+
+msgid "Not Configured"
+msgstr "Δεν έχει ρυθμιστεί"
+
+msgid "Change"
+msgstr "Αλλαγή"
+
+msgid "Locked State"
+msgstr "Κλειδωμένη κατάσταση"
+
+msgid "Edit"
+msgstr "Επεξεργασία"
+
+msgid "Unlocked State"
+msgstr "Ξεκλειδωμένη κατάσταση"
+
+msgid "No Action"
+msgstr "Καμία ενέργεια"
+
+msgid "Missing Trigger"
+msgstr "Λείπει η ενεργοποίηση"
+
+msgid "Please configure a gesture trigger before saving."
+msgstr ""
+
+msgid "OK"
+msgstr "Εντάξει"
+
+msgid "Gestures"
+msgstr ""
+
+msgid "Service"
+msgstr "Υπηρεσία"
+
+msgid "Enable Touch Gestures"
+msgstr "Ενεργοποίηση χειρονομιών αφής"
+
+msgid "Add New Gesture"
+msgstr "Προσθήκη νέας χειρονομίας"
+
+msgid "Configured Gestures"
+msgstr "Ρυθμισμένες χειρονομίες"
+
+msgid "Unnamed Gesture"
+msgstr "Ανώνυμη χειρονομία"
+
+msgid "New Gesture"
+msgstr "Νέα χειρονομία"
+
+msgid "Change Password"
+msgstr "Αλλαγή κωδικού πρόσβασης"
+
+msgid "Password Details"
+msgstr "Λεπτομέρειες κωδικού πρόσβασης"
+
+msgid "Current Password"
+msgstr "Τρέχων κωδικός πρόσβασης"
+
+msgid "New Password"
+msgstr "Νέος κωδικός πρόσβασης"
+
+msgid "Confirm New Password"
+msgstr "Επιβεβαίωση νέου κωδικού πρόσβασης"
+
+msgid "Please enter current password."
+msgstr ""
+
+msgid "Please enter new password."
+msgstr ""
+
+msgid "New passwords do not match."
+msgstr ""
+
+msgid "Changing password..."
+msgstr ""
+
+msgid "Password changed successfully!"
+msgstr "Ο κωδικός πρόσβασης άλλαξε με επιτυχία!"
+
+msgid "Failed to change password."
+msgstr "Αποτυχία αλλαγής κωδικού πρόσβασης."
+
+msgid "Authentication error. Check current password."
+msgstr ""
+
+msgid "Bad password."
+msgstr ""
+
+msgid "it is too short"
+msgstr ""
+
+msgid "is the same as the old one"
+msgstr ""
+
+msgid "is a palindrome"
+msgstr ""
+
+msgid "case changes only"
+msgstr ""
+
+msgid "is too similar to the old one"
+msgstr ""
+
+msgid "it does not contain enough DIFFERENT characters"
+msgstr ""
+
+msgid "it is based on a dictionary word"
+msgstr ""
+
+msgid "Bad password: "
+msgstr ""
+
+msgid "Input Configuration"
+msgstr "Ρύθμιση εισόδου"
+
+msgid "Hardware Buttons"
+msgstr "Κουμπιά υλικού"
+
+msgid "Configure short, double, and long press actions"
+msgstr ""
+
+msgid "Touch Gestures"
+msgstr "Χειρονομίες αφής"
+
+msgid "Configure edge swipes and shortcuts"
+msgstr ""
+
+msgid "Buttons"
+msgstr "Κουμπιά"
+
+msgid "Keyboard"
+msgstr "Πληκτρολόγιο"
+
+msgid "Active Keyboard"
+msgstr "Ενεργό πληκτρολόγιο"
+
+msgid "Change Keyboard"
+msgstr "Αλλαγή πληκτρολογίου"
+
+msgid "Finnish Layout"
+msgstr ""
+
+msgid "Install custom Squeekboard layout"
+msgstr ""
+
+msgid "Configuration"
+msgstr "Ρύθμιση"
+
+msgid "Enforce App Wofi Config"
+msgstr ""
+
+msgid "Use Tweak-FLX1s Wofi style and config"
+msgstr ""
+
+msgid "Environment"
+msgstr "Περιβάλλον"
+
+msgid "Current Environment"
+msgstr ""
+
+msgid "Updates"
+msgstr "Ενημερώσεις"
+
+msgid "System Upgrade"
+msgstr "Αναβάθμιση συστήματος"
+
+msgid "Upgrade FuriOS"
+msgstr ""
+
+msgid "Upgrading System"
+msgstr ""
+
+msgid "Applications"
+msgstr "Εφαρμογές"
+
+msgid "Squeekboard"
+msgstr "Squeekboard"
+
+msgid "On-screen keyboard"
+msgstr ""
+
+msgid "FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Install custom battery monitor"
+msgstr ""
+
+msgid "Install"
+msgstr "Εγκατάσταση"
+
+msgid "Phofono"
+msgstr ""
+
+msgid "Alternative Phone and Messages App"
+msgstr ""
+
+msgid "Branchy App Store"
+msgstr ""
+
+msgid "DebUI"
+msgstr ""
+
+msgid "Debian Package Installer UI"
+msgstr ""
+
+msgid "Security"
+msgstr "Ασφάλεια"
+
+msgid "Enable Shorter Passcodes"
+msgstr ""
+
+msgid "Allow 1-character passwords"
+msgstr ""
+
+msgid "Change current user password"
+msgstr ""
+
+msgid "Fingerprint Authentication"
+msgstr "Έλεγχος ταυτότητας δακτυλικών αποτυπωμάτων"
+
+msgid "Configure PAM for fingerprint support"
+msgstr ""
+
+msgid "Enable"
+msgstr "Ενεργοποίηση"
+
+msgid "Restarting Keyboard Service"
+msgstr ""
+
+msgid "Changing Keyboard"
+msgstr ""
+
+msgid "Remove"
+msgstr "Αφαίρεση"
+
+msgid "Removing Squeekboard"
+msgstr ""
+
+msgid "Installing Squeekboard"
+msgstr ""
+
+msgid "Enabling Shorter Passwords"
+msgstr ""
+
+msgid "Disabling Shorter Passwords"
+msgstr ""
+
+msgid "Removing DebUI"
+msgstr ""
+
+msgid "Installing DebUI"
+msgstr ""
+
+msgid "Removing FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Installing FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Fingerprint is enabled"
+msgstr ""
+
+msgid "Removing Fingerprint"
+msgstr ""
+
+msgid "Configuring Fingerprint"
+msgstr ""
+
+msgid "Installed"
+msgstr "Εγκατεστημένο"
+
+msgid "Removing Phofono"
+msgstr ""
+
+msgid "Installing Phofono"
+msgstr ""
+
+msgid "Removing Branchy"
+msgstr ""
+
+msgid "Installing Branchy"
+msgstr ""
+
+msgid "Staging"
+msgstr ""
+
+msgid "Switch to Production"
+msgstr ""
+
+msgid "Production"
+msgstr ""
+
+msgid "Switch to Staging"
+msgstr ""
+
+msgid "Switching to Production"
+msgstr ""
+
+msgid "Switching to Staging"
+msgstr ""
+
+msgid "About Tweak-FLX1s"
+msgstr "Σχετικά με το Tweak-FLX1s"
+
+msgid "System tweaks and utilities for FuriPhoneFLX1s."
+msgstr ""
+
+msgid "Version"
+msgstr "Έκδοση"
+
+msgid "Developer"
+msgstr "Προγραμματιστής"
+
+msgid "License"
+msgstr "Άδεια"
+
+msgid "Links"
+msgstr "Σύνδεσμοι"
+
+msgid "Website"
+msgstr "Ιστότοπος"
+
+msgid "Issue Tracker"
+msgstr "Παρακολούθηση προβλημάτων"
+
+msgid "Report bugs or request features"
+msgstr ""
+
+msgid "Appearance"
+msgstr "Εμφάνιση"
+
+msgid "GTK3 CSS Tweak"
+msgstr ""
+
+msgid "Apply custom UI scaling tweaks for GTK3 apps"
+msgstr ""
+
+msgid "Background Services"
+msgstr "Υπηρεσίες παρασκηνίου"
+
+msgid "Alarm Volume Fix"
+msgstr ""
+
+msgid "Ensure alarm plays at full volume"
+msgstr ""
+
+msgid "Andromeda Guard"
+msgstr ""
+
+msgid "Prevent OSK issues"
+msgstr ""
+
+msgid "Andromeda Integration"
+msgstr ""
+
+msgid "Shared Folders"
+msgstr ""
+
+msgid "Mount ~/.local/share/andromeda to ~/Android-Share"
+msgstr ""
+
+msgid "Audio"
+msgstr "Ήχος"
+
+msgid "Custom Sound Theme"
+msgstr ""
+
+msgid "Use fastflx1 custom sounds"
+msgstr ""
+
+msgid "Mounting Shared Folders"
+msgstr ""
+
+msgid "Unmounting Shared Folders"
+msgstr ""
+
+msgid "Short Press"
+msgstr "Σύντομο πάτημα"
+
+msgid "Double Press"
+msgstr "Διπλό πάτημα"
+
+msgid "Long Press"
+msgstr "Παρατεταμένο πάτημα"
+
+msgid "Use Custom Assistant File"
+msgstr ""
+
+msgid "Write ~/.config/assistant-button/..."
+msgstr ""
+
+msgid "Locked Action"
+msgstr ""
+
+msgid "Unlocked Action"
+msgstr ""
+
+msgid "Copy (Ctrl+C)"
+msgstr "Αντιγραφή (Ctrl+C)"
+
+msgid "Paste (Ctrl+V)"
+msgstr "Επικόλληση (Ctrl+V)"
+
+msgid "Cut (Ctrl+X)"
+msgstr ""
+
+msgid "Select All and Copy"
+msgstr ""
+
+msgid "Paste from Clipboard"
+msgstr ""
+
+msgid "Kill Active Window"
+msgstr ""
+
+msgid "Switch Window on the left"
+msgstr ""
+
+msgid "Switch Window on the right"
+msgstr ""
+
+msgid "Screenshot"
+msgstr "Στιγμιότυπο οθόνης"
+
+msgid "Flashlight"
+msgstr "Φακός"
+
+msgid "Play/Pause"
+msgstr ""
+
+msgid "Next Track"
+msgstr ""
+
+msgid "Previous Track"
+msgstr ""
+
+msgid "Volume Up"
+msgstr ""
+
+msgid "Volume Down"
+msgstr ""
+
+msgid "Mute"
+msgstr "Σίγαση"

@@ -1,0 +1,675 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: tweak-flx1s 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-01-01 00:00+0000\n"
+"Last-Translator: ai\n"
+"Language-Team: ai\n"
+"Language: tr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Add Location"
+msgstr "Konum Ekle"
+
+msgid "Close"
+msgstr "Kapat"
+
+msgid "Enter city name"
+msgstr "Şehir adı girin"
+
+msgid "Search"
+msgstr "Ara"
+
+msgid "Result"
+msgstr "Sonuç"
+
+msgid "No location found yet."
+msgstr "Henüz konum bulunamadı."
+
+msgid "Searching..."
+msgstr "Aranıyor..."
+
+msgid "No location found."
+msgstr "Konum bulunamadı."
+
+msgid "Error adding location."
+msgstr "Konum ekleme hatası."
+
+msgid "Tweaks"
+msgstr "İnce Ayarlar"
+
+msgid "System"
+msgstr "Sistem"
+
+msgid "Actions"
+msgstr "Eylemler"
+
+msgid "New Gesture Wizard"
+msgstr "Yeni Jest Sihirbazı"
+
+msgid "Cancel"
+msgstr "İptal"
+
+msgid "Go Back"
+msgstr "Geri Dön"
+
+msgid "Proceed"
+msgstr "Devam Et"
+
+msgid "Step 1: Fingers"
+msgstr "Adım 1: Parmaklar"
+
+msgid "How many fingers used for the gesture?"
+msgstr "Jest için kaç parmak kullanılıyor?"
+
+msgid "Step 2: Direction"
+msgstr "Adım 2: Yön"
+
+msgid "Which direction is the swipe?"
+msgstr "Kaydırma yönü nedir?"
+
+msgid "From Left to Right"
+msgstr "Soldan Sağa"
+
+msgid "From Right to Left"
+msgstr "Sağdan Sola"
+
+msgid "From Top to Bottom"
+msgstr "Yukarıdan Aşağıya"
+
+msgid "From Bottom to Top"
+msgstr "Aşağıdan Yukarıya"
+
+msgid "From Bottom-Left to Top-Right"
+msgstr ""
+
+msgid "From Top-Right to Bottom-Left"
+msgstr ""
+
+msgid "From Top-Left to Bottom-Right"
+msgstr ""
+
+msgid "From Bottom-Right to Top-Left"
+msgstr ""
+
+msgid "Step 3: Edge"
+msgstr "Adım 3: Kenar"
+
+msgid "Where should the gesture start?"
+msgstr "Jest nereden başlamalı?"
+
+msgid "Anywhere"
+msgstr "Herhangi Bir Yer"
+
+msgid "Left Edge"
+msgstr "Sol Kenar"
+
+msgid "Right Edge"
+msgstr "Sağ Kenar"
+
+msgid "Top Edge"
+msgstr "Üst Kenar"
+
+msgid "Bottom Edge"
+msgstr "Alt Kenar"
+
+msgid "Top-Left Corner"
+msgstr ""
+
+msgid "Top-Right Corner"
+msgstr ""
+
+msgid "Bottom-Left Corner"
+msgstr ""
+
+msgid "Bottom-Right Corner"
+msgstr ""
+
+msgid "None (Middle of screen only)"
+msgstr ""
+
+msgid "Step 4: Distance"
+msgstr "Adım 4: Mesafe"
+
+msgid "How long should the swipe be?"
+msgstr "Kaydırma ne kadar uzun olmalı?"
+
+msgid "Any Distance"
+msgstr "Herhangi Bir Mesafe"
+
+msgid "Short"
+msgstr "Kısa"
+
+msgid "Medium"
+msgstr "Orta"
+
+msgid "Large"
+msgstr "Uzun"
+
+msgid "Step 5: Mode"
+msgstr "Adım 5: Mod"
+
+msgid "Trigger on press or release?"
+msgstr "Basınca mı yoksa bırakınca mı tetiklensin?"
+
+msgid "On Release (Recommended)"
+msgstr "Bırakınca (Önerilen)"
+
+msgid "On Press"
+msgstr "Basınca"
+
+msgid "Already configured"
+msgstr ""
+
+msgid "Error: Both Release and Press modes are already configured for this gesture combination."
+msgstr ""
+
+msgid "Save"
+msgstr "Kaydet"
+
+msgid "Select Keyboard"
+msgstr ""
+
+msgid "Edit Item"
+msgstr "Öğeyi Düzenle"
+
+msgid "Item Details"
+msgstr "Öğe Detayları"
+
+msgid "Action Name"
+msgstr "Eylem Adı"
+
+msgid "Action Type"
+msgstr "Eylem Türü"
+
+msgid "Predefined Action"
+msgstr "Ön Tanımlı Eylem"
+
+msgid "Select from common actions"
+msgstr ""
+
+msgid "Custom Command"
+msgstr "Özel Komut"
+
+msgid "Execute a shell command"
+msgstr ""
+
+msgid "Command"
+msgstr "Komut"
+
+msgid "Predefined Actions"
+msgstr ""
+
+msgid "Edit Menu"
+msgstr "Menüyü Düzenle"
+
+msgid "New Item"
+msgstr "Yeni Öğe"
+
+msgid "Select Action"
+msgstr "Eylem Seç"
+
+msgid "Wofi Menu"
+msgstr "Wofi Menüsü"
+
+msgid "Show a menu of actions"
+msgstr ""
+
+msgid "Edit Gesture"
+msgstr "Jesti Düzenle"
+
+msgid "General"
+msgstr "Genel"
+
+msgid "Name"
+msgstr "İsim"
+
+msgid "Trigger Spec"
+msgstr "Tetikleyici Özellikleri"
+
+msgid "Not Configured"
+msgstr "Yapılandırılmadı"
+
+msgid "Change"
+msgstr "Değiştir"
+
+msgid "Locked State"
+msgstr "Kilitli Durum"
+
+msgid "Edit"
+msgstr "Düzenle"
+
+msgid "Unlocked State"
+msgstr "Kilit Açık Durum"
+
+msgid "No Action"
+msgstr "Eylem Yok"
+
+msgid "Missing Trigger"
+msgstr "Eksik Tetikleyici"
+
+msgid "Please configure a gesture trigger before saving."
+msgstr ""
+
+msgid "OK"
+msgstr "Tamam"
+
+msgid "Gestures"
+msgstr ""
+
+msgid "Service"
+msgstr "Hizmet"
+
+msgid "Enable Touch Gestures"
+msgstr "Dokunmatik Jestleri Etkinleştir"
+
+msgid "Add New Gesture"
+msgstr "Yeni Jest Ekle"
+
+msgid "Configured Gestures"
+msgstr "Yapılandırılmış Jestler"
+
+msgid "Unnamed Gesture"
+msgstr "İsimsiz Jest"
+
+msgid "New Gesture"
+msgstr "Yeni Jest"
+
+msgid "Change Password"
+msgstr "Şifreyi Değiştir"
+
+msgid "Password Details"
+msgstr "Şifre Detayları"
+
+msgid "Current Password"
+msgstr "Mevcut Şifre"
+
+msgid "New Password"
+msgstr "Yeni Şifre"
+
+msgid "Confirm New Password"
+msgstr "Yeni Şifreyi Onayla"
+
+msgid "Please enter current password."
+msgstr ""
+
+msgid "Please enter new password."
+msgstr ""
+
+msgid "New passwords do not match."
+msgstr ""
+
+msgid "Changing password..."
+msgstr ""
+
+msgid "Password changed successfully!"
+msgstr "Şifre başarıyla değiştirildi!"
+
+msgid "Failed to change password."
+msgstr "Şifre değiştirilemedi."
+
+msgid "Authentication error. Check current password."
+msgstr ""
+
+msgid "Bad password."
+msgstr ""
+
+msgid "it is too short"
+msgstr ""
+
+msgid "is the same as the old one"
+msgstr ""
+
+msgid "is a palindrome"
+msgstr ""
+
+msgid "case changes only"
+msgstr ""
+
+msgid "is too similar to the old one"
+msgstr ""
+
+msgid "it does not contain enough DIFFERENT characters"
+msgstr ""
+
+msgid "it is based on a dictionary word"
+msgstr ""
+
+msgid "Bad password: "
+msgstr ""
+
+msgid "Input Configuration"
+msgstr "Giriş Yapılandırması"
+
+msgid "Hardware Buttons"
+msgstr "Donanım Düğmeleri"
+
+msgid "Configure short, double, and long press actions"
+msgstr ""
+
+msgid "Touch Gestures"
+msgstr "Dokunmatik Jestler"
+
+msgid "Configure edge swipes and shortcuts"
+msgstr ""
+
+msgid "Buttons"
+msgstr "Düğmeler"
+
+msgid "Keyboard"
+msgstr "Klavye"
+
+msgid "Active Keyboard"
+msgstr "Aktif Klavye"
+
+msgid "Change Keyboard"
+msgstr "Klavyeyi Değiştir"
+
+msgid "Finnish Layout"
+msgstr ""
+
+msgid "Install custom Squeekboard layout"
+msgstr ""
+
+msgid "Configuration"
+msgstr "Yapılandırma"
+
+msgid "Enforce App Wofi Config"
+msgstr ""
+
+msgid "Use Tweak-FLX1s Wofi style and config"
+msgstr ""
+
+msgid "Environment"
+msgstr "Ortam"
+
+msgid "Current Environment"
+msgstr ""
+
+msgid "Updates"
+msgstr "Güncellemeler"
+
+msgid "System Upgrade"
+msgstr "Sistem Yükseltme"
+
+msgid "Upgrade FuriOS"
+msgstr ""
+
+msgid "Upgrading System"
+msgstr ""
+
+msgid "Applications"
+msgstr "Uygulamalar"
+
+msgid "Squeekboard"
+msgstr "Squeekboard"
+
+msgid "On-screen keyboard"
+msgstr ""
+
+msgid "FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Install custom battery monitor"
+msgstr ""
+
+msgid "Install"
+msgstr "Yükle"
+
+msgid "Phofono"
+msgstr ""
+
+msgid "Alternative Phone and Messages App"
+msgstr ""
+
+msgid "Branchy App Store"
+msgstr ""
+
+msgid "DebUI"
+msgstr ""
+
+msgid "Debian Package Installer UI"
+msgstr ""
+
+msgid "Security"
+msgstr "Güvenlik"
+
+msgid "Enable Shorter Passcodes"
+msgstr ""
+
+msgid "Allow 1-character passwords"
+msgstr ""
+
+msgid "Change current user password"
+msgstr ""
+
+msgid "Fingerprint Authentication"
+msgstr "Parmak İzi Kimlik Doğrulama"
+
+msgid "Configure PAM for fingerprint support"
+msgstr ""
+
+msgid "Enable"
+msgstr "Etkinleştir"
+
+msgid "Restarting Keyboard Service"
+msgstr ""
+
+msgid "Changing Keyboard"
+msgstr ""
+
+msgid "Remove"
+msgstr "Kaldır"
+
+msgid "Removing Squeekboard"
+msgstr ""
+
+msgid "Installing Squeekboard"
+msgstr ""
+
+msgid "Enabling Shorter Passwords"
+msgstr ""
+
+msgid "Disabling Shorter Passwords"
+msgstr ""
+
+msgid "Removing DebUI"
+msgstr ""
+
+msgid "Installing DebUI"
+msgstr ""
+
+msgid "Removing FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Installing FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Fingerprint is enabled"
+msgstr ""
+
+msgid "Removing Fingerprint"
+msgstr ""
+
+msgid "Configuring Fingerprint"
+msgstr ""
+
+msgid "Installed"
+msgstr "Yüklü"
+
+msgid "Removing Phofono"
+msgstr ""
+
+msgid "Installing Phofono"
+msgstr ""
+
+msgid "Removing Branchy"
+msgstr ""
+
+msgid "Installing Branchy"
+msgstr ""
+
+msgid "Staging"
+msgstr ""
+
+msgid "Switch to Production"
+msgstr ""
+
+msgid "Production"
+msgstr ""
+
+msgid "Switch to Staging"
+msgstr ""
+
+msgid "Switching to Production"
+msgstr ""
+
+msgid "Switching to Staging"
+msgstr ""
+
+msgid "About Tweak-FLX1s"
+msgstr "Tweak-FLX1s Hakkında"
+
+msgid "System tweaks and utilities for FuriPhoneFLX1s."
+msgstr ""
+
+msgid "Version"
+msgstr "Sürüm"
+
+msgid "Developer"
+msgstr "Geliştirici"
+
+msgid "License"
+msgstr "Lisans"
+
+msgid "Links"
+msgstr "Bağlantılar"
+
+msgid "Website"
+msgstr "Web Sitesi"
+
+msgid "Issue Tracker"
+msgstr "Sorun Takipçisi"
+
+msgid "Report bugs or request features"
+msgstr ""
+
+msgid "Appearance"
+msgstr "Görünüm"
+
+msgid "GTK3 CSS Tweak"
+msgstr ""
+
+msgid "Apply custom UI scaling tweaks for GTK3 apps"
+msgstr ""
+
+msgid "Background Services"
+msgstr "Arka Plan Hizmetleri"
+
+msgid "Alarm Volume Fix"
+msgstr ""
+
+msgid "Ensure alarm plays at full volume"
+msgstr ""
+
+msgid "Andromeda Guard"
+msgstr ""
+
+msgid "Prevent OSK issues"
+msgstr ""
+
+msgid "Andromeda Integration"
+msgstr ""
+
+msgid "Shared Folders"
+msgstr ""
+
+msgid "Mount ~/.local/share/andromeda to ~/Android-Share"
+msgstr ""
+
+msgid "Audio"
+msgstr "Ses"
+
+msgid "Custom Sound Theme"
+msgstr ""
+
+msgid "Use fastflx1 custom sounds"
+msgstr ""
+
+msgid "Mounting Shared Folders"
+msgstr ""
+
+msgid "Unmounting Shared Folders"
+msgstr ""
+
+msgid "Short Press"
+msgstr "Kısa Basış"
+
+msgid "Double Press"
+msgstr "Çift Basış"
+
+msgid "Long Press"
+msgstr "Uzun Basış"
+
+msgid "Use Custom Assistant File"
+msgstr ""
+
+msgid "Write ~/.config/assistant-button/..."
+msgstr ""
+
+msgid "Locked Action"
+msgstr ""
+
+msgid "Unlocked Action"
+msgstr ""
+
+msgid "Copy (Ctrl+C)"
+msgstr "Kopyala (Ctrl+C)"
+
+msgid "Paste (Ctrl+V)"
+msgstr "Yapıştır (Ctrl+V)"
+
+msgid "Cut (Ctrl+X)"
+msgstr ""
+
+msgid "Select All and Copy"
+msgstr ""
+
+msgid "Paste from Clipboard"
+msgstr ""
+
+msgid "Kill Active Window"
+msgstr ""
+
+msgid "Switch Window on the left"
+msgstr ""
+
+msgid "Switch Window on the right"
+msgstr ""
+
+msgid "Screenshot"
+msgstr "Ekran Görüntüsü"
+
+msgid "Flashlight"
+msgstr "El Feneri"
+
+msgid "Play/Pause"
+msgstr ""
+
+msgid "Next Track"
+msgstr ""
+
+msgid "Previous Track"
+msgstr ""
+
+msgid "Volume Up"
+msgstr ""
+
+msgid "Volume Down"
+msgstr ""
+
+msgid "Mute"
+msgstr "Sessiz"

@@ -5,8 +5,11 @@
 
 override_dh_auto_build:
 	dh_auto_build
-	mkdir -p locales/fi/LC_MESSAGES
-	msgfmt po/fi.po -o locales/fi/LC_MESSAGES/tweak-flx1s.mo
+	for po in po/*.po; do \
+		lang=$$(basename $$po .po); \
+		mkdir -p locales/$$lang/LC_MESSAGES; \
+		msgfmt $$po -o locales/$$lang/LC_MESSAGES/tweak-flx1s.mo; \
+	done
 
 override_dh_clean:
 	dh_clean

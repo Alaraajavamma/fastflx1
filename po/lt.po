@@ -1,0 +1,675 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: tweak-flx1s 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-01-01 00:00+0000\n"
+"Last-Translator: ai\n"
+"Language-Team: ai\n"
+"Language: lt\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Add Location"
+msgstr "Pridėti vietą"
+
+msgid "Close"
+msgstr "Uždaryti"
+
+msgid "Enter city name"
+msgstr "Įveskite miesto pavadinimą"
+
+msgid "Search"
+msgstr "Ieškoti"
+
+msgid "Result"
+msgstr "Rezultatas"
+
+msgid "No location found yet."
+msgstr "Vieta dar nerasta."
+
+msgid "Searching..."
+msgstr "Ieškoma..."
+
+msgid "No location found."
+msgstr "Vieta nerasta."
+
+msgid "Error adding location."
+msgstr "Klaida pridedant vietą."
+
+msgid "Tweaks"
+msgstr "Patobulinimai"
+
+msgid "System"
+msgstr "Sistema"
+
+msgid "Actions"
+msgstr "Veiksmai"
+
+msgid "New Gesture Wizard"
+msgstr "Naujo gesto vedlys"
+
+msgid "Cancel"
+msgstr "Atšaukti"
+
+msgid "Go Back"
+msgstr "Grįžti"
+
+msgid "Proceed"
+msgstr "Tęsti"
+
+msgid "Step 1: Fingers"
+msgstr "1 žingsnis: Pirštai"
+
+msgid "How many fingers used for the gesture?"
+msgstr "Kiek pirštų naudojama gestui?"
+
+msgid "Step 2: Direction"
+msgstr "2 žingsnis: Kryptis"
+
+msgid "Which direction is the swipe?"
+msgstr "Kokia braukimo kryptis?"
+
+msgid "From Left to Right"
+msgstr "Iš kairės į dešinę"
+
+msgid "From Right to Left"
+msgstr "Iš dešinės į kairę"
+
+msgid "From Top to Bottom"
+msgstr "Iš viršaus į apačią"
+
+msgid "From Bottom to Top"
+msgstr "Iš apačios į viršų"
+
+msgid "From Bottom-Left to Top-Right"
+msgstr ""
+
+msgid "From Top-Right to Bottom-Left"
+msgstr ""
+
+msgid "From Top-Left to Bottom-Right"
+msgstr ""
+
+msgid "From Bottom-Right to Top-Left"
+msgstr ""
+
+msgid "Step 3: Edge"
+msgstr "3 žingsnis: Kraštas"
+
+msgid "Where should the gesture start?"
+msgstr "Kur turėtų prasidėti gestas?"
+
+msgid "Anywhere"
+msgstr "Bet kur"
+
+msgid "Left Edge"
+msgstr "Kairysis kraštas"
+
+msgid "Right Edge"
+msgstr "Dešinysis kraštas"
+
+msgid "Top Edge"
+msgstr "Viršutinis kraštas"
+
+msgid "Bottom Edge"
+msgstr "Apatinis kraštas"
+
+msgid "Top-Left Corner"
+msgstr ""
+
+msgid "Top-Right Corner"
+msgstr ""
+
+msgid "Bottom-Left Corner"
+msgstr ""
+
+msgid "Bottom-Right Corner"
+msgstr ""
+
+msgid "None (Middle of screen only)"
+msgstr ""
+
+msgid "Step 4: Distance"
+msgstr "4 žingsnis: Atstumas"
+
+msgid "How long should the swipe be?"
+msgstr "Kokio ilgio turėtų būti braukimas?"
+
+msgid "Any Distance"
+msgstr "Bet koks atstumas"
+
+msgid "Short"
+msgstr "Trumpas"
+
+msgid "Medium"
+msgstr "Vidutinis"
+
+msgid "Large"
+msgstr "Ilgas"
+
+msgid "Step 5: Mode"
+msgstr "5 žingsnis: Režimas"
+
+msgid "Trigger on press or release?"
+msgstr "Suaktyvinti paspaudus ar atleidus?"
+
+msgid "On Release (Recommended)"
+msgstr "Atleidus (Rekomenduojama)"
+
+msgid "On Press"
+msgstr "Paspaudus"
+
+msgid "Already configured"
+msgstr ""
+
+msgid "Error: Both Release and Press modes are already configured for this gesture combination."
+msgstr ""
+
+msgid "Save"
+msgstr "Išsaugoti"
+
+msgid "Select Keyboard"
+msgstr ""
+
+msgid "Edit Item"
+msgstr "Redaguoti elementą"
+
+msgid "Item Details"
+msgstr "Elemento informacija"
+
+msgid "Action Name"
+msgstr "Veiksmo pavadinimas"
+
+msgid "Action Type"
+msgstr "Veiksmo tipas"
+
+msgid "Predefined Action"
+msgstr "Iš anksto nustatytas veiksmas"
+
+msgid "Select from common actions"
+msgstr ""
+
+msgid "Custom Command"
+msgstr "Pasirinktinė komanda"
+
+msgid "Execute a shell command"
+msgstr ""
+
+msgid "Command"
+msgstr "Komanda"
+
+msgid "Predefined Actions"
+msgstr ""
+
+msgid "Edit Menu"
+msgstr "Redaguoti meniu"
+
+msgid "New Item"
+msgstr "Naujas elementas"
+
+msgid "Select Action"
+msgstr "Pasirinkti veiksmą"
+
+msgid "Wofi Menu"
+msgstr "Wofi meniu"
+
+msgid "Show a menu of actions"
+msgstr ""
+
+msgid "Edit Gesture"
+msgstr "Redaguoti gestą"
+
+msgid "General"
+msgstr "Bendra"
+
+msgid "Name"
+msgstr "Pavadinimas"
+
+msgid "Trigger Spec"
+msgstr "Suaktyvinimo specifikacija"
+
+msgid "Not Configured"
+msgstr "Nesukonfigūruota"
+
+msgid "Change"
+msgstr "Keisti"
+
+msgid "Locked State"
+msgstr "Užrakinta būsena"
+
+msgid "Edit"
+msgstr "Redaguoti"
+
+msgid "Unlocked State"
+msgstr "Atrakinta būsena"
+
+msgid "No Action"
+msgstr "Nėra veiksmo"
+
+msgid "Missing Trigger"
+msgstr "Trūksta suaktyvinimo"
+
+msgid "Please configure a gesture trigger before saving."
+msgstr ""
+
+msgid "OK"
+msgstr "Gerai"
+
+msgid "Gestures"
+msgstr ""
+
+msgid "Service"
+msgstr "Paslauga"
+
+msgid "Enable Touch Gestures"
+msgstr "Įgalinti lietimo gestus"
+
+msgid "Add New Gesture"
+msgstr "Pridėti naują gestą"
+
+msgid "Configured Gestures"
+msgstr "Sukonfigūruoti gestai"
+
+msgid "Unnamed Gesture"
+msgstr "Bevardis gestas"
+
+msgid "New Gesture"
+msgstr "Naujas gestas"
+
+msgid "Change Password"
+msgstr "Keisti slaptažodį"
+
+msgid "Password Details"
+msgstr "Slaptažodžio informacija"
+
+msgid "Current Password"
+msgstr "Dabartinis slaptažodis"
+
+msgid "New Password"
+msgstr "Naujas slaptažodis"
+
+msgid "Confirm New Password"
+msgstr "Patvirtinti naują slaptažodį"
+
+msgid "Please enter current password."
+msgstr ""
+
+msgid "Please enter new password."
+msgstr ""
+
+msgid "New passwords do not match."
+msgstr ""
+
+msgid "Changing password..."
+msgstr ""
+
+msgid "Password changed successfully!"
+msgstr "Slaptažodis sėkmingai pakeistas!"
+
+msgid "Failed to change password."
+msgstr "Nepavyko pakeisti slaptažodžio."
+
+msgid "Authentication error. Check current password."
+msgstr ""
+
+msgid "Bad password."
+msgstr ""
+
+msgid "it is too short"
+msgstr ""
+
+msgid "is the same as the old one"
+msgstr ""
+
+msgid "is a palindrome"
+msgstr ""
+
+msgid "case changes only"
+msgstr ""
+
+msgid "is too similar to the old one"
+msgstr ""
+
+msgid "it does not contain enough DIFFERENT characters"
+msgstr ""
+
+msgid "it is based on a dictionary word"
+msgstr ""
+
+msgid "Bad password: "
+msgstr ""
+
+msgid "Input Configuration"
+msgstr "Įvesties konfigūracija"
+
+msgid "Hardware Buttons"
+msgstr "Aparatiniai mygtukai"
+
+msgid "Configure short, double, and long press actions"
+msgstr ""
+
+msgid "Touch Gestures"
+msgstr "Lietimo gestai"
+
+msgid "Configure edge swipes and shortcuts"
+msgstr ""
+
+msgid "Buttons"
+msgstr "Mygtukai"
+
+msgid "Keyboard"
+msgstr "Klaviatūra"
+
+msgid "Active Keyboard"
+msgstr "Aktyvi klaviatūra"
+
+msgid "Change Keyboard"
+msgstr "Keisti klaviatūrą"
+
+msgid "Finnish Layout"
+msgstr ""
+
+msgid "Install custom Squeekboard layout"
+msgstr ""
+
+msgid "Configuration"
+msgstr "Konfigūracija"
+
+msgid "Enforce App Wofi Config"
+msgstr ""
+
+msgid "Use Tweak-FLX1s Wofi style and config"
+msgstr ""
+
+msgid "Environment"
+msgstr "Aplinka"
+
+msgid "Current Environment"
+msgstr ""
+
+msgid "Updates"
+msgstr "Atnaujinimai"
+
+msgid "System Upgrade"
+msgstr "Sistemos atnaujinimas"
+
+msgid "Upgrade FuriOS"
+msgstr ""
+
+msgid "Upgrading System"
+msgstr ""
+
+msgid "Applications"
+msgstr "Programos"
+
+msgid "Squeekboard"
+msgstr "Squeekboard"
+
+msgid "On-screen keyboard"
+msgstr ""
+
+msgid "FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Install custom battery monitor"
+msgstr ""
+
+msgid "Install"
+msgstr "Įdiegti"
+
+msgid "Phofono"
+msgstr ""
+
+msgid "Alternative Phone and Messages App"
+msgstr ""
+
+msgid "Branchy App Store"
+msgstr ""
+
+msgid "DebUI"
+msgstr ""
+
+msgid "Debian Package Installer UI"
+msgstr ""
+
+msgid "Security"
+msgstr "Saugumas"
+
+msgid "Enable Shorter Passcodes"
+msgstr ""
+
+msgid "Allow 1-character passwords"
+msgstr ""
+
+msgid "Change current user password"
+msgstr ""
+
+msgid "Fingerprint Authentication"
+msgstr "Pirštų atspaudų atpažinimas"
+
+msgid "Configure PAM for fingerprint support"
+msgstr ""
+
+msgid "Enable"
+msgstr "Įgalinti"
+
+msgid "Restarting Keyboard Service"
+msgstr ""
+
+msgid "Changing Keyboard"
+msgstr ""
+
+msgid "Remove"
+msgstr "Pašalinti"
+
+msgid "Removing Squeekboard"
+msgstr ""
+
+msgid "Installing Squeekboard"
+msgstr ""
+
+msgid "Enabling Shorter Passwords"
+msgstr ""
+
+msgid "Disabling Shorter Passwords"
+msgstr ""
+
+msgid "Removing DebUI"
+msgstr ""
+
+msgid "Installing DebUI"
+msgstr ""
+
+msgid "Removing FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Installing FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Fingerprint is enabled"
+msgstr ""
+
+msgid "Removing Fingerprint"
+msgstr ""
+
+msgid "Configuring Fingerprint"
+msgstr ""
+
+msgid "Installed"
+msgstr "Įdiegta"
+
+msgid "Removing Phofono"
+msgstr ""
+
+msgid "Installing Phofono"
+msgstr ""
+
+msgid "Removing Branchy"
+msgstr ""
+
+msgid "Installing Branchy"
+msgstr ""
+
+msgid "Staging"
+msgstr ""
+
+msgid "Switch to Production"
+msgstr ""
+
+msgid "Production"
+msgstr ""
+
+msgid "Switch to Staging"
+msgstr ""
+
+msgid "Switching to Production"
+msgstr ""
+
+msgid "Switching to Staging"
+msgstr ""
+
+msgid "About Tweak-FLX1s"
+msgstr "Apie Tweak-FLX1s"
+
+msgid "System tweaks and utilities for FuriPhoneFLX1s."
+msgstr ""
+
+msgid "Version"
+msgstr "Versija"
+
+msgid "Developer"
+msgstr "Kūrėjas"
+
+msgid "License"
+msgstr "Licencija"
+
+msgid "Links"
+msgstr "Nuorodos"
+
+msgid "Website"
+msgstr "Svetainė"
+
+msgid "Issue Tracker"
+msgstr "Problemų sekimas"
+
+msgid "Report bugs or request features"
+msgstr ""
+
+msgid "Appearance"
+msgstr "Išvaizda"
+
+msgid "GTK3 CSS Tweak"
+msgstr ""
+
+msgid "Apply custom UI scaling tweaks for GTK3 apps"
+msgstr ""
+
+msgid "Background Services"
+msgstr "Fono paslaugos"
+
+msgid "Alarm Volume Fix"
+msgstr ""
+
+msgid "Ensure alarm plays at full volume"
+msgstr ""
+
+msgid "Andromeda Guard"
+msgstr ""
+
+msgid "Prevent OSK issues"
+msgstr ""
+
+msgid "Andromeda Integration"
+msgstr ""
+
+msgid "Shared Folders"
+msgstr ""
+
+msgid "Mount ~/.local/share/andromeda to ~/Android-Share"
+msgstr ""
+
+msgid "Audio"
+msgstr "Garsas"
+
+msgid "Custom Sound Theme"
+msgstr ""
+
+msgid "Use fastflx1 custom sounds"
+msgstr ""
+
+msgid "Mounting Shared Folders"
+msgstr ""
+
+msgid "Unmounting Shared Folders"
+msgstr ""
+
+msgid "Short Press"
+msgstr "Trumpas paspaudimas"
+
+msgid "Double Press"
+msgstr "Dvigubas paspaudimas"
+
+msgid "Long Press"
+msgstr "Ilgas paspaudimas"
+
+msgid "Use Custom Assistant File"
+msgstr ""
+
+msgid "Write ~/.config/assistant-button/..."
+msgstr ""
+
+msgid "Locked Action"
+msgstr ""
+
+msgid "Unlocked Action"
+msgstr ""
+
+msgid "Copy (Ctrl+C)"
+msgstr "Kopijuoti (Ctrl+C)"
+
+msgid "Paste (Ctrl+V)"
+msgstr "Įklijuoti (Ctrl+V)"
+
+msgid "Cut (Ctrl+X)"
+msgstr ""
+
+msgid "Select All and Copy"
+msgstr ""
+
+msgid "Paste from Clipboard"
+msgstr ""
+
+msgid "Kill Active Window"
+msgstr ""
+
+msgid "Switch Window on the left"
+msgstr ""
+
+msgid "Switch Window on the right"
+msgstr ""
+
+msgid "Screenshot"
+msgstr "Ekrano kopija"
+
+msgid "Flashlight"
+msgstr "Žibintuvėlis"
+
+msgid "Play/Pause"
+msgstr ""
+
+msgid "Next Track"
+msgstr ""
+
+msgid "Previous Track"
+msgstr ""
+
+msgid "Volume Up"
+msgstr ""
+
+msgid "Volume Down"
+msgstr ""
+
+msgid "Mute"
+msgstr "Nutildyti"

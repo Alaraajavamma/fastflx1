@@ -1,0 +1,675 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: tweak-flx1s 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-01-01 00:00+0000\n"
+"Last-Translator: ai\n"
+"Language-Team: ai\n"
+"Language: ur\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Add Location"
+msgstr "مقام شامل کریں"
+
+msgid "Close"
+msgstr "بند کریں"
+
+msgid "Enter city name"
+msgstr "شہر کا نام درج کریں"
+
+msgid "Search"
+msgstr "تلاش کریں"
+
+msgid "Result"
+msgstr "نتیجہ"
+
+msgid "No location found yet."
+msgstr "ابھی تک کوئی مقام نہیں ملا۔"
+
+msgid "Searching..."
+msgstr "تلاش جاری ہے..."
+
+msgid "No location found."
+msgstr "مقام نہیں ملا۔"
+
+msgid "Error adding location."
+msgstr "مقام شامل کرنے میں خرابی۔"
+
+msgid "Tweaks"
+msgstr "ترامیم"
+
+msgid "System"
+msgstr "سسٹم"
+
+msgid "Actions"
+msgstr "افعال"
+
+msgid "New Gesture Wizard"
+msgstr "نیا اشارہ وزرڈ"
+
+msgid "Cancel"
+msgstr "منسوخ کریں"
+
+msgid "Go Back"
+msgstr "واپس جائیں"
+
+msgid "Proceed"
+msgstr "آگے بڑھیں"
+
+msgid "Step 1: Fingers"
+msgstr "مرحلہ 1: انگلیاں"
+
+msgid "How many fingers used for the gesture?"
+msgstr "اشارے کے لیے کتنی انگلیاں استعمال کی جاتی ہیں؟"
+
+msgid "Step 2: Direction"
+msgstr "مرحلہ 2: سمت"
+
+msgid "Which direction is the swipe?"
+msgstr "سوائپ کس سمت میں ہے؟"
+
+msgid "From Left to Right"
+msgstr "بائیں سے دائیں"
+
+msgid "From Right to Left"
+msgstr "دائیں سے بائیں"
+
+msgid "From Top to Bottom"
+msgstr "اوپر سے نیچے"
+
+msgid "From Bottom to Top"
+msgstr "نیچے سے اوپر"
+
+msgid "From Bottom-Left to Top-Right"
+msgstr ""
+
+msgid "From Top-Right to Bottom-Left"
+msgstr ""
+
+msgid "From Top-Left to Bottom-Right"
+msgstr ""
+
+msgid "From Bottom-Right to Top-Left"
+msgstr ""
+
+msgid "Step 3: Edge"
+msgstr "مرحلہ 3: کنارہ"
+
+msgid "Where should the gesture start?"
+msgstr "اشارہ کہاں سے شروع ہونا چاہیے؟"
+
+msgid "Anywhere"
+msgstr "کہیں بھی"
+
+msgid "Left Edge"
+msgstr "بایاں کنارہ"
+
+msgid "Right Edge"
+msgstr "دایاں کنارہ"
+
+msgid "Top Edge"
+msgstr "اوپری کنارہ"
+
+msgid "Bottom Edge"
+msgstr "نچلا کنارہ"
+
+msgid "Top-Left Corner"
+msgstr ""
+
+msgid "Top-Right Corner"
+msgstr ""
+
+msgid "Bottom-Left Corner"
+msgstr ""
+
+msgid "Bottom-Right Corner"
+msgstr ""
+
+msgid "None (Middle of screen only)"
+msgstr ""
+
+msgid "Step 4: Distance"
+msgstr "مرحلہ 4: فاصلہ"
+
+msgid "How long should the swipe be?"
+msgstr "سوائپ کتنا لمبا ہونا چاہیے؟"
+
+msgid "Any Distance"
+msgstr "کوئی بھی فاصلہ"
+
+msgid "Short"
+msgstr "مختصر"
+
+msgid "Medium"
+msgstr "درمیانہ"
+
+msgid "Large"
+msgstr "طویل"
+
+msgid "Step 5: Mode"
+msgstr "مرحلہ 5: موڈ"
+
+msgid "Trigger on press or release?"
+msgstr "دبانے یا چھوڑنے پر متحرک کریں؟"
+
+msgid "On Release (Recommended)"
+msgstr "چھوڑنے پر (تجویز کردہ)"
+
+msgid "On Press"
+msgstr "دبانے پر"
+
+msgid "Already configured"
+msgstr ""
+
+msgid "Error: Both Release and Press modes are already configured for this gesture combination."
+msgstr ""
+
+msgid "Save"
+msgstr "محفوظ کریں"
+
+msgid "Select Keyboard"
+msgstr ""
+
+msgid "Edit Item"
+msgstr "آئٹم میں ترمیم کریں"
+
+msgid "Item Details"
+msgstr "آئٹم کی تفصیلات"
+
+msgid "Action Name"
+msgstr "ایکشن کا نام"
+
+msgid "Action Type"
+msgstr "ایکشن کی قسم"
+
+msgid "Predefined Action"
+msgstr "پہلے سے طے شدہ ایکشن"
+
+msgid "Select from common actions"
+msgstr ""
+
+msgid "Custom Command"
+msgstr "اپنی مرضی کی کمانڈ"
+
+msgid "Execute a shell command"
+msgstr ""
+
+msgid "Command"
+msgstr "کمانڈ"
+
+msgid "Predefined Actions"
+msgstr ""
+
+msgid "Edit Menu"
+msgstr "مینو میں ترمیم کریں"
+
+msgid "New Item"
+msgstr "نیا آئٹم"
+
+msgid "Select Action"
+msgstr "ایکشن منتخب کریں"
+
+msgid "Wofi Menu"
+msgstr "ووفی مینو"
+
+msgid "Show a menu of actions"
+msgstr ""
+
+msgid "Edit Gesture"
+msgstr "اشارے میں ترمیم کریں"
+
+msgid "General"
+msgstr "عام"
+
+msgid "Name"
+msgstr "نام"
+
+msgid "Trigger Spec"
+msgstr "ٹرگر کی تفصیلات"
+
+msgid "Not Configured"
+msgstr "کنفیگر نہیں کیا گیا"
+
+msgid "Change"
+msgstr "تبدیل کریں"
+
+msgid "Locked State"
+msgstr "مقفل حالت"
+
+msgid "Edit"
+msgstr "ترمیم کریں"
+
+msgid "Unlocked State"
+msgstr "غیر مقفل حالت"
+
+msgid "No Action"
+msgstr "کوئی عمل نہیں"
+
+msgid "Missing Trigger"
+msgstr "گمشدہ ٹرگر"
+
+msgid "Please configure a gesture trigger before saving."
+msgstr ""
+
+msgid "OK"
+msgstr "ٹھیک ہے"
+
+msgid "Gestures"
+msgstr ""
+
+msgid "Service"
+msgstr "سروس"
+
+msgid "Enable Touch Gestures"
+msgstr "ٹچ اشاروں کو فعال کریں"
+
+msgid "Add New Gesture"
+msgstr "نیا اشارہ شامل کریں"
+
+msgid "Configured Gestures"
+msgstr "کنفیگرڈ اشارے"
+
+msgid "Unnamed Gesture"
+msgstr "بے نام اشارہ"
+
+msgid "New Gesture"
+msgstr "نیا اشارہ"
+
+msgid "Change Password"
+msgstr "پاس ورڈ تبدیل کریں"
+
+msgid "Password Details"
+msgstr "پاس ورڈ کی تفصیلات"
+
+msgid "Current Password"
+msgstr "موجودہ پاس ورڈ"
+
+msgid "New Password"
+msgstr "نیا پاس ورڈ"
+
+msgid "Confirm New Password"
+msgstr "نئے پاس ورڈ کی تصدیق کریں"
+
+msgid "Please enter current password."
+msgstr ""
+
+msgid "Please enter new password."
+msgstr ""
+
+msgid "New passwords do not match."
+msgstr ""
+
+msgid "Changing password..."
+msgstr ""
+
+msgid "Password changed successfully!"
+msgstr "پاس ورڈ کامیابی سے تبدیل ہو گیا!"
+
+msgid "Failed to change password."
+msgstr "پاس ورڈ تبدیل کرنے میں ناکام۔"
+
+msgid "Authentication error. Check current password."
+msgstr ""
+
+msgid "Bad password."
+msgstr ""
+
+msgid "it is too short"
+msgstr ""
+
+msgid "is the same as the old one"
+msgstr ""
+
+msgid "is a palindrome"
+msgstr ""
+
+msgid "case changes only"
+msgstr ""
+
+msgid "is too similar to the old one"
+msgstr ""
+
+msgid "it does not contain enough DIFFERENT characters"
+msgstr ""
+
+msgid "it is based on a dictionary word"
+msgstr ""
+
+msgid "Bad password: "
+msgstr ""
+
+msgid "Input Configuration"
+msgstr "ان پٹ کنفیگریشن"
+
+msgid "Hardware Buttons"
+msgstr "ہارڈ ویئر بٹن"
+
+msgid "Configure short, double, and long press actions"
+msgstr ""
+
+msgid "Touch Gestures"
+msgstr "ٹچ اشارے"
+
+msgid "Configure edge swipes and shortcuts"
+msgstr ""
+
+msgid "Buttons"
+msgstr "بٹن"
+
+msgid "Keyboard"
+msgstr "کی بورڈ"
+
+msgid "Active Keyboard"
+msgstr "فعال کی بورڈ"
+
+msgid "Change Keyboard"
+msgstr "کی بورڈ تبدیل کریں"
+
+msgid "Finnish Layout"
+msgstr ""
+
+msgid "Install custom Squeekboard layout"
+msgstr ""
+
+msgid "Configuration"
+msgstr "کنفیگریشن"
+
+msgid "Enforce App Wofi Config"
+msgstr ""
+
+msgid "Use Tweak-FLX1s Wofi style and config"
+msgstr ""
+
+msgid "Environment"
+msgstr "ماحول"
+
+msgid "Current Environment"
+msgstr ""
+
+msgid "Updates"
+msgstr "اپ ڈیٹس"
+
+msgid "System Upgrade"
+msgstr "سسٹم اپ گریڈ"
+
+msgid "Upgrade FuriOS"
+msgstr ""
+
+msgid "Upgrading System"
+msgstr ""
+
+msgid "Applications"
+msgstr "ایپلی کیشنز"
+
+msgid "Squeekboard"
+msgstr "Squeekboard"
+
+msgid "On-screen keyboard"
+msgstr ""
+
+msgid "FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Install custom battery monitor"
+msgstr ""
+
+msgid "Install"
+msgstr "انسٹال کریں"
+
+msgid "Phofono"
+msgstr ""
+
+msgid "Alternative Phone and Messages App"
+msgstr ""
+
+msgid "Branchy App Store"
+msgstr ""
+
+msgid "DebUI"
+msgstr ""
+
+msgid "Debian Package Installer UI"
+msgstr ""
+
+msgid "Security"
+msgstr "سیکیورٹی"
+
+msgid "Enable Shorter Passcodes"
+msgstr ""
+
+msgid "Allow 1-character passwords"
+msgstr ""
+
+msgid "Change current user password"
+msgstr ""
+
+msgid "Fingerprint Authentication"
+msgstr "فنگر پرنٹ کی تصدیق"
+
+msgid "Configure PAM for fingerprint support"
+msgstr ""
+
+msgid "Enable"
+msgstr "فعال کریں"
+
+msgid "Restarting Keyboard Service"
+msgstr ""
+
+msgid "Changing Keyboard"
+msgstr ""
+
+msgid "Remove"
+msgstr "ہٹائیں"
+
+msgid "Removing Squeekboard"
+msgstr ""
+
+msgid "Installing Squeekboard"
+msgstr ""
+
+msgid "Enabling Shorter Passwords"
+msgstr ""
+
+msgid "Disabling Shorter Passwords"
+msgstr ""
+
+msgid "Removing DebUI"
+msgstr ""
+
+msgid "Installing DebUI"
+msgstr ""
+
+msgid "Removing FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Installing FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Fingerprint is enabled"
+msgstr ""
+
+msgid "Removing Fingerprint"
+msgstr ""
+
+msgid "Configuring Fingerprint"
+msgstr ""
+
+msgid "Installed"
+msgstr "انسٹال ہو گیا"
+
+msgid "Removing Phofono"
+msgstr ""
+
+msgid "Installing Phofono"
+msgstr ""
+
+msgid "Removing Branchy"
+msgstr ""
+
+msgid "Installing Branchy"
+msgstr ""
+
+msgid "Staging"
+msgstr ""
+
+msgid "Switch to Production"
+msgstr ""
+
+msgid "Production"
+msgstr ""
+
+msgid "Switch to Staging"
+msgstr ""
+
+msgid "Switching to Production"
+msgstr ""
+
+msgid "Switching to Staging"
+msgstr ""
+
+msgid "About Tweak-FLX1s"
+msgstr "Tweak-FLX1s کے بارے میں"
+
+msgid "System tweaks and utilities for FuriPhoneFLX1s."
+msgstr ""
+
+msgid "Version"
+msgstr "ورژن"
+
+msgid "Developer"
+msgstr "ڈویلپر"
+
+msgid "License"
+msgstr "لائسنس"
+
+msgid "Links"
+msgstr "لنکس"
+
+msgid "Website"
+msgstr "ویب سائٹ"
+
+msgid "Issue Tracker"
+msgstr "مسئلہ ٹریکر"
+
+msgid "Report bugs or request features"
+msgstr ""
+
+msgid "Appearance"
+msgstr "ظاہری شکل"
+
+msgid "GTK3 CSS Tweak"
+msgstr ""
+
+msgid "Apply custom UI scaling tweaks for GTK3 apps"
+msgstr ""
+
+msgid "Background Services"
+msgstr "پس منظر کی خدمات"
+
+msgid "Alarm Volume Fix"
+msgstr ""
+
+msgid "Ensure alarm plays at full volume"
+msgstr ""
+
+msgid "Andromeda Guard"
+msgstr ""
+
+msgid "Prevent OSK issues"
+msgstr ""
+
+msgid "Andromeda Integration"
+msgstr ""
+
+msgid "Shared Folders"
+msgstr ""
+
+msgid "Mount ~/.local/share/andromeda to ~/Android-Share"
+msgstr ""
+
+msgid "Audio"
+msgstr "آڈیو"
+
+msgid "Custom Sound Theme"
+msgstr ""
+
+msgid "Use fastflx1 custom sounds"
+msgstr ""
+
+msgid "Mounting Shared Folders"
+msgstr ""
+
+msgid "Unmounting Shared Folders"
+msgstr ""
+
+msgid "Short Press"
+msgstr "مختصر پریس"
+
+msgid "Double Press"
+msgstr "ڈبل پریس"
+
+msgid "Long Press"
+msgstr "طویل پریس"
+
+msgid "Use Custom Assistant File"
+msgstr ""
+
+msgid "Write ~/.config/assistant-button/..."
+msgstr ""
+
+msgid "Locked Action"
+msgstr ""
+
+msgid "Unlocked Action"
+msgstr ""
+
+msgid "Copy (Ctrl+C)"
+msgstr "کاپی (Ctrl+C)"
+
+msgid "Paste (Ctrl+V)"
+msgstr "پیسٹ (Ctrl+V)"
+
+msgid "Cut (Ctrl+X)"
+msgstr ""
+
+msgid "Select All and Copy"
+msgstr ""
+
+msgid "Paste from Clipboard"
+msgstr ""
+
+msgid "Kill Active Window"
+msgstr ""
+
+msgid "Switch Window on the left"
+msgstr ""
+
+msgid "Switch Window on the right"
+msgstr ""
+
+msgid "Screenshot"
+msgstr "اسکرین شاٹ"
+
+msgid "Flashlight"
+msgstr "فلیش لائٹ"
+
+msgid "Play/Pause"
+msgstr ""
+
+msgid "Next Track"
+msgstr ""
+
+msgid "Previous Track"
+msgstr ""
+
+msgid "Volume Up"
+msgstr ""
+
+msgid "Volume Down"
+msgstr ""
+
+msgid "Mute"
+msgstr "خاموش"

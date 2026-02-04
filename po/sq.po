@@ -1,0 +1,675 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: tweak-flx1s 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-01-01 00:00+0000\n"
+"Last-Translator: ai\n"
+"Language-Team: ai\n"
+"Language: sq\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Add Location"
+msgstr "Shto vendndodhje"
+
+msgid "Close"
+msgstr "Mbyll"
+
+msgid "Enter city name"
+msgstr "Shkruani emrin e qytetit"
+
+msgid "Search"
+msgstr "Kërko"
+
+msgid "Result"
+msgstr "Rezultati"
+
+msgid "No location found yet."
+msgstr "Asnjë vendndodhje nuk u gjet ende."
+
+msgid "Searching..."
+msgstr "Duke kërkuar..."
+
+msgid "No location found."
+msgstr "Vendndodhja nuk u gjet."
+
+msgid "Error adding location."
+msgstr "Gabim gjatë shtimit të vendndodhjes."
+
+msgid "Tweaks"
+msgstr "Ndryshime"
+
+msgid "System"
+msgstr "Sistemi"
+
+msgid "Actions"
+msgstr "Veprimet"
+
+msgid "New Gesture Wizard"
+msgstr "Magjistari i gjesteve të reja"
+
+msgid "Cancel"
+msgstr "Anulo"
+
+msgid "Go Back"
+msgstr "Kthehu"
+
+msgid "Proceed"
+msgstr "Vazhdo"
+
+msgid "Step 1: Fingers"
+msgstr "Hapi 1: Gishtat"
+
+msgid "How many fingers used for the gesture?"
+msgstr "Sa gishta përdoren për gjestin?"
+
+msgid "Step 2: Direction"
+msgstr "Hapi 2: Drejtimi"
+
+msgid "Which direction is the swipe?"
+msgstr "Në cilin drejtim është rrëshqitja?"
+
+msgid "From Left to Right"
+msgstr "Nga e majta në të djathtë"
+
+msgid "From Right to Left"
+msgstr "Nga e djathta në të majtë"
+
+msgid "From Top to Bottom"
+msgstr "Nga lart poshtë"
+
+msgid "From Bottom to Top"
+msgstr "Nga poshtë lart"
+
+msgid "From Bottom-Left to Top-Right"
+msgstr ""
+
+msgid "From Top-Right to Bottom-Left"
+msgstr ""
+
+msgid "From Top-Left to Bottom-Right"
+msgstr ""
+
+msgid "From Bottom-Right to Top-Left"
+msgstr ""
+
+msgid "Step 3: Edge"
+msgstr "Hapi 3: Buza"
+
+msgid "Where should the gesture start?"
+msgstr "Ku duhet të fillojë gjesti?"
+
+msgid "Anywhere"
+msgstr "Kudo"
+
+msgid "Left Edge"
+msgstr "Buza e majtë"
+
+msgid "Right Edge"
+msgstr "Buza e djathtë"
+
+msgid "Top Edge"
+msgstr "Buza e sipërme"
+
+msgid "Bottom Edge"
+msgstr "Buza e poshtme"
+
+msgid "Top-Left Corner"
+msgstr ""
+
+msgid "Top-Right Corner"
+msgstr ""
+
+msgid "Bottom-Left Corner"
+msgstr ""
+
+msgid "Bottom-Right Corner"
+msgstr ""
+
+msgid "None (Middle of screen only)"
+msgstr ""
+
+msgid "Step 4: Distance"
+msgstr "Hapi 4: Distanca"
+
+msgid "How long should the swipe be?"
+msgstr "Sa e gjatë duhet të jetë rrëshqitja?"
+
+msgid "Any Distance"
+msgstr "Çdo distancë"
+
+msgid "Short"
+msgstr "E shkurtër"
+
+msgid "Medium"
+msgstr "Mesatare"
+
+msgid "Large"
+msgstr "E gjatë"
+
+msgid "Step 5: Mode"
+msgstr "Hapi 5: Mënyra"
+
+msgid "Trigger on press or release?"
+msgstr "Të aktivizohet në shtypje apo lëshim?"
+
+msgid "On Release (Recommended)"
+msgstr "Në lëshim (E rekomanduar)"
+
+msgid "On Press"
+msgstr "Në shtypje"
+
+msgid "Already configured"
+msgstr ""
+
+msgid "Error: Both Release and Press modes are already configured for this gesture combination."
+msgstr ""
+
+msgid "Save"
+msgstr "Ruaj"
+
+msgid "Select Keyboard"
+msgstr ""
+
+msgid "Edit Item"
+msgstr "Redakto elementin"
+
+msgid "Item Details"
+msgstr "Detajet e elementit"
+
+msgid "Action Name"
+msgstr "Emri i veprimit"
+
+msgid "Action Type"
+msgstr "Lloji i veprimit"
+
+msgid "Predefined Action"
+msgstr "Veprim i paracaktuar"
+
+msgid "Select from common actions"
+msgstr ""
+
+msgid "Custom Command"
+msgstr "Komandë e personalizuar"
+
+msgid "Execute a shell command"
+msgstr ""
+
+msgid "Command"
+msgstr "Komanda"
+
+msgid "Predefined Actions"
+msgstr ""
+
+msgid "Edit Menu"
+msgstr "Redakto menunë"
+
+msgid "New Item"
+msgstr "Element i ri"
+
+msgid "Select Action"
+msgstr "Zgjidh veprimin"
+
+msgid "Wofi Menu"
+msgstr "Menuja Wofi"
+
+msgid "Show a menu of actions"
+msgstr ""
+
+msgid "Edit Gesture"
+msgstr "Redakto gjestin"
+
+msgid "General"
+msgstr "Të përgjithshme"
+
+msgid "Name"
+msgstr "Emri"
+
+msgid "Trigger Spec"
+msgstr "Specifikimi i aktivizuesit"
+
+msgid "Not Configured"
+msgstr "E pa konfiguruar"
+
+msgid "Change"
+msgstr "Ndrysho"
+
+msgid "Locked State"
+msgstr "Gjendja e kyçur"
+
+msgid "Edit"
+msgstr "Redakto"
+
+msgid "Unlocked State"
+msgstr "Gjendja e shkyçur"
+
+msgid "No Action"
+msgstr "Asnjë veprim"
+
+msgid "Missing Trigger"
+msgstr "Mungon aktivizuesi"
+
+msgid "Please configure a gesture trigger before saving."
+msgstr ""
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Gestures"
+msgstr ""
+
+msgid "Service"
+msgstr "Shërbimi"
+
+msgid "Enable Touch Gestures"
+msgstr "Aktivizo gjestet me prekje"
+
+msgid "Add New Gesture"
+msgstr "Shto gjest të ri"
+
+msgid "Configured Gestures"
+msgstr "Gjestet e konfiguruara"
+
+msgid "Unnamed Gesture"
+msgstr "Gjest pa emër"
+
+msgid "New Gesture"
+msgstr "Gjest i ri"
+
+msgid "Change Password"
+msgstr "Ndrysho fjalëkalimin"
+
+msgid "Password Details"
+msgstr "Detajet e fjalëkalimit"
+
+msgid "Current Password"
+msgstr "Fjalëkalimi aktual"
+
+msgid "New Password"
+msgstr "Fjalëkalimi i ri"
+
+msgid "Confirm New Password"
+msgstr "Konfirmo fjalëkalimin e ri"
+
+msgid "Please enter current password."
+msgstr ""
+
+msgid "Please enter new password."
+msgstr ""
+
+msgid "New passwords do not match."
+msgstr ""
+
+msgid "Changing password..."
+msgstr ""
+
+msgid "Password changed successfully!"
+msgstr "Fjalëkalimi u ndryshua me sukses!"
+
+msgid "Failed to change password."
+msgstr "Ndryshimi i fjalëkalimit dështoi."
+
+msgid "Authentication error. Check current password."
+msgstr ""
+
+msgid "Bad password."
+msgstr ""
+
+msgid "it is too short"
+msgstr ""
+
+msgid "is the same as the old one"
+msgstr ""
+
+msgid "is a palindrome"
+msgstr ""
+
+msgid "case changes only"
+msgstr ""
+
+msgid "is too similar to the old one"
+msgstr ""
+
+msgid "it does not contain enough DIFFERENT characters"
+msgstr ""
+
+msgid "it is based on a dictionary word"
+msgstr ""
+
+msgid "Bad password: "
+msgstr ""
+
+msgid "Input Configuration"
+msgstr "Konfigurimi i hyrjes"
+
+msgid "Hardware Buttons"
+msgstr "Butonat e harduerit"
+
+msgid "Configure short, double, and long press actions"
+msgstr ""
+
+msgid "Touch Gestures"
+msgstr "Gjestet me prekje"
+
+msgid "Configure edge swipes and shortcuts"
+msgstr ""
+
+msgid "Buttons"
+msgstr "Butonat"
+
+msgid "Keyboard"
+msgstr "Tastiera"
+
+msgid "Active Keyboard"
+msgstr "Tastiera aktive"
+
+msgid "Change Keyboard"
+msgstr "Ndrysho tastierën"
+
+msgid "Finnish Layout"
+msgstr ""
+
+msgid "Install custom Squeekboard layout"
+msgstr ""
+
+msgid "Configuration"
+msgstr "Konfigurimi"
+
+msgid "Enforce App Wofi Config"
+msgstr ""
+
+msgid "Use Tweak-FLX1s Wofi style and config"
+msgstr ""
+
+msgid "Environment"
+msgstr "Mjedisi"
+
+msgid "Current Environment"
+msgstr ""
+
+msgid "Updates"
+msgstr "Përditësimet"
+
+msgid "System Upgrade"
+msgstr "Përmirësimi i sistemit"
+
+msgid "Upgrade FuriOS"
+msgstr ""
+
+msgid "Upgrading System"
+msgstr ""
+
+msgid "Applications"
+msgstr "Aplikacionet"
+
+msgid "Squeekboard"
+msgstr "Squeekboard"
+
+msgid "On-screen keyboard"
+msgstr ""
+
+msgid "FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Install custom battery monitor"
+msgstr ""
+
+msgid "Install"
+msgstr "Instalo"
+
+msgid "Phofono"
+msgstr ""
+
+msgid "Alternative Phone and Messages App"
+msgstr ""
+
+msgid "Branchy App Store"
+msgstr ""
+
+msgid "DebUI"
+msgstr ""
+
+msgid "Debian Package Installer UI"
+msgstr ""
+
+msgid "Security"
+msgstr "Siguria"
+
+msgid "Enable Shorter Passcodes"
+msgstr ""
+
+msgid "Allow 1-character passwords"
+msgstr ""
+
+msgid "Change current user password"
+msgstr ""
+
+msgid "Fingerprint Authentication"
+msgstr "Autentifikimi me gjurmë gishtash"
+
+msgid "Configure PAM for fingerprint support"
+msgstr ""
+
+msgid "Enable"
+msgstr "Aktivizo"
+
+msgid "Restarting Keyboard Service"
+msgstr ""
+
+msgid "Changing Keyboard"
+msgstr ""
+
+msgid "Remove"
+msgstr "Hiq"
+
+msgid "Removing Squeekboard"
+msgstr ""
+
+msgid "Installing Squeekboard"
+msgstr ""
+
+msgid "Enabling Shorter Passwords"
+msgstr ""
+
+msgid "Disabling Shorter Passwords"
+msgstr ""
+
+msgid "Removing DebUI"
+msgstr ""
+
+msgid "Installing DebUI"
+msgstr ""
+
+msgid "Removing FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Installing FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Fingerprint is enabled"
+msgstr ""
+
+msgid "Removing Fingerprint"
+msgstr ""
+
+msgid "Configuring Fingerprint"
+msgstr ""
+
+msgid "Installed"
+msgstr "E instaluar"
+
+msgid "Removing Phofono"
+msgstr ""
+
+msgid "Installing Phofono"
+msgstr ""
+
+msgid "Removing Branchy"
+msgstr ""
+
+msgid "Installing Branchy"
+msgstr ""
+
+msgid "Staging"
+msgstr ""
+
+msgid "Switch to Production"
+msgstr ""
+
+msgid "Production"
+msgstr ""
+
+msgid "Switch to Staging"
+msgstr ""
+
+msgid "Switching to Production"
+msgstr ""
+
+msgid "Switching to Staging"
+msgstr ""
+
+msgid "About Tweak-FLX1s"
+msgstr "Rreth Tweak-FLX1s"
+
+msgid "System tweaks and utilities for FuriPhoneFLX1s."
+msgstr ""
+
+msgid "Version"
+msgstr "Versioni"
+
+msgid "Developer"
+msgstr "Zhvilluesi"
+
+msgid "License"
+msgstr "Licenca"
+
+msgid "Links"
+msgstr "Lidhjet"
+
+msgid "Website"
+msgstr "Faqja e internetit"
+
+msgid "Issue Tracker"
+msgstr "Gjurmuesi i problemeve"
+
+msgid "Report bugs or request features"
+msgstr ""
+
+msgid "Appearance"
+msgstr "Pamja"
+
+msgid "GTK3 CSS Tweak"
+msgstr ""
+
+msgid "Apply custom UI scaling tweaks for GTK3 apps"
+msgstr ""
+
+msgid "Background Services"
+msgstr "Shërbimet në sfond"
+
+msgid "Alarm Volume Fix"
+msgstr ""
+
+msgid "Ensure alarm plays at full volume"
+msgstr ""
+
+msgid "Andromeda Guard"
+msgstr ""
+
+msgid "Prevent OSK issues"
+msgstr ""
+
+msgid "Andromeda Integration"
+msgstr ""
+
+msgid "Shared Folders"
+msgstr ""
+
+msgid "Mount ~/.local/share/andromeda to ~/Android-Share"
+msgstr ""
+
+msgid "Audio"
+msgstr "Audio"
+
+msgid "Custom Sound Theme"
+msgstr ""
+
+msgid "Use fastflx1 custom sounds"
+msgstr ""
+
+msgid "Mounting Shared Folders"
+msgstr ""
+
+msgid "Unmounting Shared Folders"
+msgstr ""
+
+msgid "Short Press"
+msgstr "Shtypje e shkurtër"
+
+msgid "Double Press"
+msgstr "Shtypje e dyfishtë"
+
+msgid "Long Press"
+msgstr "Shtypje e gjatë"
+
+msgid "Use Custom Assistant File"
+msgstr ""
+
+msgid "Write ~/.config/assistant-button/..."
+msgstr ""
+
+msgid "Locked Action"
+msgstr ""
+
+msgid "Unlocked Action"
+msgstr ""
+
+msgid "Copy (Ctrl+C)"
+msgstr "Kopjo (Ctrl+C)"
+
+msgid "Paste (Ctrl+V)"
+msgstr "Ngjit (Ctrl+V)"
+
+msgid "Cut (Ctrl+X)"
+msgstr ""
+
+msgid "Select All and Copy"
+msgstr ""
+
+msgid "Paste from Clipboard"
+msgstr ""
+
+msgid "Kill Active Window"
+msgstr ""
+
+msgid "Switch Window on the left"
+msgstr ""
+
+msgid "Switch Window on the right"
+msgstr ""
+
+msgid "Screenshot"
+msgstr "Pamje nga ekrani"
+
+msgid "Flashlight"
+msgstr "Elektrik dore"
+
+msgid "Play/Pause"
+msgstr ""
+
+msgid "Next Track"
+msgstr ""
+
+msgid "Previous Track"
+msgstr ""
+
+msgid "Volume Up"
+msgstr ""
+
+msgid "Volume Down"
+msgstr ""
+
+msgid "Mute"
+msgstr "Pa zë"

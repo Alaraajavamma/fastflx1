@@ -1,0 +1,675 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: tweak-flx1s 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-01-01 00:00+0000\n"
+"Last-Translator: ai\n"
+"Language-Team: ai\n"
+"Language: vi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Add Location"
+msgstr "Thêm địa điểm"
+
+msgid "Close"
+msgstr "Đóng"
+
+msgid "Enter city name"
+msgstr "Nhập tên thành phố"
+
+msgid "Search"
+msgstr "Tìm kiếm"
+
+msgid "Result"
+msgstr "Kết quả"
+
+msgid "No location found yet."
+msgstr "Chưa tìm thấy địa điểm."
+
+msgid "Searching..."
+msgstr "Đang tìm..."
+
+msgid "No location found."
+msgstr "Không tìm thấy địa điểm."
+
+msgid "Error adding location."
+msgstr "Lỗi khi thêm địa điểm."
+
+msgid "Tweaks"
+msgstr "Tinh chỉnh"
+
+msgid "System"
+msgstr "Hệ thống"
+
+msgid "Actions"
+msgstr "Hành động"
+
+msgid "New Gesture Wizard"
+msgstr "Trình hướng dẫn cử chỉ mới"
+
+msgid "Cancel"
+msgstr "Hủy"
+
+msgid "Go Back"
+msgstr "Quay lại"
+
+msgid "Proceed"
+msgstr "Tiếp tục"
+
+msgid "Step 1: Fingers"
+msgstr "Bước 1: Ngón tay"
+
+msgid "How many fingers used for the gesture?"
+msgstr "Bao nhiêu ngón tay được sử dụng cho cử chỉ?"
+
+msgid "Step 2: Direction"
+msgstr "Bước 2: Hướng"
+
+msgid "Which direction is the swipe?"
+msgstr "Vuốt theo hướng nào?"
+
+msgid "From Left to Right"
+msgstr "Từ trái sang phải"
+
+msgid "From Right to Left"
+msgstr "Từ phải sang trái"
+
+msgid "From Top to Bottom"
+msgstr "Từ trên xuống dưới"
+
+msgid "From Bottom to Top"
+msgstr "Từ dưới lên trên"
+
+msgid "From Bottom-Left to Top-Right"
+msgstr ""
+
+msgid "From Top-Right to Bottom-Left"
+msgstr ""
+
+msgid "From Top-Left to Bottom-Right"
+msgstr ""
+
+msgid "From Bottom-Right to Top-Left"
+msgstr ""
+
+msgid "Step 3: Edge"
+msgstr "Bước 3: Cạnh"
+
+msgid "Where should the gesture start?"
+msgstr "Cử chỉ nên bắt đầu từ đâu?"
+
+msgid "Anywhere"
+msgstr "Bất cứ đâu"
+
+msgid "Left Edge"
+msgstr "Cạnh trái"
+
+msgid "Right Edge"
+msgstr "Cạnh phải"
+
+msgid "Top Edge"
+msgstr "Cạnh trên"
+
+msgid "Bottom Edge"
+msgstr "Cạnh dưới"
+
+msgid "Top-Left Corner"
+msgstr ""
+
+msgid "Top-Right Corner"
+msgstr ""
+
+msgid "Bottom-Left Corner"
+msgstr ""
+
+msgid "Bottom-Right Corner"
+msgstr ""
+
+msgid "None (Middle of screen only)"
+msgstr ""
+
+msgid "Step 4: Distance"
+msgstr "Bước 4: Khoảng cách"
+
+msgid "How long should the swipe be?"
+msgstr "Cú vuốt nên dài bao nhiêu?"
+
+msgid "Any Distance"
+msgstr "Bất kỳ khoảng cách nào"
+
+msgid "Short"
+msgstr "Ngắn"
+
+msgid "Medium"
+msgstr "Trung bình"
+
+msgid "Large"
+msgstr "Dài"
+
+msgid "Step 5: Mode"
+msgstr "Bước 5: Chế độ"
+
+msgid "Trigger on press or release?"
+msgstr "Kích hoạt khi nhấn hay thả?"
+
+msgid "On Release (Recommended)"
+msgstr "Khi thả (Được khuyến nghị)"
+
+msgid "On Press"
+msgstr "Khi nhấn"
+
+msgid "Already configured"
+msgstr ""
+
+msgid "Error: Both Release and Press modes are already configured for this gesture combination."
+msgstr ""
+
+msgid "Save"
+msgstr "Lưu"
+
+msgid "Select Keyboard"
+msgstr ""
+
+msgid "Edit Item"
+msgstr "Chỉnh sửa mục"
+
+msgid "Item Details"
+msgstr "Chi tiết mục"
+
+msgid "Action Name"
+msgstr "Tên hành động"
+
+msgid "Action Type"
+msgstr "Loại hành động"
+
+msgid "Predefined Action"
+msgstr "Hành động được xác định trước"
+
+msgid "Select from common actions"
+msgstr ""
+
+msgid "Custom Command"
+msgstr "Lệnh tùy chỉnh"
+
+msgid "Execute a shell command"
+msgstr ""
+
+msgid "Command"
+msgstr "Lệnh"
+
+msgid "Predefined Actions"
+msgstr ""
+
+msgid "Edit Menu"
+msgstr "Chỉnh sửa menu"
+
+msgid "New Item"
+msgstr "Mục mới"
+
+msgid "Select Action"
+msgstr "Chọn hành động"
+
+msgid "Wofi Menu"
+msgstr "Menu Wofi"
+
+msgid "Show a menu of actions"
+msgstr ""
+
+msgid "Edit Gesture"
+msgstr "Chỉnh sửa cử chỉ"
+
+msgid "General"
+msgstr "Chung"
+
+msgid "Name"
+msgstr "Tên"
+
+msgid "Trigger Spec"
+msgstr "Thông số kích hoạt"
+
+msgid "Not Configured"
+msgstr "Chưa cấu hình"
+
+msgid "Change"
+msgstr "Thay đổi"
+
+msgid "Locked State"
+msgstr "Trạng thái khóa"
+
+msgid "Edit"
+msgstr "Chỉnh sửa"
+
+msgid "Unlocked State"
+msgstr "Trạng thái mở khóa"
+
+msgid "No Action"
+msgstr "Không có hành động"
+
+msgid "Missing Trigger"
+msgstr "Thiếu kích hoạt"
+
+msgid "Please configure a gesture trigger before saving."
+msgstr ""
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Gestures"
+msgstr ""
+
+msgid "Service"
+msgstr "Dịch vụ"
+
+msgid "Enable Touch Gestures"
+msgstr "Bật cử chỉ cảm ứng"
+
+msgid "Add New Gesture"
+msgstr "Thêm cử chỉ mới"
+
+msgid "Configured Gestures"
+msgstr "Cử chỉ đã cấu hình"
+
+msgid "Unnamed Gesture"
+msgstr "Cử chỉ không tên"
+
+msgid "New Gesture"
+msgstr "Cử chỉ mới"
+
+msgid "Change Password"
+msgstr "Đổi mật khẩu"
+
+msgid "Password Details"
+msgstr "Chi tiết mật khẩu"
+
+msgid "Current Password"
+msgstr "Mật khẩu hiện tại"
+
+msgid "New Password"
+msgstr "Mật khẩu mới"
+
+msgid "Confirm New Password"
+msgstr "Xác nhận mật khẩu mới"
+
+msgid "Please enter current password."
+msgstr ""
+
+msgid "Please enter new password."
+msgstr ""
+
+msgid "New passwords do not match."
+msgstr ""
+
+msgid "Changing password..."
+msgstr ""
+
+msgid "Password changed successfully!"
+msgstr "Đổi mật khẩu thành công!"
+
+msgid "Failed to change password."
+msgstr "Đổi mật khẩu thất bại."
+
+msgid "Authentication error. Check current password."
+msgstr ""
+
+msgid "Bad password."
+msgstr ""
+
+msgid "it is too short"
+msgstr ""
+
+msgid "is the same as the old one"
+msgstr ""
+
+msgid "is a palindrome"
+msgstr ""
+
+msgid "case changes only"
+msgstr ""
+
+msgid "is too similar to the old one"
+msgstr ""
+
+msgid "it does not contain enough DIFFERENT characters"
+msgstr ""
+
+msgid "it is based on a dictionary word"
+msgstr ""
+
+msgid "Bad password: "
+msgstr ""
+
+msgid "Input Configuration"
+msgstr "Cấu hình đầu vào"
+
+msgid "Hardware Buttons"
+msgstr "Nút phần cứng"
+
+msgid "Configure short, double, and long press actions"
+msgstr ""
+
+msgid "Touch Gestures"
+msgstr "Cử chỉ cảm ứng"
+
+msgid "Configure edge swipes and shortcuts"
+msgstr ""
+
+msgid "Buttons"
+msgstr "Nút"
+
+msgid "Keyboard"
+msgstr "Bàn phím"
+
+msgid "Active Keyboard"
+msgstr "Bàn phím đang hoạt động"
+
+msgid "Change Keyboard"
+msgstr "Đổi bàn phím"
+
+msgid "Finnish Layout"
+msgstr ""
+
+msgid "Install custom Squeekboard layout"
+msgstr ""
+
+msgid "Configuration"
+msgstr "Cấu hình"
+
+msgid "Enforce App Wofi Config"
+msgstr ""
+
+msgid "Use Tweak-FLX1s Wofi style and config"
+msgstr ""
+
+msgid "Environment"
+msgstr "Môi trường"
+
+msgid "Current Environment"
+msgstr ""
+
+msgid "Updates"
+msgstr "Cập nhật"
+
+msgid "System Upgrade"
+msgstr "Nâng cấp hệ thống"
+
+msgid "Upgrade FuriOS"
+msgstr ""
+
+msgid "Upgrading System"
+msgstr ""
+
+msgid "Applications"
+msgstr "Ứng dụng"
+
+msgid "Squeekboard"
+msgstr "Squeekboard"
+
+msgid "On-screen keyboard"
+msgstr ""
+
+msgid "FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Install custom battery monitor"
+msgstr ""
+
+msgid "Install"
+msgstr "Cài đặt"
+
+msgid "Phofono"
+msgstr ""
+
+msgid "Alternative Phone and Messages App"
+msgstr ""
+
+msgid "Branchy App Store"
+msgstr ""
+
+msgid "DebUI"
+msgstr ""
+
+msgid "Debian Package Installer UI"
+msgstr ""
+
+msgid "Security"
+msgstr "Bảo mật"
+
+msgid "Enable Shorter Passcodes"
+msgstr ""
+
+msgid "Allow 1-character passwords"
+msgstr ""
+
+msgid "Change current user password"
+msgstr ""
+
+msgid "Fingerprint Authentication"
+msgstr "Xác thực vân tay"
+
+msgid "Configure PAM for fingerprint support"
+msgstr ""
+
+msgid "Enable"
+msgstr "Bật"
+
+msgid "Restarting Keyboard Service"
+msgstr ""
+
+msgid "Changing Keyboard"
+msgstr ""
+
+msgid "Remove"
+msgstr "Gỡ bỏ"
+
+msgid "Removing Squeekboard"
+msgstr ""
+
+msgid "Installing Squeekboard"
+msgstr ""
+
+msgid "Enabling Shorter Passwords"
+msgstr ""
+
+msgid "Disabling Shorter Passwords"
+msgstr ""
+
+msgid "Removing DebUI"
+msgstr ""
+
+msgid "Installing DebUI"
+msgstr ""
+
+msgid "Removing FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Installing FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Fingerprint is enabled"
+msgstr ""
+
+msgid "Removing Fingerprint"
+msgstr ""
+
+msgid "Configuring Fingerprint"
+msgstr ""
+
+msgid "Installed"
+msgstr "Đã cài đặt"
+
+msgid "Removing Phofono"
+msgstr ""
+
+msgid "Installing Phofono"
+msgstr ""
+
+msgid "Removing Branchy"
+msgstr ""
+
+msgid "Installing Branchy"
+msgstr ""
+
+msgid "Staging"
+msgstr ""
+
+msgid "Switch to Production"
+msgstr ""
+
+msgid "Production"
+msgstr ""
+
+msgid "Switch to Staging"
+msgstr ""
+
+msgid "Switching to Production"
+msgstr ""
+
+msgid "Switching to Staging"
+msgstr ""
+
+msgid "About Tweak-FLX1s"
+msgstr "Về Tweak-FLX1s"
+
+msgid "System tweaks and utilities for FuriPhoneFLX1s."
+msgstr ""
+
+msgid "Version"
+msgstr "Phiên bản"
+
+msgid "Developer"
+msgstr "Nhà phát triển"
+
+msgid "License"
+msgstr "Giấy phép"
+
+msgid "Links"
+msgstr "Liên kết"
+
+msgid "Website"
+msgstr "Trang web"
+
+msgid "Issue Tracker"
+msgstr "Trình theo dõi vấn đề"
+
+msgid "Report bugs or request features"
+msgstr ""
+
+msgid "Appearance"
+msgstr "Giao diện"
+
+msgid "GTK3 CSS Tweak"
+msgstr ""
+
+msgid "Apply custom UI scaling tweaks for GTK3 apps"
+msgstr ""
+
+msgid "Background Services"
+msgstr "Dịch vụ nền"
+
+msgid "Alarm Volume Fix"
+msgstr ""
+
+msgid "Ensure alarm plays at full volume"
+msgstr ""
+
+msgid "Andromeda Guard"
+msgstr ""
+
+msgid "Prevent OSK issues"
+msgstr ""
+
+msgid "Andromeda Integration"
+msgstr ""
+
+msgid "Shared Folders"
+msgstr ""
+
+msgid "Mount ~/.local/share/andromeda to ~/Android-Share"
+msgstr ""
+
+msgid "Audio"
+msgstr "Âm thanh"
+
+msgid "Custom Sound Theme"
+msgstr ""
+
+msgid "Use fastflx1 custom sounds"
+msgstr ""
+
+msgid "Mounting Shared Folders"
+msgstr ""
+
+msgid "Unmounting Shared Folders"
+msgstr ""
+
+msgid "Short Press"
+msgstr "Nhấn ngắn"
+
+msgid "Double Press"
+msgstr "Nhấn đúp"
+
+msgid "Long Press"
+msgstr "Nhấn giữ"
+
+msgid "Use Custom Assistant File"
+msgstr ""
+
+msgid "Write ~/.config/assistant-button/..."
+msgstr ""
+
+msgid "Locked Action"
+msgstr ""
+
+msgid "Unlocked Action"
+msgstr ""
+
+msgid "Copy (Ctrl+C)"
+msgstr "Sao chép (Ctrl+C)"
+
+msgid "Paste (Ctrl+V)"
+msgstr "Dán (Ctrl+V)"
+
+msgid "Cut (Ctrl+X)"
+msgstr ""
+
+msgid "Select All and Copy"
+msgstr ""
+
+msgid "Paste from Clipboard"
+msgstr ""
+
+msgid "Kill Active Window"
+msgstr ""
+
+msgid "Switch Window on the left"
+msgstr ""
+
+msgid "Switch Window on the right"
+msgstr ""
+
+msgid "Screenshot"
+msgstr "Chụp màn hình"
+
+msgid "Flashlight"
+msgstr "Đèn pin"
+
+msgid "Play/Pause"
+msgstr ""
+
+msgid "Next Track"
+msgstr ""
+
+msgid "Previous Track"
+msgstr ""
+
+msgid "Volume Up"
+msgstr ""
+
+msgid "Volume Down"
+msgstr ""
+
+msgid "Mute"
+msgstr "Tắt tiếng"

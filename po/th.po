@@ -1,0 +1,675 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: tweak-flx1s 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-01-01 00:00+0000\n"
+"Last-Translator: ai\n"
+"Language-Team: ai\n"
+"Language: th\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Add Location"
+msgstr "เพิ่มตำแหน่ง"
+
+msgid "Close"
+msgstr "ปิด"
+
+msgid "Enter city name"
+msgstr "ป้อนชื่อเมือง"
+
+msgid "Search"
+msgstr "ค้นหา"
+
+msgid "Result"
+msgstr "ผลลัพธ์"
+
+msgid "No location found yet."
+msgstr "ยังไม่พบตำแหน่ง"
+
+msgid "Searching..."
+msgstr "กำลังค้นหา..."
+
+msgid "No location found."
+msgstr "ไม่พบตำแหน่ง"
+
+msgid "Error adding location."
+msgstr "เกิดข้อผิดพลาดในการเพิ่มตำแหน่ง"
+
+msgid "Tweaks"
+msgstr "การปรับแต่ง"
+
+msgid "System"
+msgstr "ระบบ"
+
+msgid "Actions"
+msgstr "การกระทำ"
+
+msgid "New Gesture Wizard"
+msgstr "ตัวช่วยสร้างท่าทางใหม่"
+
+msgid "Cancel"
+msgstr "ยกเลิก"
+
+msgid "Go Back"
+msgstr "ย้อนกลับ"
+
+msgid "Proceed"
+msgstr "ดำเนินการต่อ"
+
+msgid "Step 1: Fingers"
+msgstr "ขั้นตอนที่ 1: นิ้ว"
+
+msgid "How many fingers used for the gesture?"
+msgstr "ใช้กี่นิ้วสำหรับท่าทาง?"
+
+msgid "Step 2: Direction"
+msgstr "ขั้นตอนที่ 2: ทิศทาง"
+
+msgid "Which direction is the swipe?"
+msgstr "ปัดไปทางไหน?"
+
+msgid "From Left to Right"
+msgstr "จากซ้ายไปขวา"
+
+msgid "From Right to Left"
+msgstr "จากขวาไปซ้าย"
+
+msgid "From Top to Bottom"
+msgstr "จากบนลงล่าง"
+
+msgid "From Bottom to Top"
+msgstr "จากล่างขึ้นบน"
+
+msgid "From Bottom-Left to Top-Right"
+msgstr ""
+
+msgid "From Top-Right to Bottom-Left"
+msgstr ""
+
+msgid "From Top-Left to Bottom-Right"
+msgstr ""
+
+msgid "From Bottom-Right to Top-Left"
+msgstr ""
+
+msgid "Step 3: Edge"
+msgstr "ขั้นตอนที่ 3: ขอบ"
+
+msgid "Where should the gesture start?"
+msgstr "ท่าทางควรเริ่มที่ไหน?"
+
+msgid "Anywhere"
+msgstr "ทุกที่"
+
+msgid "Left Edge"
+msgstr "ขอบซ้าย"
+
+msgid "Right Edge"
+msgstr "ขอบขวา"
+
+msgid "Top Edge"
+msgstr "ขอบบน"
+
+msgid "Bottom Edge"
+msgstr "ขอบล่าง"
+
+msgid "Top-Left Corner"
+msgstr ""
+
+msgid "Top-Right Corner"
+msgstr ""
+
+msgid "Bottom-Left Corner"
+msgstr ""
+
+msgid "Bottom-Right Corner"
+msgstr ""
+
+msgid "None (Middle of screen only)"
+msgstr ""
+
+msgid "Step 4: Distance"
+msgstr "ขั้นตอนที่ 4: ระยะทาง"
+
+msgid "How long should the swipe be?"
+msgstr "การปัดควรยาวแค่ไหน?"
+
+msgid "Any Distance"
+msgstr "ระยะทางใดก็ได้"
+
+msgid "Short"
+msgstr "สั้น"
+
+msgid "Medium"
+msgstr "ปานกลาง"
+
+msgid "Large"
+msgstr "ยาว"
+
+msgid "Step 5: Mode"
+msgstr "ขั้นตอนที่ 5: โหมด"
+
+msgid "Trigger on press or release?"
+msgstr "ทริกเกอร์เมื่อกดหรือปล่อย?"
+
+msgid "On Release (Recommended)"
+msgstr "เมื่อปล่อย (แนะนำ)"
+
+msgid "On Press"
+msgstr "เมื่อกด"
+
+msgid "Already configured"
+msgstr ""
+
+msgid "Error: Both Release and Press modes are already configured for this gesture combination."
+msgstr ""
+
+msgid "Save"
+msgstr "บันทึก"
+
+msgid "Select Keyboard"
+msgstr ""
+
+msgid "Edit Item"
+msgstr "แก้ไขรายการ"
+
+msgid "Item Details"
+msgstr "รายละเอียดรายการ"
+
+msgid "Action Name"
+msgstr "ชื่อการกระทำ"
+
+msgid "Action Type"
+msgstr "ประเภทการกระทำ"
+
+msgid "Predefined Action"
+msgstr "การกระทำที่กำหนดไว้ล่วงหน้า"
+
+msgid "Select from common actions"
+msgstr ""
+
+msgid "Custom Command"
+msgstr "คำสั่งกำหนดเอง"
+
+msgid "Execute a shell command"
+msgstr ""
+
+msgid "Command"
+msgstr "คำสั่ง"
+
+msgid "Predefined Actions"
+msgstr ""
+
+msgid "Edit Menu"
+msgstr "แก้ไขเมนู"
+
+msgid "New Item"
+msgstr "รายการใหม่"
+
+msgid "Select Action"
+msgstr "เลือกการกระทำ"
+
+msgid "Wofi Menu"
+msgstr "เมนู Wofi"
+
+msgid "Show a menu of actions"
+msgstr ""
+
+msgid "Edit Gesture"
+msgstr "แก้ไขท่าทาง"
+
+msgid "General"
+msgstr "ทั่วไป"
+
+msgid "Name"
+msgstr "ชื่อ"
+
+msgid "Trigger Spec"
+msgstr "ข้อมูลจำเพาะทริกเกอร์"
+
+msgid "Not Configured"
+msgstr "ไม่ได้กำหนดค่า"
+
+msgid "Change"
+msgstr "เปลี่ยน"
+
+msgid "Locked State"
+msgstr "สถานะล็อค"
+
+msgid "Edit"
+msgstr "แก้ไข"
+
+msgid "Unlocked State"
+msgstr "สถานะปลดล็อค"
+
+msgid "No Action"
+msgstr "ไม่มีการกระทำ"
+
+msgid "Missing Trigger"
+msgstr "ไม่มีทริกเกอร์"
+
+msgid "Please configure a gesture trigger before saving."
+msgstr ""
+
+msgid "OK"
+msgstr "ตกลง"
+
+msgid "Gestures"
+msgstr ""
+
+msgid "Service"
+msgstr "บริการ"
+
+msgid "Enable Touch Gestures"
+msgstr "เปิดใช้งานท่าทางสัมผัส"
+
+msgid "Add New Gesture"
+msgstr "เพิ่มท่าทางใหม่"
+
+msgid "Configured Gestures"
+msgstr "ท่าทางที่กำหนดค่า"
+
+msgid "Unnamed Gesture"
+msgstr "ท่าทางไม่มีชื่อ"
+
+msgid "New Gesture"
+msgstr "ท่าทางใหม่"
+
+msgid "Change Password"
+msgstr "เปลี่ยนรหัสผ่าน"
+
+msgid "Password Details"
+msgstr "รายละเอียดรหัสผ่าน"
+
+msgid "Current Password"
+msgstr "รหัสผ่านปัจจุบัน"
+
+msgid "New Password"
+msgstr "รหัสผ่านใหม่"
+
+msgid "Confirm New Password"
+msgstr "ยืนยันรหัสผ่านใหม่"
+
+msgid "Please enter current password."
+msgstr ""
+
+msgid "Please enter new password."
+msgstr ""
+
+msgid "New passwords do not match."
+msgstr ""
+
+msgid "Changing password..."
+msgstr ""
+
+msgid "Password changed successfully!"
+msgstr "เปลี่ยนรหัสผ่านสำเร็จ!"
+
+msgid "Failed to change password."
+msgstr "เปลี่ยนรหัสผ่านไม่สำเร็จ"
+
+msgid "Authentication error. Check current password."
+msgstr ""
+
+msgid "Bad password."
+msgstr ""
+
+msgid "it is too short"
+msgstr ""
+
+msgid "is the same as the old one"
+msgstr ""
+
+msgid "is a palindrome"
+msgstr ""
+
+msgid "case changes only"
+msgstr ""
+
+msgid "is too similar to the old one"
+msgstr ""
+
+msgid "it does not contain enough DIFFERENT characters"
+msgstr ""
+
+msgid "it is based on a dictionary word"
+msgstr ""
+
+msgid "Bad password: "
+msgstr ""
+
+msgid "Input Configuration"
+msgstr "การกำหนดค่าอินพุต"
+
+msgid "Hardware Buttons"
+msgstr "ปุ่มฮาร์ดแวร์"
+
+msgid "Configure short, double, and long press actions"
+msgstr ""
+
+msgid "Touch Gestures"
+msgstr "ท่าทางสัมผัส"
+
+msgid "Configure edge swipes and shortcuts"
+msgstr ""
+
+msgid "Buttons"
+msgstr "ปุ่ม"
+
+msgid "Keyboard"
+msgstr "คีย์บอร์ด"
+
+msgid "Active Keyboard"
+msgstr "คีย์บอร์ดที่ใช้งานอยู่"
+
+msgid "Change Keyboard"
+msgstr "เปลี่ยนคีย์บอร์ด"
+
+msgid "Finnish Layout"
+msgstr ""
+
+msgid "Install custom Squeekboard layout"
+msgstr ""
+
+msgid "Configuration"
+msgstr "การกำหนดค่า"
+
+msgid "Enforce App Wofi Config"
+msgstr ""
+
+msgid "Use Tweak-FLX1s Wofi style and config"
+msgstr ""
+
+msgid "Environment"
+msgstr "สภาพแวดล้อม"
+
+msgid "Current Environment"
+msgstr ""
+
+msgid "Updates"
+msgstr "การอัปเดต"
+
+msgid "System Upgrade"
+msgstr "อัปเกรดระบบ"
+
+msgid "Upgrade FuriOS"
+msgstr ""
+
+msgid "Upgrading System"
+msgstr ""
+
+msgid "Applications"
+msgstr "แอปพลิเคชัน"
+
+msgid "Squeekboard"
+msgstr "Squeekboard"
+
+msgid "On-screen keyboard"
+msgstr ""
+
+msgid "FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Install custom battery monitor"
+msgstr ""
+
+msgid "Install"
+msgstr "ติดตั้ง"
+
+msgid "Phofono"
+msgstr ""
+
+msgid "Alternative Phone and Messages App"
+msgstr ""
+
+msgid "Branchy App Store"
+msgstr ""
+
+msgid "DebUI"
+msgstr ""
+
+msgid "Debian Package Installer UI"
+msgstr ""
+
+msgid "Security"
+msgstr "ความปลอดภัย"
+
+msgid "Enable Shorter Passcodes"
+msgstr ""
+
+msgid "Allow 1-character passwords"
+msgstr ""
+
+msgid "Change current user password"
+msgstr ""
+
+msgid "Fingerprint Authentication"
+msgstr "การตรวจสอบลายนิ้วมือ"
+
+msgid "Configure PAM for fingerprint support"
+msgstr ""
+
+msgid "Enable"
+msgstr "เปิดใช้งาน"
+
+msgid "Restarting Keyboard Service"
+msgstr ""
+
+msgid "Changing Keyboard"
+msgstr ""
+
+msgid "Remove"
+msgstr "ลบ"
+
+msgid "Removing Squeekboard"
+msgstr ""
+
+msgid "Installing Squeekboard"
+msgstr ""
+
+msgid "Enabling Shorter Passwords"
+msgstr ""
+
+msgid "Disabling Shorter Passwords"
+msgstr ""
+
+msgid "Removing DebUI"
+msgstr ""
+
+msgid "Installing DebUI"
+msgstr ""
+
+msgid "Removing FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Installing FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Fingerprint is enabled"
+msgstr ""
+
+msgid "Removing Fingerprint"
+msgstr ""
+
+msgid "Configuring Fingerprint"
+msgstr ""
+
+msgid "Installed"
+msgstr "ติดตั้งแล้ว"
+
+msgid "Removing Phofono"
+msgstr ""
+
+msgid "Installing Phofono"
+msgstr ""
+
+msgid "Removing Branchy"
+msgstr ""
+
+msgid "Installing Branchy"
+msgstr ""
+
+msgid "Staging"
+msgstr ""
+
+msgid "Switch to Production"
+msgstr ""
+
+msgid "Production"
+msgstr ""
+
+msgid "Switch to Staging"
+msgstr ""
+
+msgid "Switching to Production"
+msgstr ""
+
+msgid "Switching to Staging"
+msgstr ""
+
+msgid "About Tweak-FLX1s"
+msgstr "เกี่ยวกับ Tweak-FLX1s"
+
+msgid "System tweaks and utilities for FuriPhoneFLX1s."
+msgstr ""
+
+msgid "Version"
+msgstr "เวอร์ชัน"
+
+msgid "Developer"
+msgstr "นักพัฒนา"
+
+msgid "License"
+msgstr "ใบอนุญาต"
+
+msgid "Links"
+msgstr "ลิงก์"
+
+msgid "Website"
+msgstr "เว็บไซต์"
+
+msgid "Issue Tracker"
+msgstr "ติดตามปัญหา"
+
+msgid "Report bugs or request features"
+msgstr ""
+
+msgid "Appearance"
+msgstr "ลักษณะ"
+
+msgid "GTK3 CSS Tweak"
+msgstr ""
+
+msgid "Apply custom UI scaling tweaks for GTK3 apps"
+msgstr ""
+
+msgid "Background Services"
+msgstr "บริการเบื้องหลัง"
+
+msgid "Alarm Volume Fix"
+msgstr ""
+
+msgid "Ensure alarm plays at full volume"
+msgstr ""
+
+msgid "Andromeda Guard"
+msgstr ""
+
+msgid "Prevent OSK issues"
+msgstr ""
+
+msgid "Andromeda Integration"
+msgstr ""
+
+msgid "Shared Folders"
+msgstr ""
+
+msgid "Mount ~/.local/share/andromeda to ~/Android-Share"
+msgstr ""
+
+msgid "Audio"
+msgstr "เสียง"
+
+msgid "Custom Sound Theme"
+msgstr ""
+
+msgid "Use fastflx1 custom sounds"
+msgstr ""
+
+msgid "Mounting Shared Folders"
+msgstr ""
+
+msgid "Unmounting Shared Folders"
+msgstr ""
+
+msgid "Short Press"
+msgstr "กดสั้น"
+
+msgid "Double Press"
+msgstr "กดสองครั้ง"
+
+msgid "Long Press"
+msgstr "กดค้าง"
+
+msgid "Use Custom Assistant File"
+msgstr ""
+
+msgid "Write ~/.config/assistant-button/..."
+msgstr ""
+
+msgid "Locked Action"
+msgstr ""
+
+msgid "Unlocked Action"
+msgstr ""
+
+msgid "Copy (Ctrl+C)"
+msgstr "คัดลอก (Ctrl+C)"
+
+msgid "Paste (Ctrl+V)"
+msgstr "วาง (Ctrl+V)"
+
+msgid "Cut (Ctrl+X)"
+msgstr ""
+
+msgid "Select All and Copy"
+msgstr ""
+
+msgid "Paste from Clipboard"
+msgstr ""
+
+msgid "Kill Active Window"
+msgstr ""
+
+msgid "Switch Window on the left"
+msgstr ""
+
+msgid "Switch Window on the right"
+msgstr ""
+
+msgid "Screenshot"
+msgstr "ภาพหน้าจอ"
+
+msgid "Flashlight"
+msgstr "ไฟฉาย"
+
+msgid "Play/Pause"
+msgstr ""
+
+msgid "Next Track"
+msgstr ""
+
+msgid "Previous Track"
+msgstr ""
+
+msgid "Volume Up"
+msgstr ""
+
+msgid "Volume Down"
+msgstr ""
+
+msgid "Mute"
+msgstr "ปิดเสียง"

@@ -1,0 +1,675 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: tweak-flx1s 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-01-01 00:00+0000\n"
+"Last-Translator: ai\n"
+"Language-Team: ai\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Add Location"
+msgstr "إضافة موقع"
+
+msgid "Close"
+msgstr "إغلاق"
+
+msgid "Enter city name"
+msgstr "أدخل اسم المدينة"
+
+msgid "Search"
+msgstr "بحث"
+
+msgid "Result"
+msgstr "النتيجة"
+
+msgid "No location found yet."
+msgstr "لم يتم العثور على موقع بعد."
+
+msgid "Searching..."
+msgstr "جاري البحث..."
+
+msgid "No location found."
+msgstr "لم يتم العثور على الموقع."
+
+msgid "Error adding location."
+msgstr "خطأ في إضافة الموقع."
+
+msgid "Tweaks"
+msgstr "تعديلات"
+
+msgid "System"
+msgstr "النظام"
+
+msgid "Actions"
+msgstr "إجراءات"
+
+msgid "New Gesture Wizard"
+msgstr "معالج الإيماءات الجديد"
+
+msgid "Cancel"
+msgstr "إلغاء"
+
+msgid "Go Back"
+msgstr "رجوع"
+
+msgid "Proceed"
+msgstr "متابعة"
+
+msgid "Step 1: Fingers"
+msgstr "الخطوة 1: الأصابع"
+
+msgid "How many fingers used for the gesture?"
+msgstr "كم عدد الأصابع المستخدمة للإيماءة؟"
+
+msgid "Step 2: Direction"
+msgstr "الخطوة 2: الاتجاه"
+
+msgid "Which direction is the swipe?"
+msgstr "ما هو اتجاه السحب؟"
+
+msgid "From Left to Right"
+msgstr "من اليسار إلى اليمين"
+
+msgid "From Right to Left"
+msgstr "من اليمين إلى اليسار"
+
+msgid "From Top to Bottom"
+msgstr "من الأعلى إلى الأسفل"
+
+msgid "From Bottom to Top"
+msgstr "من الأسفل إلى الأعلى"
+
+msgid "From Bottom-Left to Top-Right"
+msgstr ""
+
+msgid "From Top-Right to Bottom-Left"
+msgstr ""
+
+msgid "From Top-Left to Bottom-Right"
+msgstr ""
+
+msgid "From Bottom-Right to Top-Left"
+msgstr ""
+
+msgid "Step 3: Edge"
+msgstr "الخطوة 3: الحافة"
+
+msgid "Where should the gesture start?"
+msgstr "أين يجب أن تبدأ الإيماءة؟"
+
+msgid "Anywhere"
+msgstr "في أي مكان"
+
+msgid "Left Edge"
+msgstr "الحافة اليسرى"
+
+msgid "Right Edge"
+msgstr "الحافة اليمنى"
+
+msgid "Top Edge"
+msgstr "الحافة العلوية"
+
+msgid "Bottom Edge"
+msgstr "الحافة السفلية"
+
+msgid "Top-Left Corner"
+msgstr ""
+
+msgid "Top-Right Corner"
+msgstr ""
+
+msgid "Bottom-Left Corner"
+msgstr ""
+
+msgid "Bottom-Right Corner"
+msgstr ""
+
+msgid "None (Middle of screen only)"
+msgstr ""
+
+msgid "Step 4: Distance"
+msgstr "الخطوة 4: المسافة"
+
+msgid "How long should the swipe be?"
+msgstr "كم يجب أن يكون طول السحب؟"
+
+msgid "Any Distance"
+msgstr "أي مسافة"
+
+msgid "Short"
+msgstr "قصير"
+
+msgid "Medium"
+msgstr "متوسط"
+
+msgid "Large"
+msgstr "طويل"
+
+msgid "Step 5: Mode"
+msgstr "الخطوة 5: الوضع"
+
+msgid "Trigger on press or release?"
+msgstr "التفعيل عند الضغط أم الإفلات؟"
+
+msgid "On Release (Recommended)"
+msgstr "عند الإفلات (موصى به)"
+
+msgid "On Press"
+msgstr "عند الضغط"
+
+msgid "Already configured"
+msgstr ""
+
+msgid "Error: Both Release and Press modes are already configured for this gesture combination."
+msgstr ""
+
+msgid "Save"
+msgstr "حفظ"
+
+msgid "Select Keyboard"
+msgstr ""
+
+msgid "Edit Item"
+msgstr "تعديل العنصر"
+
+msgid "Item Details"
+msgstr "تفاصيل العنصر"
+
+msgid "Action Name"
+msgstr "اسم الإجراء"
+
+msgid "Action Type"
+msgstr "نوع الإجراء"
+
+msgid "Predefined Action"
+msgstr "إجراء محدد مسبقًا"
+
+msgid "Select from common actions"
+msgstr ""
+
+msgid "Custom Command"
+msgstr "أمر مخصص"
+
+msgid "Execute a shell command"
+msgstr ""
+
+msgid "Command"
+msgstr "أمر"
+
+msgid "Predefined Actions"
+msgstr ""
+
+msgid "Edit Menu"
+msgstr "تعديل القائمة"
+
+msgid "New Item"
+msgstr "عنصر جديد"
+
+msgid "Select Action"
+msgstr "تحديد إجراء"
+
+msgid "Wofi Menu"
+msgstr "قائمة Wofi"
+
+msgid "Show a menu of actions"
+msgstr ""
+
+msgid "Edit Gesture"
+msgstr "تعديل الإيماءة"
+
+msgid "General"
+msgstr "عام"
+
+msgid "Name"
+msgstr "الاسم"
+
+msgid "Trigger Spec"
+msgstr "مواصفات المشغل"
+
+msgid "Not Configured"
+msgstr "غير مكون"
+
+msgid "Change"
+msgstr "تغيير"
+
+msgid "Locked State"
+msgstr "حالة القفل"
+
+msgid "Edit"
+msgstr "تحرير"
+
+msgid "Unlocked State"
+msgstr "حالة إلغاء القفل"
+
+msgid "No Action"
+msgstr "لا يوجد إجراء"
+
+msgid "Missing Trigger"
+msgstr "مشغل مفقود"
+
+msgid "Please configure a gesture trigger before saving."
+msgstr ""
+
+msgid "OK"
+msgstr "موافق"
+
+msgid "Gestures"
+msgstr ""
+
+msgid "Service"
+msgstr "الخدمة"
+
+msgid "Enable Touch Gestures"
+msgstr "تمكين إيماءات اللمس"
+
+msgid "Add New Gesture"
+msgstr "إضافة إيماءة جديدة"
+
+msgid "Configured Gestures"
+msgstr "الإيماءات المكونة"
+
+msgid "Unnamed Gesture"
+msgstr "إيماءة غير مسماة"
+
+msgid "New Gesture"
+msgstr "إيماءة جديدة"
+
+msgid "Change Password"
+msgstr "تغيير كلمة المرور"
+
+msgid "Password Details"
+msgstr "تفاصيل كلمة المرور"
+
+msgid "Current Password"
+msgstr "كلمة المرور الحالية"
+
+msgid "New Password"
+msgstr "كلمة المرور الجديدة"
+
+msgid "Confirm New Password"
+msgstr "تأكيد كلمة المرور الجديدة"
+
+msgid "Please enter current password."
+msgstr ""
+
+msgid "Please enter new password."
+msgstr ""
+
+msgid "New passwords do not match."
+msgstr ""
+
+msgid "Changing password..."
+msgstr ""
+
+msgid "Password changed successfully!"
+msgstr "تم تغيير كلمة المرور بنجاح!"
+
+msgid "Failed to change password."
+msgstr "فشل تغيير كلمة المرور."
+
+msgid "Authentication error. Check current password."
+msgstr ""
+
+msgid "Bad password."
+msgstr ""
+
+msgid "it is too short"
+msgstr ""
+
+msgid "is the same as the old one"
+msgstr ""
+
+msgid "is a palindrome"
+msgstr ""
+
+msgid "case changes only"
+msgstr ""
+
+msgid "is too similar to the old one"
+msgstr ""
+
+msgid "it does not contain enough DIFFERENT characters"
+msgstr ""
+
+msgid "it is based on a dictionary word"
+msgstr ""
+
+msgid "Bad password: "
+msgstr ""
+
+msgid "Input Configuration"
+msgstr "تكوين الإدخال"
+
+msgid "Hardware Buttons"
+msgstr "أزرار الأجهزة"
+
+msgid "Configure short, double, and long press actions"
+msgstr ""
+
+msgid "Touch Gestures"
+msgstr "إيماءات اللمس"
+
+msgid "Configure edge swipes and shortcuts"
+msgstr ""
+
+msgid "Buttons"
+msgstr "أزرار"
+
+msgid "Keyboard"
+msgstr "لوحة المفاتيح"
+
+msgid "Active Keyboard"
+msgstr "لوحة المفاتيح النشطة"
+
+msgid "Change Keyboard"
+msgstr "تغيير لوحة المفاتيح"
+
+msgid "Finnish Layout"
+msgstr ""
+
+msgid "Install custom Squeekboard layout"
+msgstr ""
+
+msgid "Configuration"
+msgstr "التكوين"
+
+msgid "Enforce App Wofi Config"
+msgstr ""
+
+msgid "Use Tweak-FLX1s Wofi style and config"
+msgstr ""
+
+msgid "Environment"
+msgstr "البيئة"
+
+msgid "Current Environment"
+msgstr ""
+
+msgid "Updates"
+msgstr "التحديثات"
+
+msgid "System Upgrade"
+msgstr "ترقية النظام"
+
+msgid "Upgrade FuriOS"
+msgstr ""
+
+msgid "Upgrading System"
+msgstr ""
+
+msgid "Applications"
+msgstr "التطبيقات"
+
+msgid "Squeekboard"
+msgstr "Squeekboard"
+
+msgid "On-screen keyboard"
+msgstr ""
+
+msgid "FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Install custom battery monitor"
+msgstr ""
+
+msgid "Install"
+msgstr "تثبيت"
+
+msgid "Phofono"
+msgstr ""
+
+msgid "Alternative Phone and Messages App"
+msgstr ""
+
+msgid "Branchy App Store"
+msgstr ""
+
+msgid "DebUI"
+msgstr ""
+
+msgid "Debian Package Installer UI"
+msgstr ""
+
+msgid "Security"
+msgstr "الأمان"
+
+msgid "Enable Shorter Passcodes"
+msgstr ""
+
+msgid "Allow 1-character passwords"
+msgstr ""
+
+msgid "Change current user password"
+msgstr ""
+
+msgid "Fingerprint Authentication"
+msgstr "المصادقة ببصمة الإصبع"
+
+msgid "Configure PAM for fingerprint support"
+msgstr ""
+
+msgid "Enable"
+msgstr "تمكين"
+
+msgid "Restarting Keyboard Service"
+msgstr ""
+
+msgid "Changing Keyboard"
+msgstr ""
+
+msgid "Remove"
+msgstr "إزالة"
+
+msgid "Removing Squeekboard"
+msgstr ""
+
+msgid "Installing Squeekboard"
+msgstr ""
+
+msgid "Enabling Shorter Passwords"
+msgstr ""
+
+msgid "Disabling Shorter Passwords"
+msgstr ""
+
+msgid "Removing DebUI"
+msgstr ""
+
+msgid "Installing DebUI"
+msgstr ""
+
+msgid "Removing FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Installing FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Fingerprint is enabled"
+msgstr ""
+
+msgid "Removing Fingerprint"
+msgstr ""
+
+msgid "Configuring Fingerprint"
+msgstr ""
+
+msgid "Installed"
+msgstr "مثبت"
+
+msgid "Removing Phofono"
+msgstr ""
+
+msgid "Installing Phofono"
+msgstr ""
+
+msgid "Removing Branchy"
+msgstr ""
+
+msgid "Installing Branchy"
+msgstr ""
+
+msgid "Staging"
+msgstr ""
+
+msgid "Switch to Production"
+msgstr ""
+
+msgid "Production"
+msgstr ""
+
+msgid "Switch to Staging"
+msgstr ""
+
+msgid "Switching to Production"
+msgstr ""
+
+msgid "Switching to Staging"
+msgstr ""
+
+msgid "About Tweak-FLX1s"
+msgstr "حول Tweak-FLX1s"
+
+msgid "System tweaks and utilities for FuriPhoneFLX1s."
+msgstr ""
+
+msgid "Version"
+msgstr "الإصدار"
+
+msgid "Developer"
+msgstr "المطور"
+
+msgid "License"
+msgstr "الترخيص"
+
+msgid "Links"
+msgstr "روابط"
+
+msgid "Website"
+msgstr "الموقع الإلكتروني"
+
+msgid "Issue Tracker"
+msgstr "متتبع المشكلات"
+
+msgid "Report bugs or request features"
+msgstr ""
+
+msgid "Appearance"
+msgstr "المظهر"
+
+msgid "GTK3 CSS Tweak"
+msgstr ""
+
+msgid "Apply custom UI scaling tweaks for GTK3 apps"
+msgstr ""
+
+msgid "Background Services"
+msgstr "خدمات الخلفية"
+
+msgid "Alarm Volume Fix"
+msgstr ""
+
+msgid "Ensure alarm plays at full volume"
+msgstr ""
+
+msgid "Andromeda Guard"
+msgstr ""
+
+msgid "Prevent OSK issues"
+msgstr ""
+
+msgid "Andromeda Integration"
+msgstr ""
+
+msgid "Shared Folders"
+msgstr ""
+
+msgid "Mount ~/.local/share/andromeda to ~/Android-Share"
+msgstr ""
+
+msgid "Audio"
+msgstr "الصوت"
+
+msgid "Custom Sound Theme"
+msgstr ""
+
+msgid "Use fastflx1 custom sounds"
+msgstr ""
+
+msgid "Mounting Shared Folders"
+msgstr ""
+
+msgid "Unmounting Shared Folders"
+msgstr ""
+
+msgid "Short Press"
+msgstr "ضغطة قصيرة"
+
+msgid "Double Press"
+msgstr "ضغطة مزدوجة"
+
+msgid "Long Press"
+msgstr "ضغطة طويلة"
+
+msgid "Use Custom Assistant File"
+msgstr ""
+
+msgid "Write ~/.config/assistant-button/..."
+msgstr ""
+
+msgid "Locked Action"
+msgstr ""
+
+msgid "Unlocked Action"
+msgstr ""
+
+msgid "Copy (Ctrl+C)"
+msgstr "نسخ (Ctrl+C)"
+
+msgid "Paste (Ctrl+V)"
+msgstr "لصق (Ctrl+V)"
+
+msgid "Cut (Ctrl+X)"
+msgstr ""
+
+msgid "Select All and Copy"
+msgstr ""
+
+msgid "Paste from Clipboard"
+msgstr ""
+
+msgid "Kill Active Window"
+msgstr ""
+
+msgid "Switch Window on the left"
+msgstr ""
+
+msgid "Switch Window on the right"
+msgstr ""
+
+msgid "Screenshot"
+msgstr "لقطة شاشة"
+
+msgid "Flashlight"
+msgstr "مصباح يدوي"
+
+msgid "Play/Pause"
+msgstr ""
+
+msgid "Next Track"
+msgstr ""
+
+msgid "Previous Track"
+msgstr ""
+
+msgid "Volume Up"
+msgstr ""
+
+msgid "Volume Down"
+msgstr ""
+
+msgid "Mute"
+msgstr "كتم الصوت"

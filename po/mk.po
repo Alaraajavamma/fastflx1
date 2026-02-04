@@ -1,0 +1,675 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: tweak-flx1s 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-01-01 00:00+0000\n"
+"Last-Translator: ai\n"
+"Language-Team: ai\n"
+"Language: mk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Add Location"
+msgstr "Додај локација"
+
+msgid "Close"
+msgstr "Затвори"
+
+msgid "Enter city name"
+msgstr "Внесете име на град"
+
+msgid "Search"
+msgstr "Барај"
+
+msgid "Result"
+msgstr "Резултат"
+
+msgid "No location found yet."
+msgstr "Сè уште не е пронајдена локација."
+
+msgid "Searching..."
+msgstr "Барам..."
+
+msgid "No location found."
+msgstr "Локацијата не е пронајдена."
+
+msgid "Error adding location."
+msgstr "Грешка при додавање локација."
+
+msgid "Tweaks"
+msgstr "Подесувања"
+
+msgid "System"
+msgstr "Систем"
+
+msgid "Actions"
+msgstr "Дејства"
+
+msgid "New Gesture Wizard"
+msgstr "Волшебник за нови гестови"
+
+msgid "Cancel"
+msgstr "Откажи"
+
+msgid "Go Back"
+msgstr "Назад"
+
+msgid "Proceed"
+msgstr "Продолжи"
+
+msgid "Step 1: Fingers"
+msgstr "Чекор 1: Прсти"
+
+msgid "How many fingers used for the gesture?"
+msgstr "Колку прсти се користат за гестот?"
+
+msgid "Step 2: Direction"
+msgstr "Чекор 2: Насока"
+
+msgid "Which direction is the swipe?"
+msgstr "Во која насока е повлекувањето?"
+
+msgid "From Left to Right"
+msgstr "Од лево кон десно"
+
+msgid "From Right to Left"
+msgstr "Од десно кон лево"
+
+msgid "From Top to Bottom"
+msgstr "Од горе надолу"
+
+msgid "From Bottom to Top"
+msgstr "Од долу нагоре"
+
+msgid "From Bottom-Left to Top-Right"
+msgstr ""
+
+msgid "From Top-Right to Bottom-Left"
+msgstr ""
+
+msgid "From Top-Left to Bottom-Right"
+msgstr ""
+
+msgid "From Bottom-Right to Top-Left"
+msgstr ""
+
+msgid "Step 3: Edge"
+msgstr "Чекор 3: Работ"
+
+msgid "Where should the gesture start?"
+msgstr "Каде треба да започне гестот?"
+
+msgid "Anywhere"
+msgstr "Каде било"
+
+msgid "Left Edge"
+msgstr "Лев раб"
+
+msgid "Right Edge"
+msgstr "Десен раб"
+
+msgid "Top Edge"
+msgstr "Горен раб"
+
+msgid "Bottom Edge"
+msgstr "Долен раб"
+
+msgid "Top-Left Corner"
+msgstr ""
+
+msgid "Top-Right Corner"
+msgstr ""
+
+msgid "Bottom-Left Corner"
+msgstr ""
+
+msgid "Bottom-Right Corner"
+msgstr ""
+
+msgid "None (Middle of screen only)"
+msgstr ""
+
+msgid "Step 4: Distance"
+msgstr "Чекор 4: Растојание"
+
+msgid "How long should the swipe be?"
+msgstr "Колку долго треба да биде повлекувањето?"
+
+msgid "Any Distance"
+msgstr "Секое растојание"
+
+msgid "Short"
+msgstr "Кратко"
+
+msgid "Medium"
+msgstr "Средно"
+
+msgid "Large"
+msgstr "Дорго"
+
+msgid "Step 5: Mode"
+msgstr "Чекор 5: Режим"
+
+msgid "Trigger on press or release?"
+msgstr "Активирај при притискање или пуштање?"
+
+msgid "On Release (Recommended)"
+msgstr "При пуштање (Препорачано)"
+
+msgid "On Press"
+msgstr "При притискање"
+
+msgid "Already configured"
+msgstr ""
+
+msgid "Error: Both Release and Press modes are already configured for this gesture combination."
+msgstr ""
+
+msgid "Save"
+msgstr "Зачувај"
+
+msgid "Select Keyboard"
+msgstr ""
+
+msgid "Edit Item"
+msgstr "Уреди ставка"
+
+msgid "Item Details"
+msgstr "Детали за ставка"
+
+msgid "Action Name"
+msgstr "Име на дејство"
+
+msgid "Action Type"
+msgstr "Тип на дејство"
+
+msgid "Predefined Action"
+msgstr "Однапред дефинирано дејство"
+
+msgid "Select from common actions"
+msgstr ""
+
+msgid "Custom Command"
+msgstr "Прилагодена команда"
+
+msgid "Execute a shell command"
+msgstr ""
+
+msgid "Command"
+msgstr "Команда"
+
+msgid "Predefined Actions"
+msgstr ""
+
+msgid "Edit Menu"
+msgstr "Уреди мени"
+
+msgid "New Item"
+msgstr "Нова ставка"
+
+msgid "Select Action"
+msgstr "Избери дејство"
+
+msgid "Wofi Menu"
+msgstr "Wofi мени"
+
+msgid "Show a menu of actions"
+msgstr ""
+
+msgid "Edit Gesture"
+msgstr "Уреди гест"
+
+msgid "General"
+msgstr "Општо"
+
+msgid "Name"
+msgstr "Име"
+
+msgid "Trigger Spec"
+msgstr "Спецификација на активирач"
+
+msgid "Not Configured"
+msgstr "Не е конфигурирано"
+
+msgid "Change"
+msgstr "Промени"
+
+msgid "Locked State"
+msgstr "Заклучена состојба"
+
+msgid "Edit"
+msgstr "Уреди"
+
+msgid "Unlocked State"
+msgstr "Отклучена состојба"
+
+msgid "No Action"
+msgstr "Нема дејство"
+
+msgid "Missing Trigger"
+msgstr "Недостасува активирач"
+
+msgid "Please configure a gesture trigger before saving."
+msgstr ""
+
+msgid "OK"
+msgstr "Во ред"
+
+msgid "Gestures"
+msgstr ""
+
+msgid "Service"
+msgstr "Услуга"
+
+msgid "Enable Touch Gestures"
+msgstr "Овозможи гестови на допир"
+
+msgid "Add New Gesture"
+msgstr "Додај нов гест"
+
+msgid "Configured Gestures"
+msgstr "Конфигурирани гестови"
+
+msgid "Unnamed Gesture"
+msgstr "Неименуван гест"
+
+msgid "New Gesture"
+msgstr "Нов гест"
+
+msgid "Change Password"
+msgstr "Промени лозинка"
+
+msgid "Password Details"
+msgstr "Детали за лозинка"
+
+msgid "Current Password"
+msgstr "Тековна лозинка"
+
+msgid "New Password"
+msgstr "Нова лозинка"
+
+msgid "Confirm New Password"
+msgstr "Потврди нова лозинка"
+
+msgid "Please enter current password."
+msgstr ""
+
+msgid "Please enter new password."
+msgstr ""
+
+msgid "New passwords do not match."
+msgstr ""
+
+msgid "Changing password..."
+msgstr ""
+
+msgid "Password changed successfully!"
+msgstr "Лозинката е успешно променета!"
+
+msgid "Failed to change password."
+msgstr "Не успеа да се промени лозинката."
+
+msgid "Authentication error. Check current password."
+msgstr ""
+
+msgid "Bad password."
+msgstr ""
+
+msgid "it is too short"
+msgstr ""
+
+msgid "is the same as the old one"
+msgstr ""
+
+msgid "is a palindrome"
+msgstr ""
+
+msgid "case changes only"
+msgstr ""
+
+msgid "is too similar to the old one"
+msgstr ""
+
+msgid "it does not contain enough DIFFERENT characters"
+msgstr ""
+
+msgid "it is based on a dictionary word"
+msgstr ""
+
+msgid "Bad password: "
+msgstr ""
+
+msgid "Input Configuration"
+msgstr "Конфигурација на влез"
+
+msgid "Hardware Buttons"
+msgstr "Хардверски копчиња"
+
+msgid "Configure short, double, and long press actions"
+msgstr ""
+
+msgid "Touch Gestures"
+msgstr "Гестови на допир"
+
+msgid "Configure edge swipes and shortcuts"
+msgstr ""
+
+msgid "Buttons"
+msgstr "Копчиња"
+
+msgid "Keyboard"
+msgstr "Тастатура"
+
+msgid "Active Keyboard"
+msgstr "Активна тастатура"
+
+msgid "Change Keyboard"
+msgstr "Промени тастатура"
+
+msgid "Finnish Layout"
+msgstr ""
+
+msgid "Install custom Squeekboard layout"
+msgstr ""
+
+msgid "Configuration"
+msgstr "Конфигурација"
+
+msgid "Enforce App Wofi Config"
+msgstr ""
+
+msgid "Use Tweak-FLX1s Wofi style and config"
+msgstr ""
+
+msgid "Environment"
+msgstr "Окружување"
+
+msgid "Current Environment"
+msgstr ""
+
+msgid "Updates"
+msgstr "Ажурирања"
+
+msgid "System Upgrade"
+msgstr "Надградба на системот"
+
+msgid "Upgrade FuriOS"
+msgstr ""
+
+msgid "Upgrading System"
+msgstr ""
+
+msgid "Applications"
+msgstr "Апликации"
+
+msgid "Squeekboard"
+msgstr "Squeekboard"
+
+msgid "On-screen keyboard"
+msgstr ""
+
+msgid "FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Install custom battery monitor"
+msgstr ""
+
+msgid "Install"
+msgstr "Инсталирај"
+
+msgid "Phofono"
+msgstr ""
+
+msgid "Alternative Phone and Messages App"
+msgstr ""
+
+msgid "Branchy App Store"
+msgstr ""
+
+msgid "DebUI"
+msgstr ""
+
+msgid "Debian Package Installer UI"
+msgstr ""
+
+msgid "Security"
+msgstr "Безбедност"
+
+msgid "Enable Shorter Passcodes"
+msgstr ""
+
+msgid "Allow 1-character passwords"
+msgstr ""
+
+msgid "Change current user password"
+msgstr ""
+
+msgid "Fingerprint Authentication"
+msgstr "Автентикација со отпечаток од прст"
+
+msgid "Configure PAM for fingerprint support"
+msgstr ""
+
+msgid "Enable"
+msgstr "Овозможи"
+
+msgid "Restarting Keyboard Service"
+msgstr ""
+
+msgid "Changing Keyboard"
+msgstr ""
+
+msgid "Remove"
+msgstr "Отстрани"
+
+msgid "Removing Squeekboard"
+msgstr ""
+
+msgid "Installing Squeekboard"
+msgstr ""
+
+msgid "Enabling Shorter Passwords"
+msgstr ""
+
+msgid "Disabling Shorter Passwords"
+msgstr ""
+
+msgid "Removing DebUI"
+msgstr ""
+
+msgid "Installing DebUI"
+msgstr ""
+
+msgid "Removing FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Installing FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Fingerprint is enabled"
+msgstr ""
+
+msgid "Removing Fingerprint"
+msgstr ""
+
+msgid "Configuring Fingerprint"
+msgstr ""
+
+msgid "Installed"
+msgstr "Инсталирано"
+
+msgid "Removing Phofono"
+msgstr ""
+
+msgid "Installing Phofono"
+msgstr ""
+
+msgid "Removing Branchy"
+msgstr ""
+
+msgid "Installing Branchy"
+msgstr ""
+
+msgid "Staging"
+msgstr ""
+
+msgid "Switch to Production"
+msgstr ""
+
+msgid "Production"
+msgstr ""
+
+msgid "Switch to Staging"
+msgstr ""
+
+msgid "Switching to Production"
+msgstr ""
+
+msgid "Switching to Staging"
+msgstr ""
+
+msgid "About Tweak-FLX1s"
+msgstr "За Tweak-FLX1s"
+
+msgid "System tweaks and utilities for FuriPhoneFLX1s."
+msgstr ""
+
+msgid "Version"
+msgstr "Верзија"
+
+msgid "Developer"
+msgstr "Програмер"
+
+msgid "License"
+msgstr "Лиценца"
+
+msgid "Links"
+msgstr "Врски"
+
+msgid "Website"
+msgstr "Веб-страница"
+
+msgid "Issue Tracker"
+msgstr "Следење проблеми"
+
+msgid "Report bugs or request features"
+msgstr ""
+
+msgid "Appearance"
+msgstr "Изглед"
+
+msgid "GTK3 CSS Tweak"
+msgstr ""
+
+msgid "Apply custom UI scaling tweaks for GTK3 apps"
+msgstr ""
+
+msgid "Background Services"
+msgstr "Услуги во позадина"
+
+msgid "Alarm Volume Fix"
+msgstr ""
+
+msgid "Ensure alarm plays at full volume"
+msgstr ""
+
+msgid "Andromeda Guard"
+msgstr ""
+
+msgid "Prevent OSK issues"
+msgstr ""
+
+msgid "Andromeda Integration"
+msgstr ""
+
+msgid "Shared Folders"
+msgstr ""
+
+msgid "Mount ~/.local/share/andromeda to ~/Android-Share"
+msgstr ""
+
+msgid "Audio"
+msgstr "Аудио"
+
+msgid "Custom Sound Theme"
+msgstr ""
+
+msgid "Use fastflx1 custom sounds"
+msgstr ""
+
+msgid "Mounting Shared Folders"
+msgstr ""
+
+msgid "Unmounting Shared Folders"
+msgstr ""
+
+msgid "Short Press"
+msgstr "Кратко притискање"
+
+msgid "Double Press"
+msgstr "Двојно притискање"
+
+msgid "Long Press"
+msgstr "Дорго притискање"
+
+msgid "Use Custom Assistant File"
+msgstr ""
+
+msgid "Write ~/.config/assistant-button/..."
+msgstr ""
+
+msgid "Locked Action"
+msgstr ""
+
+msgid "Unlocked Action"
+msgstr ""
+
+msgid "Copy (Ctrl+C)"
+msgstr "Копирај (Ctrl+C)"
+
+msgid "Paste (Ctrl+V)"
+msgstr "Залепи (Ctrl+V)"
+
+msgid "Cut (Ctrl+X)"
+msgstr ""
+
+msgid "Select All and Copy"
+msgstr ""
+
+msgid "Paste from Clipboard"
+msgstr ""
+
+msgid "Kill Active Window"
+msgstr ""
+
+msgid "Switch Window on the left"
+msgstr ""
+
+msgid "Switch Window on the right"
+msgstr ""
+
+msgid "Screenshot"
+msgstr "Слика од екранот"
+
+msgid "Flashlight"
+msgstr "Фенерче"
+
+msgid "Play/Pause"
+msgstr ""
+
+msgid "Next Track"
+msgstr ""
+
+msgid "Previous Track"
+msgstr ""
+
+msgid "Volume Up"
+msgstr ""
+
+msgid "Volume Down"
+msgstr ""
+
+msgid "Mute"
+msgstr "Исклучи звук"

@@ -1,0 +1,675 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: tweak-flx1s 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-01-01 00:00+0000\n"
+"Last-Translator: ai\n"
+"Language-Team: ai\n"
+"Language: ro\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Add Location"
+msgstr "Adaugă locație"
+
+msgid "Close"
+msgstr "Închide"
+
+msgid "Enter city name"
+msgstr "Introduceți numele orașului"
+
+msgid "Search"
+msgstr "Caută"
+
+msgid "Result"
+msgstr "Rezultat"
+
+msgid "No location found yet."
+msgstr "Nicio locație găsită încă."
+
+msgid "Searching..."
+msgstr "Se caută..."
+
+msgid "No location found."
+msgstr "Locație negăsită."
+
+msgid "Error adding location."
+msgstr "Eroare la adăugarea locației."
+
+msgid "Tweaks"
+msgstr "Ajustări"
+
+msgid "System"
+msgstr "Sistem"
+
+msgid "Actions"
+msgstr "Acțiuni"
+
+msgid "New Gesture Wizard"
+msgstr "Expert gesturi noi"
+
+msgid "Cancel"
+msgstr "Anulează"
+
+msgid "Go Back"
+msgstr "Înapoi"
+
+msgid "Proceed"
+msgstr "Continuă"
+
+msgid "Step 1: Fingers"
+msgstr "Pasul 1: Degete"
+
+msgid "How many fingers used for the gesture?"
+msgstr "Câte degete sunt folosite pentru gest?"
+
+msgid "Step 2: Direction"
+msgstr "Pasul 2: Direcție"
+
+msgid "Which direction is the swipe?"
+msgstr "Care este direcția glisării?"
+
+msgid "From Left to Right"
+msgstr "De la stânga la dreapta"
+
+msgid "From Right to Left"
+msgstr "De la dreapta la stânga"
+
+msgid "From Top to Bottom"
+msgstr "De sus în jos"
+
+msgid "From Bottom to Top"
+msgstr "De jos în sus"
+
+msgid "From Bottom-Left to Top-Right"
+msgstr ""
+
+msgid "From Top-Right to Bottom-Left"
+msgstr ""
+
+msgid "From Top-Left to Bottom-Right"
+msgstr ""
+
+msgid "From Bottom-Right to Top-Left"
+msgstr ""
+
+msgid "Step 3: Edge"
+msgstr "Pasul 3: Margine"
+
+msgid "Where should the gesture start?"
+msgstr "Unde ar trebui să înceapă gestul?"
+
+msgid "Anywhere"
+msgstr "Oriunde"
+
+msgid "Left Edge"
+msgstr "Marginea stângă"
+
+msgid "Right Edge"
+msgstr "Marginea dreaptă"
+
+msgid "Top Edge"
+msgstr "Marginea de sus"
+
+msgid "Bottom Edge"
+msgstr "Marginea de jos"
+
+msgid "Top-Left Corner"
+msgstr ""
+
+msgid "Top-Right Corner"
+msgstr ""
+
+msgid "Bottom-Left Corner"
+msgstr ""
+
+msgid "Bottom-Right Corner"
+msgstr ""
+
+msgid "None (Middle of screen only)"
+msgstr ""
+
+msgid "Step 4: Distance"
+msgstr "Pasul 4: Distanță"
+
+msgid "How long should the swipe be?"
+msgstr "Cât de lungă ar trebui să fie glisarea?"
+
+msgid "Any Distance"
+msgstr "Orice distanță"
+
+msgid "Short"
+msgstr "Scurtă"
+
+msgid "Medium"
+msgstr "Medie"
+
+msgid "Large"
+msgstr "Lungă"
+
+msgid "Step 5: Mode"
+msgstr "Pasul 5: Mod"
+
+msgid "Trigger on press or release?"
+msgstr "Declanșare la apăsare sau eliberare?"
+
+msgid "On Release (Recommended)"
+msgstr "La eliberare (Recomandat)"
+
+msgid "On Press"
+msgstr "La apăsare"
+
+msgid "Already configured"
+msgstr ""
+
+msgid "Error: Both Release and Press modes are already configured for this gesture combination."
+msgstr ""
+
+msgid "Save"
+msgstr "Salvează"
+
+msgid "Select Keyboard"
+msgstr ""
+
+msgid "Edit Item"
+msgstr "Editează element"
+
+msgid "Item Details"
+msgstr "Detalii element"
+
+msgid "Action Name"
+msgstr "Nume acțiune"
+
+msgid "Action Type"
+msgstr "Tip acțiune"
+
+msgid "Predefined Action"
+msgstr "Acțiune predefinită"
+
+msgid "Select from common actions"
+msgstr ""
+
+msgid "Custom Command"
+msgstr "Comandă personalizată"
+
+msgid "Execute a shell command"
+msgstr ""
+
+msgid "Command"
+msgstr "Comandă"
+
+msgid "Predefined Actions"
+msgstr ""
+
+msgid "Edit Menu"
+msgstr "Editează meniu"
+
+msgid "New Item"
+msgstr "Element nou"
+
+msgid "Select Action"
+msgstr "Selectează acțiune"
+
+msgid "Wofi Menu"
+msgstr "Meniu Wofi"
+
+msgid "Show a menu of actions"
+msgstr ""
+
+msgid "Edit Gesture"
+msgstr "Editează gest"
+
+msgid "General"
+msgstr "General"
+
+msgid "Name"
+msgstr "Nume"
+
+msgid "Trigger Spec"
+msgstr "Specificație declanșator"
+
+msgid "Not Configured"
+msgstr "Neconfigurat"
+
+msgid "Change"
+msgstr "Schimbă"
+
+msgid "Locked State"
+msgstr "Stare blocată"
+
+msgid "Edit"
+msgstr "Editează"
+
+msgid "Unlocked State"
+msgstr "Stare deblocată"
+
+msgid "No Action"
+msgstr "Nicio acțiune"
+
+msgid "Missing Trigger"
+msgstr "Declanșator lipsă"
+
+msgid "Please configure a gesture trigger before saving."
+msgstr ""
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Gestures"
+msgstr ""
+
+msgid "Service"
+msgstr "Serviciu"
+
+msgid "Enable Touch Gestures"
+msgstr "Activează gesturi tactile"
+
+msgid "Add New Gesture"
+msgstr "Adaugă gest nou"
+
+msgid "Configured Gestures"
+msgstr "Gesturi configurate"
+
+msgid "Unnamed Gesture"
+msgstr "Gest fără nume"
+
+msgid "New Gesture"
+msgstr "Gest nou"
+
+msgid "Change Password"
+msgstr "Schimbă parola"
+
+msgid "Password Details"
+msgstr "Detalii parolă"
+
+msgid "Current Password"
+msgstr "Parola curentă"
+
+msgid "New Password"
+msgstr "Parola nouă"
+
+msgid "Confirm New Password"
+msgstr "Confirmă parola nouă"
+
+msgid "Please enter current password."
+msgstr ""
+
+msgid "Please enter new password."
+msgstr ""
+
+msgid "New passwords do not match."
+msgstr ""
+
+msgid "Changing password..."
+msgstr ""
+
+msgid "Password changed successfully!"
+msgstr "Parola a fost schimbată cu succes!"
+
+msgid "Failed to change password."
+msgstr "Nu s-a putut schimba parola."
+
+msgid "Authentication error. Check current password."
+msgstr ""
+
+msgid "Bad password."
+msgstr ""
+
+msgid "it is too short"
+msgstr ""
+
+msgid "is the same as the old one"
+msgstr ""
+
+msgid "is a palindrome"
+msgstr ""
+
+msgid "case changes only"
+msgstr ""
+
+msgid "is too similar to the old one"
+msgstr ""
+
+msgid "it does not contain enough DIFFERENT characters"
+msgstr ""
+
+msgid "it is based on a dictionary word"
+msgstr ""
+
+msgid "Bad password: "
+msgstr ""
+
+msgid "Input Configuration"
+msgstr "Configurare intrare"
+
+msgid "Hardware Buttons"
+msgstr "Butoane hardware"
+
+msgid "Configure short, double, and long press actions"
+msgstr ""
+
+msgid "Touch Gestures"
+msgstr "Gesturi tactile"
+
+msgid "Configure edge swipes and shortcuts"
+msgstr ""
+
+msgid "Buttons"
+msgstr "Butoane"
+
+msgid "Keyboard"
+msgstr "Tastatură"
+
+msgid "Active Keyboard"
+msgstr "Tastatură activă"
+
+msgid "Change Keyboard"
+msgstr "Schimbă tastatura"
+
+msgid "Finnish Layout"
+msgstr ""
+
+msgid "Install custom Squeekboard layout"
+msgstr ""
+
+msgid "Configuration"
+msgstr "Configurare"
+
+msgid "Enforce App Wofi Config"
+msgstr ""
+
+msgid "Use Tweak-FLX1s Wofi style and config"
+msgstr ""
+
+msgid "Environment"
+msgstr "Mediu"
+
+msgid "Current Environment"
+msgstr ""
+
+msgid "Updates"
+msgstr "Actualizări"
+
+msgid "System Upgrade"
+msgstr "Actualizare sistem"
+
+msgid "Upgrade FuriOS"
+msgstr ""
+
+msgid "Upgrading System"
+msgstr ""
+
+msgid "Applications"
+msgstr "Aplicații"
+
+msgid "Squeekboard"
+msgstr "Squeekboard"
+
+msgid "On-screen keyboard"
+msgstr ""
+
+msgid "FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Install custom battery monitor"
+msgstr ""
+
+msgid "Install"
+msgstr "Instalează"
+
+msgid "Phofono"
+msgstr ""
+
+msgid "Alternative Phone and Messages App"
+msgstr ""
+
+msgid "Branchy App Store"
+msgstr ""
+
+msgid "DebUI"
+msgstr ""
+
+msgid "Debian Package Installer UI"
+msgstr ""
+
+msgid "Security"
+msgstr "Securitate"
+
+msgid "Enable Shorter Passcodes"
+msgstr ""
+
+msgid "Allow 1-character passwords"
+msgstr ""
+
+msgid "Change current user password"
+msgstr ""
+
+msgid "Fingerprint Authentication"
+msgstr "Autentificare cu amprentă"
+
+msgid "Configure PAM for fingerprint support"
+msgstr ""
+
+msgid "Enable"
+msgstr "Activează"
+
+msgid "Restarting Keyboard Service"
+msgstr ""
+
+msgid "Changing Keyboard"
+msgstr ""
+
+msgid "Remove"
+msgstr "Elimină"
+
+msgid "Removing Squeekboard"
+msgstr ""
+
+msgid "Installing Squeekboard"
+msgstr ""
+
+msgid "Enabling Shorter Passwords"
+msgstr ""
+
+msgid "Disabling Shorter Passwords"
+msgstr ""
+
+msgid "Removing DebUI"
+msgstr ""
+
+msgid "Installing DebUI"
+msgstr ""
+
+msgid "Removing FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Installing FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Fingerprint is enabled"
+msgstr ""
+
+msgid "Removing Fingerprint"
+msgstr ""
+
+msgid "Configuring Fingerprint"
+msgstr ""
+
+msgid "Installed"
+msgstr "Instalat"
+
+msgid "Removing Phofono"
+msgstr ""
+
+msgid "Installing Phofono"
+msgstr ""
+
+msgid "Removing Branchy"
+msgstr ""
+
+msgid "Installing Branchy"
+msgstr ""
+
+msgid "Staging"
+msgstr ""
+
+msgid "Switch to Production"
+msgstr ""
+
+msgid "Production"
+msgstr ""
+
+msgid "Switch to Staging"
+msgstr ""
+
+msgid "Switching to Production"
+msgstr ""
+
+msgid "Switching to Staging"
+msgstr ""
+
+msgid "About Tweak-FLX1s"
+msgstr "Despre Tweak-FLX1s"
+
+msgid "System tweaks and utilities for FuriPhoneFLX1s."
+msgstr ""
+
+msgid "Version"
+msgstr "Versiune"
+
+msgid "Developer"
+msgstr "Dezvoltator"
+
+msgid "License"
+msgstr "Licență"
+
+msgid "Links"
+msgstr "Linkuri"
+
+msgid "Website"
+msgstr "Site web"
+
+msgid "Issue Tracker"
+msgstr "Urmărire probleme"
+
+msgid "Report bugs or request features"
+msgstr ""
+
+msgid "Appearance"
+msgstr "Aspect"
+
+msgid "GTK3 CSS Tweak"
+msgstr ""
+
+msgid "Apply custom UI scaling tweaks for GTK3 apps"
+msgstr ""
+
+msgid "Background Services"
+msgstr "Servicii de fundal"
+
+msgid "Alarm Volume Fix"
+msgstr ""
+
+msgid "Ensure alarm plays at full volume"
+msgstr ""
+
+msgid "Andromeda Guard"
+msgstr ""
+
+msgid "Prevent OSK issues"
+msgstr ""
+
+msgid "Andromeda Integration"
+msgstr ""
+
+msgid "Shared Folders"
+msgstr ""
+
+msgid "Mount ~/.local/share/andromeda to ~/Android-Share"
+msgstr ""
+
+msgid "Audio"
+msgstr "Audio"
+
+msgid "Custom Sound Theme"
+msgstr ""
+
+msgid "Use fastflx1 custom sounds"
+msgstr ""
+
+msgid "Mounting Shared Folders"
+msgstr ""
+
+msgid "Unmounting Shared Folders"
+msgstr ""
+
+msgid "Short Press"
+msgstr "Apăsare scurtă"
+
+msgid "Double Press"
+msgstr "Apăsare dublă"
+
+msgid "Long Press"
+msgstr "Apăsare lungă"
+
+msgid "Use Custom Assistant File"
+msgstr ""
+
+msgid "Write ~/.config/assistant-button/..."
+msgstr ""
+
+msgid "Locked Action"
+msgstr ""
+
+msgid "Unlocked Action"
+msgstr ""
+
+msgid "Copy (Ctrl+C)"
+msgstr "Copiază (Ctrl+C)"
+
+msgid "Paste (Ctrl+V)"
+msgstr "Lipește (Ctrl+V)"
+
+msgid "Cut (Ctrl+X)"
+msgstr ""
+
+msgid "Select All and Copy"
+msgstr ""
+
+msgid "Paste from Clipboard"
+msgstr ""
+
+msgid "Kill Active Window"
+msgstr ""
+
+msgid "Switch Window on the left"
+msgstr ""
+
+msgid "Switch Window on the right"
+msgstr ""
+
+msgid "Screenshot"
+msgstr "Captură de ecran"
+
+msgid "Flashlight"
+msgstr "Lanternă"
+
+msgid "Play/Pause"
+msgstr ""
+
+msgid "Next Track"
+msgstr ""
+
+msgid "Previous Track"
+msgstr ""
+
+msgid "Volume Up"
+msgstr ""
+
+msgid "Volume Down"
+msgstr ""
+
+msgid "Mute"
+msgstr "Dezactivare sunet"

@@ -1,0 +1,675 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: tweak-flx1s 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-01-01 00:00+0000\n"
+"Last-Translator: ai\n"
+"Language-Team: ai\n"
+"Language: bn\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Add Location"
+msgstr "অবস্থান যোগ করুন"
+
+msgid "Close"
+msgstr "বন্ধ করুন"
+
+msgid "Enter city name"
+msgstr "শহরের নাম লিখুন"
+
+msgid "Search"
+msgstr "অনুসন্ধান"
+
+msgid "Result"
+msgstr "ফলাফল"
+
+msgid "No location found yet."
+msgstr "এখনও কোন অবস্থান পাওয়া যায়নি।"
+
+msgid "Searching..."
+msgstr "অনুসন্ধান করা হচ্ছে..."
+
+msgid "No location found."
+msgstr "অবস্থান পাওয়া যায়নি।"
+
+msgid "Error adding location."
+msgstr "অবস্থান যোগ করতে ত্রুটি।"
+
+msgid "Tweaks"
+msgstr "টুইকস"
+
+msgid "System"
+msgstr "সিস্টেম"
+
+msgid "Actions"
+msgstr "ক্রিয়া"
+
+msgid "New Gesture Wizard"
+msgstr "নতুন জেসচার উইজার্ড"
+
+msgid "Cancel"
+msgstr "বাতিল"
+
+msgid "Go Back"
+msgstr "ফিরে যান"
+
+msgid "Proceed"
+msgstr "এগিয়ে যান"
+
+msgid "Step 1: Fingers"
+msgstr "ধাপ ১: আঙ্গুল"
+
+msgid "How many fingers used for the gesture?"
+msgstr "জেসচারের জন্য কতগুলি আঙ্গুল ব্যবহার করা হয়?"
+
+msgid "Step 2: Direction"
+msgstr "ধাপ ২: দিক"
+
+msgid "Which direction is the swipe?"
+msgstr "সোয়াইপ কোন দিকে?"
+
+msgid "From Left to Right"
+msgstr "বাম থেকে ডানে"
+
+msgid "From Right to Left"
+msgstr "ডান থেকে বামে"
+
+msgid "From Top to Bottom"
+msgstr "উপর থেকে নিচে"
+
+msgid "From Bottom to Top"
+msgstr "নিচ থেকে উপরে"
+
+msgid "From Bottom-Left to Top-Right"
+msgstr ""
+
+msgid "From Top-Right to Bottom-Left"
+msgstr ""
+
+msgid "From Top-Left to Bottom-Right"
+msgstr ""
+
+msgid "From Bottom-Right to Top-Left"
+msgstr ""
+
+msgid "Step 3: Edge"
+msgstr "ধাপ ৩: প্রান্ত"
+
+msgid "Where should the gesture start?"
+msgstr "জেসচার কোথায় শুরু করা উচিত?"
+
+msgid "Anywhere"
+msgstr "যেকোনো জায়গায়"
+
+msgid "Left Edge"
+msgstr "বাম প্রান্ত"
+
+msgid "Right Edge"
+msgstr "ডান প্রান্ত"
+
+msgid "Top Edge"
+msgstr "উপরের প্রান্ত"
+
+msgid "Bottom Edge"
+msgstr "নিচের প্রান্ত"
+
+msgid "Top-Left Corner"
+msgstr ""
+
+msgid "Top-Right Corner"
+msgstr ""
+
+msgid "Bottom-Left Corner"
+msgstr ""
+
+msgid "Bottom-Right Corner"
+msgstr ""
+
+msgid "None (Middle of screen only)"
+msgstr ""
+
+msgid "Step 4: Distance"
+msgstr "ধাপ ৪: দূরত্ব"
+
+msgid "How long should the swipe be?"
+msgstr "সোয়াইপ কত দীর্ঘ হওয়া উচিত?"
+
+msgid "Any Distance"
+msgstr "যেকোনো দূরত্ব"
+
+msgid "Short"
+msgstr "সংক্ষিপ্ত"
+
+msgid "Medium"
+msgstr "মাঝারি"
+
+msgid "Large"
+msgstr "দীর্ঘ"
+
+msgid "Step 5: Mode"
+msgstr "ধাপ ৫: মোড"
+
+msgid "Trigger on press or release?"
+msgstr "টিপলে নাকি ছাড়লে ট্রিগার হবে?"
+
+msgid "On Release (Recommended)"
+msgstr "ছাড়লে (প্রস্তাবিত)"
+
+msgid "On Press"
+msgstr "টিপলে"
+
+msgid "Already configured"
+msgstr ""
+
+msgid "Error: Both Release and Press modes are already configured for this gesture combination."
+msgstr ""
+
+msgid "Save"
+msgstr "সংরক্ষণ"
+
+msgid "Select Keyboard"
+msgstr ""
+
+msgid "Edit Item"
+msgstr "আইটেম সম্পাদনা করুন"
+
+msgid "Item Details"
+msgstr "আইটেমের বিবরণ"
+
+msgid "Action Name"
+msgstr "ক্রিয়ার নাম"
+
+msgid "Action Type"
+msgstr "ক্রিয়ার ধরণ"
+
+msgid "Predefined Action"
+msgstr "পূর্বনির্ধারিত ক্রিয়া"
+
+msgid "Select from common actions"
+msgstr ""
+
+msgid "Custom Command"
+msgstr "কাস্টম কমান্ড"
+
+msgid "Execute a shell command"
+msgstr ""
+
+msgid "Command"
+msgstr "কমান্ড"
+
+msgid "Predefined Actions"
+msgstr ""
+
+msgid "Edit Menu"
+msgstr "মেনু সম্পাদনা করুন"
+
+msgid "New Item"
+msgstr "নতুন আইটেম"
+
+msgid "Select Action"
+msgstr "ক্রিয়া নির্বাচন করুন"
+
+msgid "Wofi Menu"
+msgstr "Wofi মেনু"
+
+msgid "Show a menu of actions"
+msgstr ""
+
+msgid "Edit Gesture"
+msgstr "জেসচার সম্পাদনা করুন"
+
+msgid "General"
+msgstr "সাধারণ"
+
+msgid "Name"
+msgstr "নাম"
+
+msgid "Trigger Spec"
+msgstr "ট্রিগার স্পেসিফিকেশন"
+
+msgid "Not Configured"
+msgstr "কনফিগার করা হয়নি"
+
+msgid "Change"
+msgstr "পরিবর্তন"
+
+msgid "Locked State"
+msgstr "লক করা অবস্থা"
+
+msgid "Edit"
+msgstr "সম্পাদনা"
+
+msgid "Unlocked State"
+msgstr "আনলক করা অবস্থা"
+
+msgid "No Action"
+msgstr "কোন ক্রিয়া নেই"
+
+msgid "Missing Trigger"
+msgstr "অনুপস্থিত ট্রিগার"
+
+msgid "Please configure a gesture trigger before saving."
+msgstr ""
+
+msgid "OK"
+msgstr "ঠিক আছে"
+
+msgid "Gestures"
+msgstr ""
+
+msgid "Service"
+msgstr "সেবা"
+
+msgid "Enable Touch Gestures"
+msgstr "টাচ জেসচার সক্ষম করুন"
+
+msgid "Add New Gesture"
+msgstr "নতুন জেসচার যোগ করুন"
+
+msgid "Configured Gestures"
+msgstr "কনফিগার করা জেসচার"
+
+msgid "Unnamed Gesture"
+msgstr "নামবিহীন জেসচার"
+
+msgid "New Gesture"
+msgstr "নতুন জেসচার"
+
+msgid "Change Password"
+msgstr "পাসওয়ার্ড পরিবর্তন করুন"
+
+msgid "Password Details"
+msgstr "পাসওয়ার্ডের বিবরণ"
+
+msgid "Current Password"
+msgstr "বর্তমান পাসওয়ার্ড"
+
+msgid "New Password"
+msgstr "নতুন পাসওয়ার্ড"
+
+msgid "Confirm New Password"
+msgstr "নতুন পাসওয়ার্ড নিশ্চিত করুন"
+
+msgid "Please enter current password."
+msgstr ""
+
+msgid "Please enter new password."
+msgstr ""
+
+msgid "New passwords do not match."
+msgstr ""
+
+msgid "Changing password..."
+msgstr ""
+
+msgid "Password changed successfully!"
+msgstr "পাসওয়ার্ড সফলভাবে পরিবর্তিত হয়েছে!"
+
+msgid "Failed to change password."
+msgstr "পাসওয়ার্ড পরিবর্তন করতে ব্যর্থ।"
+
+msgid "Authentication error. Check current password."
+msgstr ""
+
+msgid "Bad password."
+msgstr ""
+
+msgid "it is too short"
+msgstr ""
+
+msgid "is the same as the old one"
+msgstr ""
+
+msgid "is a palindrome"
+msgstr ""
+
+msgid "case changes only"
+msgstr ""
+
+msgid "is too similar to the old one"
+msgstr ""
+
+msgid "it does not contain enough DIFFERENT characters"
+msgstr ""
+
+msgid "it is based on a dictionary word"
+msgstr ""
+
+msgid "Bad password: "
+msgstr ""
+
+msgid "Input Configuration"
+msgstr "ইনপুট কনফিগারেশন"
+
+msgid "Hardware Buttons"
+msgstr "হার্ডওয়্যার বোতাম"
+
+msgid "Configure short, double, and long press actions"
+msgstr ""
+
+msgid "Touch Gestures"
+msgstr "টাচ জেসচার"
+
+msgid "Configure edge swipes and shortcuts"
+msgstr ""
+
+msgid "Buttons"
+msgstr "বোতাম"
+
+msgid "Keyboard"
+msgstr "কীবোর্ড"
+
+msgid "Active Keyboard"
+msgstr "সক্রিয় কীবোর্ড"
+
+msgid "Change Keyboard"
+msgstr "কীবোর্ড পরিবর্তন করুন"
+
+msgid "Finnish Layout"
+msgstr ""
+
+msgid "Install custom Squeekboard layout"
+msgstr ""
+
+msgid "Configuration"
+msgstr "কনফিগারেশন"
+
+msgid "Enforce App Wofi Config"
+msgstr ""
+
+msgid "Use Tweak-FLX1s Wofi style and config"
+msgstr ""
+
+msgid "Environment"
+msgstr "পরিবেশ"
+
+msgid "Current Environment"
+msgstr ""
+
+msgid "Updates"
+msgstr "আপডেট"
+
+msgid "System Upgrade"
+msgstr "সিস্টেম আপগ্রেড"
+
+msgid "Upgrade FuriOS"
+msgstr ""
+
+msgid "Upgrading System"
+msgstr ""
+
+msgid "Applications"
+msgstr "অ্যাপ্লিকেশন"
+
+msgid "Squeekboard"
+msgstr "Squeekboard"
+
+msgid "On-screen keyboard"
+msgstr ""
+
+msgid "FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Install custom battery monitor"
+msgstr ""
+
+msgid "Install"
+msgstr "ইনস্টল করুন"
+
+msgid "Phofono"
+msgstr ""
+
+msgid "Alternative Phone and Messages App"
+msgstr ""
+
+msgid "Branchy App Store"
+msgstr ""
+
+msgid "DebUI"
+msgstr ""
+
+msgid "Debian Package Installer UI"
+msgstr ""
+
+msgid "Security"
+msgstr "নিরাপত্তা"
+
+msgid "Enable Shorter Passcodes"
+msgstr ""
+
+msgid "Allow 1-character passwords"
+msgstr ""
+
+msgid "Change current user password"
+msgstr ""
+
+msgid "Fingerprint Authentication"
+msgstr "আঙ্গুলের ছাপ প্রমাণীকরণ"
+
+msgid "Configure PAM for fingerprint support"
+msgstr ""
+
+msgid "Enable"
+msgstr "সক্ষম করুন"
+
+msgid "Restarting Keyboard Service"
+msgstr ""
+
+msgid "Changing Keyboard"
+msgstr ""
+
+msgid "Remove"
+msgstr "সরান"
+
+msgid "Removing Squeekboard"
+msgstr ""
+
+msgid "Installing Squeekboard"
+msgstr ""
+
+msgid "Enabling Shorter Passwords"
+msgstr ""
+
+msgid "Disabling Shorter Passwords"
+msgstr ""
+
+msgid "Removing DebUI"
+msgstr ""
+
+msgid "Installing DebUI"
+msgstr ""
+
+msgid "Removing FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Installing FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Fingerprint is enabled"
+msgstr ""
+
+msgid "Removing Fingerprint"
+msgstr ""
+
+msgid "Configuring Fingerprint"
+msgstr ""
+
+msgid "Installed"
+msgstr "ইনস্টল করা হয়েছে"
+
+msgid "Removing Phofono"
+msgstr ""
+
+msgid "Installing Phofono"
+msgstr ""
+
+msgid "Removing Branchy"
+msgstr ""
+
+msgid "Installing Branchy"
+msgstr ""
+
+msgid "Staging"
+msgstr ""
+
+msgid "Switch to Production"
+msgstr ""
+
+msgid "Production"
+msgstr ""
+
+msgid "Switch to Staging"
+msgstr ""
+
+msgid "Switching to Production"
+msgstr ""
+
+msgid "Switching to Staging"
+msgstr ""
+
+msgid "About Tweak-FLX1s"
+msgstr "Tweak-FLX1s সম্পর্কে"
+
+msgid "System tweaks and utilities for FuriPhoneFLX1s."
+msgstr ""
+
+msgid "Version"
+msgstr "সংস্করণ"
+
+msgid "Developer"
+msgstr "বিকাশকারী"
+
+msgid "License"
+msgstr "লাইসেন্স"
+
+msgid "Links"
+msgstr "লিঙ্ক"
+
+msgid "Website"
+msgstr "ওয়েবসাইট"
+
+msgid "Issue Tracker"
+msgstr "ইস্যু ট্র্যাকার"
+
+msgid "Report bugs or request features"
+msgstr ""
+
+msgid "Appearance"
+msgstr "চেহারা"
+
+msgid "GTK3 CSS Tweak"
+msgstr ""
+
+msgid "Apply custom UI scaling tweaks for GTK3 apps"
+msgstr ""
+
+msgid "Background Services"
+msgstr "ব্যাকগ্রাউন্ড পরিষেবা"
+
+msgid "Alarm Volume Fix"
+msgstr ""
+
+msgid "Ensure alarm plays at full volume"
+msgstr ""
+
+msgid "Andromeda Guard"
+msgstr ""
+
+msgid "Prevent OSK issues"
+msgstr ""
+
+msgid "Andromeda Integration"
+msgstr ""
+
+msgid "Shared Folders"
+msgstr ""
+
+msgid "Mount ~/.local/share/andromeda to ~/Android-Share"
+msgstr ""
+
+msgid "Audio"
+msgstr "অডিও"
+
+msgid "Custom Sound Theme"
+msgstr ""
+
+msgid "Use fastflx1 custom sounds"
+msgstr ""
+
+msgid "Mounting Shared Folders"
+msgstr ""
+
+msgid "Unmounting Shared Folders"
+msgstr ""
+
+msgid "Short Press"
+msgstr "শর্ট প্রেস"
+
+msgid "Double Press"
+msgstr "ডাবল প্রেস"
+
+msgid "Long Press"
+msgstr "লং প্রেস"
+
+msgid "Use Custom Assistant File"
+msgstr ""
+
+msgid "Write ~/.config/assistant-button/..."
+msgstr ""
+
+msgid "Locked Action"
+msgstr ""
+
+msgid "Unlocked Action"
+msgstr ""
+
+msgid "Copy (Ctrl+C)"
+msgstr "অনুলিপি (Ctrl+C)"
+
+msgid "Paste (Ctrl+V)"
+msgstr "পেস্ট (Ctrl+V)"
+
+msgid "Cut (Ctrl+X)"
+msgstr ""
+
+msgid "Select All and Copy"
+msgstr ""
+
+msgid "Paste from Clipboard"
+msgstr ""
+
+msgid "Kill Active Window"
+msgstr ""
+
+msgid "Switch Window on the left"
+msgstr ""
+
+msgid "Switch Window on the right"
+msgstr ""
+
+msgid "Screenshot"
+msgstr "স্ক্রিনশট"
+
+msgid "Flashlight"
+msgstr "ফ্ল্যাশলাইট"
+
+msgid "Play/Pause"
+msgstr ""
+
+msgid "Next Track"
+msgstr ""
+
+msgid "Previous Track"
+msgstr ""
+
+msgid "Volume Up"
+msgstr ""
+
+msgid "Volume Down"
+msgstr ""
+
+msgid "Mute"
+msgstr "মিউট"
