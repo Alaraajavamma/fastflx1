@@ -60,7 +60,12 @@ class TweaksPage(Adw.PreferencesPage):
         self.add(shared_group)
 
         shared_row = Adw.SwitchRow(title=_("Shared Folders"), subtitle=_("Mount ~/.local/share/andromeda to ~/Android-Share"))
-        shared_row.set_active(self.andromeda.is_mounted())
+        is_mounted = self.andromeda.is_mounted()
+        user = GLib.get_user_name()
+        service_name = f"tweak-flx1s-andromeda-fs@{user}.service"
+        is_running = self._is_service_running(service_name)
+
+        shared_row.set_active(is_mounted and is_running)
         shared_row.connect("notify::active", self._on_shared_toggled)
         shared_group.add(shared_row)
 
@@ -109,38 +114,40 @@ class TweaksPage(Adw.PreferencesPage):
     def _add_service_row(self, group, title, subtitle, service_name):
         row = Adw.SwitchRow(title=title, subtitle=subtitle)
 
-
-        initial_state = self._is_active(service_name)
-
-
-        row.set_active(initial_state)
+        is_running = self._is_service_running(service_name)
+        row.set_active(is_running)
 
         row.connect("notify::active", self._on_switch_toggled, service_name)
         group.add(row)
 
-    def _is_active(self, service):
+    def _is_service_running(self, service):
+        """Checks if a service is active (running)."""
         try:
-            out = run_command(f"systemctl --user is-enabled {service}", check=False)
-            return out == "enabled"
+            out = run_command(f"systemctl --user is-active {service}", check=False)
+            return out == "active"
         except Exception as e:
-            logger.warning(f"Failed to check status for {service}: {e}")
+            logger.warning(f"Failed to check active status for {service}: {e}")
             return False
 
     def _on_switch_toggled(self, row, param, service):
-        is_active = row.get_active()
-        current_status = self._is_active(service)
+        should_be_active = row.get_active()
 
-        if is_active == current_status:
-             logger.debug(f"Service {service} state match ({is_active}), skipping toggle command.")
-             return
+        if should_be_active:
+             cmd = f"systemctl --user enable {service} && systemctl --user daemon-reload && systemctl --user start {service}"
+        else:
+             cmd = f"systemctl --user stop {service} && systemctl --user disable {service} && systemctl --user daemon-reload"
 
-        action = "enable --now" if is_active else "disable --now"
-        logger.info(f"Toggling {service}: {action}")
-        run_command(f"systemctl --user daemon-reload && systemctl --user {action} {service}", check=False)
+        logger.info(f"Toggling {service} to {should_be_active}...")
+        run_command(cmd, check=False)
+
+        is_running = self._is_service_running(service)
+        if should_be_active != is_running:
+             logger.warning(f"Service {service} state mismatch after toggle. Expected: {should_be_active}, Actual: {is_running}")
 
     def _on_shared_toggled(self, row, param):
         is_active = row.get_active()
         user = GLib.get_user_name()
+
         if is_active:
             if not self.andromeda.is_mounted():
                 cmd = f"python3 -c \"import sys; from tweak_flx1s.system.andromeda import AndromedaManager; AndromedaManager(user=sys.argv[1]).mount()\" {shlex.quote(user)}"
@@ -151,9 +158,3 @@ class TweaksPage(Adw.PreferencesPage):
                 cmd = f"python3 -c \"import sys; from tweak_flx1s.system.andromeda import AndromedaManager; AndromedaManager(user=sys.argv[1]).unmount()\" {shlex.quote(user)}"
                 dlg = ExecutionDialog(self.window, _("Unmounting Shared Folders"), cmd, as_root=True)
                 dlg.present()
-
-    def _on_sound_toggled(self, row, param):
-        if row.get_active():
-            self.sounds.enable_custom_theme()
-        else:
-            self.sounds.disable_custom_theme()

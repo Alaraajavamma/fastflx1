@@ -14,8 +14,7 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import signal
-import threading
-import subprocess
+import gi
 from gi.repository import Gio, GLib
 from loguru import logger
 from tweak_flx1s.utils import run_command
@@ -37,28 +36,37 @@ class AndromedaGuardService:
         self.withdrawal_source_id = None
         self.countdown_source_id = None
         self.counter = 0
+        self.subprocess = None
+        self.cancellable = Gio.Cancellable()
+        self.data_input_stream = None
 
     def run(self):
         """Starts the guard service loop."""
         logger.info("Starting Andromeda Guard Service...")
+
+        self.loop = GLib.MainLoop()
 
         GLib.unix_signal_add(GLib.PRIORITY_DEFAULT, signal.SIGTERM, self._quit_service)
         GLib.unix_signal_add(GLib.PRIORITY_DEFAULT, signal.SIGINT, self._quit_service)
 
         GLib.idle_add(self._perform_reset)
 
-        t = threading.Thread(target=self._monitor_dbus, daemon=True)
-        t.start()
+        self._start_monitor_subprocess()
 
-        self.loop = GLib.MainLoop()
         try:
             self.loop.run()
         except KeyboardInterrupt:
             self._quit_service()
 
     def _quit_service(self):
+        logger.info("Stopping Andromeda Guard Service...")
         self._running = False
-        if self.loop:
+        self.cancellable.cancel()
+
+        if self.subprocess:
+            self.subprocess.force_exit()
+
+        if self.loop.is_running():
             self.loop.quit()
         return GLib.SOURCE_REMOVE
 
@@ -72,7 +80,7 @@ class AndromedaGuardService:
     def _handle_session_reset(self):
         """Quick reset triggered by session signal."""
         logger.info("Handling session reset signal.")
-        GLib.idle_add(self._trigger_session_reset_ui)
+        self._trigger_session_reset_ui()
 
     def _trigger_session_reset_ui(self):
         self._disable_keyboard()
@@ -134,24 +142,51 @@ class AndromedaGuardService:
         self.withdrawal_source_id = None
         return False
 
-    def _monitor_dbus(self):
-        """Monitors DBus for the custom signal."""
+    def _start_monitor_subprocess(self):
+        """Monitors DBus for the custom signal using Gio.Subprocess."""
         cmd = ["dbus-monitor", "--session", "type='signal',interface='org.freedesktop.DBus',member='NameAcquired'"]
         logger.debug(f"Running dbus monitor: {' '.join(cmd)}")
-        try:
-            process = subprocess.Popen(cmd, stdout=subprocess.PIPE, text=True)
 
-            while self._running:
-                line = process.stdout.readline()
-                if not line:
-                    break
-                if "io.furios.Andromeda.Session" in line:
-                    self._handle_session_reset()
+        try:
+            self.subprocess = Gio.Subprocess.new(
+                cmd,
+                Gio.SubprocessFlags.STDOUT_PIPE | Gio.SubprocessFlags.STDERR_PIPE
+            )
+
+            stdout_pipe = self.subprocess.get_stdout_pipe()
+            self.data_input_stream = Gio.DataInputStream.new(stdout_pipe)
+            self._read_line()
+
         except Exception as e:
-            logger.error(f"Error in DBus monitor: {e}")
-        finally:
-            if 'process' in locals() and process:
-                process.terminate()
+            logger.error(f"Failed to start dbus-monitor: {e}")
+            self._quit_service()
+
+    def _read_line(self):
+        """Reads a line asynchronously."""
+        self.data_input_stream.read_line_async(
+            GLib.PRIORITY_DEFAULT,
+            self.cancellable,
+            self._on_line_read
+        )
+
+    def _on_line_read(self, source, result):
+        try:
+            line_bytes, length = source.read_line_finish(result)
+            if line_bytes is None:
+                logger.warning("dbus-monitor stream ended")
+                self._quit_service()
+                return
+
+            line = line_bytes.decode('utf-8').strip()
+            if "io.furios.Andromeda.Session" in line:
+                self._handle_session_reset()
+
+            self._read_line()
+
+        except GLib.Error as e:
+            if e.code != Gio.IOErrorEnum.CANCELLED:
+                logger.error(f"Error reading line: {e}")
+                self._quit_service()
 
 def run():
     service = AndromedaGuardService()

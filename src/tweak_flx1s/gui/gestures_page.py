@@ -71,9 +71,6 @@ class GestureEditor(Adw.Window):
         spec_row = Adw.ActionRow(title=_("Trigger Spec"))
         spec_row.set_subtitle(self.gesture.get("spec", _("Not Configured")))
 
-
-
-
         change_btn = Gtk.Button(label=_("Change"), valign=Gtk.Align.CENTER)
         change_btn.connect("clicked", lambda b: GLib.idle_add(lambda: self._on_change_spec(b, spec_row) or False))
         spec_row.add_suffix(change_btn)
@@ -103,7 +100,6 @@ class GestureEditor(Adw.Window):
         def on_complete(new_spec):
             self.gesture["spec"] = new_spec
             row.set_subtitle(new_spec)
-
 
         current_spec = self.gesture.get("spec")
         specs_to_exclude = [s for s in self.used_specs if s != current_spec]
@@ -142,7 +138,6 @@ class GestureEditor(Adw.Window):
     def _on_save_clicked(self, btn):
         self.gesture["name"] = self.entries["name"].get_text()
 
-
         if not self.gesture.get("spec"):
              dlg = Adw.MessageDialog(
                   transient_for=self,
@@ -168,7 +163,10 @@ class GesturesPage(Adw.PreferencesPage):
         self.add(svc_group)
 
         enable_row = Adw.SwitchRow(title=_("Enable Touch Gestures"))
-        enable_row.set_active(self.config.get("enabled", False))
+
+        is_running = self._is_service_running(SERVICE_GESTURES)
+        enable_row.set_active(is_running)
+
         enable_row.connect("notify::active", self._on_enable_toggled)
         svc_group.add(enable_row)
 
@@ -192,12 +190,31 @@ class GesturesPage(Adw.PreferencesPage):
 
         self._refresh_list()
 
+    def _is_service_running(self, service):
+        """Checks if a service is active (running)."""
+        try:
+            out = run_command(f"systemctl --user is-active {service}", check=False)
+            return out == "active"
+        except Exception as e:
+            logger.warning(f"Failed to check active status for {service}: {e}")
+            return False
+
     def _on_enable_toggled(self, row, param):
-        self.config["enabled"] = row.get_active()
+        should_be_active = row.get_active()
+        self.config["enabled"] = should_be_active
         self.manager.save_config(self.config)
-        action = "enable --now" if row.get_active() else "disable --now"
-        logger.info(f"{action} {SERVICE_GESTURES}")
-        run_command(f"systemctl --user daemon-reload && systemctl --user {action} {SERVICE_GESTURES}", check=False)
+
+        if should_be_active:
+             cmd = f"systemctl --user enable {SERVICE_GESTURES} && systemctl --user daemon-reload && systemctl --user start {SERVICE_GESTURES}"
+        else:
+             cmd = f"systemctl --user stop {SERVICE_GESTURES} && systemctl --user disable {SERVICE_GESTURES} && systemctl --user daemon-reload"
+
+        logger.info(f"Toggling {SERVICE_GESTURES} to {should_be_active}...")
+        run_command(cmd, check=False)
+
+        is_running = self._is_service_running(SERVICE_GESTURES)
+        if should_be_active != is_running:
+             logger.warning(f"Service {SERVICE_GESTURES} state mismatch after toggle. Expected: {should_be_active}, Actual: {is_running}")
 
     def _refresh_list(self):
         child = self.list_box.get_first_child()
@@ -238,17 +255,13 @@ class GesturesPage(Adw.PreferencesPage):
 
     def _on_add(self, btn):
         def on_wizard_complete(spec):
-
             new_data = {
                 "name": _("New Gesture"),
                 "spec": spec,
                 "locked": {"type": "command", "value": ""},
                 "unlocked": {"type": "command", "value": ""}
             }
-
-
             self._show_editor(None, new_data)
-
 
         wiz = GestureWizard(self.get_root(), on_wizard_complete, used_specs=self._get_used_specs())
         wiz.present()

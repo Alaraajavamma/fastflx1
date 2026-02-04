@@ -14,8 +14,10 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import os
-import subprocess
+import signal
 import shutil
+import gi
+from gi.repository import GLib, Gio
 from loguru import logger
 from tweak_flx1s.utils import get_device_model
 from tweak_flx1s.actions.gestures import GesturesManager
@@ -31,8 +33,10 @@ class GestureMonitor:
             else:
                 self.device = "/dev/input/event2"
 
-        self.process = None
+        self.subprocess = None
         self.manager = GesturesManager()
+        self.loop = GLib.MainLoop()
+        self.cancellable = Gio.Cancellable()
 
     def start(self):
         """Starts the lisgd process with configured gestures."""
@@ -40,6 +44,17 @@ class GestureMonitor:
             logger.info("Gestures are disabled in config.")
             return
 
+        GLib.unix_signal_add(GLib.PRIORITY_DEFAULT, signal.SIGTERM, self._on_quit)
+        GLib.unix_signal_add(GLib.PRIORITY_DEFAULT, signal.SIGINT, self._on_quit)
+
+        self._start_lisgd()
+
+        try:
+            self.loop.run()
+        except KeyboardInterrupt:
+            self._on_quit()
+
+    def _start_lisgd(self):
         logger.info(f"Starting lisgd on {self.device}")
 
         cmd = ["lisgd", "-d", self.device]
@@ -60,22 +75,39 @@ class GestureMonitor:
         logger.debug(f"Executing: {' '.join(cmd)}")
 
         try:
-            self.process = subprocess.Popen(cmd)
-            self.process.wait()
-        except KeyboardInterrupt:
-            self.stop()
+            self.subprocess = Gio.Subprocess.new(
+                cmd,
+                Gio.SubprocessFlags.NONE
+            )
+
+            self.subprocess.wait_check_async(self.cancellable, self._on_subprocess_exit)
+
         except Exception as e:
             logger.error(f"Error running lisgd: {e}")
+            self._on_quit()
 
-    def stop(self):
-        """Stops the lisgd process."""
-        if self.process:
-            logger.info("Stopping lisgd...")
-            self.process.terminate()
-            try:
-                self.process.wait(timeout=5)
-            except subprocess.TimeoutExpired:
-                self.process.kill()
+    def _on_subprocess_exit(self, source, result):
+        try:
+            source.wait_check_finish(result)
+            logger.info("lisgd exited normally.")
+        except GLib.Error as e:
+            if e.code != Gio.IOErrorEnum.CANCELLED:
+                 logger.error(f"lisgd exited with error: {e}")
+        finally:
+            self._on_quit()
+
+    def _on_quit(self):
+        """Stops the lisgd process and quits the loop."""
+        logger.info("Stopping gestures monitor...")
+        self.cancellable.cancel()
+
+        if self.subprocess:
+            logger.info("Terminating lisgd...")
+            self.subprocess.force_exit()
+
+        if self.loop.is_running():
+            self.loop.quit()
+        return GLib.SOURCE_REMOVE
 
 def run():
     monitor = GestureMonitor()
