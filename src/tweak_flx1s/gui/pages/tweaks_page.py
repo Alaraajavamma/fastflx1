@@ -48,7 +48,7 @@ class TweaksPage(Adw.PreferencesPage):
 
         css_row = Adw.SwitchRow(title=_("GTK3 CSS Tweak"), subtitle=_("Apply custom UI scaling tweaks for GTK3 apps"))
         css_row.set_active(self._is_gtk_tweak_active())
-        css_row.connect("notify::active", self._on_css_toggled)
+        css_row.connect("notify::active", lambda r, p: GLib.idle_add(lambda: self._on_css_toggled(r, p) or False))
         appearance_grp.add(css_row)
 
         svc_group = Adw.PreferencesGroup(title=_("Background Services"))
@@ -67,7 +67,7 @@ class TweaksPage(Adw.PreferencesPage):
         is_running = self._is_service_running(service_name, user_bus=False)
 
         shared_row.set_active(is_mounted and is_running)
-        shared_row.connect("notify::active", self._on_shared_toggled)
+        shared_row.connect("notify::active", lambda r, p: GLib.idle_add(lambda: self._on_shared_toggled(r, p) or False))
         shared_group.add(shared_row)
 
         sound_group = Adw.PreferencesGroup(title=_("Audio"))
@@ -75,7 +75,7 @@ class TweaksPage(Adw.PreferencesPage):
 
         sound_row = Adw.SwitchRow(title=_("Custom Sound Theme"), subtitle=_("Use fastflx1 custom sounds"))
         sound_row.set_active(self.sounds.is_custom_theme_active())
-        sound_row.connect("notify::active", self._on_sound_toggled)
+        sound_row.connect("notify::active", lambda r, p: GLib.idle_add(lambda: self._on_sound_toggled(r, p) or False))
         sound_group.add(sound_row)
 
     def _get_css_paths(self):
@@ -118,7 +118,7 @@ class TweaksPage(Adw.PreferencesPage):
         is_running = self._is_service_running(service_name)
         row.set_active(is_running)
 
-        row.connect("notify::active", self._on_switch_toggled, service_name)
+        row.connect("notify::active", lambda r, p, s=service_name: GLib.idle_add(lambda: self._on_switch_toggled(r, p, s) or False))
         group.add(row)
 
     def _is_service_running(self, service, user_bus=True):

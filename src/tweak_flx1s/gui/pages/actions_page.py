@@ -40,14 +40,14 @@ class ActionsPage(Adw.PreferencesPage):
         btn_row = Adw.ActionRow(title=_("Hardware Buttons"), subtitle=_("Configure short, double, and long press actions"))
         btn_nav = Gtk.Button(icon_name="go-next-symbolic")
         btn_nav.add_css_class("flat")
-        btn_nav.connect("clicked", self._open_buttons)
+        btn_nav.connect("clicked", lambda b: GLib.idle_add(lambda: self._open_buttons(b) or False))
         btn_row.add_suffix(btn_nav)
         group.add(btn_row)
 
         gst_row = Adw.ActionRow(title=_("Touch Gestures"), subtitle=_("Configure edge swipes and shortcuts"))
         gst_nav = Gtk.Button(icon_name="go-next-symbolic")
         gst_nav.add_css_class("flat")
-        gst_nav.connect("clicked", self._open_gestures)
+        gst_nav.connect("clicked", lambda b: GLib.idle_add(lambda: self._open_gestures(b) or False))
         gst_row.add_suffix(gst_nav)
         group.add(gst_row)
 

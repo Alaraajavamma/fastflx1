@@ -46,7 +46,7 @@ class ButtonsPage(Adw.PreferencesPage):
         custom_row = Adw.SwitchRow(title=_("Use Custom Assistant File"))
         custom_row.set_subtitle(_("Write ~/.config/assistant-button/..."))
         custom_row.set_active(self.config.get(key, {}).get("use_custom_file", False))
-        custom_row.connect("notify::active", self._on_custom_toggled, key)
+        custom_row.connect("notify::active", lambda r, p, k=key: GLib.idle_add(lambda: self._on_custom_toggled(r, p, k) or False))
         group.add(custom_row)
 
         locked_row = Adw.ActionRow(title=_("Locked Action"))

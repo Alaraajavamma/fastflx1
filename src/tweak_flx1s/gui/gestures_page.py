@@ -51,7 +51,7 @@ class GestureEditor(Adw.Window):
 
         save_btn = Gtk.Button(label=_("Save"))
         save_btn.add_css_class("suggested-action")
-        save_btn.connect("clicked", self._on_save_clicked)
+        save_btn.connect("clicked", lambda b: GLib.idle_add(lambda: self._on_save_clicked(b) or False))
         header.pack_start(save_btn)
 
         close_btn = Gtk.Button(label=_("Close"))
@@ -168,7 +168,7 @@ class GesturesPage(Adw.PreferencesPage):
         is_running = self._is_service_running(SERVICE_GESTURES)
         enable_row.set_active(is_running)
 
-        enable_row.connect("notify::active", self._on_enable_toggled)
+        enable_row.connect("notify::active", lambda r, p: GLib.idle_add(lambda: self._on_enable_toggled(r, p) or False))
         svc_group.add(enable_row)
 
         action_group = Adw.PreferencesGroup(title=_("Actions"))

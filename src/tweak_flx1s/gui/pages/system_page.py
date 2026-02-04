@@ -80,7 +80,7 @@ class SystemPage(Adw.PreferencesPage):
         self.fi_row.set_title_lines(0)
         self.fi_row.set_subtitle_lines(0)
         self.fi_row.set_active(self.kbd_mgr.is_finnish_layout_installed())
-        self.fi_row.connect("notify::active", self._on_fi_toggled)
+        self.fi_row.connect("notify::active", lambda r, p: GLib.idle_add(lambda: self._on_fi_toggled(r, p) or False))
         kbd_group.add(self.fi_row)
 
         wofi_group = Adw.PreferencesGroup(title=_("Configuration"))
@@ -90,7 +90,7 @@ class SystemPage(Adw.PreferencesPage):
         wofi_row.set_title_lines(0)
         wofi_row.set_subtitle_lines(0)
         wofi_row.set_active(self.wofi_mgr.check_config_match())
-        wofi_row.connect("notify::active", self._on_wofi_toggled)
+        wofi_row.connect("notify::active", lambda r, p: GLib.idle_add(lambda: self._on_wofi_toggled(r, p) or False))
         wofi_group.add(wofi_row)
 
         env_group = Adw.PreferencesGroup(title=_("Environment"))
@@ -184,7 +184,7 @@ class SystemPage(Adw.PreferencesPage):
         self.short_pass_row.set_title_lines(0)
         self.short_pass_row.set_subtitle_lines(0)
         self.short_pass_row.set_active(self.pam_mgr.check_short_passwords_enabled())
-        self.short_pass_row.connect("notify::active", self._on_short_pass_toggled)
+        self.short_pass_row.connect("notify::active", lambda r, p: GLib.idle_add(lambda: self._on_short_pass_toggled(r, p) or False))
         sec_group.add(self.short_pass_row)
 
         self.change_pass_row = Adw.ActionRow(title=_("Change Password"), subtitle=_("Change current user password"))

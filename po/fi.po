@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tweak-flx1s 0.1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-01 00:00+0000\n"
+"POT-Creation-Date: 2026-02-04 15:36+0000\n"
 "PO-Revision-Date: 2026-01-01 00:00+0000\n"
 "Last-Translator: Alaraajavamma <aki@urheiluaki.fi>\n"
 "Language-Team: Finnish\n"
@@ -11,707 +11,1017 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-msgid "Settings"
-msgstr "Asetukset"
-
-msgid "Close"
-msgstr "Sulje"
-
-msgid "About Tweak-FLX1s"
-msgstr "Tietoja Tweak-FLX1s:stä"
-
-msgid "Version"
-msgstr "Versio"
-
-msgid "Developer"
-msgstr "Kehittäjä"
-
-msgid "License"
-msgstr "Lisenssi"
-
-msgid "Links"
-msgstr "Linkit"
-
-msgid "Website"
-msgstr "Verkkosivusto"
-
-msgid "Issue Tracker"
-msgstr "Ongelmanseuranta"
-
-msgid "Report bugs or request features"
-msgstr "Ilmoita virheistä tai ehdota ominaisuuksia"
-
-msgid "System"
-msgstr "Järjestelmä"
-
-msgid "Keyboard"
-msgstr "Näppäimistö"
-
-msgid "Change Keyboard"
-msgstr "Vaihda näppäimistö"
-
-msgid "Select Keyboard"
-msgstr "Valitse näppäimistö"
-
-msgid "Restarting Keyboard Service"
-msgstr "Käynnistetään näppäimistöpalvelu uudelleen"
-
-msgid "Changing Keyboard"
-msgstr "Vaihdetaan näppäimistö"
-
-msgid "None - write it yourself below"
-msgstr "Ei mitään - kirjoita itse alle"
-
-msgid "Use Tweak-FLX1s Wofi style and config"
-msgstr "Käytä Tweak-FLX1s Wofi tyyliä ja asetuksia"
-
-msgid "Alternative Phone and Messages App"
-msgstr "Vaihtoehtoinen Puhelin ja Viestit -sovellus"
-
-msgid "Select All and Copy"
-msgstr "Valitse kaikki ja kopioi"
-
-msgid "Action Type"
-msgstr "Toiminnon tyyppi"
-
-msgid "Custom Command"
-msgstr "Mukautettu komento"
-
-msgid "Execute a shell command"
-msgstr "Suorita komentorivikomento"
-
-msgid "Wofi Menu"
-msgstr "Wofi-valikko"
-
-msgid "Show a menu of actions"
-msgstr "Näytä toimintovalikko"
-
-msgid "Edit Menu"
-msgstr "Muokkaa valikkoa"
-
-msgid "Predefined Actions"
-msgstr "Esitellyt toiminnot"
-
-msgid "Edit Item"
-msgstr "Muokkaa kohdetta"
-
-msgid "Add Item"
-msgstr "Lisää kohde"
-
-msgid "Label"
-msgstr "Nimi"
-
-msgid "Command"
-msgstr "Komento"
-
-msgid "Predefined"
-msgstr "Esitellyt"
-
-msgid "Cancel"
-msgstr "Peruuta"
-
-msgid "Save"
-msgstr "Tallenna"
-
-msgid "Select"
-msgstr "Valitse"
-
-msgid "New Item"
-msgstr "Uusi kohde"
-
-msgid "Installing Squeekboard"
-msgstr "Asennetaan Squeekboard"
-
-msgid "Switching to Staging"
-msgstr "Vaihdetaan Staging-ympäristöön"
-
-msgid "Switching to Production"
-msgstr "Vaihdetaan tuotantoympäristöön"
-
-msgid "Upgrading System"
-msgstr "Päivitetään järjestelmä"
-
-msgid "Installing Branchy"
-msgstr "Asennetaan Branchy"
-
-msgid "Setting Password Policy"
-msgstr "Asetetaan salasanakäytäntö"
-
-msgid "Configuring Fingerprint"
-msgstr "Määritetään sormenjälki"
-
-msgid "Installing FLX1s-Bat-Mon"
-msgstr "Asennetaan FLX1s-Bat-Mon"
-
-msgid "Removing Phofono"
-msgstr "Poistetaan Phofono"
-
-msgid "Installing Phofono"
-msgstr "Asennetaan Phofono"
-
-msgid "Squeekboard Missing"
-msgstr "Squeekboard puuttuu"
-
-msgid "Install"
-msgstr "Asenna"
-
-msgid "Active Keyboard"
-msgstr "Aktiivinen näppäimistö"
-
-msgid "Finnish Layout"
-msgstr "Suomalainen asettelu"
-
-msgid "Install custom Squeekboard layout"
-msgstr "Asenna mukautettu Squeekboard-asettelu"
-
-msgid "Enforce App Wofi Config"
-msgstr "Pakota sovelluksen Wofi-asetukset"
-
-msgid "Environment"
-msgstr "Ympäristö"
-
-msgid "Switch Environment"
-msgstr "Vaihda ympäristö"
-
-msgid "Staging"
-msgstr "Staging"
-
-msgid "Production"
-msgstr "Tuotanto"
-
-msgid "Updates"
-msgstr "Päivitykset"
-
-msgid "System Upgrade"
-msgstr "Järjestelmäpäivitys"
-
-msgid "Upgrade FuriOS"
-msgstr "Päivitä FuriOS"
-
-msgid "Applications"
-msgstr "Sovellukset"
-
-msgid "FLX1s-Bat-Mon"
-msgstr "FLX1s-Bat-Mon"
-
-msgid "Install custom battery monitor"
-msgstr "Asenna mukautettu akun seuranta"
-
-msgid "Phofono"
-msgstr "Phofono"
-
-msgid "Branchy App Store"
-msgstr "Branchy-sovelluskauppa"
-
-msgid "Security"
-msgstr "Tietoturva"
-
-msgid "Minimum Password Length"
-msgstr "Salasanan vähimmäispituus"
-
-msgid "Apply"
-msgstr "Käytä"
-
-msgid "Fingerprint Authentication"
-msgstr "Sormenjälkitunnistus"
-
-msgid "Configure PAM for fingerprint support"
-msgstr "Määritä PAM sormenjälkituelle"
-
-msgid "Enable"
-msgstr "Ota käyttöön"
-
-msgid "Installed"
-msgstr "Asennettu"
-
-msgid "Remove"
-msgstr "Poista"
-
-msgid "Copy (Ctrl+C)"
-msgstr "Kopioi (Ctrl+C)"
-
-msgid "Paste (Ctrl+V)"
-msgstr "Liitä (Ctrl+V)"
-
-msgid "Cut (Ctrl+X)"
-msgstr "Leikkaa (Ctrl+X)"
-
-msgid "Paste from Clipboard"
-msgstr "Liitä leikepöydältä"
-
-msgid "Kill Active Window"
-msgstr "Tapa aktiivinen ikkuna"
-
-msgid "Switch Window"
-msgstr "Vaihda ikkunaa"
-
-msgid "Screenshot"
-msgstr "Kuvakaappaus"
-
-msgid "Flashlight"
-msgstr "Taskulamppu"
-
-msgid "Select..."
-msgstr "Valitse..."
-
-msgid "Fingerprint is enabled"
-msgstr "Sormenjälkitunnistus on käytössä"
-
-msgid "Removing Fingerprint"
-msgstr "Poistetaan sormenjälkitunnistusta"
-
-msgid "Removing FLX1s-Bat-Mon"
-msgstr "Poistetaan FLX1s-Bat-Mon"
-
-msgid "Template"
-msgstr "Malli"
-
-msgid "Select from predefined templates"
-msgstr "Valitse esimääritellyistä malleista"
-
-msgid "Select Template"
-msgstr "Valitse malli"
-
-msgid "Actions"
-msgstr "Toiminnot"
-
-msgid "Configured Gestures"
-msgstr "Määritetyt eleet"
-
-msgid "Swipe Left (RL)"
-msgstr "Pyyhkäisy vasemmalle (RL)"
-
-msgid "Swipe Right (LR)"
-msgstr "Pyyhkäisy oikealle (LR)"
-
-msgid "Swipe Up (BT)"
-msgstr "Pyyhkäisy ylös (BT)"
-
-msgid "Swipe Down (TB)"
-msgstr "Pyyhkäisy alas (TB)"
-
-msgid "Left Edge Swipe Right"
-msgstr "Vasen reuna pyyhkäisy oikealle"
-
-msgid "Right Edge Swipe Left"
-msgstr "Oikea reuna pyyhkäisy vasemmalle"
-
-msgid "Top Edge Swipe Down"
-msgstr "Yläreuna pyyhkäisy alas"
-
-msgid "Bottom Edge Swipe Up"
-msgstr "Alareuna pyyhkäisy ylös"
-
-msgid "Bottom Left Corner Swipe Up"
-msgstr "Vasen alakulma pyyhkäisy ylös"
-
-msgid "Bottom Right Corner Swipe Up"
-msgstr "Oikea alakulma pyyhkäisy ylös"
-
-msgid "Top Left Corner Swipe Down"
-msgstr "Vasen yläkulma pyyhkäisy alas"
-
-msgid "Top Right Corner Swipe Down"
-msgstr "Oikea yläkulma pyyhkäisy alas"
-
-msgid "Use Custom Assistant File"
-msgstr "Käytä mukautettua avustajatiedostoa"
-
-msgid "Write ~/.config/assistant-button/..."
-msgstr "Kirjoita ~/.config/assistant-button/..."
-
-msgid "Locked Action"
-msgstr "Lukittu toiminto"
-
-msgid "Unlocked Action"
-msgstr "Lukitsematon toiminto"
-
-msgid "Locked State"
-msgstr "Lukittu tila"
-
-msgid "Unlocked State"
-msgstr "Lukitsematon tila"
-
-msgid "Appearance"
-msgstr "Ulkoasu"
-
-msgid "GTK3 CSS Tweak"
-msgstr "GTK3 CSS -säätö"
-
-msgid "Apply custom UI scaling tweaks for GTK3 apps"
-msgstr "Käytä mukautettuja käyttöliittymän skaalaussäätöjä GTK3-sovelluksille"
-
-msgid "Background Services"
-msgstr "Taustapalvelut"
-
-msgid "Alarm Volume Fix"
-msgstr "Hälytysäänenvoimakkuuden korjaus"
-
-msgid "Ensure alarm plays at full volume"
-msgstr "Varmista, että hälytys soi täydellä voimakkuudella"
-
-msgid "Andromeda Guard"
-msgstr "Andromeda Guard"
-
-msgid "Prevent OSK issues"
-msgstr "Estä OSK-ongelmat"
-
-msgid "Andromeda Integration"
-msgstr "Andromeda-integraatio"
-
-msgid "Shared Folders"
-msgstr "Jaetut kansiot"
-
-msgid "Mount ~/.local/share/andromeda to ~/Android-Share"
-msgstr "Liitä ~/.local/share/andromeda kansioon ~/Android-Share"
-
-msgid "Audio"
-msgstr "Audio"
-
-msgid "Custom Sound Theme"
-msgstr "Mukautettu ääniteema"
-
-msgid "Use fastflx1 custom sounds"
-msgstr "Käytä fastflx1 mukautettuja ääniä"
-
-msgid "Mounting Shared Folders"
-msgstr "Liitetään jaetut kansiot"
-
-msgid "Unmounting Shared Folders"
-msgstr "Irrotetaan jaetut kansiot"
-
-msgid "Input Configuration"
-msgstr "Syöteasetukset"
-
-msgid "Hardware Buttons"
-msgstr "Laitteistopainikkeet"
-
-msgid "Configure short, double, and long press actions"
-msgstr "Määritä lyhyen, kaksois- ja pitkän painalluksen toiminnot"
-
-msgid "Touch Gestures"
-msgstr "Kosketuseleet"
-
-msgid "Configure edge swipes and shortcuts"
-msgstr "Määritä reunapyyhkäisyt ja pikakomennot"
-
+#: src/tweak_flx1s/gui/weather_dialog.py:32
+#: src/tweak_flx1s/gui/weather_dialog.py:75
 msgid "Add Location"
 msgstr "Lisää sijainti"
 
+#: src/tweak_flx1s/gui/weather_dialog.py:45 src/tweak_flx1s/gui/window.py:58
+#: src/tweak_flx1s/gui/dialogs.py:35 src/tweak_flx1s/gui/dialogs.py:130
+#: src/tweak_flx1s/gui/dialogs.py:180 src/tweak_flx1s/gui/dialogs.py:322
+#: src/tweak_flx1s/gui/dialogs.py:418 src/tweak_flx1s/gui/gestures_page.py:57
+#: src/tweak_flx1s/gui/password_dialog.py:52
+#: src/tweak_flx1s/gui/pages/actions_page.py:64
+#: src/tweak_flx1s/gui/pages/actions_page.py:82
+#: src/tweak_flx1s/gui/pages/info_page.py:46
+msgid "Close"
+msgstr "Sulje"
+
+#: src/tweak_flx1s/gui/weather_dialog.py:57
 msgid "Enter city name"
 msgstr "Kirjoita kaupungin nimi"
 
+#: src/tweak_flx1s/gui/weather_dialog.py:62
 msgid "Search"
 msgstr "Hae"
 
+#: src/tweak_flx1s/gui/weather_dialog.py:68
 msgid "Result"
 msgstr "Tulos"
 
+#: src/tweak_flx1s/gui/weather_dialog.py:69
 msgid "No location found yet."
 msgstr "Sijaintia ei vielä löytynyt."
 
+#: src/tweak_flx1s/gui/weather_dialog.py:95
 msgid "Searching..."
 msgstr "Etsitään..."
 
-msgid "Found"
-msgstr "Löytyi"
-
+#: src/tweak_flx1s/gui/weather_dialog.py:114
 msgid "No location found."
 msgstr "Sijaintia ei löytynyt."
 
+#: src/tweak_flx1s/gui/weather_dialog.py:124
 msgid "Error adding location."
 msgstr "Virhe sijainnin lisäämisessä."
 
-msgid "General"
-msgstr "Yleiset"
+#: src/tweak_flx1s/gui/window.py:69 src/tweak_flx1s/gui/pages/tweaks_page.py:41
+msgid "Tweaks"
+msgstr "Säädöt"
 
-msgid "Name"
-msgstr "Nimi"
+#: src/tweak_flx1s/gui/window.py:72 src/tweak_flx1s/gui/pages/system_page.py:47
+msgid "System"
+msgstr "Järjestelmä"
 
-msgid "Spec (lisgd)"
-msgstr "Määritys (lisgd)"
+#: src/tweak_flx1s/gui/window.py:75 src/tweak_flx1s/gui/gestures_page.py:81
+#: src/tweak_flx1s/gui/gestures_page.py:174
+#: src/tweak_flx1s/gui/pages/actions_page.py:34
+msgid "Actions"
+msgstr "Toiminnot"
 
-msgid "Short Press"
-msgstr "Lyhyt painallus"
-
-msgid "Double Press"
-msgstr "Kaksoispainallus"
-
-msgid "Long Press"
-msgstr "Pitkä painallus"
-
-msgid "Add New Gesture"
-msgstr "Lisää uusi ele"
-
-msgid "Removing Branchy"
-msgstr "Poistetaan Branchy"
-
-msgid "Enable Touch Gestures"
-msgstr "Ota kosketuseleet käyttöön"
-
-msgid "Current Environment"
-msgstr "Nykyinen ympäristö"
-
-msgid "Switch to Production"
-msgstr "Vaihda tuotantoon"
-
-msgid "Switch to Staging"
-msgstr "Vaihda stagingiin"
-
-msgid "Enable Shorter Passcodes"
-msgstr "Ota käyttöön lyhyemmät salasanat"
-
-msgid "Allow 1-character passwords"
-msgstr "Salli 1 merkin salasanat"
-
-msgid "Change Password"
-msgstr "Vaihda salasana"
-
-msgid "Change current user password"
-msgstr "Vaihda nykyisen käyttäjän salasana"
-
-msgid "Enabling Shorter Passwords"
-msgstr "Otetaan käyttöön lyhyemmät salasanat"
-
-msgid "Disabling Shorter Passwords"
-msgstr "Poistetaan käytöstä lyhyemmät salasanat"
-
-msgid "Password Details"
-msgstr "Salasanan tiedot"
-
-msgid "Current Password"
-msgstr "Nykyinen salasana"
-
-msgid "New Password"
-msgstr "Uusi salasana"
-
-msgid "Confirm New Password"
-msgstr "Vahvista uusi salasana"
-
-msgid "Please enter current password."
-msgstr "Anna nykyinen salasana."
-
-msgid "Please enter new password."
-msgstr "Anna uusi salasana."
-
-msgid "New passwords do not match."
-msgstr "Uudet salasanat eivät täsmää."
-
-msgid "Changing password..."
-msgstr "Vaihdetaan salasanaa..."
-
-msgid "Password changed successfully!"
-msgstr "Salasana vaihdettu onnistuneesti!"
-
-msgid "Failed to change password."
-msgstr "Salasanan vaihto epäonnistui."
-
-msgid "Authentication error. Check current password."
-msgstr "Tunnistautumisvirhe. Tarkista nykyinen salasana."
-
-msgid "Bad password."
-msgstr "Huono salasana."
-
-msgid "(In Use)"
-msgstr "(Käytössä)"
-
-msgid "Change"
-msgstr "Vaihda"
-
-msgid "Bad password: "
-msgstr "Huono salasana: "
-
-msgid "it is too short"
-msgstr "se on liian lyhyt"
-
-msgid "is the same as the old one"
-msgstr "se on sama kuin vanha"
-
-msgid "is a palindrome"
-msgstr "se on palindromi"
-
-msgid "case changes only"
-msgstr "vain kirjainkoko muuttui"
-
-msgid "is too similar to the old one"
-msgstr "se on liian samankaltainen kuin vanha"
-
-msgid "it does not contain enough DIFFERENT characters"
-msgstr "siinä ei ole tarpeeksi ERILAISIA merkkejä"
-
-msgid "it is based on a dictionary word"
-msgstr "se perustuu sanakirjasanaan"
-
-msgid "Removing DebUI"
-msgstr "Poistetaan DebUI"
-
-msgid "Installing DebUI"
-msgstr "Asennetaan DebUI"
-
+#: src/tweak_flx1s/gui/wizard.py:30
 msgid "New Gesture Wizard"
 msgstr "Uuden eleen ohjattu toiminto"
 
+#: src/tweak_flx1s/gui/wizard.py:52
+msgid "Cancel"
+msgstr "Peruuta"
+
+#: src/tweak_flx1s/gui/wizard.py:56
 msgid "Go Back"
 msgstr "Mene takaisin"
 
+#: src/tweak_flx1s/gui/wizard.py:61 src/tweak_flx1s/gui/wizard.py:298
+#: src/tweak_flx1s/gui/wizard.py:305
 msgid "Proceed"
 msgstr "Jatka"
 
+#: src/tweak_flx1s/gui/wizard.py:108
 msgid "Step 1: Fingers"
 msgstr "Vaihe 1: Sormet"
 
+#: src/tweak_flx1s/gui/wizard.py:108
 msgid "How many fingers used for the gesture?"
 msgstr "Kuinka monta sormea eleessä käytetään?"
 
+#: src/tweak_flx1s/gui/wizard.py:126
 msgid "Step 2: Direction"
 msgstr "Vaihe 2: Suunta"
 
+#: src/tweak_flx1s/gui/wizard.py:126
 msgid "Which direction is the swipe?"
 msgstr "Mihin suuntaan pyyhkäistään?"
 
+#: src/tweak_flx1s/gui/wizard.py:129
 msgid "From Left to Right"
 msgstr "Vasemmalta oikealle"
 
+#: src/tweak_flx1s/gui/wizard.py:130
 msgid "From Right to Left"
 msgstr "Oikealta vasemmalle"
 
+#: src/tweak_flx1s/gui/wizard.py:131
 msgid "From Top to Bottom"
 msgstr "Ylhäältä alas"
 
+#: src/tweak_flx1s/gui/wizard.py:132
 msgid "From Bottom to Top"
 msgstr "Alhaalta ylös"
 
+#: src/tweak_flx1s/gui/wizard.py:133
 msgid "From Bottom-Left to Top-Right"
 msgstr "Viistosti vasemmasta alakulmasta kohti oikeaa yläkulmaa"
 
+#: src/tweak_flx1s/gui/wizard.py:134
 msgid "From Top-Right to Bottom-Left"
 msgstr "Viistosti oikeasta yläkulmasta kohti vasenta alakulmaa"
 
+#: src/tweak_flx1s/gui/wizard.py:135
 msgid "From Top-Left to Bottom-Right"
 msgstr "Viistosti vasemmasta yläkulmasta kohti oikeaa alakulmaa"
 
+#: src/tweak_flx1s/gui/wizard.py:136
 msgid "From Bottom-Right to Top-Left"
 msgstr "Viistosti oikeasta alakulmasta kohti vasenta yläkulmaa"
 
+#: src/tweak_flx1s/gui/wizard.py:156
 msgid "Step 3: Edge"
 msgstr "Vaihe 3: Reuna"
 
+#: src/tweak_flx1s/gui/wizard.py:156
 msgid "Where should the gesture start?"
 msgstr "Mistä eleen tulisi alkaa?"
 
+#: src/tweak_flx1s/gui/wizard.py:159
 msgid "Anywhere"
 msgstr "Missä tahansa"
 
+#: src/tweak_flx1s/gui/wizard.py:160
 msgid "Left Edge"
 msgstr "Vasen reuna"
 
+#: src/tweak_flx1s/gui/wizard.py:161
 msgid "Right Edge"
 msgstr "Oikea reuna"
 
+#: src/tweak_flx1s/gui/wizard.py:162
 msgid "Top Edge"
 msgstr "Yläreuna"
 
+#: src/tweak_flx1s/gui/wizard.py:163
 msgid "Bottom Edge"
 msgstr "Alareuna"
 
+#: src/tweak_flx1s/gui/wizard.py:164
 msgid "Top-Left Corner"
 msgstr "Vasen yläkulma"
 
+#: src/tweak_flx1s/gui/wizard.py:165
 msgid "Top-Right Corner"
 msgstr "Oikea yläkulma"
 
+#: src/tweak_flx1s/gui/wizard.py:166
 msgid "Bottom-Left Corner"
 msgstr "Vasen alakulma"
 
+#: src/tweak_flx1s/gui/wizard.py:167
 msgid "Bottom-Right Corner"
 msgstr "Oikea alakulma"
 
+#: src/tweak_flx1s/gui/wizard.py:168
 msgid "None (Middle of screen only)"
 msgstr "Ei mikään (vain ruudun keskellä)"
 
+#: src/tweak_flx1s/gui/wizard.py:188
 msgid "Step 4: Distance"
 msgstr "Vaihe 4: Etäisyys"
 
+#: src/tweak_flx1s/gui/wizard.py:188
 msgid "How long should the swipe be?"
 msgstr "Kuinka pitkä pyyhkäisyn tulisi olla?"
 
+#: src/tweak_flx1s/gui/wizard.py:191
 msgid "Any Distance"
 msgstr "Mikä tahansa etäisyys"
 
+#: src/tweak_flx1s/gui/wizard.py:192
 msgid "Short"
 msgstr "Lyhyt"
 
+#: src/tweak_flx1s/gui/wizard.py:193
 msgid "Medium"
 msgstr "Keskipitkä"
 
+#: src/tweak_flx1s/gui/wizard.py:194
 msgid "Large"
 msgstr "Pitkä"
 
+#: src/tweak_flx1s/gui/wizard.py:228
 msgid "Step 5: Mode"
 msgstr "Vaihe 5: Tila"
 
+#: src/tweak_flx1s/gui/wizard.py:229
 msgid "Trigger on press or release?"
 msgstr "Laukaise painettaessa vai vapautettaessa?"
 
+#: src/tweak_flx1s/gui/wizard.py:233
 msgid "On Release (Recommended)"
 msgstr "Vapautettaessa (Suositus)"
 
+#: src/tweak_flx1s/gui/wizard.py:234
 msgid "On Press"
 msgstr "Painettaessa"
 
+#: src/tweak_flx1s/gui/wizard.py:248
 msgid "Already configured"
 msgstr "Jo määritetty"
 
-msgid "Error: Both Release and Press modes are already configured for this gesture combination."
-msgstr "Virhe: Sekä vapautus- että painallustilat on jo määritetty tälle eleyhdistelmälle."
+#: src/tweak_flx1s/gui/wizard.py:274
+msgid ""
+"Error: Both Release and Press modes are already configured for this gesture "
+"combination."
+msgstr ""
+"Virhe: Sekä vapautus- että painallustilat on jo määritetty tälle "
+"eleyhdistelmälle."
 
-msgid "Not Configured"
-msgstr "Ei määritetty"
+#: src/tweak_flx1s/gui/wizard.py:311 src/tweak_flx1s/gui/dialogs.py:175
+#: src/tweak_flx1s/gui/dialogs.py:317 src/tweak_flx1s/gui/dialogs.py:413
+#: src/tweak_flx1s/gui/gestures_page.py:52
+msgid "Save"
+msgstr "Tallenna"
 
-msgid "Missing Trigger"
-msgstr "Puuttuva laukaisin"
+#: src/tweak_flx1s/gui/dialogs.py:117
+msgid "Select Keyboard"
+msgstr "Valitse näppäimistö"
 
-msgid "Please configure a gesture trigger before saving."
-msgstr "Määritä eleen laukaisin ennen tallentamista."
+#: src/tweak_flx1s/gui/dialogs.py:162
+msgid "Edit Item"
+msgstr "Muokkaa kohdetta"
 
+#: src/tweak_flx1s/gui/dialogs.py:187
+msgid "Item Details"
+msgstr "Kohteen tiedot"
+
+#: src/tweak_flx1s/gui/dialogs.py:190
+msgid "Action Name"
+msgstr "Toiminnon nimi"
+
+#: src/tweak_flx1s/gui/dialogs.py:194 src/tweak_flx1s/gui/dialogs.py:425
+msgid "Action Type"
+msgstr "Toiminnon tyyppi"
+
+#: src/tweak_flx1s/gui/dialogs.py:203 src/tweak_flx1s/gui/dialogs.py:434
+msgid "Predefined Action"
+msgstr "Esivalittu toiminto"
+
+#: src/tweak_flx1s/gui/dialogs.py:204 src/tweak_flx1s/gui/dialogs.py:435
+msgid "Select from common actions"
+msgstr "Valitse yleisistä toiminnoista"
+
+#: src/tweak_flx1s/gui/dialogs.py:214 src/tweak_flx1s/gui/dialogs.py:445
+msgid "Custom Command"
+msgstr "Mukautettu komento"
+
+#: src/tweak_flx1s/gui/dialogs.py:215 src/tweak_flx1s/gui/dialogs.py:446
+msgid "Execute a shell command"
+msgstr "Suorita komentorivikomento"
+
+#: src/tweak_flx1s/gui/dialogs.py:226 src/tweak_flx1s/gui/dialogs.py:457
+msgid "Command"
+msgstr "Komento"
+
+#: src/tweak_flx1s/gui/dialogs.py:231 src/tweak_flx1s/gui/dialogs.py:479
+msgid "Predefined Actions"
+msgstr "Esitellyt toiminnot"
+
+#: src/tweak_flx1s/gui/dialogs.py:300 src/tweak_flx1s/gui/dialogs.py:474
+msgid "Edit Menu"
+msgstr "Muokkaa valikkoa"
+
+#: src/tweak_flx1s/gui/dialogs.py:347
+msgid "New Item"
+msgstr "Uusi kohde"
+
+#: src/tweak_flx1s/gui/dialogs.py:400
+msgid "Select Action"
+msgstr "Valitse toiminto"
+
+#: src/tweak_flx1s/gui/dialogs.py:462 src/tweak_flx1s/gui/gestures_page.py:117
+#: src/tweak_flx1s/gui/buttons_page.py:81
+msgid "Wofi Menu"
+msgstr "Wofi-valikko"
+
+#: src/tweak_flx1s/gui/dialogs.py:463
+msgid "Show a menu of actions"
+msgstr "Näytä toimintovalikko"
+
+#: src/tweak_flx1s/gui/gestures_page.py:36
 msgid "Edit Gesture"
 msgstr "Muokkaa elettä"
 
+#: src/tweak_flx1s/gui/gestures_page.py:64
+msgid "General"
+msgstr "Yleiset"
+
+#: src/tweak_flx1s/gui/gestures_page.py:67
+msgid "Name"
+msgstr "Nimi"
+
+#: src/tweak_flx1s/gui/gestures_page.py:72
 msgid "Trigger Spec"
 msgstr "Laukaisimen määritys"
 
-msgid "Unnamed Gesture"
-msgstr "Nimetön ele"
+#: src/tweak_flx1s/gui/gestures_page.py:73
+msgid "Not Configured"
+msgstr "Ei määritetty"
 
+#: src/tweak_flx1s/gui/gestures_page.py:75
+#: src/tweak_flx1s/gui/password_dialog.py:47
+#: src/tweak_flx1s/gui/pages/system_page.py:196
+msgid "Change"
+msgstr "Vaihda"
+
+#: src/tweak_flx1s/gui/gestures_page.py:84
+msgid "Locked State"
+msgstr "Lukittu tila"
+
+#: src/tweak_flx1s/gui/gestures_page.py:86
+#: src/tweak_flx1s/gui/gestures_page.py:94
+#: src/tweak_flx1s/gui/buttons_page.py:55
+#: src/tweak_flx1s/gui/buttons_page.py:64
+msgid "Edit"
+msgstr "Muokkaa"
+
+#: src/tweak_flx1s/gui/gestures_page.py:92
+msgid "Unlocked State"
+msgstr "Lukitsematon tila"
+
+#: src/tweak_flx1s/gui/gestures_page.py:126
+#: src/tweak_flx1s/gui/buttons_page.py:90
 msgid "No Action"
 msgstr "Ei toimintoa"
 
+#: src/tweak_flx1s/gui/gestures_page.py:145
+msgid "Missing Trigger"
+msgstr "Puuttuva laukaisin"
+
+#: src/tweak_flx1s/gui/gestures_page.py:146
+msgid "Please configure a gesture trigger before saving."
+msgstr "Määritä eleen laukaisin ennen tallentamista."
+
+#: src/tweak_flx1s/gui/gestures_page.py:148
 msgid "OK"
 msgstr "OK"
 
+#: src/tweak_flx1s/gui/gestures_page.py:159
+#: src/tweak_flx1s/gui/pages/actions_page.py:73
+msgid "Gestures"
+msgstr "Eleet"
+
+#: src/tweak_flx1s/gui/gestures_page.py:163
+msgid "Service"
+msgstr "Palvelu"
+
+#: src/tweak_flx1s/gui/gestures_page.py:166
+msgid "Enable Touch Gestures"
+msgstr "Ota kosketuseleet käyttöön"
+
+#: src/tweak_flx1s/gui/gestures_page.py:177
+msgid "Add New Gesture"
+msgstr "Lisää uusi ele"
+
+#: src/tweak_flx1s/gui/gestures_page.py:184
+msgid "Configured Gestures"
+msgstr "Määritetyt eleet"
+
+#: src/tweak_flx1s/gui/gestures_page.py:234
+msgid "Unnamed Gesture"
+msgstr "Nimetön ele"
+
+#: src/tweak_flx1s/gui/gestures_page.py:266
 msgid "New Gesture"
 msgstr "Uusi ele"
 
+#: src/tweak_flx1s/gui/password_dialog.py:36
+#: src/tweak_flx1s/gui/pages/system_page.py:190
+msgid "Change Password"
+msgstr "Vaihda salasana"
+
+#: src/tweak_flx1s/gui/password_dialog.py:59
+msgid "Password Details"
+msgstr "Salasanan tiedot"
+
+#: src/tweak_flx1s/gui/password_dialog.py:62
+msgid "Current Password"
+msgstr "Nykyinen salasana"
+
+#: src/tweak_flx1s/gui/password_dialog.py:65
+msgid "New Password"
+msgstr "Uusi salasana"
+
+#: src/tweak_flx1s/gui/password_dialog.py:68
+msgid "Confirm New Password"
+msgstr "Vahvista uusi salasana"
+
+#: src/tweak_flx1s/gui/password_dialog.py:88
+msgid "Please enter current password."
+msgstr "Anna nykyinen salasana."
+
+#: src/tweak_flx1s/gui/password_dialog.py:91
+msgid "Please enter new password."
+msgstr "Anna uusi salasana."
+
+#: src/tweak_flx1s/gui/password_dialog.py:94
+msgid "New passwords do not match."
+msgstr "Uudet salasanat eivät täsmää."
+
+#: src/tweak_flx1s/gui/password_dialog.py:97
+msgid "Changing password..."
+msgstr "Vaihdetaan salasanaa..."
+
+#: src/tweak_flx1s/gui/password_dialog.py:177
+msgid "Password changed successfully!"
+msgstr "Salasana vaihdettu onnistuneesti!"
+
+#: src/tweak_flx1s/gui/password_dialog.py:183
+msgid "Failed to change password."
+msgstr "Salasanan vaihto epäonnistui."
+
+#: src/tweak_flx1s/gui/password_dialog.py:185
+msgid "Authentication error. Check current password."
+msgstr "Tunnistautumisvirhe. Tarkista nykyinen salasana."
+
+#: src/tweak_flx1s/gui/password_dialog.py:187
+msgid "Bad password."
+msgstr "Huono salasana."
+
+#: src/tweak_flx1s/gui/password_dialog.py:193
+msgid "it is too short"
+msgstr "se on liian lyhyt"
+
+#: src/tweak_flx1s/gui/password_dialog.py:195
+msgid "is the same as the old one"
+msgstr "se on sama kuin vanha"
+
+#: src/tweak_flx1s/gui/password_dialog.py:197
+msgid "is a palindrome"
+msgstr "se on palindromi"
+
+#: src/tweak_flx1s/gui/password_dialog.py:199
+msgid "case changes only"
+msgstr "vain kirjainkoko muuttui"
+
+#: src/tweak_flx1s/gui/password_dialog.py:201
+msgid "is too similar to the old one"
+msgstr "se on liian samankaltainen kuin vanha"
+
+#: src/tweak_flx1s/gui/password_dialog.py:203
+msgid "it does not contain enough DIFFERENT characters"
+msgstr "siinä ei ole tarpeeksi ERILAISIA merkkejä"
+
+#: src/tweak_flx1s/gui/password_dialog.py:205
+msgid "it is based on a dictionary word"
+msgstr "se perustuu sanakirjasanaan"
+
+#: src/tweak_flx1s/gui/password_dialog.py:207
+msgid "Bad password: "
+msgstr "Huono salasana: "
+
+#: src/tweak_flx1s/gui/pages/actions_page.py:37
+msgid "Input Configuration"
+msgstr "Syöteasetukset"
+
+#: src/tweak_flx1s/gui/pages/actions_page.py:40
+msgid "Hardware Buttons"
+msgstr "Laitteistopainikkeet"
+
+#: src/tweak_flx1s/gui/pages/actions_page.py:40
+msgid "Configure short, double, and long press actions"
+msgstr "Määritä lyhyen, kaksois- ja pitkän painalluksen toiminnot"
+
+#: src/tweak_flx1s/gui/pages/actions_page.py:47
+msgid "Touch Gestures"
+msgstr "Kosketuseleet"
+
+#: src/tweak_flx1s/gui/pages/actions_page.py:47
+msgid "Configure edge swipes and shortcuts"
+msgstr "Määritä reunapyyhkäisyt ja pikakomennot"
+
+#: src/tweak_flx1s/gui/pages/actions_page.py:55
+#: src/tweak_flx1s/gui/buttons_page.py:32
+msgid "Buttons"
+msgstr "Painikkeet"
+
+#: src/tweak_flx1s/gui/pages/system_page.py:65
+msgid "Keyboard"
+msgstr "Näppäimistö"
+
+#: src/tweak_flx1s/gui/pages/system_page.py:68
+msgid "Active Keyboard"
+msgstr "Aktiivinen näppäimistö"
+
+#: src/tweak_flx1s/gui/pages/system_page.py:73
+msgid "Change Keyboard"
+msgstr "Vaihda näppäimistö"
+
+#: src/tweak_flx1s/gui/pages/system_page.py:79
+msgid "Finnish Layout"
+msgstr "Suomalainen asettelu"
+
+#: src/tweak_flx1s/gui/pages/system_page.py:79
+msgid "Install custom Squeekboard layout"
+msgstr "Asenna mukautettu Squeekboard-asettelu"
+
+#: src/tweak_flx1s/gui/pages/system_page.py:86
+msgid "Configuration"
+msgstr "Asetukset"
+
+#: src/tweak_flx1s/gui/pages/system_page.py:89
+msgid "Enforce App Wofi Config"
+msgstr "Pakota sovelluksen Wofi-asetukset"
+
+#: src/tweak_flx1s/gui/pages/system_page.py:89
+msgid "Use Tweak-FLX1s Wofi style and config"
+msgstr "Käytä Tweak-FLX1s Wofi tyyliä ja asetuksia"
+
+#: src/tweak_flx1s/gui/pages/system_page.py:96
+msgid "Environment"
+msgstr "Ympäristö"
+
+#: src/tweak_flx1s/gui/pages/system_page.py:99
+msgid "Current Environment"
+msgstr "Nykyinen ympäristö"
+
+#: src/tweak_flx1s/gui/pages/system_page.py:110
+msgid "Updates"
+msgstr "Päivitykset"
+
+#: src/tweak_flx1s/gui/pages/system_page.py:112
+msgid "System Upgrade"
+msgstr "Järjestelmäpäivitys"
+
+#: src/tweak_flx1s/gui/pages/system_page.py:117
+msgid "Upgrade FuriOS"
+msgstr "Päivitä FuriOS"
+
+#: src/tweak_flx1s/gui/pages/system_page.py:120
+msgid "Upgrading System"
+msgstr "Päivitetään järjestelmä"
+
+#: src/tweak_flx1s/gui/pages/system_page.py:123
+msgid "Applications"
+msgstr "Sovellukset"
+
+#: src/tweak_flx1s/gui/pages/system_page.py:126
+msgid "Squeekboard"
+msgstr "Squeekboard"
+
+#: src/tweak_flx1s/gui/pages/system_page.py:126
+msgid "On-screen keyboard"
+msgstr "Virtuaalinäppäimistö"
+
+#: src/tweak_flx1s/gui/pages/system_page.py:137
+msgid "FLX1s-Bat-Mon"
+msgstr "FLX1s-Bat-Mon"
+
+#: src/tweak_flx1s/gui/pages/system_page.py:137
+msgid "Install custom battery monitor"
+msgstr "Asenna mukautettu akun seuranta"
+
+#: src/tweak_flx1s/gui/pages/system_page.py:142
+#: src/tweak_flx1s/gui/pages/system_page.py:163
+#: src/tweak_flx1s/gui/pages/system_page.py:285
+#: src/tweak_flx1s/gui/pages/system_page.py:337
+#: src/tweak_flx1s/gui/pages/system_page.py:367
+#: src/tweak_flx1s/gui/pages/system_page.py:432
+#: src/tweak_flx1s/gui/pages/system_page.py:481
+msgid "Install"
+msgstr "Asenna"
+
+#: src/tweak_flx1s/gui/pages/system_page.py:148
+msgid "Phofono"
+msgstr "Phofono"
+
+#: src/tweak_flx1s/gui/pages/system_page.py:148
+#: src/tweak_flx1s/gui/pages/system_page.py:435
+msgid "Alternative Phone and Messages App"
+msgstr "Vaihtoehtoinen Puhelin ja Viestit -sovellus"
+
+#: src/tweak_flx1s/gui/pages/system_page.py:158
+msgid "Branchy App Store"
+msgstr "Branchy-sovelluskauppa"
+
+#: src/tweak_flx1s/gui/pages/system_page.py:169
+msgid "DebUI"
+msgstr "DebUI"
+
+#: src/tweak_flx1s/gui/pages/system_page.py:169
+msgid "Debian Package Installer UI"
+msgstr "Debian-pakettien asennusliittymä"
+
+#: src/tweak_flx1s/gui/pages/system_page.py:180
+msgid "Security"
+msgstr "Tietoturva"
+
+#: src/tweak_flx1s/gui/pages/system_page.py:183
+msgid "Enable Shorter Passcodes"
+msgstr "Ota käyttöön lyhyemmät salasanat"
+
+#: src/tweak_flx1s/gui/pages/system_page.py:183
+msgid "Allow 1-character passwords"
+msgstr "Salli 1 merkin salasanat"
+
+#: src/tweak_flx1s/gui/pages/system_page.py:190
+msgid "Change current user password"
+msgstr "Vaihda nykyisen käyttäjän salasana"
+
+#: src/tweak_flx1s/gui/pages/system_page.py:203
+msgid "Fingerprint Authentication"
+msgstr "Sormenjälkitunnistus"
+
+#: src/tweak_flx1s/gui/pages/system_page.py:203
+#: src/tweak_flx1s/gui/pages/system_page.py:401
+msgid "Configure PAM for fingerprint support"
+msgstr "Määritä PAM sormenjälkituelle"
+
+#: src/tweak_flx1s/gui/pages/system_page.py:208
+#: src/tweak_flx1s/gui/pages/system_page.py:398
+msgid "Enable"
+msgstr "Ota käyttöön"
+
+#: src/tweak_flx1s/gui/pages/system_page.py:240
+msgid "Restarting Keyboard Service"
+msgstr "Käynnistetään näppäimistöpalvelu uudelleen"
+
+#: src/tweak_flx1s/gui/pages/system_page.py:246
+msgid "Changing Keyboard"
+msgstr "Vaihdetaan näppäimistö"
+
+#: src/tweak_flx1s/gui/pages/system_page.py:279
+#: src/tweak_flx1s/gui/pages/system_page.py:333
+#: src/tweak_flx1s/gui/pages/system_page.py:363
+#: src/tweak_flx1s/gui/pages/system_page.py:393
+#: src/tweak_flx1s/gui/pages/system_page.py:427
+#: src/tweak_flx1s/gui/pages/system_page.py:477
+msgid "Remove"
+msgstr "Poista"
+
+#: src/tweak_flx1s/gui/pages/system_page.py:299
+msgid "Removing Squeekboard"
+msgstr "Poistetaan Squeekboard"
+
+#: src/tweak_flx1s/gui/pages/system_page.py:304
+msgid "Installing Squeekboard"
+msgstr "Asennetaan Squeekboard"
+
+#: src/tweak_flx1s/gui/pages/system_page.py:315
+msgid "Enabling Shorter Passwords"
+msgstr "Otetaan käyttöön lyhyemmät salasanat"
+
+#: src/tweak_flx1s/gui/pages/system_page.py:319
+msgid "Disabling Shorter Passwords"
+msgstr "Poistetaan käytöstä lyhyemmät salasanat"
+
+#: src/tweak_flx1s/gui/pages/system_page.py:349
+msgid "Removing DebUI"
+msgstr "Poistetaan DebUI"
+
+#: src/tweak_flx1s/gui/pages/system_page.py:354
+msgid "Installing DebUI"
+msgstr "Asennetaan DebUI"
+
+#: src/tweak_flx1s/gui/pages/system_page.py:379
+msgid "Removing FLX1s-Bat-Mon"
+msgstr "Poistetaan FLX1s-Bat-Mon"
+
+#: src/tweak_flx1s/gui/pages/system_page.py:384
+msgid "Installing FLX1s-Bat-Mon"
+msgstr "Asennetaan FLX1s-Bat-Mon"
+
+#: src/tweak_flx1s/gui/pages/system_page.py:396
+msgid "Fingerprint is enabled"
+msgstr "Sormenjälkitunnistus on käytössä"
+
+#: src/tweak_flx1s/gui/pages/system_page.py:410
+msgid "Removing Fingerprint"
+msgstr "Poistetaan sormenjälkitunnistusta"
+
+#: src/tweak_flx1s/gui/pages/system_page.py:413
+msgid "Configuring Fingerprint"
+msgstr "Määritetään sormenjälki"
+
+#: src/tweak_flx1s/gui/pages/system_page.py:430
+msgid "Installed"
+msgstr "Asennettu"
+
+#: src/tweak_flx1s/gui/pages/system_page.py:452
+msgid "Removing Phofono"
+msgstr "Poistetaan Phofono"
+
+#: src/tweak_flx1s/gui/pages/system_page.py:466
+msgid "Installing Phofono"
+msgstr "Asennetaan Phofono"
+
+#: src/tweak_flx1s/gui/pages/system_page.py:493
+msgid "Removing Branchy"
+msgstr "Poistetaan Branchy"
+
+#: src/tweak_flx1s/gui/pages/system_page.py:498
+msgid "Installing Branchy"
+msgstr "Asennetaan Branchy"
+
+#: src/tweak_flx1s/gui/pages/system_page.py:507
+msgid "Staging"
+msgstr "Staging"
+
+#: src/tweak_flx1s/gui/pages/system_page.py:508
+msgid "Switch to Production"
+msgstr "Vaihda tuotantoon"
+
+#: src/tweak_flx1s/gui/pages/system_page.py:512
+msgid "Production"
+msgstr "Tuotanto"
+
+#: src/tweak_flx1s/gui/pages/system_page.py:513
+msgid "Switch to Staging"
+msgstr "Vaihda stagingiin"
+
+#: src/tweak_flx1s/gui/pages/system_page.py:525
+msgid "Switching to Production"
+msgstr "Vaihdetaan tuotantoympäristöön"
+
+#: src/tweak_flx1s/gui/pages/system_page.py:529
+msgid "Switching to Staging"
+msgstr "Vaihdetaan Staging-ympäristöön"
+
+#: src/tweak_flx1s/gui/pages/info_page.py:34
+msgid "About Tweak-FLX1s"
+msgstr "Tietoja Tweak-FLX1s:stä"
+
+#: src/tweak_flx1s/gui/pages/info_page.py:59
+msgid "System tweaks and utilities for FuriPhoneFLX1s."
+msgstr ""
+
+#: src/tweak_flx1s/gui/pages/info_page.py:77
+msgid "Version"
+msgstr "Versio"
+
+#: src/tweak_flx1s/gui/pages/info_page.py:78
+msgid "Developer"
+msgstr "Kehittäjä"
+
+#: src/tweak_flx1s/gui/pages/info_page.py:79
+msgid "License"
+msgstr "Lisenssi"
+
+#: src/tweak_flx1s/gui/pages/info_page.py:83
+msgid "Links"
+msgstr "Linkit"
+
+#: src/tweak_flx1s/gui/pages/info_page.py:107
+msgid "Website"
+msgstr "Verkkosivusto"
+
+#: src/tweak_flx1s/gui/pages/info_page.py:115
+msgid "Issue Tracker"
+msgstr "Ongelmanseuranta"
+
+#: src/tweak_flx1s/gui/pages/info_page.py:116
+msgid "Report bugs or request features"
+msgstr "Ilmoita virheistä tai ehdota ominaisuuksia"
+
+#: src/tweak_flx1s/gui/pages/tweaks_page.py:46
+msgid "Appearance"
+msgstr "Ulkoasu"
+
+#: src/tweak_flx1s/gui/pages/tweaks_page.py:49
+msgid "GTK3 CSS Tweak"
+msgstr "GTK3 CSS -säätö"
+
+#: src/tweak_flx1s/gui/pages/tweaks_page.py:49
+msgid "Apply custom UI scaling tweaks for GTK3 apps"
+msgstr "Käytä mukautettuja käyttöliittymän skaalaussäätöjä GTK3-sovelluksille"
+
+#: src/tweak_flx1s/gui/pages/tweaks_page.py:54
+msgid "Background Services"
+msgstr "Taustapalvelut"
+
+#: src/tweak_flx1s/gui/pages/tweaks_page.py:57
+msgid "Alarm Volume Fix"
+msgstr "Hälytysäänenvoimakkuuden korjaus"
+
+#: src/tweak_flx1s/gui/pages/tweaks_page.py:57
+msgid "Ensure alarm plays at full volume"
+msgstr "Varmista, että hälytys soi täydellä voimakkuudella"
+
+#: src/tweak_flx1s/gui/pages/tweaks_page.py:58
+msgid "Andromeda Guard"
+msgstr "Andromeda Guard"
+
+#: src/tweak_flx1s/gui/pages/tweaks_page.py:58
+msgid "Prevent OSK issues"
+msgstr "Estä OSK-ongelmat"
+
+#: src/tweak_flx1s/gui/pages/tweaks_page.py:60
+msgid "Andromeda Integration"
+msgstr "Andromeda-integraatio"
+
+#: src/tweak_flx1s/gui/pages/tweaks_page.py:63
+msgid "Shared Folders"
+msgstr "Jaetut kansiot"
+
+#: src/tweak_flx1s/gui/pages/tweaks_page.py:63
+msgid "Mount ~/.local/share/andromeda to ~/Android-Share"
+msgstr "Liitä ~/.local/share/andromeda kansioon ~/Android-Share"
+
+#: src/tweak_flx1s/gui/pages/tweaks_page.py:73
+msgid "Audio"
+msgstr "Audio"
+
+#: src/tweak_flx1s/gui/pages/tweaks_page.py:76
+msgid "Custom Sound Theme"
+msgstr "Mukautettu ääniteema"
+
+#: src/tweak_flx1s/gui/pages/tweaks_page.py:76
+msgid "Use fastflx1 custom sounds"
+msgstr "Käytä fastflx1 mukautettuja ääniä"
+
+#: src/tweak_flx1s/gui/pages/tweaks_page.py:179
+msgid "Mounting Shared Folders"
+msgstr "Liitetään jaetut kansiot"
+
+#: src/tweak_flx1s/gui/pages/tweaks_page.py:183
+msgid "Unmounting Shared Folders"
+msgstr "Irrotetaan jaetut kansiot"
+
+#: src/tweak_flx1s/gui/buttons_page.py:37
+msgid "Short Press"
+msgstr "Lyhyt painallus"
+
+#: src/tweak_flx1s/gui/buttons_page.py:38
+msgid "Double Press"
+msgstr "Kaksoispainallus"
+
+#: src/tweak_flx1s/gui/buttons_page.py:39
+msgid "Long Press"
+msgstr "Pitkä painallus"
+
+#: src/tweak_flx1s/gui/buttons_page.py:46
+msgid "Use Custom Assistant File"
+msgstr "Käytä mukautettua avustajatiedostoa"
+
+#: src/tweak_flx1s/gui/buttons_page.py:47
+msgid "Write ~/.config/assistant-button/..."
+msgstr "Kirjoita ~/.config/assistant-button/..."
+
+#: src/tweak_flx1s/gui/buttons_page.py:52
+msgid "Locked Action"
+msgstr "Lukittu toiminto"
+
+#: src/tweak_flx1s/gui/buttons_page.py:61
+msgid "Unlocked Action"
+msgstr "Lukitsematon toiminto"
+
+#: src/tweak_flx1s/actions/buttons.py:32
+msgid "Copy (Ctrl+C)"
+msgstr "Kopioi (Ctrl+C)"
+
+#: src/tweak_flx1s/actions/buttons.py:33
+msgid "Paste (Ctrl+V)"
+msgstr "Liitä (Ctrl+V)"
+
+#: src/tweak_flx1s/actions/buttons.py:34
+msgid "Cut (Ctrl+X)"
+msgstr "Leikkaa (Ctrl+X)"
+
+#: src/tweak_flx1s/actions/buttons.py:35
+msgid "Select All and Copy"
+msgstr "Valitse kaikki ja kopioi"
+
+#: src/tweak_flx1s/actions/buttons.py:36
+msgid "Paste from Clipboard"
+msgstr "Liitä leikepöydältä"
+
+#: src/tweak_flx1s/actions/buttons.py:37
+msgid "Kill Active Window"
+msgstr "Tapa aktiivinen ikkuna"
+
+#: src/tweak_flx1s/actions/buttons.py:38
 msgid "Switch Window on the left"
 msgstr "Vaihda ikkunaa vasemmalle"
 
+#: src/tweak_flx1s/actions/buttons.py:39
 msgid "Switch Window on the right"
 msgstr "Vaihda ikkunaa oikealle"
 
+#: src/tweak_flx1s/actions/buttons.py:40
+msgid "Screenshot"
+msgstr "Kuvakaappaus"
+
+#: src/tweak_flx1s/actions/buttons.py:41
+msgid "Flashlight"
+msgstr "Taskulamppu"
+
+#: src/tweak_flx1s/actions/buttons.py:42
 msgid "Play/Pause"
 msgstr "Toista/Tauko"
 
+#: src/tweak_flx1s/actions/buttons.py:43
 msgid "Next Track"
 msgstr "Seuraava kappale"
 
+#: src/tweak_flx1s/actions/buttons.py:44
 msgid "Previous Track"
 msgstr "Edellinen kappale"
 
+#: src/tweak_flx1s/actions/buttons.py:45
 msgid "Volume Up"
 msgstr "Äänenvoimakkuus ylös"
 
+#: src/tweak_flx1s/actions/buttons.py:46
 msgid "Volume Down"
 msgstr "Äänenvoimakkuus alas"
 
+#: src/tweak_flx1s/actions/buttons.py:47
 msgid "Mute"
 msgstr "Mykistä"
+
+#~ msgid "Settings"
+#~ msgstr "Asetukset"
+
+#~ msgid "None - write it yourself below"
+#~ msgstr "Ei mitään - kirjoita itse alle"
+
+#~ msgid "Add Item"
+#~ msgstr "Lisää kohde"
+
+#~ msgid "Label"
+#~ msgstr "Nimi"
+
+#~ msgid "Predefined"
+#~ msgstr "Esitellyt"
+
+#~ msgid "Select"
+#~ msgstr "Valitse"
+
+#~ msgid "Setting Password Policy"
+#~ msgstr "Asetetaan salasanakäytäntö"
+
+#~ msgid "Switch Environment"
+#~ msgstr "Vaihda ympäristö"
+
+#~ msgid "Minimum Password Length"
+#~ msgstr "Salasanan vähimmäispituus"
+
+#~ msgid "Apply"
+#~ msgstr "Käytä"
+
+#~ msgid "Switch Window"
+#~ msgstr "Vaihda ikkunaa"
+
+#~ msgid "Select..."
+#~ msgstr "Valitse..."
+
+#~ msgid "Template"
+#~ msgstr "Malli"
+
+#~ msgid "Select from predefined templates"
+#~ msgstr "Valitse esimääritellyistä malleista"
+
+#~ msgid "Select Template"
+#~ msgstr "Valitse malli"
+
+#~ msgid "Swipe Left (RL)"
+#~ msgstr "Pyyhkäisy vasemmalle (RL)"
+
+#~ msgid "Swipe Right (LR)"
+#~ msgstr "Pyyhkäisy oikealle (LR)"
+
+#~ msgid "Swipe Up (BT)"
+#~ msgstr "Pyyhkäisy ylös (BT)"
+
+#~ msgid "Swipe Down (TB)"
+#~ msgstr "Pyyhkäisy alas (TB)"
+
+#~ msgid "Left Edge Swipe Right"
+#~ msgstr "Vasen reuna pyyhkäisy oikealle"
+
+#~ msgid "Right Edge Swipe Left"
+#~ msgstr "Oikea reuna pyyhkäisy vasemmalle"
+
+#~ msgid "Top Edge Swipe Down"
+#~ msgstr "Yläreuna pyyhkäisy alas"
+
+#~ msgid "Bottom Edge Swipe Up"
+#~ msgstr "Alareuna pyyhkäisy ylös"
+
+#~ msgid "Bottom Left Corner Swipe Up"
+#~ msgstr "Vasen alakulma pyyhkäisy ylös"
+
+#~ msgid "Bottom Right Corner Swipe Up"
+#~ msgstr "Oikea alakulma pyyhkäisy ylös"
+
+#~ msgid "Top Left Corner Swipe Down"
+#~ msgstr "Vasen yläkulma pyyhkäisy alas"
+
+#~ msgid "Top Right Corner Swipe Down"
+#~ msgstr "Oikea yläkulma pyyhkäisy alas"
+
+#~ msgid "Found"
+#~ msgstr "Löytyi"
+
+#~ msgid "Spec (lisgd)"
+#~ msgstr "Määritys (lisgd)"
+
+#~ msgid "(In Use)"
+#~ msgstr "(Käytössä)"

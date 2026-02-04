@@ -98,7 +98,7 @@ class InfoPage:
                     except Exception as e:
                         logger.error(f"Error opening link: {e}")
 
-                btn.connect("clicked", on_click)
+                btn.connect("clicked", lambda b: GLib.idle_add(lambda: on_click(b) or False))
                 row.add_suffix(btn)
                 return row
 
