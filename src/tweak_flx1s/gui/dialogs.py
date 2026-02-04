@@ -160,7 +160,7 @@ class WofiItemEditor(Adw.Window):
     """Editor for a single Wofi menu item."""
     def __init__(self, parent, item_data, on_save):
         super().__init__(transient_for=parent, modal=True, title=_("Edit Item"))
-        self.set_default_size(350, 500)
+        self.set_default_size(350, 600)
         self.item = item_data.copy()
         self.on_save = on_save
 
@@ -184,47 +184,112 @@ class WofiItemEditor(Adw.Window):
         page = Adw.PreferencesPage()
         content.set_content(page)
 
-        group = Adw.PreferencesGroup(title=_("Item Details"))
-        page.add(group)
+        name_group = Adw.PreferencesGroup(title=_("Item Details"))
+        page.add(name_group)
 
-        self.label_entry = Adw.EntryRow(title=_("Label"))
+        self.label_entry = Adw.EntryRow(title=_("Action Name"))
         self.label_entry.set_text(self.item.get("label", ""))
-        group.add(self.label_entry)
+        name_group.add(self.label_entry)
+
+        type_group = Adw.PreferencesGroup(title=_("Action Type"))
+        page.add(type_group)
+
+        current_cmd = self.item.get("cmd", "")
+        is_predef = current_cmd in PREDEFINED_ACTIONS.values()
+        is_custom = not is_predef
+
+        self.selected_cmd = current_cmd
+
+        predef_row = Adw.ActionRow(title=_("Predefined Action"))
+        predef_row.set_subtitle(_("Select from common actions"))
+        predef_row.set_title_lines(0)
+        predef_row.set_subtitle_lines(0)
+        predef_chk = Gtk.CheckButton(valign=Gtk.Align.CENTER)
+        predef_chk.set_active(is_predef)
+        predef_chk.connect("toggled", self._on_type_toggled, "predefined")
+        predef_row.add_prefix(predef_chk)
+        type_group.add(predef_row)
+        self.predef_chk = predef_chk
+
+        cmd_row = Adw.ActionRow(title=_("Custom Command"))
+        cmd_row.set_subtitle(_("Execute a shell command"))
+        cmd_row.set_title_lines(0)
+        cmd_row.set_subtitle_lines(0)
+        cmd_chk = Gtk.CheckButton(valign=Gtk.Align.CENTER)
+        cmd_chk.set_group(predef_chk)
+        cmd_chk.set_active(is_custom)
+        cmd_chk.connect("toggled", self._on_type_toggled, "command")
+        cmd_row.add_prefix(cmd_chk)
+        type_group.add(cmd_row)
+        self.cmd_chk = cmd_chk
 
         self.cmd_entry = Adw.EntryRow(title=_("Command"))
-        self.cmd_entry.set_text(self.item.get("cmd", ""))
-        group.add(self.cmd_entry)
+        self.cmd_entry.set_text(current_cmd if is_custom else "")
+        self.cmd_entry.set_visible(is_custom)
+        type_group.add(self.cmd_entry)
 
-        predef_group = Adw.PreferencesGroup(title=_("Predefined Actions"))
-        page.add(predef_group)
+        self.predef_group = Adw.PreferencesGroup(title=_("Predefined Actions"))
+        self.predef_group.set_visible(is_predef)
+        page.add(self.predef_group)
 
-        none_row = Adw.ActionRow(title=_("None"))
-        none_row.set_subtitle=_("Clear fields to write manually")
-        none_row.set_activatable(True)
-        none_row.connect("activated", lambda row: GLib.idle_add(lambda: self._on_none_activated(row) or False))
-        predef_group.add(none_row)
-
+        self.predef_rows = {}
         sorted_keys = sorted(PREDEFINED_ACTIONS.keys())
+
         for key in sorted_keys:
+            val = PREDEFINED_ACTIONS[key]
             row = Adw.ActionRow(title=_(key))
             row.set_title_lines(0)
             row.set_activatable(True)
-            row.connect("activated", lambda row: GLib.idle_add(lambda: self._on_predef_activated(row, key) or False))
-            predef_group.add(row)
 
-    def _on_none_activated(self, row):
-        self.label_entry.set_text("")
-        self.cmd_entry.set_text("")
+            icon = Gtk.Image.new_from_icon_name("object-select-symbolic")
+            icon.set_visible(is_predef and current_cmd == val)
+            row.add_suffix(icon)
 
-    def _on_predef_activated(self, row, key):
-        self.label_entry.set_text(_(key))
-        self.cmd_entry.set_text(PREDEFINED_ACTIONS[key])
+            self.predef_rows[val] = icon
+
+            row.connect("activated", lambda row, v=val, k=key: GLib.idle_add(lambda: self._on_predef_activated(v, k) or False))
+            self.predef_group.add(row)
+
+    def _on_type_toggled(self, chk, type_name):
+        if not chk.get_active(): return
+
+        if type_name == "command":
+            self.cmd_entry.set_visible(True)
+            self.predef_group.set_visible(False)
+            self._update_predef_icons(None)
+
+        elif type_name == "predefined":
+            self.cmd_entry.set_visible(False)
+            self.predef_group.set_visible(True)
+            if self.selected_cmd in PREDEFINED_ACTIONS.values():
+                 self._update_predef_icons(self.selected_cmd)
+            else:
+                 self._update_predef_icons(None)
+
+    def _update_predef_icons(self, active_val):
+        for val, icon in self.predef_rows.items():
+            icon.set_visible(val == active_val)
+
+    def _on_predef_activated(self, cmd_val, key_name):
+        self.predef_chk.set_active(True)
+        self.selected_cmd = cmd_val
+        self._update_predef_icons(cmd_val)
+
+        self.label_entry.set_text(_(key_name))
+
+        self.cmd_entry.set_text(cmd_val)
 
     def _on_save_clicked(self, btn):
         if self.on_save:
+            final_cmd = ""
+            if self.predef_chk.get_active():
+                final_cmd = self.selected_cmd
+            else:
+                final_cmd = self.cmd_entry.get_text()
+
             new_item = {
                 "label": self.label_entry.get_text(),
-                "cmd": self.cmd_entry.get_text()
+                "cmd": final_cmd
             }
             self.on_save(new_item)
         GLib.idle_add(lambda: self.close() or False)
