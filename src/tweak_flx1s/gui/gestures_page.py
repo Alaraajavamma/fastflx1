@@ -13,6 +13,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import subprocess
 import gi
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
@@ -193,8 +194,8 @@ class GesturesPage(Adw.PreferencesPage):
     def _is_service_running(self, service):
         """Checks if a service is active (running)."""
         try:
-            out = run_command(f"systemctl --user is-active {service}", check=False)
-            return out == "active"
+            cmd = ["systemctl", "--user", "is-active", "--quiet", service]
+            return subprocess.call(cmd) == 0
         except Exception as e:
             logger.warning(f"Failed to check active status for {service}: {e}")
             return False
@@ -204,17 +205,23 @@ class GesturesPage(Adw.PreferencesPage):
         self.config["enabled"] = should_be_active
         self.manager.save_config(self.config)
 
-        if should_be_active:
-             cmd = f"systemctl --user enable {SERVICE_GESTURES} && systemctl --user daemon-reload && systemctl --user start {SERVICE_GESTURES}"
-        else:
-             cmd = f"systemctl --user stop {SERVICE_GESTURES} && systemctl --user disable {SERVICE_GESTURES} && systemctl --user daemon-reload"
-
-        logger.info(f"Toggling {SERVICE_GESTURES} to {should_be_active}...")
-        run_command(cmd, check=False)
+        try:
+            if should_be_active:
+                run_command(f"systemctl --user enable {SERVICE_GESTURES}")
+                run_command("systemctl --user daemon-reload")
+                run_command(f"systemctl --user start {SERVICE_GESTURES}")
+            else:
+                run_command(f"systemctl --user stop {SERVICE_GESTURES}")
+                run_command(f"systemctl --user disable {SERVICE_GESTURES}")
+                run_command("systemctl --user daemon-reload")
+        except Exception as e:
+            logger.error(f"Failed to toggle service {SERVICE_GESTURES}: {e}")
 
         is_running = self._is_service_running(SERVICE_GESTURES)
+
         if should_be_active != is_running:
-             logger.warning(f"Service {SERVICE_GESTURES} state mismatch after toggle. Expected: {should_be_active}, Actual: {is_running}")
+             logger.warning(f"Service {SERVICE_GESTURES} state mismatch. Expected: {should_be_active}, Actual: {is_running}")
+             row.set_active(is_running)
 
     def _refresh_list(self):
         child = self.list_box.get_first_child()

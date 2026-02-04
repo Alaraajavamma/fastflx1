@@ -16,6 +16,7 @@
 import os
 import shutil
 import shlex
+import subprocess
 import gi
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
@@ -123,8 +124,8 @@ class TweaksPage(Adw.PreferencesPage):
     def _is_service_running(self, service):
         """Checks if a service is active (running)."""
         try:
-            out = run_command(f"systemctl --user is-active {service}", check=False)
-            return out == "active"
+            cmd = ["systemctl", "--user", "is-active", "--quiet", service]
+            return subprocess.call(cmd) == 0
         except Exception as e:
             logger.warning(f"Failed to check active status for {service}: {e}")
             return False
@@ -132,17 +133,39 @@ class TweaksPage(Adw.PreferencesPage):
     def _on_switch_toggled(self, row, param, service):
         should_be_active = row.get_active()
 
-        if should_be_active:
-             cmd = f"systemctl --user enable {service} && systemctl --user daemon-reload && systemctl --user start {service}"
-        else:
-             cmd = f"systemctl --user stop {service} && systemctl --user disable {service} && systemctl --user daemon-reload"
-
-        logger.info(f"Toggling {service} to {should_be_active}...")
-        run_command(cmd, check=False)
+        try:
+            if should_be_active:
+                run_command(f"systemctl --user enable {service}")
+                run_command("systemctl --user daemon-reload")
+                run_command(f"systemctl --user start {service}")
+            else:
+                run_command(f"systemctl --user stop {service}")
+                run_command(f"systemctl --user disable {service}")
+                run_command("systemctl --user daemon-reload")
+        except Exception as e:
+            logger.error(f"Failed to toggle service {service}: {e}")
 
         is_running = self._is_service_running(service)
+
         if should_be_active != is_running:
-             logger.warning(f"Service {service} state mismatch after toggle. Expected: {should_be_active}, Actual: {is_running}")
+             logger.warning(f"Service {service} state mismatch. Expected: {should_be_active}, Actual: {is_running}")
+             row.set_active(is_running)
+
+    def _on_sound_toggled(self, row, param):
+        active = row.get_active()
+        success = False
+        if active:
+            success = self.sounds.enable_custom_theme()
+            if success:
+                logger.info("Custom sound theme enabled.")
+        else:
+            success = self.sounds.disable_custom_theme()
+            if success:
+                logger.info("Custom sound theme disabled.")
+
+        if not success:
+            logger.error("Failed to toggle sound theme.")
+            row.set_active(not active)
 
     def _on_shared_toggled(self, row, param):
         is_active = row.get_active()
