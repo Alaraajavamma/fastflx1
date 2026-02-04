@@ -55,7 +55,7 @@ class WeatherDialog(Adw.Window):
 
 
         self.search_entry = Gtk.SearchEntry(placeholder_text=_("Enter city name"))
-        self.search_entry.connect("search-changed", self._on_search_changed)
+        self.search_entry.connect("search-changed", lambda entry: GLib.idle_add(lambda: self._on_search_changed(entry) or False))
         box.append(self.search_entry)
 
 

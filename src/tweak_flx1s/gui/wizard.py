@@ -72,7 +72,7 @@ class GestureWizard(Adw.Window):
         self.carousel.set_vexpand(True)
         self.carousel.set_hexpand(True)
 
-        self.carousel.connect("page-changed", self._on_page_changed)
+        self.carousel.connect("page-changed", lambda c, i: GLib.idle_add(lambda: self._on_page_changed(c, i) or False))
         content.set_content(self.carousel)
 
         self.step_fingers = self._create_step_fingers()
@@ -281,9 +281,12 @@ class GestureWizard(Adw.Window):
 
     def _make_radio_callback(self, value, attr_name):
         def _callback(btn):
-            if btn.get_active():
-                setattr(self, attr_name, value)
-                logger.debug(f"Wizard {attr_name} set to {value}")
+            def _inner():
+                if btn.get_active():
+                    setattr(self, attr_name, value)
+                    logger.debug(f"Wizard {attr_name} set to {value}")
+                return False
+            GLib.idle_add(_inner)
         return _callback
 
     def _on_page_changed(self, carousel, index):

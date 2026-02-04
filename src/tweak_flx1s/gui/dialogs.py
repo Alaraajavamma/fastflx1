@@ -34,7 +34,7 @@ class ExecutionDialog(Adw.MessageDialog):
         self.set_default_size(300, 400)
         self.add_response("close", _("Close"))
         self.set_response_enabled("close", False)
-        self.connect("response", self._on_response)
+        self.connect("response", lambda d, r: GLib.idle_add(lambda: self._on_response(d, r) or False))
         self.on_finish_callback = on_finish
 
         if as_root:
@@ -148,7 +148,7 @@ class KeyboardSelectionDialog(Adw.Window):
             row.set_title_lines(0)
             row.set_subtitle_lines(0)
             row.set_activatable(True)
-            row.connect("activated", self._on_row_activated, kbd["path"])
+            row.connect("activated", lambda r, p=kbd["path"]: GLib.idle_add(lambda: self._on_row_activated(r, p) or False))
             list_box.append(row)
 
     def _on_row_activated(self, row, path):
@@ -174,7 +174,7 @@ class WofiItemEditor(Adw.Window):
 
         save_btn = Gtk.Button(label=_("Save"))
         save_btn.add_css_class("suggested-action")
-        save_btn.connect("clicked", self._on_save_clicked)
+        save_btn.connect("clicked", lambda b: GLib.idle_add(lambda: self._on_save_clicked(b) or False))
         header.pack_start(save_btn)
 
         close_btn = Gtk.Button(label=_("Close"))
@@ -206,7 +206,7 @@ class WofiItemEditor(Adw.Window):
         predef_row.set_subtitle_lines(0)
         predef_chk = Gtk.CheckButton(valign=Gtk.Align.CENTER)
         predef_chk.set_active(is_predef)
-        predef_chk.connect("toggled", self._on_type_toggled, "predefined")
+        predef_chk.connect("toggled", lambda b, t="predefined": GLib.idle_add(lambda: self._on_type_toggled(b, t) or False))
         predef_row.add_prefix(predef_chk)
         type_group.add(predef_row)
         self.predef_chk = predef_chk
@@ -218,7 +218,7 @@ class WofiItemEditor(Adw.Window):
         cmd_chk = Gtk.CheckButton(valign=Gtk.Align.CENTER)
         cmd_chk.set_group(predef_chk)
         cmd_chk.set_active(is_custom)
-        cmd_chk.connect("toggled", self._on_type_toggled, "command")
+        cmd_chk.connect("toggled", lambda b, t="command": GLib.idle_add(lambda: self._on_type_toggled(b, t) or False))
         cmd_row.add_prefix(cmd_chk)
         type_group.add(cmd_row)
         self.cmd_chk = cmd_chk
@@ -316,7 +316,7 @@ class WofiMenuEditor(Adw.Window):
 
         save_btn = Gtk.Button(label=_("Save"))
         save_btn.add_css_class("suggested-action")
-        save_btn.connect("clicked", self._on_save_clicked)
+        save_btn.connect("clicked", lambda b: GLib.idle_add(lambda: self._on_save_clicked(b) or False))
         header.pack_start(save_btn)
 
         close_btn = Gtk.Button(label=_("Close"))
@@ -437,7 +437,7 @@ class ActionSelectionDialog(Adw.Window):
         predef_row.set_subtitle_lines(0)
         predef_chk = Gtk.CheckButton(valign=Gtk.Align.CENTER)
         predef_chk.set_active(is_predef)
-        predef_chk.connect("toggled", self._on_type_toggled, "predefined")
+        predef_chk.connect("toggled", lambda b, t="predefined": GLib.idle_add(lambda: self._on_type_toggled(b, t) or False))
         predef_row.add_prefix(predef_chk)
         type_group.add(predef_row)
         self.predef_chk = predef_chk
@@ -449,7 +449,7 @@ class ActionSelectionDialog(Adw.Window):
         cmd_chk = Gtk.CheckButton(valign=Gtk.Align.CENTER)
         cmd_chk.set_group(predef_chk)
         cmd_chk.set_active(is_custom)
-        cmd_chk.connect("toggled", self._on_type_toggled, "command")
+        cmd_chk.connect("toggled", lambda b, t="command": GLib.idle_add(lambda: self._on_type_toggled(b, t) or False))
         cmd_row.add_prefix(cmd_chk)
         type_group.add(cmd_row)
         self.cmd_chk = cmd_chk
@@ -466,7 +466,7 @@ class ActionSelectionDialog(Adw.Window):
         wofi_chk = Gtk.CheckButton(valign=Gtk.Align.CENTER)
         wofi_chk.set_group(predef_chk)
         wofi_chk.set_active(is_wofi)
-        wofi_chk.connect("toggled", self._on_type_toggled, "wofi")
+        wofi_chk.connect("toggled", lambda b, t="wofi": GLib.idle_add(lambda: self._on_type_toggled(b, t) or False))
         wofi_row.add_prefix(wofi_chk)
         type_group.add(wofi_row)
         self.wofi_chk = wofi_chk

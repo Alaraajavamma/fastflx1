@@ -13,4 +13,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from .core import TweaksPage, ActionsPage, SystemPage
+from .tweaks_page import TweaksPage
+from .actions_page import ActionsPage
+from .system_page import SystemPage
