@@ -35,9 +35,16 @@ PREDEFINED_ACTIONS = {
     _("Select All and Copy"): "wtype -M ctrl a -m ctrl && wtype -M ctrl c -m ctrl",
     _("Paste from Clipboard"): "tweak-flx1s --action paste",
     _("Kill Active Window"): "wtype -M alt -P F4 -m alt -p F4",
-    _("Switch Window"): "wtype -M alt -P tab -m alt -p tab",
+    _("Switch Window on the left"): "wtype -M alt -P tab -m alt -p tab",
+    _("Switch Window on the right"): "wtype -M alt -M shift -P tab -m alt -m shift -p tab",
     _("Screenshot"): "tweak-flx1s --action screenshot",
-    _("Flashlight"): "tweak-flx1s --action flashlight"
+    _("Flashlight"): "tweak-flx1s --action flashlight",
+    _("Play/Pause"): "wtype -k XF86AudioPlay",
+    _("Next Track"): "wtype -k XF86AudioNext",
+    _("Previous Track"): "wtype -k XF86AudioPrev",
+    _("Volume Up"): "wtype -k XF86AudioRaiseVolume",
+    _("Volume Down"): "wtype -k XF86AudioLowerVolume",
+    _("Mute"): "wtype -k XF86AudioMute"
 }
 
 if _.__name__ == "_":
