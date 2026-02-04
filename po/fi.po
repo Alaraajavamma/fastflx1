@@ -569,29 +569,29 @@ msgstr "Vaihe 2: Suunta"
 msgid "Which direction is the swipe?"
 msgstr "Mihin suuntaan pyyhkäistään?"
 
-msgid "Left -> Right"
-msgstr "Vasen -> Oikea"
+msgid "From Left to Right"
+msgstr "Vasemmalta oikealle"
 
-msgid "Right -> Left"
-msgstr "Oikea -> Vasen"
+msgid "From Right to Left"
+msgstr "Oikealta vasemmalle"
 
-msgid "Up -> Down"
-msgstr "Ylös -> Alas"
+msgid "From Top to Bottom"
+msgstr "Ylhäältä alas"
 
-msgid "Down -> Up"
-msgstr "Alas -> Ylös"
+msgid "From Bottom to Top"
+msgstr "Alhaalta ylös"
 
-msgid "Down-Left -> Up-Right"
-msgstr "Alas-Vasen -> Ylös-Oikea"
+msgid "From Bottom-Left to Top-Right"
+msgstr "Viistosti vasemmasta alakulmasta kohti oikeaa yläkulmaa"
 
-msgid "Up-Right -> Down-Left"
-msgstr "Ylös-Oikea -> Alas-Vasen"
+msgid "From Top-Right to Bottom-Left"
+msgstr "Viistosti oikeasta yläkulmasta kohti vasenta alakulmaa"
 
-msgid "Up-Left -> Down-Right"
-msgstr "Ylös-Vasen -> Alas-Oikea"
+msgid "From Top-Left to Bottom-Right"
+msgstr "Viistosti vasemmasta yläkulmasta kohti oikeaa alakulmaa"
 
-msgid "Down-Right -> Up-Left"
-msgstr "Alas-Oikea -> Ylös-Vasen"
+msgid "From Bottom-Right to Top-Left"
+msgstr "Viistosti oikeasta alakulmasta kohti vasenta yläkulmaa"
 
 msgid "Step 3: Edge"
 msgstr "Vaihe 3: Reuna"
@@ -664,3 +664,30 @@ msgstr "Jo määritetty"
 
 msgid "Error: Both Release and Press modes are already configured for this gesture combination."
 msgstr "Virhe: Sekä vapautus- että painallustilat on jo määritetty tälle eleyhdistelmälle."
+
+msgid "Not Configured"
+msgstr "Ei määritetty"
+
+msgid "Missing Trigger"
+msgstr "Puuttuva laukaisin"
+
+msgid "Please configure a gesture trigger before saving."
+msgstr "Määritä eleen laukaisin ennen tallentamista."
+
+msgid "Edit Gesture"
+msgstr "Muokkaa elettä"
+
+msgid "Trigger Spec"
+msgstr "Laukaisimen määritys"
+
+msgid "Unnamed Gesture"
+msgstr "Nimetön ele"
+
+msgid "No Action"
+msgstr "Ei toimintoa"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "New Gesture"
+msgstr "Uusi ele"
