@@ -15,6 +15,7 @@
 
 import os
 import json
+import copy
 from loguru import logger
 from tweak_flx1s.const import CONFIG_DIR
 from tweak_flx1s.actions.executor import is_locked, execute_command, show_wofi_menu
@@ -75,20 +76,42 @@ class GesturesManager:
     """Manages gesture configuration and execution."""
     def __init__(self):
         self.config = self._load_config()
+        self._remove_duplicates()
 
     def _load_config(self):
         """Loads gesture configuration."""
         if not os.path.exists(CONFIG_FILE):
-            return DEFAULT_CONFIG
+            return copy.deepcopy(DEFAULT_CONFIG)
         try:
             with open(CONFIG_FILE, 'r') as f:
                 data = json.load(f)
                 if "gestures" not in data:
-                     return DEFAULT_CONFIG
+                     return copy.deepcopy(DEFAULT_CONFIG)
                 return data
         except Exception as e:
             logger.error(f"Failed to load gestures config: {e}")
-            return DEFAULT_CONFIG
+            return copy.deepcopy(DEFAULT_CONFIG)
+
+    def _remove_duplicates(self):
+        """Removes duplicate gesture specs, keeping the first occurrence."""
+        gestures = self.config.get("gestures", [])
+        seen_specs = set()
+        unique_gestures = []
+        modified = False
+
+        for g in gestures:
+            spec = g.get("spec")
+            if spec and spec in seen_specs:
+                logger.warning(f"Removing duplicate gesture spec: {spec}")
+                modified = True
+                continue
+            if spec:
+                seen_specs.add(spec)
+            unique_gestures.append(g)
+
+        if modified:
+            self.config["gestures"] = unique_gestures
+            self.save_config()
 
     def save_config(self, new_config=None):
         """Saves gesture configuration."""
