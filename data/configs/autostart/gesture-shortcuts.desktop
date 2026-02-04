@@ -1,8 +1,0 @@
-[Desktop Entry]
-Version=0.1
-Name=Gesture-Shortcuts
-Comment=Run lisgd in the background to generate gesture shortcuts
-Exec=bash -c 'gesture-shortcuts'
-Icon=org.gnome.Terminal
-Terminal=false
-Type=Application

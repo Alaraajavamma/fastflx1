@@ -106,5 +106,5 @@ This will:
 
 ## Copyright
 
-Copyright (C) 2024 Alaraajavamma <aki@urheiluaki.fi>
+Copyright (C) 2026 Alaraajavamma <aki@urheiluaki.fi>
 License: GPL-3.0-or-later

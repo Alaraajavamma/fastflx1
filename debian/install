@@ -1,6 +1,7 @@
 scripts/* usr/bin
 data/applications/io.FuriOS.Tweak-FLX1s.desktop usr/share/applications
 data/icons/hicolor/scalable/apps/io.FuriOS.Tweak-FLX1s.svg usr/share/icons/hicolor/scalable/apps
+data/metainfo/* usr/share/metainfo/
 data/systemd/user/tweak-flx1s-alarm.service usr/lib/systemd/user/
 data/systemd/user/tweak-flx1s-gestures.service usr/lib/systemd/user/
 data/systemd/user/tweak-flx1s-guard.service usr/lib/systemd/user/

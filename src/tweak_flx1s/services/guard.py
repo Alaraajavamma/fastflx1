@@ -137,13 +137,21 @@ class AndromedaGuardService:
     def _monitor_dbus(self):
         """Monitors DBus for the custom signal."""
         cmd = ["dbus-monitor", "--session", "type='signal',interface='org.freedesktop.DBus',member='NameAcquired'"]
-        process = subprocess.Popen(cmd, stdout=subprocess.PIPE, text=True)
+        logger.debug(f"Running dbus monitor: {' '.join(cmd)}")
+        try:
+            process = subprocess.Popen(cmd, stdout=subprocess.PIPE, text=True)
 
-        while self._running:
-            line = process.stdout.readline()
-            if not line: break
-            if "io.furios.Andromeda.Session" in line:
-                self._handle_session_reset()
+            while self._running:
+                line = process.stdout.readline()
+                if not line:
+                    break
+                if "io.furios.Andromeda.Session" in line:
+                    self._handle_session_reset()
+        except Exception as e:
+            logger.error(f"Error in DBus monitor: {e}")
+        finally:
+            if 'process' in locals() and process:
+                process.terminate()
 
 def run():
     service = AndromedaGuardService()

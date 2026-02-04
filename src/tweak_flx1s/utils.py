@@ -46,6 +46,9 @@ def run_command(command, check=True):
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE
         )
+        if result.returncode != 0:
+            logger.error(f"Command failed: {cmd_str}")
+            logger.error(f"Error output: {result.stderr}")
         return result.stdout.strip()
     except subprocess.CalledProcessError as e:
         logger.error(f"Command failed: {cmd_str}")
