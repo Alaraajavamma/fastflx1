@@ -1,0 +1,675 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: tweak-flx1s 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-01-01 00:00+0000\n"
+"Last-Translator: ai\n"
+"Language-Team: ai\n"
+"Language: ja\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Add Location"
+msgstr "場所を追加"
+
+msgid "Close"
+msgstr "閉じる"
+
+msgid "Enter city name"
+msgstr "都市名を入力"
+
+msgid "Search"
+msgstr "検索"
+
+msgid "Result"
+msgstr "結果"
+
+msgid "No location found yet."
+msgstr "場所がまだ見つかりません。"
+
+msgid "Searching..."
+msgstr "検索中..."
+
+msgid "No location found."
+msgstr "場所が見つかりません。"
+
+msgid "Error adding location."
+msgstr "場所の追加エラー。"
+
+msgid "Tweaks"
+msgstr "調整"
+
+msgid "System"
+msgstr "システム"
+
+msgid "Actions"
+msgstr "アクション"
+
+msgid "New Gesture Wizard"
+msgstr "新しいジェスチャーウィザード"
+
+msgid "Cancel"
+msgstr "キャンセル"
+
+msgid "Go Back"
+msgstr "戻る"
+
+msgid "Proceed"
+msgstr "続行"
+
+msgid "Step 1: Fingers"
+msgstr "ステップ 1: 指"
+
+msgid "How many fingers used for the gesture?"
+msgstr "ジェスチャーに使用する指の数は？"
+
+msgid "Step 2: Direction"
+msgstr "ステップ 2: 方向"
+
+msgid "Which direction is the swipe?"
+msgstr "スワイプの方向は？"
+
+msgid "From Left to Right"
+msgstr "左から右へ"
+
+msgid "From Right to Left"
+msgstr "右から左へ"
+
+msgid "From Top to Bottom"
+msgstr "上から下へ"
+
+msgid "From Bottom to Top"
+msgstr "下から上へ"
+
+msgid "From Bottom-Left to Top-Right"
+msgstr ""
+
+msgid "From Top-Right to Bottom-Left"
+msgstr ""
+
+msgid "From Top-Left to Bottom-Right"
+msgstr ""
+
+msgid "From Bottom-Right to Top-Left"
+msgstr ""
+
+msgid "Step 3: Edge"
+msgstr "ステップ 3: エッジ"
+
+msgid "Where should the gesture start?"
+msgstr "ジェスチャーの開始位置は？"
+
+msgid "Anywhere"
+msgstr "どこでも"
+
+msgid "Left Edge"
+msgstr "左端"
+
+msgid "Right Edge"
+msgstr "右端"
+
+msgid "Top Edge"
+msgstr "上端"
+
+msgid "Bottom Edge"
+msgstr "下端"
+
+msgid "Top-Left Corner"
+msgstr ""
+
+msgid "Top-Right Corner"
+msgstr ""
+
+msgid "Bottom-Left Corner"
+msgstr ""
+
+msgid "Bottom-Right Corner"
+msgstr ""
+
+msgid "None (Middle of screen only)"
+msgstr ""
+
+msgid "Step 4: Distance"
+msgstr "ステップ 4: 距離"
+
+msgid "How long should the swipe be?"
+msgstr "スワイプの長さは？"
+
+msgid "Any Distance"
+msgstr "任意の距離"
+
+msgid "Short"
+msgstr "短い"
+
+msgid "Medium"
+msgstr "中くらい"
+
+msgid "Large"
+msgstr "長い"
+
+msgid "Step 5: Mode"
+msgstr "ステップ 5: モード"
+
+msgid "Trigger on press or release?"
+msgstr "プレスまたはリリースでトリガー？"
+
+msgid "On Release (Recommended)"
+msgstr "リリース時（推奨）"
+
+msgid "On Press"
+msgstr "プレス時"
+
+msgid "Already configured"
+msgstr ""
+
+msgid "Error: Both Release and Press modes are already configured for this gesture combination."
+msgstr ""
+
+msgid "Save"
+msgstr "保存"
+
+msgid "Select Keyboard"
+msgstr ""
+
+msgid "Edit Item"
+msgstr "アイテムを編集"
+
+msgid "Item Details"
+msgstr "アイテムの詳細"
+
+msgid "Action Name"
+msgstr "アクション名"
+
+msgid "Action Type"
+msgstr "アクションタイプ"
+
+msgid "Predefined Action"
+msgstr "定義済みアクション"
+
+msgid "Select from common actions"
+msgstr ""
+
+msgid "Custom Command"
+msgstr "カスタムコマンド"
+
+msgid "Execute a shell command"
+msgstr ""
+
+msgid "Command"
+msgstr "コマンド"
+
+msgid "Predefined Actions"
+msgstr ""
+
+msgid "Edit Menu"
+msgstr "メニューを編集"
+
+msgid "New Item"
+msgstr "新しいアイテム"
+
+msgid "Select Action"
+msgstr "アクションを選択"
+
+msgid "Wofi Menu"
+msgstr "Wofi メニュー"
+
+msgid "Show a menu of actions"
+msgstr ""
+
+msgid "Edit Gesture"
+msgstr "ジェスチャーを編集"
+
+msgid "General"
+msgstr "一般"
+
+msgid "Name"
+msgstr "名前"
+
+msgid "Trigger Spec"
+msgstr "トリガー仕様"
+
+msgid "Not Configured"
+msgstr "未設定"
+
+msgid "Change"
+msgstr "変更"
+
+msgid "Locked State"
+msgstr "ロック状態"
+
+msgid "Edit"
+msgstr "編集"
+
+msgid "Unlocked State"
+msgstr "ロック解除状態"
+
+msgid "No Action"
+msgstr "アクションなし"
+
+msgid "Missing Trigger"
+msgstr "トリガーがありません"
+
+msgid "Please configure a gesture trigger before saving."
+msgstr ""
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Gestures"
+msgstr ""
+
+msgid "Service"
+msgstr "サービス"
+
+msgid "Enable Touch Gestures"
+msgstr "タッチジェスチャーを有効化"
+
+msgid "Add New Gesture"
+msgstr "新しいジェスチャーを追加"
+
+msgid "Configured Gestures"
+msgstr "設定済みのジェスチャー"
+
+msgid "Unnamed Gesture"
+msgstr "名称未設定のジェスチャー"
+
+msgid "New Gesture"
+msgstr "新しいジェスチャー"
+
+msgid "Change Password"
+msgstr "パスワードを変更"
+
+msgid "Password Details"
+msgstr "パスワードの詳細"
+
+msgid "Current Password"
+msgstr "現在のパスワード"
+
+msgid "New Password"
+msgstr "新しいパスワード"
+
+msgid "Confirm New Password"
+msgstr "新しいパスワードを確認"
+
+msgid "Please enter current password."
+msgstr ""
+
+msgid "Please enter new password."
+msgstr ""
+
+msgid "New passwords do not match."
+msgstr ""
+
+msgid "Changing password..."
+msgstr ""
+
+msgid "Password changed successfully!"
+msgstr "パスワードが正常に変更されました！"
+
+msgid "Failed to change password."
+msgstr "パスワードの変更に失敗しました。"
+
+msgid "Authentication error. Check current password."
+msgstr ""
+
+msgid "Bad password."
+msgstr ""
+
+msgid "it is too short"
+msgstr ""
+
+msgid "is the same as the old one"
+msgstr ""
+
+msgid "is a palindrome"
+msgstr ""
+
+msgid "case changes only"
+msgstr ""
+
+msgid "is too similar to the old one"
+msgstr ""
+
+msgid "it does not contain enough DIFFERENT characters"
+msgstr ""
+
+msgid "it is based on a dictionary word"
+msgstr ""
+
+msgid "Bad password: "
+msgstr ""
+
+msgid "Input Configuration"
+msgstr "入力設定"
+
+msgid "Hardware Buttons"
+msgstr "ハードウェアボタン"
+
+msgid "Configure short, double, and long press actions"
+msgstr ""
+
+msgid "Touch Gestures"
+msgstr "タッチジェスチャー"
+
+msgid "Configure edge swipes and shortcuts"
+msgstr ""
+
+msgid "Buttons"
+msgstr "ボタン"
+
+msgid "Keyboard"
+msgstr "キーボード"
+
+msgid "Active Keyboard"
+msgstr "アクティブなキーボード"
+
+msgid "Change Keyboard"
+msgstr "キーボードを変更"
+
+msgid "Finnish Layout"
+msgstr ""
+
+msgid "Install custom Squeekboard layout"
+msgstr ""
+
+msgid "Configuration"
+msgstr "設定"
+
+msgid "Enforce App Wofi Config"
+msgstr ""
+
+msgid "Use Tweak-FLX1s Wofi style and config"
+msgstr ""
+
+msgid "Environment"
+msgstr "環境"
+
+msgid "Current Environment"
+msgstr ""
+
+msgid "Updates"
+msgstr "アップデート"
+
+msgid "System Upgrade"
+msgstr "システムアップグレード"
+
+msgid "Upgrade FuriOS"
+msgstr ""
+
+msgid "Upgrading System"
+msgstr ""
+
+msgid "Applications"
+msgstr "アプリケーション"
+
+msgid "Squeekboard"
+msgstr "Squeekboard"
+
+msgid "On-screen keyboard"
+msgstr ""
+
+msgid "FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Install custom battery monitor"
+msgstr ""
+
+msgid "Install"
+msgstr "インストール"
+
+msgid "Phofono"
+msgstr ""
+
+msgid "Alternative Phone and Messages App"
+msgstr ""
+
+msgid "Branchy App Store"
+msgstr ""
+
+msgid "DebUI"
+msgstr ""
+
+msgid "Debian Package Installer UI"
+msgstr ""
+
+msgid "Security"
+msgstr "セキュリティ"
+
+msgid "Enable Shorter Passcodes"
+msgstr ""
+
+msgid "Allow 1-character passwords"
+msgstr ""
+
+msgid "Change current user password"
+msgstr ""
+
+msgid "Fingerprint Authentication"
+msgstr "指紋認証"
+
+msgid "Configure PAM for fingerprint support"
+msgstr ""
+
+msgid "Enable"
+msgstr "有効化"
+
+msgid "Restarting Keyboard Service"
+msgstr ""
+
+msgid "Changing Keyboard"
+msgstr ""
+
+msgid "Remove"
+msgstr "削除"
+
+msgid "Removing Squeekboard"
+msgstr ""
+
+msgid "Installing Squeekboard"
+msgstr ""
+
+msgid "Enabling Shorter Passwords"
+msgstr ""
+
+msgid "Disabling Shorter Passwords"
+msgstr ""
+
+msgid "Removing DebUI"
+msgstr ""
+
+msgid "Installing DebUI"
+msgstr ""
+
+msgid "Removing FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Installing FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Fingerprint is enabled"
+msgstr ""
+
+msgid "Removing Fingerprint"
+msgstr ""
+
+msgid "Configuring Fingerprint"
+msgstr ""
+
+msgid "Installed"
+msgstr "インストール済み"
+
+msgid "Removing Phofono"
+msgstr ""
+
+msgid "Installing Phofono"
+msgstr ""
+
+msgid "Removing Branchy"
+msgstr ""
+
+msgid "Installing Branchy"
+msgstr ""
+
+msgid "Staging"
+msgstr ""
+
+msgid "Switch to Production"
+msgstr ""
+
+msgid "Production"
+msgstr ""
+
+msgid "Switch to Staging"
+msgstr ""
+
+msgid "Switching to Production"
+msgstr ""
+
+msgid "Switching to Staging"
+msgstr ""
+
+msgid "About Tweak-FLX1s"
+msgstr "Tweak-FLX1s について"
+
+msgid "System tweaks and utilities for FuriPhoneFLX1s."
+msgstr ""
+
+msgid "Version"
+msgstr "バージョン"
+
+msgid "Developer"
+msgstr "開発者"
+
+msgid "License"
+msgstr "ライセンス"
+
+msgid "Links"
+msgstr "リンク"
+
+msgid "Website"
+msgstr "ウェブサイト"
+
+msgid "Issue Tracker"
+msgstr "課題追跡"
+
+msgid "Report bugs or request features"
+msgstr ""
+
+msgid "Appearance"
+msgstr "外観"
+
+msgid "GTK3 CSS Tweak"
+msgstr ""
+
+msgid "Apply custom UI scaling tweaks for GTK3 apps"
+msgstr ""
+
+msgid "Background Services"
+msgstr "バックグラウンドサービス"
+
+msgid "Alarm Volume Fix"
+msgstr ""
+
+msgid "Ensure alarm plays at full volume"
+msgstr ""
+
+msgid "Andromeda Guard"
+msgstr ""
+
+msgid "Prevent OSK issues"
+msgstr ""
+
+msgid "Andromeda Integration"
+msgstr ""
+
+msgid "Shared Folders"
+msgstr ""
+
+msgid "Mount ~/.local/share/andromeda to ~/Android-Share"
+msgstr ""
+
+msgid "Audio"
+msgstr "オーディオ"
+
+msgid "Custom Sound Theme"
+msgstr ""
+
+msgid "Use fastflx1 custom sounds"
+msgstr ""
+
+msgid "Mounting Shared Folders"
+msgstr ""
+
+msgid "Unmounting Shared Folders"
+msgstr ""
+
+msgid "Short Press"
+msgstr "短押し"
+
+msgid "Double Press"
+msgstr "2回押し"
+
+msgid "Long Press"
+msgstr "長押し"
+
+msgid "Use Custom Assistant File"
+msgstr ""
+
+msgid "Write ~/.config/assistant-button/..."
+msgstr ""
+
+msgid "Locked Action"
+msgstr ""
+
+msgid "Unlocked Action"
+msgstr ""
+
+msgid "Copy (Ctrl+C)"
+msgstr "コピー (Ctrl+C)"
+
+msgid "Paste (Ctrl+V)"
+msgstr "貼り付け (Ctrl+V)"
+
+msgid "Cut (Ctrl+X)"
+msgstr ""
+
+msgid "Select All and Copy"
+msgstr ""
+
+msgid "Paste from Clipboard"
+msgstr ""
+
+msgid "Kill Active Window"
+msgstr ""
+
+msgid "Switch Window on the left"
+msgstr ""
+
+msgid "Switch Window on the right"
+msgstr ""
+
+msgid "Screenshot"
+msgstr "スクリーンショット"
+
+msgid "Flashlight"
+msgstr "懐中電灯"
+
+msgid "Play/Pause"
+msgstr ""
+
+msgid "Next Track"
+msgstr ""
+
+msgid "Previous Track"
+msgstr ""
+
+msgid "Volume Up"
+msgstr ""
+
+msgid "Volume Down"
+msgstr ""
+
+msgid "Mute"
+msgstr "ミュート"

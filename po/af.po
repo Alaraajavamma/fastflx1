@@ -1,0 +1,675 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: tweak-flx1s 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-01-01 00:00+0000\n"
+"Last-Translator: ai\n"
+"Language-Team: ai\n"
+"Language: af\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Add Location"
+msgstr "Voeg Ligging by"
+
+msgid "Close"
+msgstr "Maak toe"
+
+msgid "Enter city name"
+msgstr "Voer stadnaam in"
+
+msgid "Search"
+msgstr "Soek"
+
+msgid "Result"
+msgstr "Resultaat"
+
+msgid "No location found yet."
+msgstr "Nog geen ligging gevind nie."
+
+msgid "Searching..."
+msgstr "Soek..."
+
+msgid "No location found."
+msgstr "Ligging nie gevind nie."
+
+msgid "Error adding location."
+msgstr "Fout met byvoeg van ligging."
+
+msgid "Tweaks"
+msgstr "Aanpassings"
+
+msgid "System"
+msgstr "Stelsel"
+
+msgid "Actions"
+msgstr "Aksies"
+
+msgid "New Gesture Wizard"
+msgstr "Nuwe Gebaar-towenaar"
+
+msgid "Cancel"
+msgstr "Kanselleer"
+
+msgid "Go Back"
+msgstr "Gaan Terug"
+
+msgid "Proceed"
+msgstr "Gaan Voort"
+
+msgid "Step 1: Fingers"
+msgstr "Stap 1: Vingers"
+
+msgid "How many fingers used for the gesture?"
+msgstr "Hoeveel vingers word vir die gebaar gebruik?"
+
+msgid "Step 2: Direction"
+msgstr "Stap 2: Rigting"
+
+msgid "Which direction is the swipe?"
+msgstr "Watter rigting is die vee?"
+
+msgid "From Left to Right"
+msgstr "Van Links na Regs"
+
+msgid "From Right to Left"
+msgstr "Van Regs na Links"
+
+msgid "From Top to Bottom"
+msgstr "Van Bo na Onder"
+
+msgid "From Bottom to Top"
+msgstr "Van Onder na Bo"
+
+msgid "From Bottom-Left to Top-Right"
+msgstr ""
+
+msgid "From Top-Right to Bottom-Left"
+msgstr ""
+
+msgid "From Top-Left to Bottom-Right"
+msgstr ""
+
+msgid "From Bottom-Right to Top-Left"
+msgstr ""
+
+msgid "Step 3: Edge"
+msgstr "Stap 3: Rand"
+
+msgid "Where should the gesture start?"
+msgstr "Waar moet die gebaar begin?"
+
+msgid "Anywhere"
+msgstr "Enige plek"
+
+msgid "Left Edge"
+msgstr "Linker Rand"
+
+msgid "Right Edge"
+msgstr "Regter Rand"
+
+msgid "Top Edge"
+msgstr "Boonste Rand"
+
+msgid "Bottom Edge"
+msgstr "Onderste Rand"
+
+msgid "Top-Left Corner"
+msgstr ""
+
+msgid "Top-Right Corner"
+msgstr ""
+
+msgid "Bottom-Left Corner"
+msgstr ""
+
+msgid "Bottom-Right Corner"
+msgstr ""
+
+msgid "None (Middle of screen only)"
+msgstr ""
+
+msgid "Step 4: Distance"
+msgstr "Stap 4: Afstand"
+
+msgid "How long should the swipe be?"
+msgstr "Hoe lank moet die vee wees?"
+
+msgid "Any Distance"
+msgstr "Enige Afstand"
+
+msgid "Short"
+msgstr "Kort"
+
+msgid "Medium"
+msgstr "Medium"
+
+msgid "Large"
+msgstr "Lank"
+
+msgid "Step 5: Mode"
+msgstr "Stap 5: Modus"
+
+msgid "Trigger on press or release?"
+msgstr "Aktiveer by druk of loslaat?"
+
+msgid "On Release (Recommended)"
+msgstr "By Loslaat (Aanbeveel)"
+
+msgid "On Press"
+msgstr "By Druk"
+
+msgid "Already configured"
+msgstr ""
+
+msgid "Error: Both Release and Press modes are already configured for this gesture combination."
+msgstr ""
+
+msgid "Save"
+msgstr "Stoor"
+
+msgid "Select Keyboard"
+msgstr ""
+
+msgid "Edit Item"
+msgstr "Wysig Item"
+
+msgid "Item Details"
+msgstr "Item Besonderhede"
+
+msgid "Action Name"
+msgstr "Aksienaam"
+
+msgid "Action Type"
+msgstr "Aksietipe"
+
+msgid "Predefined Action"
+msgstr "Voorafgedefinieerde Aksie"
+
+msgid "Select from common actions"
+msgstr ""
+
+msgid "Custom Command"
+msgstr "Pasgemaakte Bevel"
+
+msgid "Execute a shell command"
+msgstr ""
+
+msgid "Command"
+msgstr "Bevel"
+
+msgid "Predefined Actions"
+msgstr ""
+
+msgid "Edit Menu"
+msgstr "Wysig Kieslys"
+
+msgid "New Item"
+msgstr "Nuwe Item"
+
+msgid "Select Action"
+msgstr "Kies Aksie"
+
+msgid "Wofi Menu"
+msgstr "Wofi-kieslys"
+
+msgid "Show a menu of actions"
+msgstr ""
+
+msgid "Edit Gesture"
+msgstr "Wysig Gebaar"
+
+msgid "General"
+msgstr "Algemeen"
+
+msgid "Name"
+msgstr "Naam"
+
+msgid "Trigger Spec"
+msgstr "Sneller Spesifikasie"
+
+msgid "Not Configured"
+msgstr "Nie Gekonfigureer Nie"
+
+msgid "Change"
+msgstr "Verander"
+
+msgid "Locked State"
+msgstr "Gesluit Staat"
+
+msgid "Edit"
+msgstr "Wysig"
+
+msgid "Unlocked State"
+msgstr "Oopgesluit Staat"
+
+msgid "No Action"
+msgstr "Geen Aksie"
+
+msgid "Missing Trigger"
+msgstr "Ontbrekende Sneller"
+
+msgid "Please configure a gesture trigger before saving."
+msgstr ""
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Gestures"
+msgstr ""
+
+msgid "Service"
+msgstr "Diens"
+
+msgid "Enable Touch Gestures"
+msgstr "Aktiveer Raakgebare"
+
+msgid "Add New Gesture"
+msgstr "Voeg Nuwe Gebaar By"
+
+msgid "Configured Gestures"
+msgstr "Gekonfigureerde Gebare"
+
+msgid "Unnamed Gesture"
+msgstr "Naamlose Gebaar"
+
+msgid "New Gesture"
+msgstr "Nuwe Gebaar"
+
+msgid "Change Password"
+msgstr "Verander Wagwoord"
+
+msgid "Password Details"
+msgstr "Wagwoord Besonderhede"
+
+msgid "Current Password"
+msgstr "Huidige Wagwoord"
+
+msgid "New Password"
+msgstr "Nuwe Wagwoord"
+
+msgid "Confirm New Password"
+msgstr "Bevestig Nuwe Wagwoord"
+
+msgid "Please enter current password."
+msgstr ""
+
+msgid "Please enter new password."
+msgstr ""
+
+msgid "New passwords do not match."
+msgstr ""
+
+msgid "Changing password..."
+msgstr ""
+
+msgid "Password changed successfully!"
+msgstr "Wagwoord suksesvol verander!"
+
+msgid "Failed to change password."
+msgstr "Kon nie wagwoord verander nie."
+
+msgid "Authentication error. Check current password."
+msgstr ""
+
+msgid "Bad password."
+msgstr ""
+
+msgid "it is too short"
+msgstr ""
+
+msgid "is the same as the old one"
+msgstr ""
+
+msgid "is a palindrome"
+msgstr ""
+
+msgid "case changes only"
+msgstr ""
+
+msgid "is too similar to the old one"
+msgstr ""
+
+msgid "it does not contain enough DIFFERENT characters"
+msgstr ""
+
+msgid "it is based on a dictionary word"
+msgstr ""
+
+msgid "Bad password: "
+msgstr ""
+
+msgid "Input Configuration"
+msgstr "Invoer Konfigurasie"
+
+msgid "Hardware Buttons"
+msgstr "Hardeware Knoppies"
+
+msgid "Configure short, double, and long press actions"
+msgstr ""
+
+msgid "Touch Gestures"
+msgstr "Raakgebare"
+
+msgid "Configure edge swipes and shortcuts"
+msgstr ""
+
+msgid "Buttons"
+msgstr "Knoppies"
+
+msgid "Keyboard"
+msgstr "Sleutelbord"
+
+msgid "Active Keyboard"
+msgstr "Aktiewe Sleutelbord"
+
+msgid "Change Keyboard"
+msgstr "Verander Sleutelbord"
+
+msgid "Finnish Layout"
+msgstr ""
+
+msgid "Install custom Squeekboard layout"
+msgstr ""
+
+msgid "Configuration"
+msgstr "Konfigurasie"
+
+msgid "Enforce App Wofi Config"
+msgstr ""
+
+msgid "Use Tweak-FLX1s Wofi style and config"
+msgstr ""
+
+msgid "Environment"
+msgstr "Omgewing"
+
+msgid "Current Environment"
+msgstr ""
+
+msgid "Updates"
+msgstr "Opdaterings"
+
+msgid "System Upgrade"
+msgstr "Stelselopgradering"
+
+msgid "Upgrade FuriOS"
+msgstr ""
+
+msgid "Upgrading System"
+msgstr ""
+
+msgid "Applications"
+msgstr "Toepassings"
+
+msgid "Squeekboard"
+msgstr "Squeekboard"
+
+msgid "On-screen keyboard"
+msgstr ""
+
+msgid "FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Install custom battery monitor"
+msgstr ""
+
+msgid "Install"
+msgstr "Installeer"
+
+msgid "Phofono"
+msgstr ""
+
+msgid "Alternative Phone and Messages App"
+msgstr ""
+
+msgid "Branchy App Store"
+msgstr ""
+
+msgid "DebUI"
+msgstr ""
+
+msgid "Debian Package Installer UI"
+msgstr ""
+
+msgid "Security"
+msgstr "Sekuriteit"
+
+msgid "Enable Shorter Passcodes"
+msgstr ""
+
+msgid "Allow 1-character passwords"
+msgstr ""
+
+msgid "Change current user password"
+msgstr ""
+
+msgid "Fingerprint Authentication"
+msgstr "Vingerafdrukverifikasie"
+
+msgid "Configure PAM for fingerprint support"
+msgstr ""
+
+msgid "Enable"
+msgstr "Aktiveer"
+
+msgid "Restarting Keyboard Service"
+msgstr ""
+
+msgid "Changing Keyboard"
+msgstr ""
+
+msgid "Remove"
+msgstr "Verwyder"
+
+msgid "Removing Squeekboard"
+msgstr ""
+
+msgid "Installing Squeekboard"
+msgstr ""
+
+msgid "Enabling Shorter Passwords"
+msgstr ""
+
+msgid "Disabling Shorter Passwords"
+msgstr ""
+
+msgid "Removing DebUI"
+msgstr ""
+
+msgid "Installing DebUI"
+msgstr ""
+
+msgid "Removing FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Installing FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Fingerprint is enabled"
+msgstr ""
+
+msgid "Removing Fingerprint"
+msgstr ""
+
+msgid "Configuring Fingerprint"
+msgstr ""
+
+msgid "Installed"
+msgstr "Geïnstalleer"
+
+msgid "Removing Phofono"
+msgstr ""
+
+msgid "Installing Phofono"
+msgstr ""
+
+msgid "Removing Branchy"
+msgstr ""
+
+msgid "Installing Branchy"
+msgstr ""
+
+msgid "Staging"
+msgstr ""
+
+msgid "Switch to Production"
+msgstr ""
+
+msgid "Production"
+msgstr ""
+
+msgid "Switch to Staging"
+msgstr ""
+
+msgid "Switching to Production"
+msgstr ""
+
+msgid "Switching to Staging"
+msgstr ""
+
+msgid "About Tweak-FLX1s"
+msgstr "Oor Tweak-FLX1s"
+
+msgid "System tweaks and utilities for FuriPhoneFLX1s."
+msgstr ""
+
+msgid "Version"
+msgstr "Weergawe"
+
+msgid "Developer"
+msgstr "Ontwikkelaar"
+
+msgid "License"
+msgstr "Lisensie"
+
+msgid "Links"
+msgstr "Skakels"
+
+msgid "Website"
+msgstr "Webwerf"
+
+msgid "Issue Tracker"
+msgstr "Probleemopspoorder"
+
+msgid "Report bugs or request features"
+msgstr ""
+
+msgid "Appearance"
+msgstr "Voorkoms"
+
+msgid "GTK3 CSS Tweak"
+msgstr ""
+
+msgid "Apply custom UI scaling tweaks for GTK3 apps"
+msgstr ""
+
+msgid "Background Services"
+msgstr "Agtergronddienste"
+
+msgid "Alarm Volume Fix"
+msgstr ""
+
+msgid "Ensure alarm plays at full volume"
+msgstr ""
+
+msgid "Andromeda Guard"
+msgstr ""
+
+msgid "Prevent OSK issues"
+msgstr ""
+
+msgid "Andromeda Integration"
+msgstr ""
+
+msgid "Shared Folders"
+msgstr ""
+
+msgid "Mount ~/.local/share/andromeda to ~/Android-Share"
+msgstr ""
+
+msgid "Audio"
+msgstr "Oudio"
+
+msgid "Custom Sound Theme"
+msgstr ""
+
+msgid "Use fastflx1 custom sounds"
+msgstr ""
+
+msgid "Mounting Shared Folders"
+msgstr ""
+
+msgid "Unmounting Shared Folders"
+msgstr ""
+
+msgid "Short Press"
+msgstr "Kort Druk"
+
+msgid "Double Press"
+msgstr "Dubbel Druk"
+
+msgid "Long Press"
+msgstr "Lang Druk"
+
+msgid "Use Custom Assistant File"
+msgstr ""
+
+msgid "Write ~/.config/assistant-button/..."
+msgstr ""
+
+msgid "Locked Action"
+msgstr ""
+
+msgid "Unlocked Action"
+msgstr ""
+
+msgid "Copy (Ctrl+C)"
+msgstr "Kopieer (Ctrl+C)"
+
+msgid "Paste (Ctrl+V)"
+msgstr "Plak (Ctrl+V)"
+
+msgid "Cut (Ctrl+X)"
+msgstr ""
+
+msgid "Select All and Copy"
+msgstr ""
+
+msgid "Paste from Clipboard"
+msgstr ""
+
+msgid "Kill Active Window"
+msgstr ""
+
+msgid "Switch Window on the left"
+msgstr ""
+
+msgid "Switch Window on the right"
+msgstr ""
+
+msgid "Screenshot"
+msgstr "Skermskoot"
+
+msgid "Flashlight"
+msgstr "Flitslig"
+
+msgid "Play/Pause"
+msgstr ""
+
+msgid "Next Track"
+msgstr ""
+
+msgid "Previous Track"
+msgstr ""
+
+msgid "Volume Up"
+msgstr ""
+
+msgid "Volume Down"
+msgstr ""
+
+msgid "Mute"
+msgstr "Demp"

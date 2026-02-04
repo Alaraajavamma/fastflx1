@@ -1,0 +1,675 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: tweak-flx1s 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-01-01 00:00+0000\n"
+"Last-Translator: ai\n"
+"Language-Team: ai\n"
+"Language: sw\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Add Location"
+msgstr "Ongeza Mahali"
+
+msgid "Close"
+msgstr "Funga"
+
+msgid "Enter city name"
+msgstr "Weka jina la mji"
+
+msgid "Search"
+msgstr "Tafuta"
+
+msgid "Result"
+msgstr "Matokeo"
+
+msgid "No location found yet."
+msgstr "Hakuna mahali palipopatikana bado."
+
+msgid "Searching..."
+msgstr "Inatafuta..."
+
+msgid "No location found."
+msgstr "Mahali hakukupatikana."
+
+msgid "Error adding location."
+msgstr "Hitilafu kuongeza mahali."
+
+msgid "Tweaks"
+msgstr "Marekebisho"
+
+msgid "System"
+msgstr "Mfumo"
+
+msgid "Actions"
+msgstr "Vitendo"
+
+msgid "New Gesture Wizard"
+msgstr "Mchawi wa Ishara Mpya"
+
+msgid "Cancel"
+msgstr "Ghairi"
+
+msgid "Go Back"
+msgstr "Rudi Nyuma"
+
+msgid "Proceed"
+msgstr "Endelea"
+
+msgid "Step 1: Fingers"
+msgstr "Hatua ya 1: Vidole"
+
+msgid "How many fingers used for the gesture?"
+msgstr "Vidole vingapi vinatumika kwa ishara?"
+
+msgid "Step 2: Direction"
+msgstr "Hatua ya 2: Mwelekeo"
+
+msgid "Which direction is the swipe?"
+msgstr "Swipe iko katika mwelekeo gani?"
+
+msgid "From Left to Right"
+msgstr "Kutoka Kushoto kwenda Kulia"
+
+msgid "From Right to Left"
+msgstr "Kutoka Kulia kwenda Kushoto"
+
+msgid "From Top to Bottom"
+msgstr "Kutoka Juu kwenda Chini"
+
+msgid "From Bottom to Top"
+msgstr "Kutoka Chini kwenda Juu"
+
+msgid "From Bottom-Left to Top-Right"
+msgstr ""
+
+msgid "From Top-Right to Bottom-Left"
+msgstr ""
+
+msgid "From Top-Left to Bottom-Right"
+msgstr ""
+
+msgid "From Bottom-Right to Top-Left"
+msgstr ""
+
+msgid "Step 3: Edge"
+msgstr "Hatua ya 3: Ukingo"
+
+msgid "Where should the gesture start?"
+msgstr "Ishara inapaswa kuanzia wapi?"
+
+msgid "Anywhere"
+msgstr "Popote"
+
+msgid "Left Edge"
+msgstr "Ukingo wa Kushoto"
+
+msgid "Right Edge"
+msgstr "Ukingo wa Kulia"
+
+msgid "Top Edge"
+msgstr "Ukingo wa Juu"
+
+msgid "Bottom Edge"
+msgstr "Ukingo wa Chini"
+
+msgid "Top-Left Corner"
+msgstr ""
+
+msgid "Top-Right Corner"
+msgstr ""
+
+msgid "Bottom-Left Corner"
+msgstr ""
+
+msgid "Bottom-Right Corner"
+msgstr ""
+
+msgid "None (Middle of screen only)"
+msgstr ""
+
+msgid "Step 4: Distance"
+msgstr "Hatua ya 4: Umbali"
+
+msgid "How long should the swipe be?"
+msgstr "Swipe inapaswa kuwa ndefu kiasi gani?"
+
+msgid "Any Distance"
+msgstr "Umbali Wowote"
+
+msgid "Short"
+msgstr "Fupi"
+
+msgid "Medium"
+msgstr "Wastani"
+
+msgid "Large"
+msgstr "Ndefu"
+
+msgid "Step 5: Mode"
+msgstr "Hatua ya 5: Njia"
+
+msgid "Trigger on press or release?"
+msgstr "Anzisha wakati wa kubonyeza au kuachia?"
+
+msgid "On Release (Recommended)"
+msgstr "Wakati wa Kuachia (Inapendekezwa)"
+
+msgid "On Press"
+msgstr "Wakati wa Kubonyeza"
+
+msgid "Already configured"
+msgstr ""
+
+msgid "Error: Both Release and Press modes are already configured for this gesture combination."
+msgstr ""
+
+msgid "Save"
+msgstr "Hifadhi"
+
+msgid "Select Keyboard"
+msgstr ""
+
+msgid "Edit Item"
+msgstr "Hariri Kipengele"
+
+msgid "Item Details"
+msgstr "Maelezo ya Kipengele"
+
+msgid "Action Name"
+msgstr "Jina la Kitendo"
+
+msgid "Action Type"
+msgstr "Aina ya Kitendo"
+
+msgid "Predefined Action"
+msgstr "Kitendo Kilichofafanuliwa Awali"
+
+msgid "Select from common actions"
+msgstr ""
+
+msgid "Custom Command"
+msgstr "Amri Maalum"
+
+msgid "Execute a shell command"
+msgstr ""
+
+msgid "Command"
+msgstr "Amri"
+
+msgid "Predefined Actions"
+msgstr ""
+
+msgid "Edit Menu"
+msgstr "Hariri Menyu"
+
+msgid "New Item"
+msgstr "Kipengele Kipya"
+
+msgid "Select Action"
+msgstr "Chagua Kitendo"
+
+msgid "Wofi Menu"
+msgstr "Menyu ya Wofi"
+
+msgid "Show a menu of actions"
+msgstr ""
+
+msgid "Edit Gesture"
+msgstr "Hariri Ishara"
+
+msgid "General"
+msgstr "Jumla"
+
+msgid "Name"
+msgstr "Jina"
+
+msgid "Trigger Spec"
+msgstr "Vipimo vya Kianzishaji"
+
+msgid "Not Configured"
+msgstr "Haijasanidiwa"
+
+msgid "Change"
+msgstr "Badilisha"
+
+msgid "Locked State"
+msgstr "Hali Iliyofungwa"
+
+msgid "Edit"
+msgstr "Hariri"
+
+msgid "Unlocked State"
+msgstr "Hali Isiyofungwa"
+
+msgid "No Action"
+msgstr "Hakuna Kitendo"
+
+msgid "Missing Trigger"
+msgstr "Kianzishaji Kinachokosekana"
+
+msgid "Please configure a gesture trigger before saving."
+msgstr ""
+
+msgid "OK"
+msgstr "Sawa"
+
+msgid "Gestures"
+msgstr ""
+
+msgid "Service"
+msgstr "Huduma"
+
+msgid "Enable Touch Gestures"
+msgstr "Washa Ishara za Kugusa"
+
+msgid "Add New Gesture"
+msgstr "Ongeza Ishara Mpya"
+
+msgid "Configured Gestures"
+msgstr "Ishara Zilizosanidiwa"
+
+msgid "Unnamed Gesture"
+msgstr "Ishara Isiyo na Jina"
+
+msgid "New Gesture"
+msgstr "Ishara Mpya"
+
+msgid "Change Password"
+msgstr "Badilisha Nenosiri"
+
+msgid "Password Details"
+msgstr "Maelezo ya Nenosiri"
+
+msgid "Current Password"
+msgstr "Nenosiri la Sasa"
+
+msgid "New Password"
+msgstr "Nenosiri Jipya"
+
+msgid "Confirm New Password"
+msgstr "Thibitisha Nenosiri Jipya"
+
+msgid "Please enter current password."
+msgstr ""
+
+msgid "Please enter new password."
+msgstr ""
+
+msgid "New passwords do not match."
+msgstr ""
+
+msgid "Changing password..."
+msgstr ""
+
+msgid "Password changed successfully!"
+msgstr "Nenosiri limebadilishwa kikamilifu!"
+
+msgid "Failed to change password."
+msgstr "Imeshindwa kubadilisha nenosiri."
+
+msgid "Authentication error. Check current password."
+msgstr ""
+
+msgid "Bad password."
+msgstr ""
+
+msgid "it is too short"
+msgstr ""
+
+msgid "is the same as the old one"
+msgstr ""
+
+msgid "is a palindrome"
+msgstr ""
+
+msgid "case changes only"
+msgstr ""
+
+msgid "is too similar to the old one"
+msgstr ""
+
+msgid "it does not contain enough DIFFERENT characters"
+msgstr ""
+
+msgid "it is based on a dictionary word"
+msgstr ""
+
+msgid "Bad password: "
+msgstr ""
+
+msgid "Input Configuration"
+msgstr "Usanidi wa Kuingiza"
+
+msgid "Hardware Buttons"
+msgstr "Vifungo vya Kifaa"
+
+msgid "Configure short, double, and long press actions"
+msgstr ""
+
+msgid "Touch Gestures"
+msgstr "Ishara za Kugusa"
+
+msgid "Configure edge swipes and shortcuts"
+msgstr ""
+
+msgid "Buttons"
+msgstr "Vifungo"
+
+msgid "Keyboard"
+msgstr "Kibodi"
+
+msgid "Active Keyboard"
+msgstr "Kibodi Inayotumika"
+
+msgid "Change Keyboard"
+msgstr "Badilisha Kibodi"
+
+msgid "Finnish Layout"
+msgstr ""
+
+msgid "Install custom Squeekboard layout"
+msgstr ""
+
+msgid "Configuration"
+msgstr "Usanidi"
+
+msgid "Enforce App Wofi Config"
+msgstr ""
+
+msgid "Use Tweak-FLX1s Wofi style and config"
+msgstr ""
+
+msgid "Environment"
+msgstr "Mazingira"
+
+msgid "Current Environment"
+msgstr ""
+
+msgid "Updates"
+msgstr "Sasisho"
+
+msgid "System Upgrade"
+msgstr "Uboreshaji wa Mfumo"
+
+msgid "Upgrade FuriOS"
+msgstr ""
+
+msgid "Upgrading System"
+msgstr ""
+
+msgid "Applications"
+msgstr "Programu"
+
+msgid "Squeekboard"
+msgstr "Squeekboard"
+
+msgid "On-screen keyboard"
+msgstr ""
+
+msgid "FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Install custom battery monitor"
+msgstr ""
+
+msgid "Install"
+msgstr "Sakinisha"
+
+msgid "Phofono"
+msgstr ""
+
+msgid "Alternative Phone and Messages App"
+msgstr ""
+
+msgid "Branchy App Store"
+msgstr ""
+
+msgid "DebUI"
+msgstr ""
+
+msgid "Debian Package Installer UI"
+msgstr ""
+
+msgid "Security"
+msgstr "Usalama"
+
+msgid "Enable Shorter Passcodes"
+msgstr ""
+
+msgid "Allow 1-character passwords"
+msgstr ""
+
+msgid "Change current user password"
+msgstr ""
+
+msgid "Fingerprint Authentication"
+msgstr "Uthibitishaji wa Alama ya Kidole"
+
+msgid "Configure PAM for fingerprint support"
+msgstr ""
+
+msgid "Enable"
+msgstr "Washa"
+
+msgid "Restarting Keyboard Service"
+msgstr ""
+
+msgid "Changing Keyboard"
+msgstr ""
+
+msgid "Remove"
+msgstr "Ondoa"
+
+msgid "Removing Squeekboard"
+msgstr ""
+
+msgid "Installing Squeekboard"
+msgstr ""
+
+msgid "Enabling Shorter Passwords"
+msgstr ""
+
+msgid "Disabling Shorter Passwords"
+msgstr ""
+
+msgid "Removing DebUI"
+msgstr ""
+
+msgid "Installing DebUI"
+msgstr ""
+
+msgid "Removing FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Installing FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Fingerprint is enabled"
+msgstr ""
+
+msgid "Removing Fingerprint"
+msgstr ""
+
+msgid "Configuring Fingerprint"
+msgstr ""
+
+msgid "Installed"
+msgstr "Imesakinishwa"
+
+msgid "Removing Phofono"
+msgstr ""
+
+msgid "Installing Phofono"
+msgstr ""
+
+msgid "Removing Branchy"
+msgstr ""
+
+msgid "Installing Branchy"
+msgstr ""
+
+msgid "Staging"
+msgstr ""
+
+msgid "Switch to Production"
+msgstr ""
+
+msgid "Production"
+msgstr ""
+
+msgid "Switch to Staging"
+msgstr ""
+
+msgid "Switching to Production"
+msgstr ""
+
+msgid "Switching to Staging"
+msgstr ""
+
+msgid "About Tweak-FLX1s"
+msgstr "Kuhusu Tweak-FLX1s"
+
+msgid "System tweaks and utilities for FuriPhoneFLX1s."
+msgstr ""
+
+msgid "Version"
+msgstr "Toleo"
+
+msgid "Developer"
+msgstr "Msanidi"
+
+msgid "License"
+msgstr "Leseni"
+
+msgid "Links"
+msgstr "Viungo"
+
+msgid "Website"
+msgstr "Tovuti"
+
+msgid "Issue Tracker"
+msgstr "Kifuatiliaji cha Masuala"
+
+msgid "Report bugs or request features"
+msgstr ""
+
+msgid "Appearance"
+msgstr "Muonekano"
+
+msgid "GTK3 CSS Tweak"
+msgstr ""
+
+msgid "Apply custom UI scaling tweaks for GTK3 apps"
+msgstr ""
+
+msgid "Background Services"
+msgstr "Huduma za Nyuma"
+
+msgid "Alarm Volume Fix"
+msgstr ""
+
+msgid "Ensure alarm plays at full volume"
+msgstr ""
+
+msgid "Andromeda Guard"
+msgstr ""
+
+msgid "Prevent OSK issues"
+msgstr ""
+
+msgid "Andromeda Integration"
+msgstr ""
+
+msgid "Shared Folders"
+msgstr ""
+
+msgid "Mount ~/.local/share/andromeda to ~/Android-Share"
+msgstr ""
+
+msgid "Audio"
+msgstr "Sauti"
+
+msgid "Custom Sound Theme"
+msgstr ""
+
+msgid "Use fastflx1 custom sounds"
+msgstr ""
+
+msgid "Mounting Shared Folders"
+msgstr ""
+
+msgid "Unmounting Shared Folders"
+msgstr ""
+
+msgid "Short Press"
+msgstr "Bonyeza Fupi"
+
+msgid "Double Press"
+msgstr "Bonyeza Mara Mbili"
+
+msgid "Long Press"
+msgstr "Bonyeza Kwa Muda Mrefu"
+
+msgid "Use Custom Assistant File"
+msgstr ""
+
+msgid "Write ~/.config/assistant-button/..."
+msgstr ""
+
+msgid "Locked Action"
+msgstr ""
+
+msgid "Unlocked Action"
+msgstr ""
+
+msgid "Copy (Ctrl+C)"
+msgstr "Nakili (Ctrl+C)"
+
+msgid "Paste (Ctrl+V)"
+msgstr "Bandika (Ctrl+V)"
+
+msgid "Cut (Ctrl+X)"
+msgstr ""
+
+msgid "Select All and Copy"
+msgstr ""
+
+msgid "Paste from Clipboard"
+msgstr ""
+
+msgid "Kill Active Window"
+msgstr ""
+
+msgid "Switch Window on the left"
+msgstr ""
+
+msgid "Switch Window on the right"
+msgstr ""
+
+msgid "Screenshot"
+msgstr "Picha ya Skrini"
+
+msgid "Flashlight"
+msgstr "Tochi"
+
+msgid "Play/Pause"
+msgstr ""
+
+msgid "Next Track"
+msgstr ""
+
+msgid "Previous Track"
+msgstr ""
+
+msgid "Volume Up"
+msgstr ""
+
+msgid "Volume Down"
+msgstr ""
+
+msgid "Mute"
+msgstr "Nyamazisha"

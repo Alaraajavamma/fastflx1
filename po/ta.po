@@ -1,0 +1,675 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: tweak-flx1s 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-01-01 00:00+0000\n"
+"Last-Translator: ai\n"
+"Language-Team: ai\n"
+"Language: ta\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Add Location"
+msgstr "இடத்தைச் சேர்"
+
+msgid "Close"
+msgstr "மூடு"
+
+msgid "Enter city name"
+msgstr "நகரத்தின் பெயரை உள்ளிடவும்"
+
+msgid "Search"
+msgstr "தேடு"
+
+msgid "Result"
+msgstr "முடிவு"
+
+msgid "No location found yet."
+msgstr "இடம் இன்னும் காணப்படவில்லை."
+
+msgid "Searching..."
+msgstr "தேடுகிறது..."
+
+msgid "No location found."
+msgstr "இடம் காணப்படவில்லை."
+
+msgid "Error adding location."
+msgstr "இடத்தைச் சேர்ப்பதில் பிழை."
+
+msgid "Tweaks"
+msgstr "மாற்றங்கள்"
+
+msgid "System"
+msgstr "அமைப்பு"
+
+msgid "Actions"
+msgstr "செயல்கள்"
+
+msgid "New Gesture Wizard"
+msgstr "புதிய சைகை வழிகாட்டி"
+
+msgid "Cancel"
+msgstr "ரத்துசெய்"
+
+msgid "Go Back"
+msgstr "திரும்பிச் செல்"
+
+msgid "Proceed"
+msgstr "தொடரவும்"
+
+msgid "Step 1: Fingers"
+msgstr "படி 1: விரல்கள்"
+
+msgid "How many fingers used for the gesture?"
+msgstr "சைகைக்கு எத்தனை விரல்கள் பயன்படுத்தப்படுகின்றன?"
+
+msgid "Step 2: Direction"
+msgstr "படி 2: திசை"
+
+msgid "Which direction is the swipe?"
+msgstr "ஸ்வைப் எந்த திசையில் உள்ளது?"
+
+msgid "From Left to Right"
+msgstr "இடமிருந்து வலமாக"
+
+msgid "From Right to Left"
+msgstr "வலமிருந்து இடமாக"
+
+msgid "From Top to Bottom"
+msgstr "மேலிருந்து கீழாக"
+
+msgid "From Bottom to Top"
+msgstr "கீழிருந்து மேலாக"
+
+msgid "From Bottom-Left to Top-Right"
+msgstr ""
+
+msgid "From Top-Right to Bottom-Left"
+msgstr ""
+
+msgid "From Top-Left to Bottom-Right"
+msgstr ""
+
+msgid "From Bottom-Right to Top-Left"
+msgstr ""
+
+msgid "Step 3: Edge"
+msgstr "படி 3: விளிம்பு"
+
+msgid "Where should the gesture start?"
+msgstr "சைகை எங்கு தொடங்க வேண்டும்?"
+
+msgid "Anywhere"
+msgstr "எங்கும்"
+
+msgid "Left Edge"
+msgstr "இடது விளிம்பு"
+
+msgid "Right Edge"
+msgstr "வலது விளிம்பு"
+
+msgid "Top Edge"
+msgstr "மேல் விளிம்பு"
+
+msgid "Bottom Edge"
+msgstr "கீழ் விளிம்பு"
+
+msgid "Top-Left Corner"
+msgstr ""
+
+msgid "Top-Right Corner"
+msgstr ""
+
+msgid "Bottom-Left Corner"
+msgstr ""
+
+msgid "Bottom-Right Corner"
+msgstr ""
+
+msgid "None (Middle of screen only)"
+msgstr ""
+
+msgid "Step 4: Distance"
+msgstr "படி 4: தூரம்"
+
+msgid "How long should the swipe be?"
+msgstr "ஸ்வைப் எவ்வளவு நீளமாக இருக்க வேண்டும்?"
+
+msgid "Any Distance"
+msgstr "எந்த தூரமும்"
+
+msgid "Short"
+msgstr "குறுகிய"
+
+msgid "Medium"
+msgstr "நடுத்தர"
+
+msgid "Large"
+msgstr "பெரிய"
+
+msgid "Step 5: Mode"
+msgstr "படி 5: முறை"
+
+msgid "Trigger on press or release?"
+msgstr "அழுத்தும் போதா அல்லது விடுவிக்கும் போதா தூண்ட வேண்டும்?"
+
+msgid "On Release (Recommended)"
+msgstr "விடுவிக்கும் போது (பரிந்துரைக்கப்படுகிறது)"
+
+msgid "On Press"
+msgstr "அழுத்தும் போது"
+
+msgid "Already configured"
+msgstr ""
+
+msgid "Error: Both Release and Press modes are already configured for this gesture combination."
+msgstr ""
+
+msgid "Save"
+msgstr "சேமி"
+
+msgid "Select Keyboard"
+msgstr ""
+
+msgid "Edit Item"
+msgstr "உருப்படியைத் திருத்து"
+
+msgid "Item Details"
+msgstr "உருப்படி விவரங்கள்"
+
+msgid "Action Name"
+msgstr "செயல் பெயர்"
+
+msgid "Action Type"
+msgstr "செயல் வகை"
+
+msgid "Predefined Action"
+msgstr "முன் வரையறுக்கப்பட்ட செயல்"
+
+msgid "Select from common actions"
+msgstr ""
+
+msgid "Custom Command"
+msgstr "தனிப்பயன் கட்டளை"
+
+msgid "Execute a shell command"
+msgstr ""
+
+msgid "Command"
+msgstr "கட்டளை"
+
+msgid "Predefined Actions"
+msgstr ""
+
+msgid "Edit Menu"
+msgstr "மெனுவைத் திருத்து"
+
+msgid "New Item"
+msgstr "புதிய உருப்படி"
+
+msgid "Select Action"
+msgstr "செயலைத் தேர்ந்தெடு"
+
+msgid "Wofi Menu"
+msgstr "Wofi மெனு"
+
+msgid "Show a menu of actions"
+msgstr ""
+
+msgid "Edit Gesture"
+msgstr "சைகையைத் திருத்து"
+
+msgid "General"
+msgstr "பொது"
+
+msgid "Name"
+msgstr "பெயர்"
+
+msgid "Trigger Spec"
+msgstr "தூண்டுதல் விவரக்குறிப்பு"
+
+msgid "Not Configured"
+msgstr "கட்டமைக்கப்படவில்லை"
+
+msgid "Change"
+msgstr "மாற்று"
+
+msgid "Locked State"
+msgstr "பூட்டப்பட்ட நிலை"
+
+msgid "Edit"
+msgstr "திருத்து"
+
+msgid "Unlocked State"
+msgstr "பூட்டப்படாத நிலை"
+
+msgid "No Action"
+msgstr "செயல் இல்லை"
+
+msgid "Missing Trigger"
+msgstr "தூண்டுதல் இல்லை"
+
+msgid "Please configure a gesture trigger before saving."
+msgstr ""
+
+msgid "OK"
+msgstr "சரி"
+
+msgid "Gestures"
+msgstr ""
+
+msgid "Service"
+msgstr "சேவை"
+
+msgid "Enable Touch Gestures"
+msgstr "தொடு சைகைகளை இயக்கு"
+
+msgid "Add New Gesture"
+msgstr "புதிய சைகையைச் சேர்"
+
+msgid "Configured Gestures"
+msgstr "கட்டமைக்கப்பட்ட சைகைகள்"
+
+msgid "Unnamed Gesture"
+msgstr "பெயரிடப்படாத சைகை"
+
+msgid "New Gesture"
+msgstr "புதிய சைகை"
+
+msgid "Change Password"
+msgstr "கடவுச்சொல்லை மாற்று"
+
+msgid "Password Details"
+msgstr "கடவுச்சொல் விவரங்கள்"
+
+msgid "Current Password"
+msgstr "தற்போதைய கடவுச்சொல்"
+
+msgid "New Password"
+msgstr "புதிய கடவுச்சொல்"
+
+msgid "Confirm New Password"
+msgstr "புதிய கடவுச்சொல்லை உறுதிப்படுத்தவும்"
+
+msgid "Please enter current password."
+msgstr ""
+
+msgid "Please enter new password."
+msgstr ""
+
+msgid "New passwords do not match."
+msgstr ""
+
+msgid "Changing password..."
+msgstr ""
+
+msgid "Password changed successfully!"
+msgstr "கடவுச்சொல் வெற்றிகரமாக மாற்றப்பட்டது!"
+
+msgid "Failed to change password."
+msgstr "கடவுச்சொல்லை மாற்ற முடியவில்லை."
+
+msgid "Authentication error. Check current password."
+msgstr ""
+
+msgid "Bad password."
+msgstr ""
+
+msgid "it is too short"
+msgstr ""
+
+msgid "is the same as the old one"
+msgstr ""
+
+msgid "is a palindrome"
+msgstr ""
+
+msgid "case changes only"
+msgstr ""
+
+msgid "is too similar to the old one"
+msgstr ""
+
+msgid "it does not contain enough DIFFERENT characters"
+msgstr ""
+
+msgid "it is based on a dictionary word"
+msgstr ""
+
+msgid "Bad password: "
+msgstr ""
+
+msgid "Input Configuration"
+msgstr "உள்ளீடு கட்டமைப்பு"
+
+msgid "Hardware Buttons"
+msgstr "வன்பொருள் பொத்தான்கள்"
+
+msgid "Configure short, double, and long press actions"
+msgstr ""
+
+msgid "Touch Gestures"
+msgstr "தொடு சைகைகள்"
+
+msgid "Configure edge swipes and shortcuts"
+msgstr ""
+
+msgid "Buttons"
+msgstr "பொத்தான்கள்"
+
+msgid "Keyboard"
+msgstr "விசைப்பலகை"
+
+msgid "Active Keyboard"
+msgstr "செயலில் உள்ள விசைப்பலகை"
+
+msgid "Change Keyboard"
+msgstr "விசைப்பலகையை மாற்று"
+
+msgid "Finnish Layout"
+msgstr ""
+
+msgid "Install custom Squeekboard layout"
+msgstr ""
+
+msgid "Configuration"
+msgstr "கட்டமைப்பு"
+
+msgid "Enforce App Wofi Config"
+msgstr ""
+
+msgid "Use Tweak-FLX1s Wofi style and config"
+msgstr ""
+
+msgid "Environment"
+msgstr "சுற்றுச்சூழல்"
+
+msgid "Current Environment"
+msgstr ""
+
+msgid "Updates"
+msgstr "புதுப்பிப்புகள்"
+
+msgid "System Upgrade"
+msgstr "அமைப்பு மேம்படுத்தல்"
+
+msgid "Upgrade FuriOS"
+msgstr ""
+
+msgid "Upgrading System"
+msgstr ""
+
+msgid "Applications"
+msgstr "பயன்பாடுகள்"
+
+msgid "Squeekboard"
+msgstr "Squeekboard"
+
+msgid "On-screen keyboard"
+msgstr ""
+
+msgid "FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Install custom battery monitor"
+msgstr ""
+
+msgid "Install"
+msgstr "நிறுவு"
+
+msgid "Phofono"
+msgstr ""
+
+msgid "Alternative Phone and Messages App"
+msgstr ""
+
+msgid "Branchy App Store"
+msgstr ""
+
+msgid "DebUI"
+msgstr ""
+
+msgid "Debian Package Installer UI"
+msgstr ""
+
+msgid "Security"
+msgstr "பாதுகாப்பு"
+
+msgid "Enable Shorter Passcodes"
+msgstr ""
+
+msgid "Allow 1-character passwords"
+msgstr ""
+
+msgid "Change current user password"
+msgstr ""
+
+msgid "Fingerprint Authentication"
+msgstr "கைரேகை அங்கீகாரம்"
+
+msgid "Configure PAM for fingerprint support"
+msgstr ""
+
+msgid "Enable"
+msgstr "இயக்கு"
+
+msgid "Restarting Keyboard Service"
+msgstr ""
+
+msgid "Changing Keyboard"
+msgstr ""
+
+msgid "Remove"
+msgstr "அகற்று"
+
+msgid "Removing Squeekboard"
+msgstr ""
+
+msgid "Installing Squeekboard"
+msgstr ""
+
+msgid "Enabling Shorter Passwords"
+msgstr ""
+
+msgid "Disabling Shorter Passwords"
+msgstr ""
+
+msgid "Removing DebUI"
+msgstr ""
+
+msgid "Installing DebUI"
+msgstr ""
+
+msgid "Removing FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Installing FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Fingerprint is enabled"
+msgstr ""
+
+msgid "Removing Fingerprint"
+msgstr ""
+
+msgid "Configuring Fingerprint"
+msgstr ""
+
+msgid "Installed"
+msgstr "நிறுவப்பட்டது"
+
+msgid "Removing Phofono"
+msgstr ""
+
+msgid "Installing Phofono"
+msgstr ""
+
+msgid "Removing Branchy"
+msgstr ""
+
+msgid "Installing Branchy"
+msgstr ""
+
+msgid "Staging"
+msgstr ""
+
+msgid "Switch to Production"
+msgstr ""
+
+msgid "Production"
+msgstr ""
+
+msgid "Switch to Staging"
+msgstr ""
+
+msgid "Switching to Production"
+msgstr ""
+
+msgid "Switching to Staging"
+msgstr ""
+
+msgid "About Tweak-FLX1s"
+msgstr "Tweak-FLX1s பற்றி"
+
+msgid "System tweaks and utilities for FuriPhoneFLX1s."
+msgstr ""
+
+msgid "Version"
+msgstr "பதிப்பு"
+
+msgid "Developer"
+msgstr "உருவாக்குநர்"
+
+msgid "License"
+msgstr "உரிமம்"
+
+msgid "Links"
+msgstr "இணைப்புகள்"
+
+msgid "Website"
+msgstr "வலைத்தளம்"
+
+msgid "Issue Tracker"
+msgstr "சிக்கல் கண்காணிப்பு"
+
+msgid "Report bugs or request features"
+msgstr ""
+
+msgid "Appearance"
+msgstr "தோற்றம்"
+
+msgid "GTK3 CSS Tweak"
+msgstr ""
+
+msgid "Apply custom UI scaling tweaks for GTK3 apps"
+msgstr ""
+
+msgid "Background Services"
+msgstr "பின்னணி சேவைகள்"
+
+msgid "Alarm Volume Fix"
+msgstr ""
+
+msgid "Ensure alarm plays at full volume"
+msgstr ""
+
+msgid "Andromeda Guard"
+msgstr ""
+
+msgid "Prevent OSK issues"
+msgstr ""
+
+msgid "Andromeda Integration"
+msgstr ""
+
+msgid "Shared Folders"
+msgstr ""
+
+msgid "Mount ~/.local/share/andromeda to ~/Android-Share"
+msgstr ""
+
+msgid "Audio"
+msgstr "ஆடியோ"
+
+msgid "Custom Sound Theme"
+msgstr ""
+
+msgid "Use fastflx1 custom sounds"
+msgstr ""
+
+msgid "Mounting Shared Folders"
+msgstr ""
+
+msgid "Unmounting Shared Folders"
+msgstr ""
+
+msgid "Short Press"
+msgstr "குறுகிய அழுத்தம்"
+
+msgid "Double Press"
+msgstr "இரட்டை அழுத்தம்"
+
+msgid "Long Press"
+msgstr "நீண்ட அழுத்தம்"
+
+msgid "Use Custom Assistant File"
+msgstr ""
+
+msgid "Write ~/.config/assistant-button/..."
+msgstr ""
+
+msgid "Locked Action"
+msgstr ""
+
+msgid "Unlocked Action"
+msgstr ""
+
+msgid "Copy (Ctrl+C)"
+msgstr "நகலெடு (Ctrl+C)"
+
+msgid "Paste (Ctrl+V)"
+msgstr "ஒட்டு (Ctrl+V)"
+
+msgid "Cut (Ctrl+X)"
+msgstr ""
+
+msgid "Select All and Copy"
+msgstr ""
+
+msgid "Paste from Clipboard"
+msgstr ""
+
+msgid "Kill Active Window"
+msgstr ""
+
+msgid "Switch Window on the left"
+msgstr ""
+
+msgid "Switch Window on the right"
+msgstr ""
+
+msgid "Screenshot"
+msgstr "திரைக்காட்சி"
+
+msgid "Flashlight"
+msgstr "டார்ச்லைட்"
+
+msgid "Play/Pause"
+msgstr ""
+
+msgid "Next Track"
+msgstr ""
+
+msgid "Previous Track"
+msgstr ""
+
+msgid "Volume Up"
+msgstr ""
+
+msgid "Volume Down"
+msgstr ""
+
+msgid "Mute"
+msgstr "அமைதி"

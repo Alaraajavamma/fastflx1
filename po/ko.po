@@ -1,0 +1,675 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: tweak-flx1s 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-01-01 00:00+0000\n"
+"Last-Translator: ai\n"
+"Language-Team: ai\n"
+"Language: ko\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Add Location"
+msgstr "위치 추가"
+
+msgid "Close"
+msgstr "닫기"
+
+msgid "Enter city name"
+msgstr "도시 이름 입력"
+
+msgid "Search"
+msgstr "검색"
+
+msgid "Result"
+msgstr "결과"
+
+msgid "No location found yet."
+msgstr "아직 위치를 찾지 못했습니다."
+
+msgid "Searching..."
+msgstr "검색 중..."
+
+msgid "No location found."
+msgstr "위치를 찾을 수 없습니다."
+
+msgid "Error adding location."
+msgstr "위치 추가 오류."
+
+msgid "Tweaks"
+msgstr "조정"
+
+msgid "System"
+msgstr "시스템"
+
+msgid "Actions"
+msgstr "동작"
+
+msgid "New Gesture Wizard"
+msgstr "새 제스처 마법사"
+
+msgid "Cancel"
+msgstr "취소"
+
+msgid "Go Back"
+msgstr "뒤로 가기"
+
+msgid "Proceed"
+msgstr "계속"
+
+msgid "Step 1: Fingers"
+msgstr "1단계: 손가락"
+
+msgid "How many fingers used for the gesture?"
+msgstr "제스처에 몇 개의 손가락을 사용합니까?"
+
+msgid "Step 2: Direction"
+msgstr "2단계: 방향"
+
+msgid "Which direction is the swipe?"
+msgstr "스와이프 방향은 어디입니까?"
+
+msgid "From Left to Right"
+msgstr "왼쪽에서 오른쪽으로"
+
+msgid "From Right to Left"
+msgstr "오른쪽에서 왼쪽으로"
+
+msgid "From Top to Bottom"
+msgstr "위에서 아래로"
+
+msgid "From Bottom to Top"
+msgstr "아래에서 위로"
+
+msgid "From Bottom-Left to Top-Right"
+msgstr ""
+
+msgid "From Top-Right to Bottom-Left"
+msgstr ""
+
+msgid "From Top-Left to Bottom-Right"
+msgstr ""
+
+msgid "From Bottom-Right to Top-Left"
+msgstr ""
+
+msgid "Step 3: Edge"
+msgstr "3단계: 가장자리"
+
+msgid "Where should the gesture start?"
+msgstr "제스처는 어디서 시작해야 합니까?"
+
+msgid "Anywhere"
+msgstr "어디서나"
+
+msgid "Left Edge"
+msgstr "왼쪽 가장자리"
+
+msgid "Right Edge"
+msgstr "오른쪽 가장자리"
+
+msgid "Top Edge"
+msgstr "위쪽 가장자리"
+
+msgid "Bottom Edge"
+msgstr "아래쪽 가장자리"
+
+msgid "Top-Left Corner"
+msgstr ""
+
+msgid "Top-Right Corner"
+msgstr ""
+
+msgid "Bottom-Left Corner"
+msgstr ""
+
+msgid "Bottom-Right Corner"
+msgstr ""
+
+msgid "None (Middle of screen only)"
+msgstr ""
+
+msgid "Step 4: Distance"
+msgstr "4단계: 거리"
+
+msgid "How long should the swipe be?"
+msgstr "스와이프 길이는 얼마여야 합니까?"
+
+msgid "Any Distance"
+msgstr "모든 거리"
+
+msgid "Short"
+msgstr "짧게"
+
+msgid "Medium"
+msgstr "중간"
+
+msgid "Large"
+msgstr "길게"
+
+msgid "Step 5: Mode"
+msgstr "5단계: 모드"
+
+msgid "Trigger on press or release?"
+msgstr "누를 때 또는 뗄 때 트리거합니까?"
+
+msgid "On Release (Recommended)"
+msgstr "뗄 때 (권장)"
+
+msgid "On Press"
+msgstr "누를 때"
+
+msgid "Already configured"
+msgstr ""
+
+msgid "Error: Both Release and Press modes are already configured for this gesture combination."
+msgstr ""
+
+msgid "Save"
+msgstr "저장"
+
+msgid "Select Keyboard"
+msgstr ""
+
+msgid "Edit Item"
+msgstr "항목 편집"
+
+msgid "Item Details"
+msgstr "항목 세부 정보"
+
+msgid "Action Name"
+msgstr "동작 이름"
+
+msgid "Action Type"
+msgstr "동작 유형"
+
+msgid "Predefined Action"
+msgstr "미리 정의된 동작"
+
+msgid "Select from common actions"
+msgstr ""
+
+msgid "Custom Command"
+msgstr "사용자 지정 명령"
+
+msgid "Execute a shell command"
+msgstr ""
+
+msgid "Command"
+msgstr "명령"
+
+msgid "Predefined Actions"
+msgstr ""
+
+msgid "Edit Menu"
+msgstr "메뉴 편집"
+
+msgid "New Item"
+msgstr "새 항목"
+
+msgid "Select Action"
+msgstr "동작 선택"
+
+msgid "Wofi Menu"
+msgstr "Wofi 메뉴"
+
+msgid "Show a menu of actions"
+msgstr ""
+
+msgid "Edit Gesture"
+msgstr "제스처 편집"
+
+msgid "General"
+msgstr "일반"
+
+msgid "Name"
+msgstr "이름"
+
+msgid "Trigger Spec"
+msgstr "트리거 사양"
+
+msgid "Not Configured"
+msgstr "구성되지 않음"
+
+msgid "Change"
+msgstr "변경"
+
+msgid "Locked State"
+msgstr "잠금 상태"
+
+msgid "Edit"
+msgstr "편집"
+
+msgid "Unlocked State"
+msgstr "잠금 해제 상태"
+
+msgid "No Action"
+msgstr "동작 없음"
+
+msgid "Missing Trigger"
+msgstr "누락된 트리거"
+
+msgid "Please configure a gesture trigger before saving."
+msgstr ""
+
+msgid "OK"
+msgstr "확인"
+
+msgid "Gestures"
+msgstr ""
+
+msgid "Service"
+msgstr "서비스"
+
+msgid "Enable Touch Gestures"
+msgstr "터치 제스처 활성화"
+
+msgid "Add New Gesture"
+msgstr "새 제스처 추가"
+
+msgid "Configured Gestures"
+msgstr "구성된 제스처"
+
+msgid "Unnamed Gesture"
+msgstr "이름 없는 제스처"
+
+msgid "New Gesture"
+msgstr "새 제스처"
+
+msgid "Change Password"
+msgstr "비밀번호 변경"
+
+msgid "Password Details"
+msgstr "비밀번호 세부 정보"
+
+msgid "Current Password"
+msgstr "현재 비밀번호"
+
+msgid "New Password"
+msgstr "새 비밀번호"
+
+msgid "Confirm New Password"
+msgstr "새 비밀번호 확인"
+
+msgid "Please enter current password."
+msgstr ""
+
+msgid "Please enter new password."
+msgstr ""
+
+msgid "New passwords do not match."
+msgstr ""
+
+msgid "Changing password..."
+msgstr ""
+
+msgid "Password changed successfully!"
+msgstr "비밀번호가 성공적으로 변경되었습니다!"
+
+msgid "Failed to change password."
+msgstr "비밀번호 변경 실패."
+
+msgid "Authentication error. Check current password."
+msgstr ""
+
+msgid "Bad password."
+msgstr ""
+
+msgid "it is too short"
+msgstr ""
+
+msgid "is the same as the old one"
+msgstr ""
+
+msgid "is a palindrome"
+msgstr ""
+
+msgid "case changes only"
+msgstr ""
+
+msgid "is too similar to the old one"
+msgstr ""
+
+msgid "it does not contain enough DIFFERENT characters"
+msgstr ""
+
+msgid "it is based on a dictionary word"
+msgstr ""
+
+msgid "Bad password: "
+msgstr ""
+
+msgid "Input Configuration"
+msgstr "입력 구성"
+
+msgid "Hardware Buttons"
+msgstr "하드웨어 버튼"
+
+msgid "Configure short, double, and long press actions"
+msgstr ""
+
+msgid "Touch Gestures"
+msgstr "터치 제스처"
+
+msgid "Configure edge swipes and shortcuts"
+msgstr ""
+
+msgid "Buttons"
+msgstr "버튼"
+
+msgid "Keyboard"
+msgstr "키보드"
+
+msgid "Active Keyboard"
+msgstr "활성 키보드"
+
+msgid "Change Keyboard"
+msgstr "키보드 변경"
+
+msgid "Finnish Layout"
+msgstr ""
+
+msgid "Install custom Squeekboard layout"
+msgstr ""
+
+msgid "Configuration"
+msgstr "구성"
+
+msgid "Enforce App Wofi Config"
+msgstr ""
+
+msgid "Use Tweak-FLX1s Wofi style and config"
+msgstr ""
+
+msgid "Environment"
+msgstr "환경"
+
+msgid "Current Environment"
+msgstr ""
+
+msgid "Updates"
+msgstr "업데이트"
+
+msgid "System Upgrade"
+msgstr "시스템 업그레이드"
+
+msgid "Upgrade FuriOS"
+msgstr ""
+
+msgid "Upgrading System"
+msgstr ""
+
+msgid "Applications"
+msgstr "애플리케이션"
+
+msgid "Squeekboard"
+msgstr "Squeekboard"
+
+msgid "On-screen keyboard"
+msgstr ""
+
+msgid "FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Install custom battery monitor"
+msgstr ""
+
+msgid "Install"
+msgstr "설치"
+
+msgid "Phofono"
+msgstr ""
+
+msgid "Alternative Phone and Messages App"
+msgstr ""
+
+msgid "Branchy App Store"
+msgstr ""
+
+msgid "DebUI"
+msgstr ""
+
+msgid "Debian Package Installer UI"
+msgstr ""
+
+msgid "Security"
+msgstr "보안"
+
+msgid "Enable Shorter Passcodes"
+msgstr ""
+
+msgid "Allow 1-character passwords"
+msgstr ""
+
+msgid "Change current user password"
+msgstr ""
+
+msgid "Fingerprint Authentication"
+msgstr "지문 인증"
+
+msgid "Configure PAM for fingerprint support"
+msgstr ""
+
+msgid "Enable"
+msgstr "활성화"
+
+msgid "Restarting Keyboard Service"
+msgstr ""
+
+msgid "Changing Keyboard"
+msgstr ""
+
+msgid "Remove"
+msgstr "제거"
+
+msgid "Removing Squeekboard"
+msgstr ""
+
+msgid "Installing Squeekboard"
+msgstr ""
+
+msgid "Enabling Shorter Passwords"
+msgstr ""
+
+msgid "Disabling Shorter Passwords"
+msgstr ""
+
+msgid "Removing DebUI"
+msgstr ""
+
+msgid "Installing DebUI"
+msgstr ""
+
+msgid "Removing FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Installing FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Fingerprint is enabled"
+msgstr ""
+
+msgid "Removing Fingerprint"
+msgstr ""
+
+msgid "Configuring Fingerprint"
+msgstr ""
+
+msgid "Installed"
+msgstr "설치됨"
+
+msgid "Removing Phofono"
+msgstr ""
+
+msgid "Installing Phofono"
+msgstr ""
+
+msgid "Removing Branchy"
+msgstr ""
+
+msgid "Installing Branchy"
+msgstr ""
+
+msgid "Staging"
+msgstr ""
+
+msgid "Switch to Production"
+msgstr ""
+
+msgid "Production"
+msgstr ""
+
+msgid "Switch to Staging"
+msgstr ""
+
+msgid "Switching to Production"
+msgstr ""
+
+msgid "Switching to Staging"
+msgstr ""
+
+msgid "About Tweak-FLX1s"
+msgstr "Tweak-FLX1s 정보"
+
+msgid "System tweaks and utilities for FuriPhoneFLX1s."
+msgstr ""
+
+msgid "Version"
+msgstr "버전"
+
+msgid "Developer"
+msgstr "개발자"
+
+msgid "License"
+msgstr "라이선스"
+
+msgid "Links"
+msgstr "링크"
+
+msgid "Website"
+msgstr "웹사이트"
+
+msgid "Issue Tracker"
+msgstr "이슈 트래커"
+
+msgid "Report bugs or request features"
+msgstr ""
+
+msgid "Appearance"
+msgstr "모양"
+
+msgid "GTK3 CSS Tweak"
+msgstr ""
+
+msgid "Apply custom UI scaling tweaks for GTK3 apps"
+msgstr ""
+
+msgid "Background Services"
+msgstr "백그라운드 서비스"
+
+msgid "Alarm Volume Fix"
+msgstr ""
+
+msgid "Ensure alarm plays at full volume"
+msgstr ""
+
+msgid "Andromeda Guard"
+msgstr ""
+
+msgid "Prevent OSK issues"
+msgstr ""
+
+msgid "Andromeda Integration"
+msgstr ""
+
+msgid "Shared Folders"
+msgstr ""
+
+msgid "Mount ~/.local/share/andromeda to ~/Android-Share"
+msgstr ""
+
+msgid "Audio"
+msgstr "오디오"
+
+msgid "Custom Sound Theme"
+msgstr ""
+
+msgid "Use fastflx1 custom sounds"
+msgstr ""
+
+msgid "Mounting Shared Folders"
+msgstr ""
+
+msgid "Unmounting Shared Folders"
+msgstr ""
+
+msgid "Short Press"
+msgstr "짧게 누르기"
+
+msgid "Double Press"
+msgstr "두 번 누르기"
+
+msgid "Long Press"
+msgstr "길게 누르기"
+
+msgid "Use Custom Assistant File"
+msgstr ""
+
+msgid "Write ~/.config/assistant-button/..."
+msgstr ""
+
+msgid "Locked Action"
+msgstr ""
+
+msgid "Unlocked Action"
+msgstr ""
+
+msgid "Copy (Ctrl+C)"
+msgstr "복사 (Ctrl+C)"
+
+msgid "Paste (Ctrl+V)"
+msgstr "붙여넣기 (Ctrl+V)"
+
+msgid "Cut (Ctrl+X)"
+msgstr ""
+
+msgid "Select All and Copy"
+msgstr ""
+
+msgid "Paste from Clipboard"
+msgstr ""
+
+msgid "Kill Active Window"
+msgstr ""
+
+msgid "Switch Window on the left"
+msgstr ""
+
+msgid "Switch Window on the right"
+msgstr ""
+
+msgid "Screenshot"
+msgstr "스크린샷"
+
+msgid "Flashlight"
+msgstr "손전등"
+
+msgid "Play/Pause"
+msgstr ""
+
+msgid "Next Track"
+msgstr ""
+
+msgid "Previous Track"
+msgstr ""
+
+msgid "Volume Up"
+msgstr ""
+
+msgid "Volume Down"
+msgstr ""
+
+msgid "Mute"
+msgstr "음소거"

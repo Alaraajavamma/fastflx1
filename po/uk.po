@@ -1,0 +1,675 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: tweak-flx1s 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-01-01 00:00+0000\n"
+"Last-Translator: ai\n"
+"Language-Team: ai\n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Add Location"
+msgstr "Додати місце"
+
+msgid "Close"
+msgstr "Закрити"
+
+msgid "Enter city name"
+msgstr "Введіть назву міста"
+
+msgid "Search"
+msgstr "Пошук"
+
+msgid "Result"
+msgstr "Результат"
+
+msgid "No location found yet."
+msgstr "Місце ще не знайдено."
+
+msgid "Searching..."
+msgstr "Пошук..."
+
+msgid "No location found."
+msgstr "Місце не знайдено."
+
+msgid "Error adding location."
+msgstr "Помилка додавання місця."
+
+msgid "Tweaks"
+msgstr "Налаштування"
+
+msgid "System"
+msgstr "Система"
+
+msgid "Actions"
+msgstr "Дії"
+
+msgid "New Gesture Wizard"
+msgstr "Майстер нових жестів"
+
+msgid "Cancel"
+msgstr "Скасувати"
+
+msgid "Go Back"
+msgstr "Назад"
+
+msgid "Proceed"
+msgstr "Продовжити"
+
+msgid "Step 1: Fingers"
+msgstr "Крок 1: Пальці"
+
+msgid "How many fingers used for the gesture?"
+msgstr "Скільки пальців використовується для жесту?"
+
+msgid "Step 2: Direction"
+msgstr "Крок 2: Напрямок"
+
+msgid "Which direction is the swipe?"
+msgstr "В якому напрямку свайп?"
+
+msgid "From Left to Right"
+msgstr "Зліва направо"
+
+msgid "From Right to Left"
+msgstr "Справа наліво"
+
+msgid "From Top to Bottom"
+msgstr "Зверху вниз"
+
+msgid "From Bottom to Top"
+msgstr "Знизу вгору"
+
+msgid "From Bottom-Left to Top-Right"
+msgstr ""
+
+msgid "From Top-Right to Bottom-Left"
+msgstr ""
+
+msgid "From Top-Left to Bottom-Right"
+msgstr ""
+
+msgid "From Bottom-Right to Top-Left"
+msgstr ""
+
+msgid "Step 3: Edge"
+msgstr "Крок 3: Край"
+
+msgid "Where should the gesture start?"
+msgstr "Де має починатися жест?"
+
+msgid "Anywhere"
+msgstr "Де завгодно"
+
+msgid "Left Edge"
+msgstr "Лівий край"
+
+msgid "Right Edge"
+msgstr "Правий край"
+
+msgid "Top Edge"
+msgstr "Верхній край"
+
+msgid "Bottom Edge"
+msgstr "Нижній край"
+
+msgid "Top-Left Corner"
+msgstr ""
+
+msgid "Top-Right Corner"
+msgstr ""
+
+msgid "Bottom-Left Corner"
+msgstr ""
+
+msgid "Bottom-Right Corner"
+msgstr ""
+
+msgid "None (Middle of screen only)"
+msgstr ""
+
+msgid "Step 4: Distance"
+msgstr "Крок 4: Відстань"
+
+msgid "How long should the swipe be?"
+msgstr "Якої довжини має бути свайп?"
+
+msgid "Any Distance"
+msgstr "Будь-яка відстань"
+
+msgid "Short"
+msgstr "Короткий"
+
+msgid "Medium"
+msgstr "Середній"
+
+msgid "Large"
+msgstr "Довгий"
+
+msgid "Step 5: Mode"
+msgstr "Крок 5: Режим"
+
+msgid "Trigger on press or release?"
+msgstr "Спрацьовувати при натисканні чи відпусканні?"
+
+msgid "On Release (Recommended)"
+msgstr "При відпусканні (рекомендовано)"
+
+msgid "On Press"
+msgstr "При натисканні"
+
+msgid "Already configured"
+msgstr ""
+
+msgid "Error: Both Release and Press modes are already configured for this gesture combination."
+msgstr ""
+
+msgid "Save"
+msgstr "Зберегти"
+
+msgid "Select Keyboard"
+msgstr ""
+
+msgid "Edit Item"
+msgstr "Редагувати елемент"
+
+msgid "Item Details"
+msgstr "Деталі елемента"
+
+msgid "Action Name"
+msgstr "Назва дії"
+
+msgid "Action Type"
+msgstr "Тип дії"
+
+msgid "Predefined Action"
+msgstr "Попередньо визначена дія"
+
+msgid "Select from common actions"
+msgstr ""
+
+msgid "Custom Command"
+msgstr "Власна команда"
+
+msgid "Execute a shell command"
+msgstr ""
+
+msgid "Command"
+msgstr "Команда"
+
+msgid "Predefined Actions"
+msgstr ""
+
+msgid "Edit Menu"
+msgstr "Редагувати меню"
+
+msgid "New Item"
+msgstr "Новий елемент"
+
+msgid "Select Action"
+msgstr "Вибрати дію"
+
+msgid "Wofi Menu"
+msgstr "Меню Wofi"
+
+msgid "Show a menu of actions"
+msgstr ""
+
+msgid "Edit Gesture"
+msgstr "Редагувати жест"
+
+msgid "General"
+msgstr "Загальне"
+
+msgid "Name"
+msgstr "Ім'я"
+
+msgid "Trigger Spec"
+msgstr "Специфікація тригера"
+
+msgid "Not Configured"
+msgstr "Не налаштовано"
+
+msgid "Change"
+msgstr "Змінити"
+
+msgid "Locked State"
+msgstr "Заблокований стан"
+
+msgid "Edit"
+msgstr "Редагувати"
+
+msgid "Unlocked State"
+msgstr "Розблокований стан"
+
+msgid "No Action"
+msgstr "Без дії"
+
+msgid "Missing Trigger"
+msgstr "Відсутній тригер"
+
+msgid "Please configure a gesture trigger before saving."
+msgstr ""
+
+msgid "OK"
+msgstr "ОК"
+
+msgid "Gestures"
+msgstr ""
+
+msgid "Service"
+msgstr "Служба"
+
+msgid "Enable Touch Gestures"
+msgstr "Увімкнути сенсорні жести"
+
+msgid "Add New Gesture"
+msgstr "Додати новий жест"
+
+msgid "Configured Gestures"
+msgstr "Налаштовані жести"
+
+msgid "Unnamed Gesture"
+msgstr "Безіменний жест"
+
+msgid "New Gesture"
+msgstr "Новий жест"
+
+msgid "Change Password"
+msgstr "Змінити пароль"
+
+msgid "Password Details"
+msgstr "Деталі пароля"
+
+msgid "Current Password"
+msgstr "Поточний пароль"
+
+msgid "New Password"
+msgstr "Новий пароль"
+
+msgid "Confirm New Password"
+msgstr "Підтвердити новий пароль"
+
+msgid "Please enter current password."
+msgstr ""
+
+msgid "Please enter new password."
+msgstr ""
+
+msgid "New passwords do not match."
+msgstr ""
+
+msgid "Changing password..."
+msgstr ""
+
+msgid "Password changed successfully!"
+msgstr "Пароль успішно змінено!"
+
+msgid "Failed to change password."
+msgstr "Не вдалося змінити пароль."
+
+msgid "Authentication error. Check current password."
+msgstr ""
+
+msgid "Bad password."
+msgstr ""
+
+msgid "it is too short"
+msgstr ""
+
+msgid "is the same as the old one"
+msgstr ""
+
+msgid "is a palindrome"
+msgstr ""
+
+msgid "case changes only"
+msgstr ""
+
+msgid "is too similar to the old one"
+msgstr ""
+
+msgid "it does not contain enough DIFFERENT characters"
+msgstr ""
+
+msgid "it is based on a dictionary word"
+msgstr ""
+
+msgid "Bad password: "
+msgstr ""
+
+msgid "Input Configuration"
+msgstr "Конфігурація введення"
+
+msgid "Hardware Buttons"
+msgstr "Апаратні кнопки"
+
+msgid "Configure short, double, and long press actions"
+msgstr ""
+
+msgid "Touch Gestures"
+msgstr "Сенсорні жести"
+
+msgid "Configure edge swipes and shortcuts"
+msgstr ""
+
+msgid "Buttons"
+msgstr "Кнопки"
+
+msgid "Keyboard"
+msgstr "Клавіатура"
+
+msgid "Active Keyboard"
+msgstr "Активна клавіатура"
+
+msgid "Change Keyboard"
+msgstr "Змінити клавіатуру"
+
+msgid "Finnish Layout"
+msgstr ""
+
+msgid "Install custom Squeekboard layout"
+msgstr ""
+
+msgid "Configuration"
+msgstr "Конфігурація"
+
+msgid "Enforce App Wofi Config"
+msgstr ""
+
+msgid "Use Tweak-FLX1s Wofi style and config"
+msgstr ""
+
+msgid "Environment"
+msgstr "Середовище"
+
+msgid "Current Environment"
+msgstr ""
+
+msgid "Updates"
+msgstr "Оновлення"
+
+msgid "System Upgrade"
+msgstr "Оновлення системи"
+
+msgid "Upgrade FuriOS"
+msgstr ""
+
+msgid "Upgrading System"
+msgstr ""
+
+msgid "Applications"
+msgstr "Програми"
+
+msgid "Squeekboard"
+msgstr "Squeekboard"
+
+msgid "On-screen keyboard"
+msgstr ""
+
+msgid "FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Install custom battery monitor"
+msgstr ""
+
+msgid "Install"
+msgstr "Встановити"
+
+msgid "Phofono"
+msgstr ""
+
+msgid "Alternative Phone and Messages App"
+msgstr ""
+
+msgid "Branchy App Store"
+msgstr ""
+
+msgid "DebUI"
+msgstr ""
+
+msgid "Debian Package Installer UI"
+msgstr ""
+
+msgid "Security"
+msgstr "Безпека"
+
+msgid "Enable Shorter Passcodes"
+msgstr ""
+
+msgid "Allow 1-character passwords"
+msgstr ""
+
+msgid "Change current user password"
+msgstr ""
+
+msgid "Fingerprint Authentication"
+msgstr "Аутентифікація за відбитком пальця"
+
+msgid "Configure PAM for fingerprint support"
+msgstr ""
+
+msgid "Enable"
+msgstr "Увімкнути"
+
+msgid "Restarting Keyboard Service"
+msgstr ""
+
+msgid "Changing Keyboard"
+msgstr ""
+
+msgid "Remove"
+msgstr "Видалити"
+
+msgid "Removing Squeekboard"
+msgstr ""
+
+msgid "Installing Squeekboard"
+msgstr ""
+
+msgid "Enabling Shorter Passwords"
+msgstr ""
+
+msgid "Disabling Shorter Passwords"
+msgstr ""
+
+msgid "Removing DebUI"
+msgstr ""
+
+msgid "Installing DebUI"
+msgstr ""
+
+msgid "Removing FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Installing FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Fingerprint is enabled"
+msgstr ""
+
+msgid "Removing Fingerprint"
+msgstr ""
+
+msgid "Configuring Fingerprint"
+msgstr ""
+
+msgid "Installed"
+msgstr "Встановлено"
+
+msgid "Removing Phofono"
+msgstr ""
+
+msgid "Installing Phofono"
+msgstr ""
+
+msgid "Removing Branchy"
+msgstr ""
+
+msgid "Installing Branchy"
+msgstr ""
+
+msgid "Staging"
+msgstr ""
+
+msgid "Switch to Production"
+msgstr ""
+
+msgid "Production"
+msgstr ""
+
+msgid "Switch to Staging"
+msgstr ""
+
+msgid "Switching to Production"
+msgstr ""
+
+msgid "Switching to Staging"
+msgstr ""
+
+msgid "About Tweak-FLX1s"
+msgstr "Про Tweak-FLX1s"
+
+msgid "System tweaks and utilities for FuriPhoneFLX1s."
+msgstr ""
+
+msgid "Version"
+msgstr "Версія"
+
+msgid "Developer"
+msgstr "Розробник"
+
+msgid "License"
+msgstr "Ліцензія"
+
+msgid "Links"
+msgstr "Посилання"
+
+msgid "Website"
+msgstr "Веб-сайт"
+
+msgid "Issue Tracker"
+msgstr "Трекер проблем"
+
+msgid "Report bugs or request features"
+msgstr ""
+
+msgid "Appearance"
+msgstr "Зовнішній вигляд"
+
+msgid "GTK3 CSS Tweak"
+msgstr ""
+
+msgid "Apply custom UI scaling tweaks for GTK3 apps"
+msgstr ""
+
+msgid "Background Services"
+msgstr "Фонові служби"
+
+msgid "Alarm Volume Fix"
+msgstr ""
+
+msgid "Ensure alarm plays at full volume"
+msgstr ""
+
+msgid "Andromeda Guard"
+msgstr ""
+
+msgid "Prevent OSK issues"
+msgstr ""
+
+msgid "Andromeda Integration"
+msgstr ""
+
+msgid "Shared Folders"
+msgstr ""
+
+msgid "Mount ~/.local/share/andromeda to ~/Android-Share"
+msgstr ""
+
+msgid "Audio"
+msgstr "Аудіо"
+
+msgid "Custom Sound Theme"
+msgstr ""
+
+msgid "Use fastflx1 custom sounds"
+msgstr ""
+
+msgid "Mounting Shared Folders"
+msgstr ""
+
+msgid "Unmounting Shared Folders"
+msgstr ""
+
+msgid "Short Press"
+msgstr "Коротке натискання"
+
+msgid "Double Press"
+msgstr "Подвійне натискання"
+
+msgid "Long Press"
+msgstr "Довге натискання"
+
+msgid "Use Custom Assistant File"
+msgstr ""
+
+msgid "Write ~/.config/assistant-button/..."
+msgstr ""
+
+msgid "Locked Action"
+msgstr ""
+
+msgid "Unlocked Action"
+msgstr ""
+
+msgid "Copy (Ctrl+C)"
+msgstr "Копіювати (Ctrl+C)"
+
+msgid "Paste (Ctrl+V)"
+msgstr "Вставити (Ctrl+V)"
+
+msgid "Cut (Ctrl+X)"
+msgstr ""
+
+msgid "Select All and Copy"
+msgstr ""
+
+msgid "Paste from Clipboard"
+msgstr ""
+
+msgid "Kill Active Window"
+msgstr ""
+
+msgid "Switch Window on the left"
+msgstr ""
+
+msgid "Switch Window on the right"
+msgstr ""
+
+msgid "Screenshot"
+msgstr "Скріншот"
+
+msgid "Flashlight"
+msgstr "Ліхтарик"
+
+msgid "Play/Pause"
+msgstr ""
+
+msgid "Next Track"
+msgstr ""
+
+msgid "Previous Track"
+msgstr ""
+
+msgid "Volume Up"
+msgstr ""
+
+msgid "Volume Down"
+msgstr ""
+
+msgid "Mute"
+msgstr "Вимкнути звук"

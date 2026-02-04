@@ -1,0 +1,675 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: tweak-flx1s 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-01-01 00:00+0000\n"
+"Last-Translator: ai\n"
+"Language-Team: ai\n"
+"Language: ca\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Add Location"
+msgstr "Afegir ubicació"
+
+msgid "Close"
+msgstr "Tancar"
+
+msgid "Enter city name"
+msgstr "Introdueix el nom de la ciutat"
+
+msgid "Search"
+msgstr "Cerca"
+
+msgid "Result"
+msgstr "Resultat"
+
+msgid "No location found yet."
+msgstr "Encara no s'ha trobat cap ubicació."
+
+msgid "Searching..."
+msgstr "Cercant..."
+
+msgid "No location found."
+msgstr "Ubicació no trobada."
+
+msgid "Error adding location."
+msgstr "Error en afegir la ubicació."
+
+msgid "Tweaks"
+msgstr "Ajustaments"
+
+msgid "System"
+msgstr "Sistema"
+
+msgid "Actions"
+msgstr "Accions"
+
+msgid "New Gesture Wizard"
+msgstr "Assistent de nous gestos"
+
+msgid "Cancel"
+msgstr "Cancel·lar"
+
+msgid "Go Back"
+msgstr "Enrere"
+
+msgid "Proceed"
+msgstr "Continuar"
+
+msgid "Step 1: Fingers"
+msgstr "Pas 1: Dits"
+
+msgid "How many fingers used for the gesture?"
+msgstr "Quants dits s'utilitzen per al gest?"
+
+msgid "Step 2: Direction"
+msgstr "Pas 2: Direcció"
+
+msgid "Which direction is the swipe?"
+msgstr "En quina direcció és el lliscament?"
+
+msgid "From Left to Right"
+msgstr "D'esquerra a dreta"
+
+msgid "From Right to Left"
+msgstr "De dreta a esquerra"
+
+msgid "From Top to Bottom"
+msgstr "De dalt a baix"
+
+msgid "From Bottom to Top"
+msgstr "De baix a dalt"
+
+msgid "From Bottom-Left to Top-Right"
+msgstr ""
+
+msgid "From Top-Right to Bottom-Left"
+msgstr ""
+
+msgid "From Top-Left to Bottom-Right"
+msgstr ""
+
+msgid "From Bottom-Right to Top-Left"
+msgstr ""
+
+msgid "Step 3: Edge"
+msgstr "Pas 3: Vora"
+
+msgid "Where should the gesture start?"
+msgstr "On hauria de començar el gest?"
+
+msgid "Anywhere"
+msgstr "A qualsevol lloc"
+
+msgid "Left Edge"
+msgstr "Vora esquerra"
+
+msgid "Right Edge"
+msgstr "Vora dreta"
+
+msgid "Top Edge"
+msgstr "Vora superior"
+
+msgid "Bottom Edge"
+msgstr "Vora inferior"
+
+msgid "Top-Left Corner"
+msgstr ""
+
+msgid "Top-Right Corner"
+msgstr ""
+
+msgid "Bottom-Left Corner"
+msgstr ""
+
+msgid "Bottom-Right Corner"
+msgstr ""
+
+msgid "None (Middle of screen only)"
+msgstr ""
+
+msgid "Step 4: Distance"
+msgstr "Pas 4: Distància"
+
+msgid "How long should the swipe be?"
+msgstr "Quan llarg hauria de ser el lliscament?"
+
+msgid "Any Distance"
+msgstr "Qualsevol distància"
+
+msgid "Short"
+msgstr "Curt"
+
+msgid "Medium"
+msgstr "Mitjà"
+
+msgid "Large"
+msgstr "Llarg"
+
+msgid "Step 5: Mode"
+msgstr "Pas 5: Mode"
+
+msgid "Trigger on press or release?"
+msgstr "Activar en prémer o deixar anar?"
+
+msgid "On Release (Recommended)"
+msgstr "En deixar anar (Recomanat)"
+
+msgid "On Press"
+msgstr "En prémer"
+
+msgid "Already configured"
+msgstr ""
+
+msgid "Error: Both Release and Press modes are already configured for this gesture combination."
+msgstr ""
+
+msgid "Save"
+msgstr "Desar"
+
+msgid "Select Keyboard"
+msgstr ""
+
+msgid "Edit Item"
+msgstr "Editar element"
+
+msgid "Item Details"
+msgstr "Detalls de l'element"
+
+msgid "Action Name"
+msgstr "Nom de l'acció"
+
+msgid "Action Type"
+msgstr "Tipus d'acció"
+
+msgid "Predefined Action"
+msgstr "Acció predefinida"
+
+msgid "Select from common actions"
+msgstr ""
+
+msgid "Custom Command"
+msgstr "Ordre personalitzada"
+
+msgid "Execute a shell command"
+msgstr ""
+
+msgid "Command"
+msgstr "Ordre"
+
+msgid "Predefined Actions"
+msgstr ""
+
+msgid "Edit Menu"
+msgstr "Editar menú"
+
+msgid "New Item"
+msgstr "Nou element"
+
+msgid "Select Action"
+msgstr "Seleccionar acció"
+
+msgid "Wofi Menu"
+msgstr "Menú Wofi"
+
+msgid "Show a menu of actions"
+msgstr ""
+
+msgid "Edit Gesture"
+msgstr "Editar gest"
+
+msgid "General"
+msgstr "General"
+
+msgid "Name"
+msgstr "Nom"
+
+msgid "Trigger Spec"
+msgstr "Especificació de l'activador"
+
+msgid "Not Configured"
+msgstr "No configurat"
+
+msgid "Change"
+msgstr "Canviar"
+
+msgid "Locked State"
+msgstr "Estat bloquejat"
+
+msgid "Edit"
+msgstr "Editar"
+
+msgid "Unlocked State"
+msgstr "Estat desbloquejat"
+
+msgid "No Action"
+msgstr "Cap acció"
+
+msgid "Missing Trigger"
+msgstr "Manca activador"
+
+msgid "Please configure a gesture trigger before saving."
+msgstr ""
+
+msgid "OK"
+msgstr "D'acord"
+
+msgid "Gestures"
+msgstr ""
+
+msgid "Service"
+msgstr "Servei"
+
+msgid "Enable Touch Gestures"
+msgstr "Habilitar gestos tàctils"
+
+msgid "Add New Gesture"
+msgstr "Afegir nou gest"
+
+msgid "Configured Gestures"
+msgstr "Gestos configurats"
+
+msgid "Unnamed Gesture"
+msgstr "Gest sense nom"
+
+msgid "New Gesture"
+msgstr "Nou gest"
+
+msgid "Change Password"
+msgstr "Canviar contrasenya"
+
+msgid "Password Details"
+msgstr "Detalls de la contrasenya"
+
+msgid "Current Password"
+msgstr "Contrasenya actual"
+
+msgid "New Password"
+msgstr "Nova contrasenya"
+
+msgid "Confirm New Password"
+msgstr "Confirmar nova contrasenya"
+
+msgid "Please enter current password."
+msgstr ""
+
+msgid "Please enter new password."
+msgstr ""
+
+msgid "New passwords do not match."
+msgstr ""
+
+msgid "Changing password..."
+msgstr ""
+
+msgid "Password changed successfully!"
+msgstr "Contrasenya canviada correctament!"
+
+msgid "Failed to change password."
+msgstr "No s'ha pogut canviar la contrasenya."
+
+msgid "Authentication error. Check current password."
+msgstr ""
+
+msgid "Bad password."
+msgstr ""
+
+msgid "it is too short"
+msgstr ""
+
+msgid "is the same as the old one"
+msgstr ""
+
+msgid "is a palindrome"
+msgstr ""
+
+msgid "case changes only"
+msgstr ""
+
+msgid "is too similar to the old one"
+msgstr ""
+
+msgid "it does not contain enough DIFFERENT characters"
+msgstr ""
+
+msgid "it is based on a dictionary word"
+msgstr ""
+
+msgid "Bad password: "
+msgstr ""
+
+msgid "Input Configuration"
+msgstr "Configuració d'entrada"
+
+msgid "Hardware Buttons"
+msgstr "Botons de maquinari"
+
+msgid "Configure short, double, and long press actions"
+msgstr ""
+
+msgid "Touch Gestures"
+msgstr "Gestos tàctils"
+
+msgid "Configure edge swipes and shortcuts"
+msgstr ""
+
+msgid "Buttons"
+msgstr "Botons"
+
+msgid "Keyboard"
+msgstr "Teclat"
+
+msgid "Active Keyboard"
+msgstr "Teclat actiu"
+
+msgid "Change Keyboard"
+msgstr "Canviar teclat"
+
+msgid "Finnish Layout"
+msgstr ""
+
+msgid "Install custom Squeekboard layout"
+msgstr ""
+
+msgid "Configuration"
+msgstr "Configuració"
+
+msgid "Enforce App Wofi Config"
+msgstr ""
+
+msgid "Use Tweak-FLX1s Wofi style and config"
+msgstr ""
+
+msgid "Environment"
+msgstr "Entorn"
+
+msgid "Current Environment"
+msgstr ""
+
+msgid "Updates"
+msgstr "Actualitzacions"
+
+msgid "System Upgrade"
+msgstr "Actualització del sistema"
+
+msgid "Upgrade FuriOS"
+msgstr ""
+
+msgid "Upgrading System"
+msgstr ""
+
+msgid "Applications"
+msgstr "Aplicacions"
+
+msgid "Squeekboard"
+msgstr "Squeekboard"
+
+msgid "On-screen keyboard"
+msgstr ""
+
+msgid "FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Install custom battery monitor"
+msgstr ""
+
+msgid "Install"
+msgstr "Instal·lar"
+
+msgid "Phofono"
+msgstr ""
+
+msgid "Alternative Phone and Messages App"
+msgstr ""
+
+msgid "Branchy App Store"
+msgstr ""
+
+msgid "DebUI"
+msgstr ""
+
+msgid "Debian Package Installer UI"
+msgstr ""
+
+msgid "Security"
+msgstr "Seguretat"
+
+msgid "Enable Shorter Passcodes"
+msgstr ""
+
+msgid "Allow 1-character passwords"
+msgstr ""
+
+msgid "Change current user password"
+msgstr ""
+
+msgid "Fingerprint Authentication"
+msgstr "Autenticació per empremta digital"
+
+msgid "Configure PAM for fingerprint support"
+msgstr ""
+
+msgid "Enable"
+msgstr "Habilitar"
+
+msgid "Restarting Keyboard Service"
+msgstr ""
+
+msgid "Changing Keyboard"
+msgstr ""
+
+msgid "Remove"
+msgstr "Eliminar"
+
+msgid "Removing Squeekboard"
+msgstr ""
+
+msgid "Installing Squeekboard"
+msgstr ""
+
+msgid "Enabling Shorter Passwords"
+msgstr ""
+
+msgid "Disabling Shorter Passwords"
+msgstr ""
+
+msgid "Removing DebUI"
+msgstr ""
+
+msgid "Installing DebUI"
+msgstr ""
+
+msgid "Removing FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Installing FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Fingerprint is enabled"
+msgstr ""
+
+msgid "Removing Fingerprint"
+msgstr ""
+
+msgid "Configuring Fingerprint"
+msgstr ""
+
+msgid "Installed"
+msgstr "Instal·lat"
+
+msgid "Removing Phofono"
+msgstr ""
+
+msgid "Installing Phofono"
+msgstr ""
+
+msgid "Removing Branchy"
+msgstr ""
+
+msgid "Installing Branchy"
+msgstr ""
+
+msgid "Staging"
+msgstr ""
+
+msgid "Switch to Production"
+msgstr ""
+
+msgid "Production"
+msgstr ""
+
+msgid "Switch to Staging"
+msgstr ""
+
+msgid "Switching to Production"
+msgstr ""
+
+msgid "Switching to Staging"
+msgstr ""
+
+msgid "About Tweak-FLX1s"
+msgstr "Quant a Tweak-FLX1s"
+
+msgid "System tweaks and utilities for FuriPhoneFLX1s."
+msgstr ""
+
+msgid "Version"
+msgstr "Versió"
+
+msgid "Developer"
+msgstr "Desenvolupador"
+
+msgid "License"
+msgstr "Llicència"
+
+msgid "Links"
+msgstr "Enllaços"
+
+msgid "Website"
+msgstr "Lloc web"
+
+msgid "Issue Tracker"
+msgstr "Seguiment de problemes"
+
+msgid "Report bugs or request features"
+msgstr ""
+
+msgid "Appearance"
+msgstr "Aparença"
+
+msgid "GTK3 CSS Tweak"
+msgstr ""
+
+msgid "Apply custom UI scaling tweaks for GTK3 apps"
+msgstr ""
+
+msgid "Background Services"
+msgstr "Serveis en segon pla"
+
+msgid "Alarm Volume Fix"
+msgstr ""
+
+msgid "Ensure alarm plays at full volume"
+msgstr ""
+
+msgid "Andromeda Guard"
+msgstr ""
+
+msgid "Prevent OSK issues"
+msgstr ""
+
+msgid "Andromeda Integration"
+msgstr ""
+
+msgid "Shared Folders"
+msgstr ""
+
+msgid "Mount ~/.local/share/andromeda to ~/Android-Share"
+msgstr ""
+
+msgid "Audio"
+msgstr "Àudio"
+
+msgid "Custom Sound Theme"
+msgstr ""
+
+msgid "Use fastflx1 custom sounds"
+msgstr ""
+
+msgid "Mounting Shared Folders"
+msgstr ""
+
+msgid "Unmounting Shared Folders"
+msgstr ""
+
+msgid "Short Press"
+msgstr "Premsada curta"
+
+msgid "Double Press"
+msgstr "Premsada doble"
+
+msgid "Long Press"
+msgstr "Premsada llarga"
+
+msgid "Use Custom Assistant File"
+msgstr ""
+
+msgid "Write ~/.config/assistant-button/..."
+msgstr ""
+
+msgid "Locked Action"
+msgstr ""
+
+msgid "Unlocked Action"
+msgstr ""
+
+msgid "Copy (Ctrl+C)"
+msgstr "Copiar (Ctrl+C)"
+
+msgid "Paste (Ctrl+V)"
+msgstr "Enganxar (Ctrl+V)"
+
+msgid "Cut (Ctrl+X)"
+msgstr ""
+
+msgid "Select All and Copy"
+msgstr ""
+
+msgid "Paste from Clipboard"
+msgstr ""
+
+msgid "Kill Active Window"
+msgstr ""
+
+msgid "Switch Window on the left"
+msgstr ""
+
+msgid "Switch Window on the right"
+msgstr ""
+
+msgid "Screenshot"
+msgstr "Captura de pantalla"
+
+msgid "Flashlight"
+msgstr "Llanterna"
+
+msgid "Play/Pause"
+msgstr ""
+
+msgid "Next Track"
+msgstr ""
+
+msgid "Previous Track"
+msgstr ""
+
+msgid "Volume Up"
+msgstr ""
+
+msgid "Volume Down"
+msgstr ""
+
+msgid "Mute"
+msgstr "Silenciar"

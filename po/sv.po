@@ -1,0 +1,675 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: tweak-flx1s 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-01-01 00:00+0000\n"
+"Last-Translator: ai\n"
+"Language-Team: ai\n"
+"Language: sv\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Add Location"
+msgstr "Lägg till plats"
+
+msgid "Close"
+msgstr "Stäng"
+
+msgid "Enter city name"
+msgstr "Ange stadsnamn"
+
+msgid "Search"
+msgstr "Sök"
+
+msgid "Result"
+msgstr "Resultat"
+
+msgid "No location found yet."
+msgstr "Ingen plats hittad än."
+
+msgid "Searching..."
+msgstr "Söker..."
+
+msgid "No location found."
+msgstr "Plats hittades inte."
+
+msgid "Error adding location."
+msgstr "Fel vid tillägg av plats."
+
+msgid "Tweaks"
+msgstr "Tweaks"
+
+msgid "System"
+msgstr "System"
+
+msgid "Actions"
+msgstr "Åtgärder"
+
+msgid "New Gesture Wizard"
+msgstr "Ny gestguide"
+
+msgid "Cancel"
+msgstr "Avbryt"
+
+msgid "Go Back"
+msgstr "Gå tillbaka"
+
+msgid "Proceed"
+msgstr "Fortsätt"
+
+msgid "Step 1: Fingers"
+msgstr "Steg 1: Fingrar"
+
+msgid "How many fingers used for the gesture?"
+msgstr "Hur många fingrar används för gesten?"
+
+msgid "Step 2: Direction"
+msgstr "Steg 2: Riktning"
+
+msgid "Which direction is the swipe?"
+msgstr "Vilken riktning är svepet?"
+
+msgid "From Left to Right"
+msgstr "Från vänster till höger"
+
+msgid "From Right to Left"
+msgstr "Från höger till vänster"
+
+msgid "From Top to Bottom"
+msgstr "Uppifrån och ner"
+
+msgid "From Bottom to Top"
+msgstr "Nerifrån och upp"
+
+msgid "From Bottom-Left to Top-Right"
+msgstr ""
+
+msgid "From Top-Right to Bottom-Left"
+msgstr ""
+
+msgid "From Top-Left to Bottom-Right"
+msgstr ""
+
+msgid "From Bottom-Right to Top-Left"
+msgstr ""
+
+msgid "Step 3: Edge"
+msgstr "Steg 3: Kant"
+
+msgid "Where should the gesture start?"
+msgstr "Var ska gesten börja?"
+
+msgid "Anywhere"
+msgstr "Var som helst"
+
+msgid "Left Edge"
+msgstr "Vänster kant"
+
+msgid "Right Edge"
+msgstr "Höger kant"
+
+msgid "Top Edge"
+msgstr "Övre kant"
+
+msgid "Bottom Edge"
+msgstr "Nedre kant"
+
+msgid "Top-Left Corner"
+msgstr ""
+
+msgid "Top-Right Corner"
+msgstr ""
+
+msgid "Bottom-Left Corner"
+msgstr ""
+
+msgid "Bottom-Right Corner"
+msgstr ""
+
+msgid "None (Middle of screen only)"
+msgstr ""
+
+msgid "Step 4: Distance"
+msgstr "Steg 4: Avstånd"
+
+msgid "How long should the swipe be?"
+msgstr "Hur långt ska svepet vara?"
+
+msgid "Any Distance"
+msgstr "Vilket avstånd som helst"
+
+msgid "Short"
+msgstr "Kort"
+
+msgid "Medium"
+msgstr "Medium"
+
+msgid "Large"
+msgstr "Lång"
+
+msgid "Step 5: Mode"
+msgstr "Steg 5: Läge"
+
+msgid "Trigger on press or release?"
+msgstr "Utlös vid tryck eller släpp?"
+
+msgid "On Release (Recommended)"
+msgstr "Vid släpp (Rekommenderas)"
+
+msgid "On Press"
+msgstr "Vid tryck"
+
+msgid "Already configured"
+msgstr ""
+
+msgid "Error: Both Release and Press modes are already configured for this gesture combination."
+msgstr ""
+
+msgid "Save"
+msgstr "Spara"
+
+msgid "Select Keyboard"
+msgstr ""
+
+msgid "Edit Item"
+msgstr "Redigera objekt"
+
+msgid "Item Details"
+msgstr "Objektdetaljer"
+
+msgid "Action Name"
+msgstr "Åtgärdsnamn"
+
+msgid "Action Type"
+msgstr "Åtgärdstyp"
+
+msgid "Predefined Action"
+msgstr "Fördefinierad åtgärd"
+
+msgid "Select from common actions"
+msgstr ""
+
+msgid "Custom Command"
+msgstr "Anpassat kommando"
+
+msgid "Execute a shell command"
+msgstr ""
+
+msgid "Command"
+msgstr "Kommando"
+
+msgid "Predefined Actions"
+msgstr ""
+
+msgid "Edit Menu"
+msgstr "Redigera meny"
+
+msgid "New Item"
+msgstr "Nytt objekt"
+
+msgid "Select Action"
+msgstr "Välj åtgärd"
+
+msgid "Wofi Menu"
+msgstr "Wofi-meny"
+
+msgid "Show a menu of actions"
+msgstr ""
+
+msgid "Edit Gesture"
+msgstr "Redigera gest"
+
+msgid "General"
+msgstr "Allmänt"
+
+msgid "Name"
+msgstr "Namn"
+
+msgid "Trigger Spec"
+msgstr "Utlösarspecifikation"
+
+msgid "Not Configured"
+msgstr "Inte konfigurerad"
+
+msgid "Change"
+msgstr "Ändra"
+
+msgid "Locked State"
+msgstr "Låst läge"
+
+msgid "Edit"
+msgstr "Redigera"
+
+msgid "Unlocked State"
+msgstr "Olåst läge"
+
+msgid "No Action"
+msgstr "Ingen åtgärd"
+
+msgid "Missing Trigger"
+msgstr "Saknad utlösare"
+
+msgid "Please configure a gesture trigger before saving."
+msgstr ""
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Gestures"
+msgstr ""
+
+msgid "Service"
+msgstr "Tjänst"
+
+msgid "Enable Touch Gestures"
+msgstr "Aktivera pekgeste"
+
+msgid "Add New Gesture"
+msgstr "Lägg till ny gest"
+
+msgid "Configured Gestures"
+msgstr "Konfigurerade gester"
+
+msgid "Unnamed Gesture"
+msgstr "Namnlös gest"
+
+msgid "New Gesture"
+msgstr "Ny gest"
+
+msgid "Change Password"
+msgstr "Byt lösenord"
+
+msgid "Password Details"
+msgstr "Lösenordsdetaljer"
+
+msgid "Current Password"
+msgstr "Nuvarande lösenord"
+
+msgid "New Password"
+msgstr "Nytt lösenord"
+
+msgid "Confirm New Password"
+msgstr "Bekräfta nytt lösenord"
+
+msgid "Please enter current password."
+msgstr ""
+
+msgid "Please enter new password."
+msgstr ""
+
+msgid "New passwords do not match."
+msgstr ""
+
+msgid "Changing password..."
+msgstr ""
+
+msgid "Password changed successfully!"
+msgstr "Lösenordet har ändrats!"
+
+msgid "Failed to change password."
+msgstr "Misslyckades med att ändra lösenord."
+
+msgid "Authentication error. Check current password."
+msgstr ""
+
+msgid "Bad password."
+msgstr ""
+
+msgid "it is too short"
+msgstr ""
+
+msgid "is the same as the old one"
+msgstr ""
+
+msgid "is a palindrome"
+msgstr ""
+
+msgid "case changes only"
+msgstr ""
+
+msgid "is too similar to the old one"
+msgstr ""
+
+msgid "it does not contain enough DIFFERENT characters"
+msgstr ""
+
+msgid "it is based on a dictionary word"
+msgstr ""
+
+msgid "Bad password: "
+msgstr ""
+
+msgid "Input Configuration"
+msgstr "Inmatningskonfiguration"
+
+msgid "Hardware Buttons"
+msgstr "Hårdvaruknappar"
+
+msgid "Configure short, double, and long press actions"
+msgstr ""
+
+msgid "Touch Gestures"
+msgstr "Pekgeste"
+
+msgid "Configure edge swipes and shortcuts"
+msgstr ""
+
+msgid "Buttons"
+msgstr "Knappar"
+
+msgid "Keyboard"
+msgstr "Tangentbord"
+
+msgid "Active Keyboard"
+msgstr "Aktivt tangentbord"
+
+msgid "Change Keyboard"
+msgstr "Byt tangentbord"
+
+msgid "Finnish Layout"
+msgstr ""
+
+msgid "Install custom Squeekboard layout"
+msgstr ""
+
+msgid "Configuration"
+msgstr "Konfiguration"
+
+msgid "Enforce App Wofi Config"
+msgstr ""
+
+msgid "Use Tweak-FLX1s Wofi style and config"
+msgstr ""
+
+msgid "Environment"
+msgstr "Miljö"
+
+msgid "Current Environment"
+msgstr ""
+
+msgid "Updates"
+msgstr "Uppdateringar"
+
+msgid "System Upgrade"
+msgstr "Systemuppgradering"
+
+msgid "Upgrade FuriOS"
+msgstr ""
+
+msgid "Upgrading System"
+msgstr ""
+
+msgid "Applications"
+msgstr "Applikationer"
+
+msgid "Squeekboard"
+msgstr "Squeekboard"
+
+msgid "On-screen keyboard"
+msgstr ""
+
+msgid "FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Install custom battery monitor"
+msgstr ""
+
+msgid "Install"
+msgstr "Installera"
+
+msgid "Phofono"
+msgstr ""
+
+msgid "Alternative Phone and Messages App"
+msgstr ""
+
+msgid "Branchy App Store"
+msgstr ""
+
+msgid "DebUI"
+msgstr ""
+
+msgid "Debian Package Installer UI"
+msgstr ""
+
+msgid "Security"
+msgstr "Säkerhet"
+
+msgid "Enable Shorter Passcodes"
+msgstr ""
+
+msgid "Allow 1-character passwords"
+msgstr ""
+
+msgid "Change current user password"
+msgstr ""
+
+msgid "Fingerprint Authentication"
+msgstr "Fingeravtrycksautentisering"
+
+msgid "Configure PAM for fingerprint support"
+msgstr ""
+
+msgid "Enable"
+msgstr "Aktivera"
+
+msgid "Restarting Keyboard Service"
+msgstr ""
+
+msgid "Changing Keyboard"
+msgstr ""
+
+msgid "Remove"
+msgstr "Ta bort"
+
+msgid "Removing Squeekboard"
+msgstr ""
+
+msgid "Installing Squeekboard"
+msgstr ""
+
+msgid "Enabling Shorter Passwords"
+msgstr ""
+
+msgid "Disabling Shorter Passwords"
+msgstr ""
+
+msgid "Removing DebUI"
+msgstr ""
+
+msgid "Installing DebUI"
+msgstr ""
+
+msgid "Removing FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Installing FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Fingerprint is enabled"
+msgstr ""
+
+msgid "Removing Fingerprint"
+msgstr ""
+
+msgid "Configuring Fingerprint"
+msgstr ""
+
+msgid "Installed"
+msgstr "Installerad"
+
+msgid "Removing Phofono"
+msgstr ""
+
+msgid "Installing Phofono"
+msgstr ""
+
+msgid "Removing Branchy"
+msgstr ""
+
+msgid "Installing Branchy"
+msgstr ""
+
+msgid "Staging"
+msgstr ""
+
+msgid "Switch to Production"
+msgstr ""
+
+msgid "Production"
+msgstr ""
+
+msgid "Switch to Staging"
+msgstr ""
+
+msgid "Switching to Production"
+msgstr ""
+
+msgid "Switching to Staging"
+msgstr ""
+
+msgid "About Tweak-FLX1s"
+msgstr "Om Tweak-FLX1s"
+
+msgid "System tweaks and utilities for FuriPhoneFLX1s."
+msgstr ""
+
+msgid "Version"
+msgstr "Version"
+
+msgid "Developer"
+msgstr "Utvecklare"
+
+msgid "License"
+msgstr "Licens"
+
+msgid "Links"
+msgstr "Länkar"
+
+msgid "Website"
+msgstr "Webbplats"
+
+msgid "Issue Tracker"
+msgstr "Problemspårare"
+
+msgid "Report bugs or request features"
+msgstr ""
+
+msgid "Appearance"
+msgstr "Utseende"
+
+msgid "GTK3 CSS Tweak"
+msgstr ""
+
+msgid "Apply custom UI scaling tweaks for GTK3 apps"
+msgstr ""
+
+msgid "Background Services"
+msgstr "Bakgrundstjänster"
+
+msgid "Alarm Volume Fix"
+msgstr ""
+
+msgid "Ensure alarm plays at full volume"
+msgstr ""
+
+msgid "Andromeda Guard"
+msgstr ""
+
+msgid "Prevent OSK issues"
+msgstr ""
+
+msgid "Andromeda Integration"
+msgstr ""
+
+msgid "Shared Folders"
+msgstr ""
+
+msgid "Mount ~/.local/share/andromeda to ~/Android-Share"
+msgstr ""
+
+msgid "Audio"
+msgstr "Ljud"
+
+msgid "Custom Sound Theme"
+msgstr ""
+
+msgid "Use fastflx1 custom sounds"
+msgstr ""
+
+msgid "Mounting Shared Folders"
+msgstr ""
+
+msgid "Unmounting Shared Folders"
+msgstr ""
+
+msgid "Short Press"
+msgstr "Kort tryck"
+
+msgid "Double Press"
+msgstr "Dubbeltryck"
+
+msgid "Long Press"
+msgstr "Långt tryck"
+
+msgid "Use Custom Assistant File"
+msgstr ""
+
+msgid "Write ~/.config/assistant-button/..."
+msgstr ""
+
+msgid "Locked Action"
+msgstr ""
+
+msgid "Unlocked Action"
+msgstr ""
+
+msgid "Copy (Ctrl+C)"
+msgstr "Kopiera (Ctrl+C)"
+
+msgid "Paste (Ctrl+V)"
+msgstr "Klistra in (Ctrl+V)"
+
+msgid "Cut (Ctrl+X)"
+msgstr ""
+
+msgid "Select All and Copy"
+msgstr ""
+
+msgid "Paste from Clipboard"
+msgstr ""
+
+msgid "Kill Active Window"
+msgstr ""
+
+msgid "Switch Window on the left"
+msgstr ""
+
+msgid "Switch Window on the right"
+msgstr ""
+
+msgid "Screenshot"
+msgstr "Skärmdump"
+
+msgid "Flashlight"
+msgstr "Ficklampa"
+
+msgid "Play/Pause"
+msgstr ""
+
+msgid "Next Track"
+msgstr ""
+
+msgid "Previous Track"
+msgstr ""
+
+msgid "Volume Up"
+msgstr ""
+
+msgid "Volume Down"
+msgstr ""
+
+msgid "Mute"
+msgstr "Tyst"

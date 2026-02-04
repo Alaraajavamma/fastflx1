@@ -1,0 +1,675 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: tweak-flx1s 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-01-01 00:00+0000\n"
+"Last-Translator: ai\n"
+"Language-Team: ai\n"
+"Language: he\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Add Location"
+msgstr "הוסף מיקום"
+
+msgid "Close"
+msgstr "סגור"
+
+msgid "Enter city name"
+msgstr "הזן שם עיר"
+
+msgid "Search"
+msgstr "חפש"
+
+msgid "Result"
+msgstr "תוצאה"
+
+msgid "No location found yet."
+msgstr "לא נמצא מיקום עדיין."
+
+msgid "Searching..."
+msgstr "מחפש..."
+
+msgid "No location found."
+msgstr "מיקום לא נמצא."
+
+msgid "Error adding location."
+msgstr "שגיאה בהוספת מיקום."
+
+msgid "Tweaks"
+msgstr "שינויים"
+
+msgid "System"
+msgstr "מערכת"
+
+msgid "Actions"
+msgstr "פעולות"
+
+msgid "New Gesture Wizard"
+msgstr "אשף מחוות חדש"
+
+msgid "Cancel"
+msgstr "ביטול"
+
+msgid "Go Back"
+msgstr "חזור"
+
+msgid "Proceed"
+msgstr "המשך"
+
+msgid "Step 1: Fingers"
+msgstr "שלב 1: אצבעות"
+
+msgid "How many fingers used for the gesture?"
+msgstr "כמה אצבעות משמשות למחווה?"
+
+msgid "Step 2: Direction"
+msgstr "שלב 2: כיוון"
+
+msgid "Which direction is the swipe?"
+msgstr "מהו כיוון ההחלקה?"
+
+msgid "From Left to Right"
+msgstr "משמאל לימין"
+
+msgid "From Right to Left"
+msgstr "מימין לשמאל"
+
+msgid "From Top to Bottom"
+msgstr "מלמעלה למטה"
+
+msgid "From Bottom to Top"
+msgstr "מלמטה למעלה"
+
+msgid "From Bottom-Left to Top-Right"
+msgstr ""
+
+msgid "From Top-Right to Bottom-Left"
+msgstr ""
+
+msgid "From Top-Left to Bottom-Right"
+msgstr ""
+
+msgid "From Bottom-Right to Top-Left"
+msgstr ""
+
+msgid "Step 3: Edge"
+msgstr "שלב 3: קצה"
+
+msgid "Where should the gesture start?"
+msgstr "היכן המחווה צריכה להתחיל?"
+
+msgid "Anywhere"
+msgstr "בכל מקום"
+
+msgid "Left Edge"
+msgstr "קצה שמאלי"
+
+msgid "Right Edge"
+msgstr "קצה ימני"
+
+msgid "Top Edge"
+msgstr "קצה עליון"
+
+msgid "Bottom Edge"
+msgstr "קצה תחתון"
+
+msgid "Top-Left Corner"
+msgstr ""
+
+msgid "Top-Right Corner"
+msgstr ""
+
+msgid "Bottom-Left Corner"
+msgstr ""
+
+msgid "Bottom-Right Corner"
+msgstr ""
+
+msgid "None (Middle of screen only)"
+msgstr ""
+
+msgid "Step 4: Distance"
+msgstr "שלב 4: מרחק"
+
+msgid "How long should the swipe be?"
+msgstr "כמה ארוכה צריכה להיות ההחלקה?"
+
+msgid "Any Distance"
+msgstr "כל מרחק"
+
+msgid "Short"
+msgstr "קצר"
+
+msgid "Medium"
+msgstr "בינוני"
+
+msgid "Large"
+msgstr "ארוך"
+
+msgid "Step 5: Mode"
+msgstr "שלב 5: מצב"
+
+msgid "Trigger on press or release?"
+msgstr "להפעיל בלחיצה או בשחרור?"
+
+msgid "On Release (Recommended)"
+msgstr "בשחרור (מומלץ)"
+
+msgid "On Press"
+msgstr "בלחיצה"
+
+msgid "Already configured"
+msgstr ""
+
+msgid "Error: Both Release and Press modes are already configured for this gesture combination."
+msgstr ""
+
+msgid "Save"
+msgstr "שמור"
+
+msgid "Select Keyboard"
+msgstr ""
+
+msgid "Edit Item"
+msgstr "ערוך פריט"
+
+msgid "Item Details"
+msgstr "פרטי פריט"
+
+msgid "Action Name"
+msgstr "שם הפעולה"
+
+msgid "Action Type"
+msgstr "סוג הפעולה"
+
+msgid "Predefined Action"
+msgstr "פעולה מוגדרת מראש"
+
+msgid "Select from common actions"
+msgstr ""
+
+msgid "Custom Command"
+msgstr "פקודה מותאמת אישית"
+
+msgid "Execute a shell command"
+msgstr ""
+
+msgid "Command"
+msgstr "פקודה"
+
+msgid "Predefined Actions"
+msgstr ""
+
+msgid "Edit Menu"
+msgstr "ערוך תפריט"
+
+msgid "New Item"
+msgstr "פריט חדש"
+
+msgid "Select Action"
+msgstr "בחר פעולה"
+
+msgid "Wofi Menu"
+msgstr "תפריט Wofi"
+
+msgid "Show a menu of actions"
+msgstr ""
+
+msgid "Edit Gesture"
+msgstr "ערוך מחווה"
+
+msgid "General"
+msgstr "כללי"
+
+msgid "Name"
+msgstr "שם"
+
+msgid "Trigger Spec"
+msgstr "מפרט מפעיל"
+
+msgid "Not Configured"
+msgstr "לא מוגדר"
+
+msgid "Change"
+msgstr "שנה"
+
+msgid "Locked State"
+msgstr "מצב נעול"
+
+msgid "Edit"
+msgstr "ערוך"
+
+msgid "Unlocked State"
+msgstr "מצב לא נעול"
+
+msgid "No Action"
+msgstr "אין פעולה"
+
+msgid "Missing Trigger"
+msgstr "מפעיל חסר"
+
+msgid "Please configure a gesture trigger before saving."
+msgstr ""
+
+msgid "OK"
+msgstr "אישור"
+
+msgid "Gestures"
+msgstr ""
+
+msgid "Service"
+msgstr "שירות"
+
+msgid "Enable Touch Gestures"
+msgstr "אפשר מחוות מגע"
+
+msgid "Add New Gesture"
+msgstr "הוסף מחווה חדשה"
+
+msgid "Configured Gestures"
+msgstr "מחוות מוגדרות"
+
+msgid "Unnamed Gesture"
+msgstr "מחווה ללא שם"
+
+msgid "New Gesture"
+msgstr "מחווה חדשה"
+
+msgid "Change Password"
+msgstr "שנה סיסמה"
+
+msgid "Password Details"
+msgstr "פרטי סיסמה"
+
+msgid "Current Password"
+msgstr "סיסמה נוכחית"
+
+msgid "New Password"
+msgstr "סיסמה חדשה"
+
+msgid "Confirm New Password"
+msgstr "אשר סיסמה חדשה"
+
+msgid "Please enter current password."
+msgstr ""
+
+msgid "Please enter new password."
+msgstr ""
+
+msgid "New passwords do not match."
+msgstr ""
+
+msgid "Changing password..."
+msgstr ""
+
+msgid "Password changed successfully!"
+msgstr "הסיסמה שונתה בהצלחה!"
+
+msgid "Failed to change password."
+msgstr "שינוי סיסמה נכשל."
+
+msgid "Authentication error. Check current password."
+msgstr ""
+
+msgid "Bad password."
+msgstr ""
+
+msgid "it is too short"
+msgstr ""
+
+msgid "is the same as the old one"
+msgstr ""
+
+msgid "is a palindrome"
+msgstr ""
+
+msgid "case changes only"
+msgstr ""
+
+msgid "is too similar to the old one"
+msgstr ""
+
+msgid "it does not contain enough DIFFERENT characters"
+msgstr ""
+
+msgid "it is based on a dictionary word"
+msgstr ""
+
+msgid "Bad password: "
+msgstr ""
+
+msgid "Input Configuration"
+msgstr "תצורת קלט"
+
+msgid "Hardware Buttons"
+msgstr "כפתורי חומרה"
+
+msgid "Configure short, double, and long press actions"
+msgstr ""
+
+msgid "Touch Gestures"
+msgstr "מחוות מגע"
+
+msgid "Configure edge swipes and shortcuts"
+msgstr ""
+
+msgid "Buttons"
+msgstr "כפתורים"
+
+msgid "Keyboard"
+msgstr "מקלדת"
+
+msgid "Active Keyboard"
+msgstr "מקלדת פעילה"
+
+msgid "Change Keyboard"
+msgstr "שנה מקלדת"
+
+msgid "Finnish Layout"
+msgstr ""
+
+msgid "Install custom Squeekboard layout"
+msgstr ""
+
+msgid "Configuration"
+msgstr "תצורה"
+
+msgid "Enforce App Wofi Config"
+msgstr ""
+
+msgid "Use Tweak-FLX1s Wofi style and config"
+msgstr ""
+
+msgid "Environment"
+msgstr "סביבה"
+
+msgid "Current Environment"
+msgstr ""
+
+msgid "Updates"
+msgstr "עדכונים"
+
+msgid "System Upgrade"
+msgstr "שדרוג מערכת"
+
+msgid "Upgrade FuriOS"
+msgstr ""
+
+msgid "Upgrading System"
+msgstr ""
+
+msgid "Applications"
+msgstr "יישומים"
+
+msgid "Squeekboard"
+msgstr "Squeekboard"
+
+msgid "On-screen keyboard"
+msgstr ""
+
+msgid "FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Install custom battery monitor"
+msgstr ""
+
+msgid "Install"
+msgstr "התקן"
+
+msgid "Phofono"
+msgstr ""
+
+msgid "Alternative Phone and Messages App"
+msgstr ""
+
+msgid "Branchy App Store"
+msgstr ""
+
+msgid "DebUI"
+msgstr ""
+
+msgid "Debian Package Installer UI"
+msgstr ""
+
+msgid "Security"
+msgstr "אבטחה"
+
+msgid "Enable Shorter Passcodes"
+msgstr ""
+
+msgid "Allow 1-character passwords"
+msgstr ""
+
+msgid "Change current user password"
+msgstr ""
+
+msgid "Fingerprint Authentication"
+msgstr "אימות טביעת אצבע"
+
+msgid "Configure PAM for fingerprint support"
+msgstr ""
+
+msgid "Enable"
+msgstr "אפשר"
+
+msgid "Restarting Keyboard Service"
+msgstr ""
+
+msgid "Changing Keyboard"
+msgstr ""
+
+msgid "Remove"
+msgstr "הסר"
+
+msgid "Removing Squeekboard"
+msgstr ""
+
+msgid "Installing Squeekboard"
+msgstr ""
+
+msgid "Enabling Shorter Passwords"
+msgstr ""
+
+msgid "Disabling Shorter Passwords"
+msgstr ""
+
+msgid "Removing DebUI"
+msgstr ""
+
+msgid "Installing DebUI"
+msgstr ""
+
+msgid "Removing FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Installing FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Fingerprint is enabled"
+msgstr ""
+
+msgid "Removing Fingerprint"
+msgstr ""
+
+msgid "Configuring Fingerprint"
+msgstr ""
+
+msgid "Installed"
+msgstr "מותקן"
+
+msgid "Removing Phofono"
+msgstr ""
+
+msgid "Installing Phofono"
+msgstr ""
+
+msgid "Removing Branchy"
+msgstr ""
+
+msgid "Installing Branchy"
+msgstr ""
+
+msgid "Staging"
+msgstr ""
+
+msgid "Switch to Production"
+msgstr ""
+
+msgid "Production"
+msgstr ""
+
+msgid "Switch to Staging"
+msgstr ""
+
+msgid "Switching to Production"
+msgstr ""
+
+msgid "Switching to Staging"
+msgstr ""
+
+msgid "About Tweak-FLX1s"
+msgstr "אודות Tweak-FLX1s"
+
+msgid "System tweaks and utilities for FuriPhoneFLX1s."
+msgstr ""
+
+msgid "Version"
+msgstr "גרסה"
+
+msgid "Developer"
+msgstr "מפתח"
+
+msgid "License"
+msgstr "רישיון"
+
+msgid "Links"
+msgstr "קישורים"
+
+msgid "Website"
+msgstr "אתר אינטרנט"
+
+msgid "Issue Tracker"
+msgstr "מעקב בעיות"
+
+msgid "Report bugs or request features"
+msgstr ""
+
+msgid "Appearance"
+msgstr "מראה"
+
+msgid "GTK3 CSS Tweak"
+msgstr ""
+
+msgid "Apply custom UI scaling tweaks for GTK3 apps"
+msgstr ""
+
+msgid "Background Services"
+msgstr "שירותי רקע"
+
+msgid "Alarm Volume Fix"
+msgstr ""
+
+msgid "Ensure alarm plays at full volume"
+msgstr ""
+
+msgid "Andromeda Guard"
+msgstr ""
+
+msgid "Prevent OSK issues"
+msgstr ""
+
+msgid "Andromeda Integration"
+msgstr ""
+
+msgid "Shared Folders"
+msgstr ""
+
+msgid "Mount ~/.local/share/andromeda to ~/Android-Share"
+msgstr ""
+
+msgid "Audio"
+msgstr "שמע"
+
+msgid "Custom Sound Theme"
+msgstr ""
+
+msgid "Use fastflx1 custom sounds"
+msgstr ""
+
+msgid "Mounting Shared Folders"
+msgstr ""
+
+msgid "Unmounting Shared Folders"
+msgstr ""
+
+msgid "Short Press"
+msgstr "לחיצה קצרה"
+
+msgid "Double Press"
+msgstr "לחיצה כפולה"
+
+msgid "Long Press"
+msgstr "לחיצה ארוכה"
+
+msgid "Use Custom Assistant File"
+msgstr ""
+
+msgid "Write ~/.config/assistant-button/..."
+msgstr ""
+
+msgid "Locked Action"
+msgstr ""
+
+msgid "Unlocked Action"
+msgstr ""
+
+msgid "Copy (Ctrl+C)"
+msgstr "העתק (Ctrl+C)"
+
+msgid "Paste (Ctrl+V)"
+msgstr "הדבק (Ctrl+V)"
+
+msgid "Cut (Ctrl+X)"
+msgstr ""
+
+msgid "Select All and Copy"
+msgstr ""
+
+msgid "Paste from Clipboard"
+msgstr ""
+
+msgid "Kill Active Window"
+msgstr ""
+
+msgid "Switch Window on the left"
+msgstr ""
+
+msgid "Switch Window on the right"
+msgstr ""
+
+msgid "Screenshot"
+msgstr "צילום מסך"
+
+msgid "Flashlight"
+msgstr "פנס"
+
+msgid "Play/Pause"
+msgstr ""
+
+msgid "Next Track"
+msgstr ""
+
+msgid "Previous Track"
+msgstr ""
+
+msgid "Volume Up"
+msgstr ""
+
+msgid "Volume Down"
+msgstr ""
+
+msgid "Mute"
+msgstr "השתק"

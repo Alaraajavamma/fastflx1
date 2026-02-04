@@ -1,0 +1,675 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: tweak-flx1s 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-01-01 00:00+0000\n"
+"Last-Translator: ai\n"
+"Language-Team: ai\n"
+"Language: ms\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Add Location"
+msgstr "Tambah Lokasi"
+
+msgid "Close"
+msgstr "Tutup"
+
+msgid "Enter city name"
+msgstr "Masukkan nama bandar"
+
+msgid "Search"
+msgstr "Cari"
+
+msgid "Result"
+msgstr "Keputusan"
+
+msgid "No location found yet."
+msgstr "Tiada lokasi ditemui lagi."
+
+msgid "Searching..."
+msgstr "Mencari..."
+
+msgid "No location found."
+msgstr "Lokasi tidak ditemui."
+
+msgid "Error adding location."
+msgstr "Ralat menambah lokasi."
+
+msgid "Tweaks"
+msgstr "Olah Tweak"
+
+msgid "System"
+msgstr "Sistem"
+
+msgid "Actions"
+msgstr "Tindakan"
+
+msgid "New Gesture Wizard"
+msgstr "Bestari Gerak Isyarat Baru"
+
+msgid "Cancel"
+msgstr "Batal"
+
+msgid "Go Back"
+msgstr "Kembali"
+
+msgid "Proceed"
+msgstr "Teruskan"
+
+msgid "Step 1: Fingers"
+msgstr "Langkah 1: Jari"
+
+msgid "How many fingers used for the gesture?"
+msgstr "Berapa jari digunakan untuk gerak isyarat?"
+
+msgid "Step 2: Direction"
+msgstr "Langkah 2: Arah"
+
+msgid "Which direction is the swipe?"
+msgstr "Arah mana leretan itu?"
+
+msgid "From Left to Right"
+msgstr "Dari Kiri ke Kanan"
+
+msgid "From Right to Left"
+msgstr "Dari Kanan ke Kiri"
+
+msgid "From Top to Bottom"
+msgstr "Dari Atas ke Bawah"
+
+msgid "From Bottom to Top"
+msgstr "Dari Bawah ke Atas"
+
+msgid "From Bottom-Left to Top-Right"
+msgstr ""
+
+msgid "From Top-Right to Bottom-Left"
+msgstr ""
+
+msgid "From Top-Left to Bottom-Right"
+msgstr ""
+
+msgid "From Bottom-Right to Top-Left"
+msgstr ""
+
+msgid "Step 3: Edge"
+msgstr "Langkah 3: Tepi"
+
+msgid "Where should the gesture start?"
+msgstr "Di mana gerak isyarat harus bermula?"
+
+msgid "Anywhere"
+msgstr "Di mana-mana"
+
+msgid "Left Edge"
+msgstr "Tepi Kiri"
+
+msgid "Right Edge"
+msgstr "Tepi Kanan"
+
+msgid "Top Edge"
+msgstr "Tepi Atas"
+
+msgid "Bottom Edge"
+msgstr "Tepi Bawah"
+
+msgid "Top-Left Corner"
+msgstr ""
+
+msgid "Top-Right Corner"
+msgstr ""
+
+msgid "Bottom-Left Corner"
+msgstr ""
+
+msgid "Bottom-Right Corner"
+msgstr ""
+
+msgid "None (Middle of screen only)"
+msgstr ""
+
+msgid "Step 4: Distance"
+msgstr "Langkah 4: Jarak"
+
+msgid "How long should the swipe be?"
+msgstr "Berapa panjang leretan itu?"
+
+msgid "Any Distance"
+msgstr "Sebarang Jarak"
+
+msgid "Short"
+msgstr "Pendek"
+
+msgid "Medium"
+msgstr "Sederhana"
+
+msgid "Large"
+msgstr "Panjang"
+
+msgid "Step 5: Mode"
+msgstr "Langkah 5: Mod"
+
+msgid "Trigger on press or release?"
+msgstr "Picu semasa tekan atau lepas?"
+
+msgid "On Release (Recommended)"
+msgstr "Semasa Lepas (Disyorkan)"
+
+msgid "On Press"
+msgstr "Semasa Tekan"
+
+msgid "Already configured"
+msgstr ""
+
+msgid "Error: Both Release and Press modes are already configured for this gesture combination."
+msgstr ""
+
+msgid "Save"
+msgstr "Simpan"
+
+msgid "Select Keyboard"
+msgstr ""
+
+msgid "Edit Item"
+msgstr "Edit Item"
+
+msgid "Item Details"
+msgstr "Butiran Item"
+
+msgid "Action Name"
+msgstr "Nama Tindakan"
+
+msgid "Action Type"
+msgstr "Jenis Tindakan"
+
+msgid "Predefined Action"
+msgstr "Tindakan Pratakrif"
+
+msgid "Select from common actions"
+msgstr ""
+
+msgid "Custom Command"
+msgstr "Perintah Tersuai"
+
+msgid "Execute a shell command"
+msgstr ""
+
+msgid "Command"
+msgstr "Perintah"
+
+msgid "Predefined Actions"
+msgstr ""
+
+msgid "Edit Menu"
+msgstr "Edit Menu"
+
+msgid "New Item"
+msgstr "Item Baru"
+
+msgid "Select Action"
+msgstr "Pilih Tindakan"
+
+msgid "Wofi Menu"
+msgstr "Menu Wofi"
+
+msgid "Show a menu of actions"
+msgstr ""
+
+msgid "Edit Gesture"
+msgstr "Edit Gerak Isyarat"
+
+msgid "General"
+msgstr "Umum"
+
+msgid "Name"
+msgstr "Nama"
+
+msgid "Trigger Spec"
+msgstr "Spesifikasi Pencetus"
+
+msgid "Not Configured"
+msgstr "Tidak Dikonfigurasi"
+
+msgid "Change"
+msgstr "Tukar"
+
+msgid "Locked State"
+msgstr "Keadaan Terkunci"
+
+msgid "Edit"
+msgstr "Edit"
+
+msgid "Unlocked State"
+msgstr "Keadaan Tidak Terkunci"
+
+msgid "No Action"
+msgstr "Tiada Tindakan"
+
+msgid "Missing Trigger"
+msgstr "Pencetus Hilang"
+
+msgid "Please configure a gesture trigger before saving."
+msgstr ""
+
+msgid "OK"
+msgstr "OK"
+
+msgid "Gestures"
+msgstr ""
+
+msgid "Service"
+msgstr "Perkhidmatan"
+
+msgid "Enable Touch Gestures"
+msgstr "Dayakan Gerak Isyarat Sentuh"
+
+msgid "Add New Gesture"
+msgstr "Tambah Gerak Isyarat Baru"
+
+msgid "Configured Gestures"
+msgstr "Gerak Isyarat Dikonfigurasi"
+
+msgid "Unnamed Gesture"
+msgstr "Gerak Isyarat Tanpa Nama"
+
+msgid "New Gesture"
+msgstr "Gerak Isyarat Baru"
+
+msgid "Change Password"
+msgstr "Tukar Kata Laluan"
+
+msgid "Password Details"
+msgstr "Butiran Kata Laluan"
+
+msgid "Current Password"
+msgstr "Kata Laluan Semasa"
+
+msgid "New Password"
+msgstr "Kata Laluan Baru"
+
+msgid "Confirm New Password"
+msgstr "Sahkan Kata Laluan Baru"
+
+msgid "Please enter current password."
+msgstr ""
+
+msgid "Please enter new password."
+msgstr ""
+
+msgid "New passwords do not match."
+msgstr ""
+
+msgid "Changing password..."
+msgstr ""
+
+msgid "Password changed successfully!"
+msgstr "Kata laluan berjaya ditukar!"
+
+msgid "Failed to change password."
+msgstr "Gagal menukar kata laluan."
+
+msgid "Authentication error. Check current password."
+msgstr ""
+
+msgid "Bad password."
+msgstr ""
+
+msgid "it is too short"
+msgstr ""
+
+msgid "is the same as the old one"
+msgstr ""
+
+msgid "is a palindrome"
+msgstr ""
+
+msgid "case changes only"
+msgstr ""
+
+msgid "is too similar to the old one"
+msgstr ""
+
+msgid "it does not contain enough DIFFERENT characters"
+msgstr ""
+
+msgid "it is based on a dictionary word"
+msgstr ""
+
+msgid "Bad password: "
+msgstr ""
+
+msgid "Input Configuration"
+msgstr "Konfigurasi Input"
+
+msgid "Hardware Buttons"
+msgstr "Butang Perkakasan"
+
+msgid "Configure short, double, and long press actions"
+msgstr ""
+
+msgid "Touch Gestures"
+msgstr "Gerak Isyarat Sentuh"
+
+msgid "Configure edge swipes and shortcuts"
+msgstr ""
+
+msgid "Buttons"
+msgstr "Butang"
+
+msgid "Keyboard"
+msgstr "Papan Kekunci"
+
+msgid "Active Keyboard"
+msgstr "Papan Kekunci Aktif"
+
+msgid "Change Keyboard"
+msgstr "Tukar Papan Kekunci"
+
+msgid "Finnish Layout"
+msgstr ""
+
+msgid "Install custom Squeekboard layout"
+msgstr ""
+
+msgid "Configuration"
+msgstr "Konfigurasi"
+
+msgid "Enforce App Wofi Config"
+msgstr ""
+
+msgid "Use Tweak-FLX1s Wofi style and config"
+msgstr ""
+
+msgid "Environment"
+msgstr "Persekitaran"
+
+msgid "Current Environment"
+msgstr ""
+
+msgid "Updates"
+msgstr "Kemas Kini"
+
+msgid "System Upgrade"
+msgstr "Naik Taraf Sistem"
+
+msgid "Upgrade FuriOS"
+msgstr ""
+
+msgid "Upgrading System"
+msgstr ""
+
+msgid "Applications"
+msgstr "Aplikasi"
+
+msgid "Squeekboard"
+msgstr "Squeekboard"
+
+msgid "On-screen keyboard"
+msgstr ""
+
+msgid "FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Install custom battery monitor"
+msgstr ""
+
+msgid "Install"
+msgstr "Pasang"
+
+msgid "Phofono"
+msgstr ""
+
+msgid "Alternative Phone and Messages App"
+msgstr ""
+
+msgid "Branchy App Store"
+msgstr ""
+
+msgid "DebUI"
+msgstr ""
+
+msgid "Debian Package Installer UI"
+msgstr ""
+
+msgid "Security"
+msgstr "Keselamatan"
+
+msgid "Enable Shorter Passcodes"
+msgstr ""
+
+msgid "Allow 1-character passwords"
+msgstr ""
+
+msgid "Change current user password"
+msgstr ""
+
+msgid "Fingerprint Authentication"
+msgstr "Pengesahan Cap Jari"
+
+msgid "Configure PAM for fingerprint support"
+msgstr ""
+
+msgid "Enable"
+msgstr "Dayakan"
+
+msgid "Restarting Keyboard Service"
+msgstr ""
+
+msgid "Changing Keyboard"
+msgstr ""
+
+msgid "Remove"
+msgstr "Buang"
+
+msgid "Removing Squeekboard"
+msgstr ""
+
+msgid "Installing Squeekboard"
+msgstr ""
+
+msgid "Enabling Shorter Passwords"
+msgstr ""
+
+msgid "Disabling Shorter Passwords"
+msgstr ""
+
+msgid "Removing DebUI"
+msgstr ""
+
+msgid "Installing DebUI"
+msgstr ""
+
+msgid "Removing FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Installing FLX1s-Bat-Mon"
+msgstr ""
+
+msgid "Fingerprint is enabled"
+msgstr ""
+
+msgid "Removing Fingerprint"
+msgstr ""
+
+msgid "Configuring Fingerprint"
+msgstr ""
+
+msgid "Installed"
+msgstr "Dipasang"
+
+msgid "Removing Phofono"
+msgstr ""
+
+msgid "Installing Phofono"
+msgstr ""
+
+msgid "Removing Branchy"
+msgstr ""
+
+msgid "Installing Branchy"
+msgstr ""
+
+msgid "Staging"
+msgstr ""
+
+msgid "Switch to Production"
+msgstr ""
+
+msgid "Production"
+msgstr ""
+
+msgid "Switch to Staging"
+msgstr ""
+
+msgid "Switching to Production"
+msgstr ""
+
+msgid "Switching to Staging"
+msgstr ""
+
+msgid "About Tweak-FLX1s"
+msgstr "Mengenai Tweak-FLX1s"
+
+msgid "System tweaks and utilities for FuriPhoneFLX1s."
+msgstr ""
+
+msgid "Version"
+msgstr "Versi"
+
+msgid "Developer"
+msgstr "Pembangun"
+
+msgid "License"
+msgstr "Lesen"
+
+msgid "Links"
+msgstr "Pautan"
+
+msgid "Website"
+msgstr "Laman Web"
+
+msgid "Issue Tracker"
+msgstr "Penjejak Isu"
+
+msgid "Report bugs or request features"
+msgstr ""
+
+msgid "Appearance"
+msgstr "Penampilan"
+
+msgid "GTK3 CSS Tweak"
+msgstr ""
+
+msgid "Apply custom UI scaling tweaks for GTK3 apps"
+msgstr ""
+
+msgid "Background Services"
+msgstr "Perkhidmatan Latar Belakang"
+
+msgid "Alarm Volume Fix"
+msgstr ""
+
+msgid "Ensure alarm plays at full volume"
+msgstr ""
+
+msgid "Andromeda Guard"
+msgstr ""
+
+msgid "Prevent OSK issues"
+msgstr ""
+
+msgid "Andromeda Integration"
+msgstr ""
+
+msgid "Shared Folders"
+msgstr ""
+
+msgid "Mount ~/.local/share/andromeda to ~/Android-Share"
+msgstr ""
+
+msgid "Audio"
+msgstr "Audio"
+
+msgid "Custom Sound Theme"
+msgstr ""
+
+msgid "Use fastflx1 custom sounds"
+msgstr ""
+
+msgid "Mounting Shared Folders"
+msgstr ""
+
+msgid "Unmounting Shared Folders"
+msgstr ""
+
+msgid "Short Press"
+msgstr "Tekan Pendek"
+
+msgid "Double Press"
+msgstr "Tekan Dua Kali"
+
+msgid "Long Press"
+msgstr "Tekan Lama"
+
+msgid "Use Custom Assistant File"
+msgstr ""
+
+msgid "Write ~/.config/assistant-button/..."
+msgstr ""
+
+msgid "Locked Action"
+msgstr ""
+
+msgid "Unlocked Action"
+msgstr ""
+
+msgid "Copy (Ctrl+C)"
+msgstr "Salin (Ctrl+C)"
+
+msgid "Paste (Ctrl+V)"
+msgstr "Tampal (Ctrl+V)"
+
+msgid "Cut (Ctrl+X)"
+msgstr ""
+
+msgid "Select All and Copy"
+msgstr ""
+
+msgid "Paste from Clipboard"
+msgstr ""
+
+msgid "Kill Active Window"
+msgstr ""
+
+msgid "Switch Window on the left"
+msgstr ""
+
+msgid "Switch Window on the right"
+msgstr ""
+
+msgid "Screenshot"
+msgstr "Tangkap Layar"
+
+msgid "Flashlight"
+msgstr "Lampu Suluh"
+
+msgid "Play/Pause"
+msgstr ""
+
+msgid "Next Track"
+msgstr ""
+
+msgid "Previous Track"
+msgstr ""
+
+msgid "Volume Up"
+msgstr ""
+
+msgid "Volume Down"
+msgstr ""
+
+msgid "Mute"
+msgstr "Senyap"
