@@ -17,9 +17,10 @@ import gi
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
 from gi.repository import Gtk, Adw, GLib, Gio
-from tweak_flx1s.actions.gestures import GesturesManager, GESTURE_TEMPLATES
+from tweak_flx1s.actions.gestures import GesturesManager
 from tweak_flx1s.actions.buttons import PREDEFINED_ACTIONS
 from tweak_flx1s.gui.dialogs import ActionSelectionDialog
+from tweak_flx1s.gui.wizard import GestureWizard
 from tweak_flx1s.utils import logger, run_command
 from tweak_flx1s.const import SERVICE_GESTURES
 
@@ -27,62 +28,6 @@ try:
     _
 except NameError:
     from gettext import gettext as _
-
-class TemplateSelectionDialog(Adw.Window):
-    """Dialog to select a gesture template."""
-    def __init__(self, parent, on_select, used_specs=None):
-        super().__init__(transient_for=parent, modal=True, title=_("Select Template"))
-        self.set_default_size(350, 500)
-        self.on_select = on_select
-        self.used_specs = used_specs or []
-
-        content = Adw.ToolbarView()
-        self.set_content(content)
-
-        header = Adw.HeaderBar()
-        header.set_show_end_title_buttons(False)
-        header.set_show_start_title_buttons(False)
-        content.add_top_bar(header)
-
-        close_btn = Gtk.Button(label=_("Close"))
-        close_btn.connect("clicked", lambda x: GLib.idle_add(lambda: self.close() or False))
-        header.pack_end(close_btn)
-
-        list_box = Gtk.ListBox()
-        list_box.add_css_class("boxed-list")
-        list_box.set_selection_mode(Gtk.SelectionMode.NONE)
-
-        scroll = Gtk.ScrolledWindow()
-        scroll.set_child(list_box)
-
-        clamp = Adw.Clamp()
-        clamp.set_child(scroll)
-        content.set_content(clamp)
-
-        sorted_specs = sorted(GESTURE_TEMPLATES.keys())
-        for key in sorted_specs:
-            spec_val = GESTURE_TEMPLATES[key]
-            is_used = spec_val in self.used_specs
-
-            row = Adw.ActionRow(title=key)
-            row.set_subtitle(spec_val)
-            row.set_title_lines(0)
-            row.set_subtitle_lines(0)
-
-            if is_used:
-                row.set_activatable(False)
-                row.set_sensitive(False)
-                row.add_suffix(Gtk.Label(label=_("(In Use)")))
-            else:
-                row.set_activatable(True)
-                row.connect("activated", lambda row: GLib.idle_add(lambda: self._on_row_activated(row, key) or False))
-
-            list_box.append(row)
-
-    def _on_row_activated(self, row, key):
-        if self.on_select:
-             self.on_select(key, GESTURE_TEMPLATES[key])
-        GLib.idle_add(lambda: self.close() or False)
 
 class GestureEditor(Adw.Window):
     """Editor for individual gestures."""
@@ -123,18 +68,17 @@ class GestureEditor(Adw.Window):
         gen_group.add(name_row)
         self.entries["name"] = name_row
 
-        spec_row = Adw.EntryRow(title=_("Spec (lisgd)"))
-        spec_row.set_text(self.gesture.get("spec", ""))
+        spec_row = Adw.ActionRow(title=_("Trigger Spec"))
+        spec_row.set_subtitle(self.gesture.get("spec", _("Not Configured")))
+
+        # Helper to parse spec for better readability?
+        # For now just showing raw spec or a simplified label is fine.
+
+        change_btn = Gtk.Button(label=_("Change"), valign=Gtk.Align.CENTER)
+        change_btn.connect("clicked", lambda b: GLib.idle_add(lambda: self._on_change_spec(b, spec_row) or False))
+        spec_row.add_suffix(change_btn)
         gen_group.add(spec_row)
-        self.entries["spec"] = spec_row
-
-        tmpl_row = Adw.ActionRow(title=_("Template"))
-        tmpl_row.set_subtitle(_("Select from predefined templates"))
-
-        tmpl_btn = Gtk.Button(label=_("Select"), valign=Gtk.Align.CENTER)
-        tmpl_btn.connect("clicked", lambda b: GLib.idle_add(lambda: self._on_select_template(b, spec_row) or False))
-        tmpl_row.add_suffix(tmpl_btn)
-        gen_group.add(tmpl_row)
+        self.rows["spec"] = spec_row
 
         act_group = Adw.PreferencesGroup(title=_("Actions"))
         page.add(act_group)
@@ -155,12 +99,17 @@ class GestureEditor(Adw.Window):
         act_group.add(unlocked_row)
         self.rows["unlocked"] = unlocked_row
 
-    def _on_select_template(self, btn, entry):
-        def on_select(key, val):
-             entry.set_text(val)
+    def _on_change_spec(self, btn, row):
+        def on_complete(new_spec):
+            self.gesture["spec"] = new_spec
+            row.set_subtitle(new_spec)
 
-        dlg = TemplateSelectionDialog(self, on_select, used_specs=self.used_specs)
-        dlg.present()
+        # We pass used_specs excluding the current one if it exists
+        current_spec = self.gesture.get("spec")
+        specs_to_exclude = [s for s in self.used_specs if s != current_spec]
+
+        wiz = GestureWizard(self, on_complete, used_specs=specs_to_exclude)
+        wiz.present()
 
     def _update_subtitle(self, row, state_key):
         conf = self.gesture.get(state_key, {})
@@ -192,14 +141,13 @@ class GestureEditor(Adw.Window):
 
     def _on_save_clicked(self, btn):
         self.gesture["name"] = self.entries["name"].get_text()
-        spec = self.entries["spec"].get_text()
-        self.gesture["spec"] = spec
+        # Spec is already updated in self.gesture via wizard callback
 
-        if spec in self.used_specs:
+        if not self.gesture.get("spec"):
              dlg = Adw.MessageDialog(
                   transient_for=self,
-                  heading=_("Duplicate Gesture"),
-                  body=_("This gesture configuration is already in use by another gesture."),
+                  heading=_("Missing Trigger"),
+                  body=_("Please configure a gesture trigger before saving."),
              )
              dlg.add_response("ok", _("OK"))
              dlg.present()
@@ -263,6 +211,8 @@ class GesturesPage(Adw.PreferencesPage):
             spec = gesture.get("spec", "")
 
             row = Adw.ActionRow(title=name, subtitle=spec)
+            row.set_title_lines(0)
+            row.set_subtitle_lines(0)
 
             edit_btn = Gtk.Button(icon_name="document-edit-symbolic")
             edit_btn.add_css_class("flat")
@@ -277,30 +227,53 @@ class GesturesPage(Adw.PreferencesPage):
 
             self.list_box.append(row)
 
+    def _get_used_specs(self, exclude_idx=None):
+        gestures = self.config.get("gestures", [])
+        specs = []
+        for i, g in enumerate(gestures):
+            if exclude_idx is None or i != exclude_idx:
+                s = g.get("spec")
+                if s: specs.append(s)
+        return specs
+
     def _on_add(self, btn):
-        self._show_editor(None)
+        def on_wizard_complete(spec):
+            # Wizard finished, now open editor with this spec pre-filled
+            new_data = {
+                "name": _("New Gesture"),
+                "spec": spec,
+                "locked": {"type": "command", "value": ""},
+                "unlocked": {"type": "command", "value": ""}
+            }
+            # Open editor to finalize
+            # We don't save to config yet, waiting for editor save.
+            self._show_editor(None, new_data)
+
+        # Open Wizard first
+        wiz = GestureWizard(self.get_root(), on_wizard_complete, used_specs=self._get_used_specs())
+        wiz.present()
 
     def _on_edit(self, btn, idx):
         self._show_editor(idx)
 
     def _on_delete(self, btn, idx):
         gestures = self.config.get("gestures", [])
-        gestures.pop(idx)
-        self.manager.save_config(self.config)
-        self._refresh_list()
-        self._restart_service()
+        if 0 <= idx < len(gestures):
+            gestures.pop(idx)
+            self.manager.save_config(self.config)
+            self._refresh_list()
+            self._restart_service()
 
-    def _show_editor(self, idx):
+    def _show_editor(self, idx, initial_data=None):
         gestures = self.config.get("gestures", [])
         is_new = idx is None
-        gesture_data = gestures[idx] if not is_new else {}
 
-        """Collect used specs, excluding the current one if editing"""
-        used_specs = []
-        for i, g in enumerate(gestures):
-             if is_new or i != idx:
-                  spec = g.get("spec")
-                  if spec: used_specs.append(spec)
+        if is_new:
+            gesture_data = initial_data if initial_data else {}
+        else:
+            gesture_data = gestures[idx]
+
+        used_specs = self._get_used_specs(exclude_idx=idx)
 
         def on_save(new_data):
             if is_new:
