@@ -36,7 +36,7 @@ class WeatherDialog(Adw.Window):
         content = Adw.ToolbarView()
         self.set_content(content)
 
-        # Header
+
         header = Adw.HeaderBar()
         header.set_show_end_title_buttons(False)
         header.set_show_start_title_buttons(False)
@@ -46,32 +46,32 @@ class WeatherDialog(Adw.Window):
         close_btn.connect("clicked", lambda b: GLib.idle_add(lambda: self.close() or False))
         header.pack_end(close_btn)
 
-        # Body
+
         box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
         box.set_margin_top(20)
         box.set_margin_bottom(20)
         box.set_margin_start(20)
         box.set_margin_end(20)
 
-        # Search Entry
+
         self.search_entry = Gtk.SearchEntry(placeholder_text=_("Enter city name"))
         self.search_entry.connect("search-changed", self._on_search_changed)
         box.append(self.search_entry)
 
-        # Search Button
+
         self.search_btn = Gtk.Button(label=_("Search"))
         self.search_btn.add_css_class("suggested-action")
         self.search_btn.connect("clicked", lambda b: GLib.idle_add(lambda: self._on_search(b) or False))
         box.append(self.search_btn)
 
-        # Result display
+
         self.result_frame = Gtk.Frame(label=_("Result"))
         self.result_label = Gtk.Label(label=_("No location found yet."))
         self.result_label.set_wrap(True)
         self.result_frame.set_child(self.result_label)
         box.append(self.result_frame)
 
-        # Add Button (Initially disabled)
+
         self.add_btn = Gtk.Button(label=_("Add Location"))
         self.add_btn.set_sensitive(False)
         self.add_btn.connect("clicked", lambda b: GLib.idle_add(lambda: self._on_add(b) or False))
@@ -89,7 +89,7 @@ class WeatherDialog(Adw.Window):
         query = self.search_entry.get_text()
         if not query: return
 
-        # Disable interactions while searching
+
         self.search_entry.set_sensitive(False)
         self.search_btn.set_sensitive(False)
         self.result_label.set_label(_("Searching..."))
@@ -118,7 +118,7 @@ class WeatherDialog(Adw.Window):
         if self.current_data:
             success = self.manager.add_location(self.current_data)
             if success:
-                # Close dialog
+
                 GLib.idle_add(lambda: self.close() or False)
             else:
                 self.result_label.set_label(_("Error adding location."))

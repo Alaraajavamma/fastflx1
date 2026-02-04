@@ -71,8 +71,8 @@ class GestureEditor(Adw.Window):
         spec_row = Adw.ActionRow(title=_("Trigger Spec"))
         spec_row.set_subtitle(self.gesture.get("spec", _("Not Configured")))
 
-        # Helper to parse spec for better readability?
-        # For now just showing raw spec or a simplified label is fine.
+
+
 
         change_btn = Gtk.Button(label=_("Change"), valign=Gtk.Align.CENTER)
         change_btn.connect("clicked", lambda b: GLib.idle_add(lambda: self._on_change_spec(b, spec_row) or False))
@@ -104,7 +104,7 @@ class GestureEditor(Adw.Window):
             self.gesture["spec"] = new_spec
             row.set_subtitle(new_spec)
 
-        # We pass used_specs excluding the current one if it exists
+
         current_spec = self.gesture.get("spec")
         specs_to_exclude = [s for s in self.used_specs if s != current_spec]
 
@@ -141,7 +141,7 @@ class GestureEditor(Adw.Window):
 
     def _on_save_clicked(self, btn):
         self.gesture["name"] = self.entries["name"].get_text()
-        # Spec is already updated in self.gesture via wizard callback
+
 
         if not self.gesture.get("spec"):
              dlg = Adw.MessageDialog(
@@ -238,18 +238,18 @@ class GesturesPage(Adw.PreferencesPage):
 
     def _on_add(self, btn):
         def on_wizard_complete(spec):
-            # Wizard finished, now open editor with this spec pre-filled
+
             new_data = {
                 "name": _("New Gesture"),
                 "spec": spec,
                 "locked": {"type": "command", "value": ""},
                 "unlocked": {"type": "command", "value": ""}
             }
-            # Open editor to finalize
-            # We don't save to config yet, waiting for editor save.
+
+
             self._show_editor(None, new_data)
 
-        # Open Wizard first
+
         wiz = GestureWizard(self.get_root(), on_wizard_complete, used_specs=self._get_used_specs())
         wiz.present()
 

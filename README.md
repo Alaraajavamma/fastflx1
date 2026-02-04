@@ -4,38 +4,64 @@ Tweak-FLX1s is a comprehensive utility and tweaking tool designed for FuriOS and
 
 ## Features
 
-### 1. Background Services
-*   **Alarm Volume Fix:** Ensures that the alarm clock plays at full volume and wakes up the device even if it is muted or screen is off.
-*   **Andromeda Guard:** Prevents the On-Screen Keyboard (OSK) from interfering with Andromeda (Android compatibility layer) applications by managing the keyboard state during session transitions.
-*   **Gesture Shortcuts:** Enables edge swipe gestures (using `lisgd`) to trigger configurable actions like app switching, closing windows, or custom commands.
+The application is organized into three main tabs:
 
-### 2. Button Actions
-Configure actions for physical button presses (Short, Double, Long Press).
-*   **Locked State:** Define specific commands when the screen is locked (e.g., Toggle Flashlight).
-*   **Unlocked State:** Launch commands or open a custom "Wofi" menu with up to 7 items.
-*   **Predefined Actions:** Quickly assign actions like Copy, Paste, Screenshot, Flashlight, or Kill Window.
+### 1. System
+Manage core system components, packages, and security settings.
 
-### 3. Phofono Management
-Easily install and manage **Phofono**, a replacement stack for Calls and Chatty.
-*   Automated installation from Git.
-*   Handles system diversions to disable stock apps safely.
-*   Manages background services (`ofono-toned`, `calls-daemon`).
+*   **Keyboard Management:**
+    *   Switch between **Squeekboard** and **Phosh-OSK**.
+    *   Install a custom **Finnish Layout** for Squeekboard.
+*   **Configuration:**
+    *   **Enforce App Wofi Config:** Apply Tweak-FLX1s styling and configuration to the Wofi launcher.
+*   **Environment:**
+    *   Toggle between **Staging** and **Production** repositories for FuriOS.
+*   **Updates:**
+    *   **System Upgrade:** Run a full system upgrade (`apt upgrade`) with a single click.
+*   **Applications:**
+    *   **Squeekboard:** Install or remove the on-screen keyboard.
+    *   **FLX1s-Bat-Mon:** Install a custom battery monitor utility.
+    *   **Phofono:** Install/Remove the alternative Phofono stack (replacing Calls/Chatty).
+    *   **Branchy:** Install/Remove the experimental "Branchy" app store.
+    *   **DebUI:** Install/Remove the Debian Package Installer UI.
+*   **Security:**
+    *   **Short Passwords:** Enable support for 1-character passwords (modifies PAM).
+    *   **Change Password:** GUI to change the current user's password.
+    *   **Fingerprint Authentication:** Configure PAM to support the FuriPhoneFLX1 fingerprint sensor.
 
-### 4. Andromeda Shared Folders
-Manage file sharing between the Linux host and the Android container.
-*   **Mount/Unmount:** Bind mount Linux home folders to Android and vice versa.
-*   **Permission Guardian:** Automatically watches and fixes permission issues (ACLs) for shared files to ensure both systems can read/write.
+### 2. Tweaks
+Customize the look, feel, and background behavior of your device.
 
-### 5. System Tweaks
-*   **Environment Switching:** Toggle between Staging and Production repositories for FuriOS with a single click (installs/removes necessary configuration packages).
-*   **System Upgrade:** Run a full system upgrade with a single click.
-*   **Branchy:** Install the experimental "Branchy" app store.
-*   **Keyboard Management:** Switch between Squeekboard and Phosh-OSK (Stub).
-*   **Weather:** Add locations to GNOME Weather from the app.
+*   **Appearance:**
+    *   **GTK3 CSS Tweak:** Apply custom UI scaling tweaks for legacy GTK3 applications.
+*   **Background Services:**
+    *   **Alarm Volume Fix:** Ensures that the alarm clock plays at full volume and wakes up the device even if it is muted.
+    *   **Andromeda Guard:** Prevents the On-Screen Keyboard (OSK) from interfering with Andromeda (Android compatibility layer) applications.
+*   **Andromeda Integration:**
+    *   **Shared Folders:** Bind mount your Linux home folders to the Android container (`~/Android-Share`), with automatic permission fixing.
+*   **Audio:**
+    *   **Custom Sound Theme:** Enable the "fastflx1" custom sound theme.
 
-### 6. Security
-*   **Password Policy:** Set the minimum password length (modifies PAM configuration).
-*   **Fingerprint Authentication:** Enable fingerprint support on FuriPhoneFLX1 (configures `libpam-biomd` and `libpam-parallel`).
+### 3. Actions
+Configure hardware buttons and touch gestures for quick access to functions.
+
+*   **Hardware Buttons:**
+    *   Configure actions for **Short**, **Double**, and **Long** presses of the assistant button.
+    *   Define different actions for **Locked** and **Unlocked** states.
+    *   Trigger actions like Flashlight, Screenshot, Kill Window, or open a custom **Wofi Menu**.
+*   **Touch Gestures:**
+    *   Create and manage edge swipe gestures (using `lisgd`).
+    *   Configure direction (Up, Down, Left, Right, Diagonals), edge, and number of fingers.
+    *   Assign commands to gestures.
+
+## CLI Arguments
+
+The application supports command-line arguments for triggers and background services:
+
+*   `--monitor [alarm|guard|gestures|andromeda-fs]`: Start a background monitor service.
+*   `--action [screenshot|flashlight|kill-window|paste]`: Perform a one-off action.
+*   `--trigger-gesture [index]`: Trigger a specific gesture action.
+*   `--[short|double|long]-press`: Handle button press events.
 
 ## Build Dependencies
 
@@ -58,23 +84,11 @@ dpkg-buildpackage -us -uc
 
 ## Installation
 
-Install the generated package. This will automatically pull in all runtime dependencies (lisgd, wtype, etc.):
+Install the generated package. This will automatically pull in all runtime dependencies:
 
 ```bash
 sudo apt install ./tweak-flx1s*.deb
 ```
-
-## Usage
-
-Launch the application from the app drawer ("Tweak-FLX1s").
-
-### CLI Arguments
-The application also supports command-line arguments for triggers and services:
-
-*   `--monitor [alarm|guard|gestures|andromeda-fs]`: Start a background monitor service.
-*   `--action [screenshot|flashlight|kill-window|paste]`: Perform a one-off action.
-*   `--trigger-gesture [index]`: Trigger a specific gesture action.
-*   `--[short|double|long]-press`: Handle button press events.
 
 ## Uninstallation
 
