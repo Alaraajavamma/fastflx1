@@ -547,3 +547,120 @@ msgstr "Poistetaan DebUI"
 
 msgid "Installing DebUI"
 msgstr "Asennetaan DebUI"
+
+msgid "New Gesture Wizard"
+msgstr "Uuden eleen ohjattu toiminto"
+
+msgid "Go Back"
+msgstr "Mene takaisin"
+
+msgid "Proceed"
+msgstr "Jatka"
+
+msgid "Step 1: Fingers"
+msgstr "Vaihe 1: Sormet"
+
+msgid "How many fingers used for the gesture?"
+msgstr "Kuinka monta sormea eleessä käytetään?"
+
+msgid "Step 2: Direction"
+msgstr "Vaihe 2: Suunta"
+
+msgid "Which direction is the swipe?"
+msgstr "Mihin suuntaan pyyhkäistään?"
+
+msgid "Left -> Right"
+msgstr "Vasen -> Oikea"
+
+msgid "Right -> Left"
+msgstr "Oikea -> Vasen"
+
+msgid "Up -> Down"
+msgstr "Ylös -> Alas"
+
+msgid "Down -> Up"
+msgstr "Alas -> Ylös"
+
+msgid "Down-Left -> Up-Right"
+msgstr "Alas-Vasen -> Ylös-Oikea"
+
+msgid "Up-Right -> Down-Left"
+msgstr "Ylös-Oikea -> Alas-Vasen"
+
+msgid "Up-Left -> Down-Right"
+msgstr "Ylös-Vasen -> Alas-Oikea"
+
+msgid "Down-Right -> Up-Left"
+msgstr "Alas-Oikea -> Ylös-Vasen"
+
+msgid "Step 3: Edge"
+msgstr "Vaihe 3: Reuna"
+
+msgid "Where should the gesture start?"
+msgstr "Mistä eleen tulisi alkaa?"
+
+msgid "Anywhere"
+msgstr "Missä tahansa"
+
+msgid "Left Edge"
+msgstr "Vasen reuna"
+
+msgid "Right Edge"
+msgstr "Oikea reuna"
+
+msgid "Top Edge"
+msgstr "Yläreuna"
+
+msgid "Bottom Edge"
+msgstr "Alareuna"
+
+msgid "Top-Left Corner"
+msgstr "Vasen yläkulma"
+
+msgid "Top-Right Corner"
+msgstr "Oikea yläkulma"
+
+msgid "Bottom-Left Corner"
+msgstr "Vasen alakulma"
+
+msgid "Bottom-Right Corner"
+msgstr "Oikea alakulma"
+
+msgid "None (Middle of screen only)"
+msgstr "Ei mikään (vain ruudun keskellä)"
+
+msgid "Step 4: Distance"
+msgstr "Vaihe 4: Etäisyys"
+
+msgid "How long should the swipe be?"
+msgstr "Kuinka pitkä pyyhkäisyn tulisi olla?"
+
+msgid "Any Distance"
+msgstr "Mikä tahansa etäisyys"
+
+msgid "Short"
+msgstr "Lyhyt"
+
+msgid "Medium"
+msgstr "Keskipitkä"
+
+msgid "Large"
+msgstr "Pitkä"
+
+msgid "Step 5: Mode"
+msgstr "Vaihe 5: Tila"
+
+msgid "Trigger on press or release?"
+msgstr "Laukaise painettaessa vai vapautettaessa?"
+
+msgid "On Release (Recommended)"
+msgstr "Vapautettaessa (Suositus)"
+
+msgid "On Press"
+msgstr "Painettaessa"
+
+msgid "Already configured"
+msgstr "Jo määritetty"
+
+msgid "Error: Both Release and Press modes are already configured for this gesture combination."
+msgstr "Virhe: Sekä vapautus- että painallustilat on jo määritetty tälle eleyhdistelmälle."
