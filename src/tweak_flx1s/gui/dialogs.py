@@ -360,20 +360,38 @@ class ActionSelectionDialog(Adw.Window):
         type_group = Adw.PreferencesGroup(title=_("Action Type"))
         page.add(type_group)
 
+        c_type = self.config.get("type", "command")
+        c_val = self.config.get("value", "")
+        is_wofi = (c_type == "wofi")
+        is_predef = (c_type == "command" and c_val in PREDEFINED_ACTIONS.values())
+        is_custom = (c_type == "command" and not is_predef)
+
+        predef_row = Adw.ActionRow(title=_("Predefined Action"))
+        predef_row.set_subtitle(_("Select from common actions"))
+        predef_row.set_title_lines(0)
+        predef_row.set_subtitle_lines(0)
+        predef_chk = Gtk.CheckButton(valign=Gtk.Align.CENTER)
+        predef_chk.set_active(is_predef)
+        predef_chk.connect("toggled", self._on_type_toggled, "predefined")
+        predef_row.add_prefix(predef_chk)
+        type_group.add(predef_row)
+        self.predef_chk = predef_chk
+
         cmd_row = Adw.ActionRow(title=_("Custom Command"))
         cmd_row.set_subtitle(_("Execute a shell command"))
         cmd_row.set_title_lines(0)
         cmd_row.set_subtitle_lines(0)
         cmd_chk = Gtk.CheckButton(valign=Gtk.Align.CENTER)
-        cmd_chk.set_active(self.config.get("type") == "command" and self.config.get("value") not in PREDEFINED_ACTIONS.values())
+        cmd_chk.set_group(predef_chk)
+        cmd_chk.set_active(is_custom)
         cmd_chk.connect("toggled", self._on_type_toggled, "command")
         cmd_row.add_prefix(cmd_chk)
         type_group.add(cmd_row)
         self.cmd_chk = cmd_chk
 
         self.cmd_entry = Adw.EntryRow(title=_("Command"))
-        self.cmd_entry.set_text(self.config.get("value", "") if self.config.get("type") == "command" else "")
-        self.cmd_entry.set_visible(cmd_chk.get_active())
+        self.cmd_entry.set_text(c_val if c_type == "command" else "")
+        self.cmd_entry.set_visible(is_custom)
         type_group.add(self.cmd_entry)
 
         wofi_row = Adw.ActionRow(title=_("Wofi Menu"))
@@ -381,8 +399,8 @@ class ActionSelectionDialog(Adw.Window):
         wofi_row.set_title_lines(0)
         wofi_row.set_subtitle_lines(0)
         wofi_chk = Gtk.CheckButton(valign=Gtk.Align.CENTER)
-        wofi_chk.set_group(cmd_chk)
-        wofi_chk.set_active(self.config.get("type") == "wofi")
+        wofi_chk.set_group(predef_chk)
+        wofi_chk.set_active(is_wofi)
         wofi_chk.connect("toggled", self._on_type_toggled, "wofi")
         wofi_row.add_prefix(wofi_chk)
         type_group.add(wofi_row)
@@ -390,14 +408,14 @@ class ActionSelectionDialog(Adw.Window):
 
         self.edit_menu_btn = Gtk.Button(label=_("Edit Menu"), valign=Gtk.Align.CENTER)
         self.edit_menu_btn.connect("clicked", lambda b: GLib.idle_add(lambda: self._on_edit_menu(b) or False))
-        self.edit_menu_btn.set_visible(wofi_chk.get_active())
+        self.edit_menu_btn.set_visible(is_wofi)
         wofi_row.add_suffix(self.edit_menu_btn)
 
         predef_group = Adw.PreferencesGroup(title=_("Predefined Actions"))
         page.add(predef_group)
 
+        self.predef_rows = {}
         sorted_keys = sorted(PREDEFINED_ACTIONS.keys())
-        current_val = self.config.get("value")
 
         for key in sorted_keys:
             val = PREDEFINED_ACTIONS[key]
@@ -405,11 +423,13 @@ class ActionSelectionDialog(Adw.Window):
             row.set_title_lines(0)
             row.set_activatable(True)
 
-            # Add a checkmark if selected?
-            if self.config.get("type") == "command" and current_val == val:
-                 row.add_suffix(Gtk.Image.new_from_icon_name("object-select-symbolic"))
+            icon = Gtk.Image.new_from_icon_name("object-select-symbolic")
+            icon.set_visible(is_predef and c_val == val)
+            row.add_suffix(icon)
 
-            row.connect("activated", lambda row: GLib.idle_add(lambda: self._on_predef_activated(row, val) or False))
+            self.predef_rows[val] = icon
+
+            row.connect("activated", lambda row, v=val: GLib.idle_add(lambda: self._on_predef_activated(v) or False))
             predef_group.add(row)
 
     def _on_type_toggled(self, chk, type_name):
@@ -419,17 +439,31 @@ class ActionSelectionDialog(Adw.Window):
             self.config["type"] = "command"
             self.cmd_entry.set_visible(True)
             self.edit_menu_btn.set_visible(False)
+            self._update_predef_icons(None)
+
         elif type_name == "wofi":
             self.config["type"] = "wofi"
             self.cmd_entry.set_visible(False)
             self.edit_menu_btn.set_visible(True)
+            self._update_predef_icons(None)
 
-    def _on_predef_activated(self, row, cmd_val):
-        self.cmd_chk.set_active(True)
+        elif type_name == "predefined":
+            self.config["type"] = "command"
+            self.cmd_entry.set_visible(False)
+            self.edit_menu_btn.set_visible(False)
+            val = self.config.get("value")
+            self._update_predef_icons(val)
+
+    def _update_predef_icons(self, active_val):
+        for val, icon in self.predef_rows.items():
+            icon.set_visible(val == active_val)
+
+    def _on_predef_activated(self, cmd_val):
+        self.predef_chk.set_active(True)
         self.config["type"] = "command"
         self.config["value"] = cmd_val
         self.cmd_entry.set_text(cmd_val)
-        self.cmd_entry.set_visible(False)
+        self._update_predef_icons(cmd_val)
 
     def _on_edit_menu(self, btn):
         items = self.config.get("items", [])

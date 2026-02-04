@@ -109,6 +109,7 @@ class GestureWizard(Adw.Window):
 
         for val in ["1", "2", "3"]:
             row = Adw.ActionRow(title=val)
+            row.set_title_lines(0)
             chk = Gtk.CheckButton()
             chk.set_group(self.fingers_group if val != "1" else None)
             if val == "1": self.fingers_group = chk
@@ -125,19 +126,20 @@ class GestureWizard(Adw.Window):
         page, group = self._create_page(_("Step 2: Direction"), _("Which direction is the swipe?"))
 
         options = [
-            ("LR", _("Left -> Right")),
-            ("RL", _("Right -> Left")),
-            ("UD", _("Up -> Down")),
-            ("DU", _("Down -> Up")),
-            ("DLUR", _("Down-Left -> Up-Right")),
-            ("URDL", _("Up-Right -> Down-Left")),
-            ("ULDR", _("Up-Left -> Down-Right")),
-            ("DRUL", _("Down-Right -> Up-Left"))
+            ("LR", _("From Left to Right")),
+            ("RL", _("From Right to Left")),
+            ("UD", _("From Top to Bottom")),
+            ("DU", _("From Bottom to Top")),
+            ("DLUR", _("From Bottom-Left to Top-Right")),
+            ("URDL", _("From Top-Right to Bottom-Left")),
+            ("ULDR", _("From Top-Left to Bottom-Right")),
+            ("DRUL", _("From Bottom-Right to Top-Left"))
         ]
 
         first_chk = None
         for code, label in options:
             row = Adw.ActionRow(title=label)
+            row.set_title_lines(0)
             chk = Gtk.CheckButton()
             chk.set_group(first_chk)
             if not first_chk: first_chk = chk
@@ -169,6 +171,7 @@ class GestureWizard(Adw.Window):
         first_chk = None
         for code, label in options:
             row = Adw.ActionRow(title=label)
+            row.set_title_lines(0)
             chk = Gtk.CheckButton()
             chk.set_group(first_chk)
             if not first_chk: first_chk = chk
@@ -194,6 +197,7 @@ class GestureWizard(Adw.Window):
         first_chk = None
         for code, label in options:
             row = Adw.ActionRow(title=label)
+            row.set_title_lines(0)
             chk = Gtk.CheckButton()
             chk.set_group(first_chk)
             if not first_chk: first_chk = chk
@@ -238,6 +242,7 @@ class GestureWizard(Adw.Window):
             is_dup = test_spec in self.used_specs
 
             row = Adw.ActionRow(title=label)
+            row.set_title_lines(0)
 
             if is_dup:
                 row.set_subtitle(_("Already configured"))
