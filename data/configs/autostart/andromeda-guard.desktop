@@ -1,8 +1,0 @@
-[Desktop Entry]
-Version=0.1
-Name=Andromeda-Guard
-Comment=Disable keyboard when Andromeda is starting
-Exec=bash -c 'andromeda-guard'
-Icon=org.gnome.Terminal
-Terminal=false
-Type=Application
