@@ -691,3 +691,27 @@ msgstr "OK"
 
 msgid "New Gesture"
 msgstr "Uusi ele"
+
+msgid "Switch Window on the left"
+msgstr "Vaihda ikkunaa vasemmalle"
+
+msgid "Switch Window on the right"
+msgstr "Vaihda ikkunaa oikealle"
+
+msgid "Play/Pause"
+msgstr "Toista/Tauko"
+
+msgid "Next Track"
+msgstr "Seuraava kappale"
+
+msgid "Previous Track"
+msgstr "Edellinen kappale"
+
+msgid "Volume Up"
+msgstr "Äänenvoimakkuus ylös"
+
+msgid "Volume Down"
+msgstr "Äänenvoimakkuus alas"
+
+msgid "Mute"
+msgstr "Mykistä"
