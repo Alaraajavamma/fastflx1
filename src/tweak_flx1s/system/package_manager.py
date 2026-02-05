@@ -50,9 +50,15 @@ class PackageManager:
 
     def switch_to_production(self):
         """Returns command to switch to production repositories."""
+        model = get_device_model()
+        extra_pkg = "furios-apt-config-krypton-staging"
+
+        if model == "FuriPhoneFLX1s":
+             extra_pkg = "furios-apt-config-radon-staging"
+
         cmd = (
             "sudo apt remove furios-apt-config-staging furios-apt-config-debian-staging "
-            "furios-apt-config-krypton-staging furios-apt-config-radon-staging -y && "
+            f"{extra_pkg} -y && "
             "sudo apt update && "
             "sudo apt upgrade -y --allow-downgrades"
         )

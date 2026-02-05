@@ -18,11 +18,12 @@ import gi
 gi.require_version('Gtk', '4.0')
 gi.require_version('Adw', '1')
 from gi.repository import Gtk, Adw, GLib, Gio
+import os
 from tweak_flx1s.actions.gestures import GesturesManager
 from tweak_flx1s.actions.buttons import PREDEFINED_ACTIONS
 from tweak_flx1s.gui.dialogs import ActionSelectionDialog
 from tweak_flx1s.gui.wizard import GestureWizard
-from tweak_flx1s.utils import logger, run_command
+from tweak_flx1s.utils import logger, run_command, get_device_model
 from tweak_flx1s.const import SERVICE_GESTURES
 
 try:
@@ -207,6 +208,16 @@ class GesturesPage(Adw.PreferencesPage):
 
         try:
             if should_be_active:
+                # Detect device and create override
+                model = get_device_model()
+                dev_path = "/dev/input/event3" if model == "FuriPhoneFLX1s" else "/dev/input/event2"
+
+                conf_dir = os.path.expanduser(f"~/.config/systemd/user/{SERVICE_GESTURES}.d")
+                os.makedirs(conf_dir, exist_ok=True)
+
+                with open(os.path.join(conf_dir, "device.conf"), "w") as f:
+                    f.write(f"[Service]\nEnvironment=LISGD_INPUT_DEVICE={dev_path}\n")
+
                 run_command(f"systemctl --user enable {SERVICE_GESTURES}")
                 run_command("systemctl --user daemon-reload")
                 run_command(f"systemctl --user start {SERVICE_GESTURES}")
@@ -214,6 +225,16 @@ class GesturesPage(Adw.PreferencesPage):
                 run_command(f"systemctl --user stop {SERVICE_GESTURES}")
                 run_command(f"systemctl --user disable {SERVICE_GESTURES}")
                 run_command("systemctl --user daemon-reload")
+
+                # Cleanup override
+                conf_dir = os.path.expanduser(f"~/.config/systemd/user/{SERVICE_GESTURES}.d")
+                conf_file = os.path.join(conf_dir, "device.conf")
+                if os.path.exists(conf_file):
+                    os.remove(conf_file)
+                    # Check if directory is empty and remove it if so
+                    if not os.listdir(conf_dir):
+                        os.rmdir(conf_dir)
+
         except Exception as e:
             logger.error(f"Failed to toggle service {SERVICE_GESTURES}: {e}")
 
