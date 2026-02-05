@@ -27,11 +27,13 @@ class GestureMonitor:
     def __init__(self):
         self.device = os.environ.get("LISGD_INPUT_DEVICE")
         if not self.device:
+            # Fallback if env var missing (e.g. manually started without override)
             model = get_device_model()
             if model == "FuriPhoneFLX1s":
                 self.device = "/dev/input/event3"
             else:
                 self.device = "/dev/input/event2"
+            logger.warning(f"LISGD_INPUT_DEVICE not set, fell back to detection: {self.device}")
 
         self.subprocess = None
         self.manager = GesturesManager()
