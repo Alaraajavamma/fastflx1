@@ -80,8 +80,13 @@ class TweaksPage(Adw.PreferencesPage):
 
     def _get_css_paths(self):
         """Returns (source_path, target_path) for GTK3 CSS."""
-        base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-        source = os.path.join(base_dir, "data", "gtk.css")
+        installed_path = "/usr/share/tweak-flx1s/configs/gtk-3.0/gtk.css"
+        if os.path.exists(installed_path):
+            source = installed_path
+        else:
+            repo_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))))
+            source = os.path.join(repo_root, "data", "configs", "gtk-3.0", "gtk.css")
+
         target = os.path.expanduser("~/.config/gtk-3.0/gtk.css")
         return source, target
 
